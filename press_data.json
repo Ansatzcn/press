@@ -38,7 +38,7 @@
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
       "category": "",
       "group": "K历史、地理",
-      "tag": "",
+      "tag": "21读书",
       "code": "190010"
     },
     {
@@ -277,6 +277,7 @@
     "T工业技术"
   ],
   "tags": [
-    "11图书"
+    "11图书",
+    "21读书"
   ]
 }
