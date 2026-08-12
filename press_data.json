@@ -18,6 +18,14 @@
       "code": "160843"
     },
     {
+      "id": "9502ae01-6f7d-4b61-9560-22b4f4d66efc",
+      "bookName": "英伟达之道",
+      "bookNo": "7-5217-7016",
+      "category": "F经济",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "code": "218340"
+    },
+    {
       "id": "3025aa9f-83ec-4a45-8499-162b7b105387",
       "bookName": "寻路中国:从乡村到工厂的自驾之旅",
       "bookNo": "7-5327-5280",
@@ -27,6 +35,7 @@
     }
   ],
   "categories": [
+    "F经济",
     "I文学",
     "K历史、地理"
   ]
