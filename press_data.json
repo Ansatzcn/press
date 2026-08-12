@@ -36,9 +36,19 @@
       "category": "I文学",
       "group": "▲",
       "code": "172093"
+    },
+    {
+      "id": "bc3b0988-c120-4fbc-a1d1-010dc8d9d893",
+      "bookName": "阿金库尔战役：百年战争中最传奇的胜利",
+      "bookNo": "7-5658-4162",
+      "institution": "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
+      "category": "E军事",
+      "group": "▲",
+      "code": "297864"
     }
   ],
   "categories": [
+    "E军事",
     "F经济",
     "I文学",
     "K历史、地理"
