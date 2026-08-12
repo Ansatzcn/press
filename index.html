@@ -182,7 +182,7 @@ pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal')
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
 let state={entries:[],categories:[],groups:[],tags:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
-let syncing=false,autoTimer=null,toastTimer=null;
+let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
 function clean(v){return String(v??'').normalize('NFKC').trim()}
@@ -704,13 +704,25 @@ pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');
 editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
 editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editModal.classList.add('hidden')});
 editSave.addEventListener('click',saveEdit);
-editModal.addEventListener('click',e=>{
-    if(e.target!==editModal)return;
+
+// 只有“按下”和“松开”都发生在遮罩层本身时，才视为真正点击弹窗外。
+// 从输入框/下拉框内部开始拖选文字，即使鼠标松到遮罩层，也不会关闭弹窗。
+editModal.addEventListener('pointerdown',e=>{
+    editOverlayPointerDown=e.target===editModal
+});
+editModal.addEventListener('pointerup',e=>{
+    const genuineOutsideClick=editOverlayPointerDown&&e.target===editModal;
+    editOverlayPointerDown=false;
+    if(!genuineOutsideClick)return;
     if(!editIsUnchanged())return;
     editingId='';
     editInitialSnapshot='';
     editModal.classList.add('hidden')
 });
+editModal.addEventListener('pointercancel',()=>{
+    editOverlayPointerDown=false
+});
+
 configBtn.addEventListener('click',openConfig);
 configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
