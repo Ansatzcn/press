@@ -161,7 +161,7 @@ addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookN
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editGroupCombo=$('editGroupCombo'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],categories:[],groups:[]},editingId='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],categories:[],groups:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -368,6 +368,18 @@ function chooseGroup(which,value){
     const panel=which==='add'?groupPanel:editGroupPanel;
     input.value=value;panel.classList.add('hidden');input.focus()
 }
+function getEditSnapshot(){
+    return JSON.stringify({
+        bookName:editBookName.value,
+        bookNo:editBookNo.value,
+        institution:editInstitution.value,
+        category:editCategory.value,
+        group:editGroup.value
+    })
+}
+function editIsUnchanged(){
+    return Boolean(editingId)&&getEditSnapshot()===editInitialSnapshot
+}
 function addCurrentGroup(which){
     const input=which==='add'?groupInput:editGroup;
     if(addGroup(input.value,true)){
@@ -400,6 +412,7 @@ function openEdit(id){
     if(!admin())return;
     const x=state.entries.find(e=>e.id===id);if(!x)return;
     editingId=id;editBookName.value=x.bookName;editBookNo.value=x.bookNo;editInstitution.value=x.institution;editCategory.value=x.category;editGroup.value=x.group||'';editCode.value=x.code;
+    editInitialSnapshot=getEditSnapshot();
     renderCategoryOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
 }
 function saveEdit(){
@@ -412,14 +425,14 @@ function saveEdit(){
     x.institution=clean(editInstitution.value);
     x.category=category;
     x.group=group;
-    editModal.classList.add('hidden');editingId='';
+    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';
     render();schedule();show('已保存','success')
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
     state.entries=state.entries.filter(e=>e.id!==id);
     if(editingId===id){
-        editingId='';
+        editingId='';editInitialSnapshot='';
         editModal.classList.add('hidden')
     }
     render();schedule();show('已删除','success');return true
@@ -614,8 +627,15 @@ addBtn.addEventListener('click',addEntry);
 bookNameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addEntry()}});
 pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id)});
 editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
-editCancel.addEventListener('click',()=>{editingId='';editModal.classList.add('hidden')});
+editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editModal.classList.add('hidden')});
 editSave.addEventListener('click',saveEdit);
+editModal.addEventListener('click',e=>{
+    if(e.target!==editModal)return;
+    if(!editIsUnchanged())return;
+    editingId='';
+    editInitialSnapshot='';
+    editModal.classList.add('hidden')
+});
 configBtn.addEventListener('click',openConfig);
 configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
