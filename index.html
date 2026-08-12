@@ -68,6 +68,16 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <input type="text" id="institutionInput" autocomplete="off">
 </div>
 <div class="form-group">
+<label for="groupInput">大类</label>
+<div class="combo" id="groupCombo">
+<div class="combo-row">
+<input type="text" id="groupInput" autocomplete="off">
+<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开大类历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
+</div>
+</div>
+<div class="form-group">
 <label for="categoryInput">书架</label>
 <div class="combo" id="categoryCombo">
 <div class="combo-row">
@@ -75,16 +85,6 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
-</div>
-</div>
-<div class="form-group">
-<label for="groupInput">分组</label>
-<div class="combo" id="groupCombo">
-<div class="combo-row">
-<input type="text" id="groupInput" autocomplete="off">
-<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开分组历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
 </div>
 </div>
 <button class="add-button" id="addBtn" type="button">添加</button>
@@ -105,6 +105,16 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group"><label for="editBookNo">书号</label><input type="text" id="editBookNo" autocomplete="off"></div>
 <div class="form-group"><label for="editInstitution">机构</label><input type="text" id="editInstitution" autocomplete="off"></div>
 <div class="form-group">
+<label for="editGroup">大类</label>
+<div class="combo" id="editGroupCombo">
+<div class="combo-row">
+<input type="text" id="editGroup" autocomplete="off">
+<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
+</div>
+</div>
+<div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-row">
@@ -112,16 +122,6 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
-</div>
-</div>
-<div class="form-group">
-<label for="editGroup">分组</label>
-<div class="combo" id="editGroupCombo">
-<div class="combo-row">
-<input type="text" id="editGroup" autocomplete="off">
-<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开分组历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
 </div>
 </div>
 <div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" readonly></div>
@@ -231,10 +231,11 @@ function norm(v){
     const categories=sortCategories(
         Array.isArray(s.categories)?s.categories:entries.map(x=>x.category)
     );
-    const groups=sortCategories([
-        ...(Array.isArray(s.groups)?s.groups:[]),
-        ...entries.map(x=>x.group)
-    ]);
+    // 兼容没有大类历史字段的旧数据：首次从已有条目建立历史。
+    // 一旦 groups 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
+    const groups=sortCategories(
+        Array.isArray(s.groups)?s.groups:entries.map(x=>x.group)
+    );
     return{schemaVersion:1,entries,categories,groups}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
@@ -270,7 +271,12 @@ function renderGroupOptions(which){
     const box=which==='add'?groupOptions:editGroupOptions;
     const q=key(input.value);
     const values=state.groups.filter(v=>!q||key(v).includes(q));
-    box.innerHTML=values.length?values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join(''):'<div class="combo-empty">暂无分组</div>'
+    const list=values.length
+        ? values.map(v=>`<div class="combo-item"><button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button><button class="combo-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除大类 ${attr(v)}">×</button></div>`).join('')
+        : '<div class="combo-empty">暂无大类</div>';
+    const current=clean(input.value);
+    const canAdd=current&&!state.groups.some(v=>key(v)===key(current));
+    box.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到大类</button>`:'')
 }
 function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');
@@ -279,8 +285,8 @@ function render(){
         const metaRows=[
             x.bookNo?`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`:'',
             x.institution?`<div class="meta-row institution"><span class="meta-label">机构：</span>${renderInstitution(x.institution)}</div>`:'',
+            x.group?`<div class="meta-row"><span class="meta-label">大类：</span>${esc(x.group)}</div>`:'',
             x.category?`<div class="meta-row"><span class="meta-label">书架：</span>${esc(x.category)}</div>`:'',
-            x.group?`<div class="meta-row"><span class="meta-label">分组：</span>${esc(x.group)}</div>`:'',
             x.code?`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`:''
         ].join('');
         return `<article class="press-item"><div class="press-head"><div><div class="book-title">${esc(x.bookName)}</div>${metaRows?`<div class="meta">${metaRows}</div>`:''}</div>${actions}</div></article>`
@@ -322,17 +328,40 @@ function addCurrentCategory(which){
         (which==='add'?categoryPanel:editCategoryPanel).classList.remove('hidden')
     }
 }
-function addGroup(v){
+function addGroup(v,notify=false){
     const value=clean(v);
-    if(value&&!state.groups.some(x=>key(x)===key(value))){
-        state.groups.push(value);
-        state.groups=sortCategories(state.groups)
-    }
+    if(!value)return false;
+    if(state.groups.some(x=>key(x)===key(value)))return false;
+    state.groups.push(value);
+    state.groups=sortCategories(state.groups);
+    saveLocal();
+    if(admin())schedule();
+    renderGroupOptions('add');
+    renderGroupOptions('edit');
+    if(notify)show('已加入大类下拉菜单','success');
+    return true
+}
+function deleteGroup(v){
+    const value=clean(v);
+    if(!value)return;
+    if(!confirm(`确定从大类下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
+    state.groups=state.groups.filter(x=>key(x)!==key(value));
+    saveLocal();
+    if(admin())schedule();
+    renderGroupOptions('add');
+    renderGroupOptions('edit');
+    show('已从大类下拉菜单删除','success')
 }
 function chooseGroup(which,value){
     const input=which==='add'?groupInput:editGroup;
     const panel=which==='add'?groupPanel:editGroupPanel;
     input.value=value;panel.classList.add('hidden');input.focus()
+}
+function addCurrentGroup(which){
+    const input=which==='add'?groupInput:editGroup;
+    if(addGroup(input.value,true)){
+        (which==='add'?groupPanel:editGroupPanel).classList.remove('hidden')
+    }
 }
 function addEntry(){
     if(!admin())return;
@@ -546,8 +575,22 @@ groupInput.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList
 editGroup.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.remove('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
 groupInput.addEventListener('input',()=>renderGroupOptions('add'));
 editGroup.addEventListener('input',()=>renderGroupOptions('edit'));
-groupOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseGroup('add',b.dataset.value)});
-editGroupOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseGroup('edit',b.dataset.value)});
+groupOptions.addEventListener('click',e=>{
+    const del=e.target.closest('.combo-delete[data-delete-value]');
+    if(del)return deleteGroup(del.dataset.deleteValue);
+    const add=e.target.closest('.combo-add[data-add-current]');
+    if(add)return addCurrentGroup('add');
+    const b=e.target.closest('.combo-option[data-value]');
+    if(b)chooseGroup('add',b.dataset.value)
+});
+editGroupOptions.addEventListener('click',e=>{
+    const del=e.target.closest('.combo-delete[data-delete-value]');
+    if(del)return deleteGroup(del.dataset.deleteValue);
+    const add=e.target.closest('.combo-add[data-add-current]');
+    if(add)return addCurrentGroup('edit');
+    const b=e.target.closest('.combo-option[data-value]');
+    if(b)chooseGroup('edit',b.dataset.value)
+});
 
 document.addEventListener('click',e=>{
     if(!categoryCombo.contains(e.target))categoryPanel.classList.add('hidden');
