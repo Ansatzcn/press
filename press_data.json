@@ -1,5 +1,16 @@
 {
   "schemaVersion": 1,
-  "entries": [],
-  "categories": []
+  "entries": [
+    {
+      "id": "700e9ea9-afd3-4a24-a784-eda1d259eb60",
+      "bookName": "1927:生死转折",
+      "bookNo": "7-5201-8442",
+      "category": "K历史、地理",
+      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+      "code": "160843"
+    }
+  ],
+  "categories": [
+    "K历史、地理"
+  ]
 }
