@@ -15,7 +15,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:1.7rem;padding-bottom:1rem;border-bottom:1px solid #e8edf4}
 .toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.btn-danger:hover{background:#fecaca}.btn-sync{border-color:#2563eb;background:#2563eb;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
 .add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}.add-section h2,.list-header h2{font-size:1.3rem}.add-section h2{margin-bottom:1rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.three-fields-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
 .form-group input,.form-group select{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.form-group input:focus,.form-group select:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
 .add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
 .combo{position:relative}.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}.combo-toggle{min-height:44px;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#475569;font-weight:700}.combo-toggle:hover{background:#f1f5f9}
@@ -30,7 +30,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#2563eb;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
 .back-to-top{position:fixed;right:16px;top:68%;z-index:900;padding:.45rem .72rem;transform:translateY(-50%);border:1px solid rgba(148,163,184,.45);border-radius:999px;background:rgba(255,255,255,.82);color:#64748b;font-size:.76rem;opacity:0;visibility:hidden;pointer-events:none}.back-to-top.visible{opacity:.55;visibility:visible;pointer-events:auto}
-@media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.item-actions{flex-direction:column}.meta{grid-template-columns:1fr}.dialog{width:100%;max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{padding:1.2rem 1.2rem .8rem}.dialog-actions{padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))}.dialog-actions .btn{flex:1}.back-to-top{right:8px}}
+@media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.item-actions{flex-direction:column}.meta{grid-template-columns:1fr}.dialog{width:100%;max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{padding:1.2rem 1.2rem .8rem}.dialog-actions{padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))}.dialog-actions .btn{flex:1}.back-to-top{right:8px}}
 </style>
 </head>
 <body>
@@ -67,6 +67,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <label for="institutionInput">出版</label>
 <input type="text" id="institutionInput" autocomplete="off">
 </div>
+<div class="three-fields-row">
 <div class="form-group">
 <label for="groupInput">大类</label>
 <div class="combo" id="groupCombo">
@@ -78,6 +79,16 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 </div>
 </div>
 <div class="form-group">
+<label for="tagInput">标签</label>
+<div class="combo" id="tagCombo">
+<div class="combo-row">
+<input type="text" id="tagInput" autocomplete="off">
+<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
+</div>
+</div>
+<div class="form-group">
 <label for="categoryInput">书架</label>
 <div class="combo" id="categoryCombo">
 <div class="combo-row">
@@ -86,15 +97,6 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
-</div>
-<div class="form-group">
-<label for="tagInput">标签</label>
-<div class="combo" id="tagCombo">
-<div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off">
-<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
 </div>
 <button class="add-button" id="addBtn" type="button">添加</button>
@@ -344,6 +346,7 @@ function render(){
             x.bookNo?`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`:'',
             x.group?`<div class="meta-row"><span class="meta-label">大类：</span>${esc(x.group)}</div>`:'',
             x.tag?`<div class="meta-row"><span class="meta-label">标签：</span>${esc(x.tag)}</div>`:'',
+            x.category?`<div class="meta-row"><span class="meta-label">书架：</span>${esc(x.category)}</div>`:'',
             x.code?`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`:''
         ].join('');
         return `<article class="press-item"><div class="press-head"><div><div class="book-title">${renderBookName(x.bookName)}</div>${metaRows?`<div class="meta">${metaRows}</div>`:''}</div>${actions}</div></article>`
