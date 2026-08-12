@@ -13,7 +13,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .cloud-status{display:inline-flex;align-items:center;gap:8px;padding:.35rem .9rem;border-radius:999px;background:#f1f5f9;color:#475569;font-size:.82rem;font-weight:500}
 .status-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8}.status-dot.online{background:#22c55e}.status-dot.offline{background:#ef4444}.status-dot.syncing{background:#f59e0b}
 .toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:1.7rem;padding-bottom:1rem;border-bottom:1px solid #e8edf4}
-.toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-sync{border-color:#2563eb;background:#2563eb;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
+.toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.btn-danger:hover{background:#fecaca}.btn-sync{border-color:#2563eb;background:#2563eb;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
 .add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}.add-section h2,.list-header h2{font-size:1.3rem}.add-section h2{margin-bottom:1rem}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
 .form-group input{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.form-group input:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
@@ -23,7 +23,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .combo-option{display:block;width:100%;padding:.58rem .7rem;border:0;border-radius:10px;background:#fff;color:#0f172a;text-align:left}.combo-option:hover{background:#f1f5f9}.combo-empty{padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
 .press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
-.press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.28rem 1rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
+.press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
 .item-actions{display:flex;gap:6px}.action-btn{padding:.28rem .72rem;border:0;border-radius:999px;font-size:.82rem;font-weight:650}.edit-btn{background:#dbeafe;color:#1e3a8a}.delete-btn{background:#fee2e2;color:#991b1b}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
 .overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(15,23,42,.45);backdrop-filter:blur(5px)}
 .dialog{width:min(100%,620px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{min-height:0;overflow-y:auto;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{display:flex;justify-content:flex-end;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}
@@ -52,7 +52,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 <h2>添加</h2>
 <div class="form-grid">
 <div class="form-group full">
-<label for="bookNameInput">书名 <span class="required">*</span></label>
+<label for="bookNameInput">书名</label>
 <input type="text" id="bookNameInput" autocomplete="off" autofocus>
 </div>
 <div class="form-group">
@@ -106,7 +106,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 <div class="form-group"><label for="editInstitution">机构</label><input type="text" id="editInstitution" autocomplete="off"></div>
 <div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" readonly></div>
 </div>
-<div class="dialog-actions"><button class="btn" id="editCancel" type="button">取消</button><button class="btn btn-primary" id="editSave" type="button">保存</button></div>
+<div class="dialog-actions"><button class="btn btn-danger" id="editDelete" type="button">删除</button><button class="btn" id="editCancel" type="button">取消</button><button class="btn btn-primary" id="editSave" type="button">保存</button></div>
 </div>
 </section>
 
@@ -138,7 +138,7 @@ const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),codeInput=$('codeInput'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editCode=$('editCode'),editCancel=$('editCancel'),editSave=$('editSave'),
+pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
 let state={entries:[],categories:[]},editingId='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
@@ -146,6 +146,7 @@ let syncing=false,autoTimer=null,toastTimer=null;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
 function clean(v){return String(v??'').normalize('NFKC').trim()}
+function cleanTitle(v){return String(v??'').trim()}
 function esc(v){const d=document.createElement('div');d.textContent=String(v??'');return d.innerHTML}
 function attr(v){return esc(v).replace(/"/g,'&quot;')}
 function uid(){return crypto?.randomUUID?crypto.randomUUID():`press_${Date.now()}_${Math.random().toString(36).slice(2,9)}`}
@@ -184,7 +185,7 @@ function randomCode(usedSet){
 }
 function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
-    const bookName=clean(x.bookName);if(!bookName)return null;
+    const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),category=clean(x.category),institution=clean(x.institution);
     let code=clean(x.code);
     if(!/^(1\d{5}|2\d{5})$/.test(code)||usedCodes.has(code))code=randomCode(usedCodes);
@@ -236,7 +237,7 @@ function renderCategoryOptions(which){
 function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
-        const actions=admin()?`<div class="item-actions"><button class="action-btn edit-btn" data-id="${attr(x.id)}" type="button">编辑</button><button class="action-btn delete-btn" data-id="${attr(x.id)}" type="button">删除</button></div>`:'';
+        const actions=admin()?`<div class="item-actions"><button class="action-btn edit-btn" data-id="${attr(x.id)}" type="button">编辑</button></div>`:'';
         return `<article class="press-item"><div class="press-head"><div><div class="book-title">${esc(x.bookName)}</div><div class="meta">
         <div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>
         <div class="meta-row"><span class="meta-label">分类：</span>${esc(x.category)}</div>
@@ -260,7 +261,7 @@ function chooseCategory(which,value){
 }
 function addEntry(){
     if(!admin())return;
-    const bookName=clean(bookNameInput.value);
+    const bookName=cleanTitle(bookNameInput.value);
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
     const category=clean(categoryInput.value);
     addCategory(category);
@@ -285,7 +286,7 @@ function openEdit(id){
 }
 function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
-    const bookName=clean(editBookName.value);
+    const bookName=cleanTitle(editBookName.value);
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
     const category=clean(editCategory.value);addCategory(category);
     x.bookName=bookName;
@@ -296,8 +297,13 @@ function saveEdit(){
     render();schedule();show('已保存','success')
 }
 function deleteEntry(id){
-    const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return;
-    state.entries=state.entries.filter(e=>e.id!==id);render();schedule();show('已删除','success')
+    const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
+    state.entries=state.entries.filter(e=>e.id!==id);
+    if(editingId===id){
+        editingId='';
+        editModal.classList.add('hidden')
+    }
+    render();schedule();show('已删除','success');return true
 }
 function downloadJson(){
     const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
@@ -444,7 +450,8 @@ document.addEventListener('click',e=>{if(!categoryCombo.contains(e.target))categ
 
 addBtn.addEventListener('click',addEntry);
 bookNameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addEntry()}});
-pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id);const del=e.target.closest('.delete-btn');if(del)deleteEntry(del.dataset.id)});
+pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id)});
+editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
 editCancel.addEventListener('click',()=>{editingId='';editModal.classList.add('hidden')});
 editSave.addEventListener('click',saveEdit);
 configBtn.addEventListener('click',openConfig);
