@@ -7,7 +7,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;padding:2rem 1rem 4rem;background:#f5f7fa;color:#0f172a;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif}
-button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .container{width:min(100%,1080px);margin:auto;padding:2rem 1.8rem;background:#fff;border-radius:30px;box-shadow:0 20px 42px -14px rgba(15,23,42,.18)}
 .page-title{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:1.45rem;padding-bottom:.8rem;border-bottom:2px solid #e8edf4;font-size:2.2rem}
 .cloud-status{display:inline-flex;align-items:center;gap:8px;padding:.35rem .9rem;border-radius:999px;background:#f1f5f9;color:#475569;font-size:.82rem;font-weight:500}
@@ -16,7 +16,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.btn-danger:hover{background:#fecaca}.btn-sync{border-color:#2563eb;background:#2563eb;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
 .add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}.add-section h2,.list-header h2{font-size:1.3rem}.add-section h2{margin-bottom:1rem}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
-.form-group input{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.form-group input:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
+.form-group input,.form-group select{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.form-group input:focus,.form-group select:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
 .add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
 .combo{position:relative}.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}.combo-toggle{min-height:44px;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#475569;font-weight:700}.combo-toggle:hover{background:#f1f5f9}
 .combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.5rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
@@ -59,19 +59,29 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 <label for="bookNoInput">书号</label>
 <input type="text" id="bookNoInput" autocomplete="off">
 </div>
+<div class="form-group full">
+<label for="institutionInput">机构</label>
+<input type="text" id="institutionInput" autocomplete="off">
+</div>
 <div class="form-group">
-<label for="categoryInput">分类</label>
+<label for="categoryInput">大类</label>
 <div class="combo" id="categoryCombo">
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开分类历史">▾</button>
+<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开大类历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
 </div>
-<div class="form-group full">
-<label for="institutionInput">机构</label>
-<input type="text" id="institutionInput" autocomplete="off">
+<div class="form-group">
+<label for="groupInput">分组</label>
+<div class="combo" id="groupCombo">
+<div class="combo-row">
+<input type="text" id="groupInput" autocomplete="off">
+<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开分组历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
+</div>
 </div>
 <div class="form-group">
 <label for="codeInput">编码</label>
@@ -91,19 +101,29 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 <div class="dialog">
 <div class="dialog-scroll">
 <h3>编辑</h3>
-<div class="form-group"><label for="editBookName">书名 <span class="required">*</span></label><input type="text" id="editBookName" autocomplete="off"></div>
+<div class="form-group"><label for="editBookName">书名</label><input type="text" id="editBookName" autocomplete="off"></div>
 <div class="form-group"><label for="editBookNo">书号</label><input type="text" id="editBookNo" autocomplete="off"></div>
+<div class="form-group"><label for="editInstitution">机构</label><input type="text" id="editInstitution" autocomplete="off"></div>
 <div class="form-group">
-<label for="editCategory">分类</label>
+<label for="editCategory">大类</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-row">
 <input type="text" id="editCategory" autocomplete="off">
-<button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开分类历史">▾</button>
+<button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开大类历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
 </div>
-<div class="form-group"><label for="editInstitution">机构</label><input type="text" id="editInstitution" autocomplete="off"></div>
+<div class="form-group">
+<label for="editGroup">分组</label>
+<div class="combo" id="editGroupCombo">
+<div class="combo-row">
+<input type="text" id="editGroup" autocomplete="off">
+<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开分组历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
+</div>
+</div>
 <div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" readonly></div>
 </div>
 <div class="dialog-actions"><button class="btn btn-danger" id="editDelete" type="button">删除</button><button class="btn" id="editCancel" type="button">取消</button><button class="btn btn-primary" id="editSave" type="button">保存</button></div>
@@ -114,7 +134,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 <form class="dialog" id="configForm" autocomplete="on">
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
-<p class="dialog-desc">所有访客均可直接读取 press_data.json。只有新增、编辑、删除、导入和同步时需要 Token。</p>
+<p class="dialog-desc">任何人均可直接浏览 press_data.json 中的公开数据，无需 Token。只有配置 Token 后才可新增、编辑、删除、导入和同步。</p>
 <div class="form-group"><label for="cfgOwner">仓库所有者</label><input id="cfgOwner" name="github-owner" type="text" autocomplete="username"></div>
 <div class="form-group"><label for="cfgRepo">仓库名称</label><input id="cfgRepo" type="text" autocomplete="off"></div>
 <div class="form-group"><label for="cfgFile">数据文件路径</label><input id="cfgFile" type="text" value="press_data.json" autocomplete="off"></div>
@@ -137,11 +157,11 @@ const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token
 const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
-addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),codeInput=$('codeInput'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
+addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),groupCombo=$('groupCombo'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
+pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editGroupCombo=$('editGroupCombo'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],categories:[]},editingId='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],categories:[],groups:[]},editingId='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -187,10 +207,11 @@ function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),category=clean(x.category),institution=clean(x.institution);
+    const group=clean(x.group);
     let code=clean(x.code);
     if(!/^(1\d{5}|2\d{5})$/.test(code)||usedCodes.has(code))code=randomCode(usedCodes);
     usedCodes.add(code);
-    return{id:clean(x.id)||uid(),bookName,bookNo,category,institution,code}
+    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,group,code}
 }
 function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
@@ -209,7 +230,11 @@ function norm(v){
         ...(Array.isArray(s.categories)?s.categories:[]),
         ...entries.map(x=>x.category)
     ]);
-    return{schemaVersion:1,entries,categories}
+    const groups=sortCategories([
+        ...(Array.isArray(s.groups)?s.groups:[]),
+        ...entries.map(x=>x.group)
+    ]);
+    return{schemaVersion:1,entries,categories,groups}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -232,16 +257,24 @@ function renderCategoryOptions(which){
     const box=which==='add'?categoryOptions:editCategoryOptions;
     const q=key(input.value);
     const values=state.categories.filter(v=>!q||key(v).includes(q));
-    box.innerHTML=values.length?values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join(''):'<div class="combo-empty">暂无分类</div>'
+    box.innerHTML=values.length?values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join(''):'<div class="combo-empty">暂无大类</div>'
+}
+function renderGroupOptions(which){
+    const input=which==='add'?groupInput:editGroup;
+    const box=which==='add'?groupOptions:editGroupOptions;
+    const q=key(input.value);
+    const values=state.groups.filter(v=>!q||key(v).includes(q));
+    box.innerHTML=values.length?values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join(''):'<div class="combo-empty">暂无分组</div>'
 }
 function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');
+    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const actions=admin()?`<div class="item-actions"><button class="action-btn edit-btn" data-id="${attr(x.id)}" type="button">编辑</button></div>`:'';
         return `<article class="press-item"><div class="press-head"><div><div class="book-title">${esc(x.bookName)}</div><div class="meta">
         <div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>
-        <div class="meta-row"><span class="meta-label">分类：</span>${esc(x.category)}</div>
         <div class="meta-row institution"><span class="meta-label">机构：</span>${renderInstitution(x.institution)}</div>
+        <div class="meta-row"><span class="meta-label">大类：</span>${esc(x.category)}</div>
+        <div class="meta-row"><span class="meta-label">分组：</span>${esc(x.group)}</div>
         <div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>
         </div></div>${actions}</div></article>`
     }).join(''):'<div class="empty-state">暂无条目</div>';
@@ -259,12 +292,26 @@ function chooseCategory(which,value){
     const panel=which==='add'?categoryPanel:editCategoryPanel;
     input.value=value;panel.classList.add('hidden');input.focus()
 }
+function addGroup(v){
+    const value=clean(v);
+    if(value&&!state.groups.some(x=>key(x)===key(value))){
+        state.groups.push(value);
+        state.groups=sortCategories(state.groups)
+    }
+}
+function chooseGroup(which,value){
+    const input=which==='add'?groupInput:editGroup;
+    const panel=which==='add'?groupPanel:editGroupPanel;
+    input.value=value;panel.classList.add('hidden');input.focus()
+}
 function addEntry(){
     if(!admin())return;
     const bookName=cleanTitle(bookNameInput.value);
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
     const category=clean(categoryInput.value);
+    const group=clean(groupInput.value);
     addCategory(category);
+    addGroup(group);
     let code;
     try{code=randomCode(new Set(state.entries.map(x=>x.code)))}catch(e){show(e.message,'error');return}
     state.entries.push({
@@ -273,26 +320,28 @@ function addEntry(){
         bookNo:clean(bookNoInput.value),
         category,
         institution:clean(institutionInput.value),
+        group,
         code
     });
-    bookNameInput.value='';bookNoInput.value='';categoryInput.value='';institutionInput.value='';codeInput.value='';
+    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';groupInput.value='';codeInput.value='';
     render();schedule();bookNameInput.focus();show(`已添加，编码 ${code}`,'success')
 }
 function openEdit(id){
     if(!admin())return;
     const x=state.entries.find(e=>e.id===id);if(!x)return;
-    editingId=id;editBookName.value=x.bookName;editBookNo.value=x.bookNo;editCategory.value=x.category;editInstitution.value=x.institution;editCode.value=x.code;
+    editingId=id;editBookName.value=x.bookName;editBookNo.value=x.bookNo;editInstitution.value=x.institution;editCategory.value=x.category;editGroup.value=x.group||'';editCode.value=x.code;
     renderCategoryOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
 }
 function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
     const bookName=cleanTitle(editBookName.value);
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
-    const category=clean(editCategory.value);addCategory(category);
+    const category=clean(editCategory.value),group=clean(editGroup.value);addCategory(category);addGroup(group);
     x.bookName=bookName;
     x.bookNo=clean(editBookNo.value);
-    x.category=category;
     x.institution=clean(editInstitution.value);
+    x.category=category;
+    x.group=group;
     editModal.classList.add('hidden');editingId='';
     render();schedule();show('已保存','success')
 }
@@ -364,7 +413,7 @@ async function readRemote(){
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
         return{exists:true,sha:d.sha,state:norm(JSON.parse(fromB64(d.content)))}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:{entries:[],categories:[]}};
+        if(e.status===404)return{exists:false,sha:null,state:{entries:[],categories:[],groups:[]}};
         throw e
     }
 }
@@ -419,7 +468,7 @@ async function loadPublic(){
         state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||{entries:[],categories:[]};render();status('offline','公开数据读取失败');
+        const local=loadLocal();state=local||{entries:[],categories:[],groups:[]};render();status('offline','公开数据读取失败');
         lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
@@ -431,10 +480,10 @@ async function loadAdminState(){
         if(remote.exists){
             state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接')
         }else{
-            state=cached||{entries:[],categories:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
+            state=cached||{entries:[],categories:[],groups:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
         }
     }catch(e){
-        console.error(e);state=cached||{entries:[],categories:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
+        console.error(e);state=cached||{entries:[],categories:[],groups:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
     }
 }
 
@@ -446,7 +495,22 @@ categoryInput.addEventListener('input',()=>renderCategoryOptions('add'));
 editCategory.addEventListener('input',()=>renderCategoryOptions('edit'));
 categoryOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseCategory('add',b.dataset.value)});
 editCategoryOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseCategory('edit',b.dataset.value)});
-document.addEventListener('click',e=>{if(!categoryCombo.contains(e.target))categoryPanel.classList.add('hidden');if(!editCategoryCombo.contains(e.target))editCategoryPanel.classList.add('hidden')});
+
+groupToggle.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList.toggle('hidden');editGroupPanel.classList.add('hidden');renderGroupOptions('add')});
+editGroupToggle.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.toggle('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
+groupInput.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList.remove('hidden');editGroupPanel.classList.add('hidden');renderGroupOptions('add')});
+editGroup.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.remove('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
+groupInput.addEventListener('input',()=>renderGroupOptions('add'));
+editGroup.addEventListener('input',()=>renderGroupOptions('edit'));
+groupOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseGroup('add',b.dataset.value)});
+editGroupOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseGroup('edit',b.dataset.value)});
+
+document.addEventListener('click',e=>{
+    if(!categoryCombo.contains(e.target))categoryPanel.classList.add('hidden');
+    if(!editCategoryCombo.contains(e.target))editCategoryPanel.classList.add('hidden');
+    if(!groupCombo.contains(e.target))groupPanel.classList.add('hidden');
+    if(!editGroupCombo.contains(e.target))editGroupPanel.classList.add('hidden')
+});
 
 addBtn.addEventListener('click',addEntry);
 bookNameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addEntry()}});
@@ -465,13 +529,15 @@ document.addEventListener('keydown',e=>{
     if(e.key!=='Escape')return;
     categoryPanel.classList.add('hidden');
     editCategoryPanel.classList.add('hidden');
+    groupPanel.classList.add('hidden');
+    editGroupPanel.classList.add('hidden');
     editModal.classList.add('hidden');
     configModal.classList.add('hidden')
 });
 backToTopBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
 
-loadConfig();loadMeta();updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');
+loadConfig();loadMeta();updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');
 if(admin())loadAdminState();else loadPublic();
 })();
 </script>
