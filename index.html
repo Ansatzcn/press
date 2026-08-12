@@ -20,7 +20,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
 .combo{position:relative}.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}.combo-toggle{min-height:44px;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#475569;font-weight:700}.combo-toggle:hover{background:#f1f5f9}
 .combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.5rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
-.combo-option{display:block;width:100%;padding:.58rem .7rem;border:0;border-radius:10px;background:#fff;color:#0f172a;text-align:left}.combo-option:hover{background:#f1f5f9}.combo-empty{padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
+.combo-item{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:5px;align-items:center}.combo-item+.combo-item{margin-top:3px}.combo-option{display:block;width:100%;padding:.58rem .7rem;border:0;border-radius:10px;background:#fff;color:#0f172a;text-align:left}.combo-option:hover{background:#f1f5f9}.combo-delete{width:34px;height:34px;border:0;border-radius:9px;background:#fff1f2;color:#991b1b;font-weight:700}.combo-delete:hover{background:#fee2e2}.combo-add{display:block;width:100%;margin-top:.45rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
 .press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
 .press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
@@ -68,11 +68,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <input type="text" id="institutionInput" autocomplete="off">
 </div>
 <div class="form-group">
-<label for="categoryInput">大类</label>
+<label for="categoryInput">书架</label>
 <div class="combo" id="categoryCombo">
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开大类历史">▾</button>
+<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
@@ -105,11 +105,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group"><label for="editBookNo">书号</label><input type="text" id="editBookNo" autocomplete="off"></div>
 <div class="form-group"><label for="editInstitution">机构</label><input type="text" id="editInstitution" autocomplete="off"></div>
 <div class="form-group">
-<label for="editCategory">大类</label>
+<label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-row">
 <input type="text" id="editCategory" autocomplete="off">
-<button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开大类历史">▾</button>
+<button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
@@ -226,10 +226,11 @@ function norm(v){
         if(byName!==0)return byName;
         return a.code.localeCompare(b.code)
     });
-    const categories=sortCategories([
-        ...(Array.isArray(s.categories)?s.categories:[]),
-        ...entries.map(x=>x.category)
-    ]);
+    // 兼容没有书架历史字段的旧数据：首次从已有条目建立历史。
+    // 一旦 categories 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
+    const categories=sortCategories(
+        Array.isArray(s.categories)?s.categories:entries.map(x=>x.category)
+    );
     const groups=sortCategories([
         ...(Array.isArray(s.groups)?s.groups:[]),
         ...entries.map(x=>x.group)
@@ -257,7 +258,12 @@ function renderCategoryOptions(which){
     const box=which==='add'?categoryOptions:editCategoryOptions;
     const q=key(input.value);
     const values=state.categories.filter(v=>!q||key(v).includes(q));
-    box.innerHTML=values.length?values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join(''):'<div class="combo-empty">暂无大类</div>'
+    const list=values.length
+        ? values.map(v=>`<div class="combo-item"><button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button><button class="combo-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除书架 ${attr(v)}">×</button></div>`).join('')
+        : '<div class="combo-empty">暂无书架</div>';
+    const current=clean(input.value);
+    const canAdd=current&&!state.categories.some(v=>key(v)===key(current));
+    box.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到书架</button>`:'')
 }
 function renderGroupOptions(which){
     const input=which==='add'?groupInput:editGroup;
@@ -270,27 +276,51 @@ function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const actions=admin()?`<div class="item-actions"><button class="action-btn edit-btn" data-id="${attr(x.id)}" type="button">编辑</button></div>`:'';
-        return `<article class="press-item"><div class="press-head"><div><div class="book-title">${esc(x.bookName)}</div><div class="meta">
-        <div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>
-        <div class="meta-row institution"><span class="meta-label">机构：</span>${renderInstitution(x.institution)}</div>
-        <div class="meta-row"><span class="meta-label">大类：</span>${esc(x.category)}</div>
-        <div class="meta-row"><span class="meta-label">分组：</span>${esc(x.group)}</div>
-        <div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>
-        </div></div>${actions}</div></article>`
+        const metaRows=[
+            x.bookNo?`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`:'',
+            x.institution?`<div class="meta-row institution"><span class="meta-label">机构：</span>${renderInstitution(x.institution)}</div>`:'',
+            x.category?`<div class="meta-row"><span class="meta-label">书架：</span>${esc(x.category)}</div>`:'',
+            x.group?`<div class="meta-row"><span class="meta-label">分组：</span>${esc(x.group)}</div>`:'',
+            x.code?`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`:''
+        ].join('');
+        return `<article class="press-item"><div class="press-head"><div><div class="book-title">${esc(x.bookName)}</div>${metaRows?`<div class="meta">${metaRows}</div>`:''}</div>${actions}</div></article>`
     }).join(''):'<div class="empty-state">暂无条目</div>';
     saveLocal()
 }
-function addCategory(v){
+function addCategory(v,notify=false){
     const value=clean(v);
-    if(value&&!state.categories.some(x=>key(x)===key(value))){
-        state.categories.push(value);
-        state.categories=sortCategories(state.categories)
-    }
+    if(!value)return false;
+    if(state.categories.some(x=>key(x)===key(value)))return false;
+    state.categories.push(value);
+    state.categories=sortCategories(state.categories);
+    saveLocal();
+    if(admin())schedule();
+    renderCategoryOptions('add');
+    renderCategoryOptions('edit');
+    if(notify)show('已加入书架下拉菜单','success');
+    return true
+}
+function deleteCategory(v){
+    const value=clean(v);
+    if(!value)return;
+    if(!confirm(`确定从书架下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
+    state.categories=state.categories.filter(x=>key(x)!==key(value));
+    saveLocal();
+    if(admin())schedule();
+    renderCategoryOptions('add');
+    renderCategoryOptions('edit');
+    show('已从书架下拉菜单删除','success')
 }
 function chooseCategory(which,value){
     const input=which==='add'?categoryInput:editCategory;
     const panel=which==='add'?categoryPanel:editCategoryPanel;
     input.value=value;panel.classList.add('hidden');input.focus()
+}
+function addCurrentCategory(which){
+    const input=which==='add'?categoryInput:editCategory;
+    if(addCategory(input.value,true)){
+        (which==='add'?categoryPanel:editCategoryPanel).classList.remove('hidden')
+    }
 }
 function addGroup(v){
     const value=clean(v);
@@ -493,8 +523,22 @@ categoryInput.addEventListener('click',e=>{e.stopPropagation();categoryPanel.cla
 editCategory.addEventListener('click',e=>{e.stopPropagation();editCategoryPanel.classList.remove('hidden');categoryPanel.classList.add('hidden');renderCategoryOptions('edit')});
 categoryInput.addEventListener('input',()=>renderCategoryOptions('add'));
 editCategory.addEventListener('input',()=>renderCategoryOptions('edit'));
-categoryOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseCategory('add',b.dataset.value)});
-editCategoryOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseCategory('edit',b.dataset.value)});
+categoryOptions.addEventListener('click',e=>{
+    const del=e.target.closest('.combo-delete[data-delete-value]');
+    if(del)return deleteCategory(del.dataset.deleteValue);
+    const add=e.target.closest('.combo-add[data-add-current]');
+    if(add)return addCurrentCategory('add');
+    const b=e.target.closest('.combo-option[data-value]');
+    if(b)chooseCategory('add',b.dataset.value)
+});
+editCategoryOptions.addEventListener('click',e=>{
+    const del=e.target.closest('.combo-delete[data-delete-value]');
+    if(del)return deleteCategory(del.dataset.deleteValue);
+    const add=e.target.closest('.combo-add[data-add-current]');
+    if(add)return addCurrentCategory('edit');
+    const b=e.target.closest('.combo-option[data-value]');
+    if(b)chooseCategory('edit',b.dataset.value)
+});
 
 groupToggle.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList.toggle('hidden');editGroupPanel.classList.add('hidden');renderGroupOptions('add')});
 editGroupToggle.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.toggle('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
