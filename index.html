@@ -341,15 +341,34 @@ function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const actions=admin()?`<div class="item-actions"><button class="action-btn edit-btn" data-id="${attr(x.id)}" type="button">编辑</button></div>`:'';
-        const metaRows=[
-            x.institution?`<div class="meta-row institution"><span class="meta-label">出版：</span>${renderInstitution(x.institution)}</div>`:'',
-            x.bookNo?`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`:'',
-            x.group?`<div class="meta-row"><span class="meta-label">大类：</span>${esc(x.group)}</div>`:'',
-            x.tag?`<div class="meta-row"><span class="meta-label">标签：</span>${esc(x.tag)}</div>`:'',
-            x.category?`<div class="meta-row"><span class="meta-label">书架：</span>${esc(x.category)}</div>`:'',
-            x.code?`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`:''
-        ].join('');
-        return `<article class="press-item"><div class="press-head"><div><div class="book-title">${renderBookName(x.bookName)}</div>${metaRows?`<div class="meta">${metaRows}</div>`:''}</div>${actions}</div></article>`
+        // 总表显示顺序固定为：
+        // 出版 → 书号 → 大类 → 标签 → 书架 → 编码
+        // 注意：历史内部字段 group=大类、category=书架，这里先按含义映射，避免后续改名造成顺序混淆。
+        const publication=x.institution;
+        const majorCategory=x.group;
+        const tagValue=x.tag;
+        const bookshelf=x.category;
+        const metaRows=[];
+        if(publication){
+            metaRows.push(`<div class="meta-row institution"><span class="meta-label">出版：</span>${renderInstitution(publication)}</div>`)
+        }
+        if(x.bookNo){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`)
+        }
+        if(majorCategory){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">大类：</span>${esc(majorCategory)}</div>`)
+        }
+        if(tagValue){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">标签：</span>${esc(tagValue)}</div>`)
+        }
+        if(bookshelf){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">书架：</span>${esc(bookshelf)}</div>`)
+        }
+        if(x.code){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`)
+        }
+        const metaHtml=metaRows.join('');
+        return `<article class="press-item"><div class="press-head"><div><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}</div>${actions}</div></article>`
     }).join(''):'<div class="empty-state">暂无条目</div>';
     saveLocal()
 }
