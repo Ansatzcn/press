@@ -19,8 +19,17 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .form-group input,.form-group select{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.form-group input:focus,.form-group select:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
 .add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
 .combo{position:relative}.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}.combo-toggle{min-height:44px;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#475569;font-weight:700}.combo-toggle:hover{background:#f1f5f9}
-.combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.5rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
-.combo-item{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:5px;align-items:center}.combo-item+.combo-item{margin-top:3px}.combo-option{display:block;width:100%;padding:.58rem .7rem;border:0;border-radius:10px;background:#fff;color:#0f172a;text-align:left}.combo-option:hover{background:#f1f5f9}.combo-delete{width:34px;height:34px;border:0;border-radius:9px;background:#fff1f2;color:#991b1b;font-weight:700}.combo-delete:hover{background:#fee2e2}.combo-add{display:block;width:100%;margin-top:.45rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
+.combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.6rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
+.combo-selected{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.combo-selected:empty{display:none}
+.combo-option-list{display:flex;flex-wrap:wrap;gap:7px}
+.combo-pill,.selected-pill{display:inline-flex;align-items:center;max-width:100%;min-height:34px;border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;overflow:hidden}
+.combo-pill.selected{border-color:#93b4ff;background:#eaf1ff}
+.combo-pill-select{min-width:0;padding:.4rem .34rem .4rem .72rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.combo-pill-select:hover{background:rgba(226,232,240,.7)}
+.combo-pill-delete,.selected-pill-remove{flex:0 0 30px;width:30px;height:30px;margin-right:2px;border:0;border-radius:50%;background:transparent;color:#991b1b;font-size:1rem;font-weight:700;line-height:1}
+.combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
+.selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
+.combo-add{display:block;width:100%;margin-top:.55rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{width:100%;padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
 .press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
 .press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.book-title a{color:#2563eb;text-decoration:none}.book-title a:hover,.book-title a:focus-visible{color:#1d4ed8;text-decoration:underline;outline:none}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
@@ -71,6 +80,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="groupInput">大类</label>
 <div class="combo" id="groupCombo">
+<div class="combo-selected" id="groupSelected"></div>
 <div class="combo-row">
 <input type="text" id="groupInput" autocomplete="off">
 <button class="combo-toggle" id="groupToggle" type="button" aria-label="展开大类历史">▾</button>
@@ -81,6 +91,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="tagInput">标签</label>
 <div class="combo" id="tagCombo">
+<div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
 <input type="text" id="tagInput" autocomplete="off">
 <button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
@@ -91,6 +102,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="categoryInput">书架</label>
 <div class="combo" id="categoryCombo">
+<div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
 <button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
@@ -119,6 +131,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="editGroup">大类</label>
 <div class="combo" id="editGroupCombo">
+<div class="combo-selected" id="editGroupSelected"></div>
 <div class="combo-row">
 <input type="text" id="editGroup" autocomplete="off">
 <button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
@@ -129,6 +142,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="editTag">标签</label>
 <div class="combo" id="editTagCombo">
+<div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
 <input type="text" id="editTag" autocomplete="off">
 <button class="combo-toggle" id="editTagToggle" type="button" aria-label="展开标签历史">▾</button>
@@ -139,6 +153,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
+<div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
 <input type="text" id="editCategory" autocomplete="off">
 <button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开书架历史">▾</button>
@@ -179,11 +194,11 @@ const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token
 const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
-addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),groupCombo=$('groupCombo'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editGroupCombo=$('editGroupCombo'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
+addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),groupCombo=$('groupCombo'),groupSelected=$('groupSelected'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
+pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],categories:[],groups:[],tags:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],categories:[],groups:[],tags:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -195,6 +210,10 @@ function uid(){return crypto?.randomUUID?crypto.randomUUID():`press_${Date.now()
 function key(v){return clean(v).toLocaleLowerCase('zh-CN')}
 function uniq(values){const m=new Map();for(const raw of values||[]){const v=clean(raw);if(v&&!m.has(key(v)))m.set(key(v),v)}return [...m.values()]}
 function sortCategories(values){return uniq(values).sort((a,b)=>collator.compare(a,b))}
+function normalizeMulti(value){
+    const values=Array.isArray(value)?value:[value];
+    return uniq(values)
+}
 function sortTags(values){
     return uniq(values).sort((a,b)=>{
         const aNum=/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(a);
@@ -251,8 +270,8 @@ function randomCode(usedSet){
 function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
-    const bookNo=clean(x.bookNo),category=clean(x.category),institution=clean(x.institution);
-    const group=clean(x.group),tag=clean(x.tag);
+    const bookNo=clean(x.bookNo),institution=clean(x.institution);
+    const category=normalizeMulti(x.category),group=normalizeMulti(x.group),tag=normalizeMulti(x.tag);
     let code=clean(x.code);
     if(!/^(1\d{5}|2\d{5})$/.test(code)||usedCodes.has(code))code=randomCode(usedCodes);
     usedCodes.add(code);
@@ -274,18 +293,17 @@ function norm(v){
     // 兼容没有书架历史字段的旧数据：首次从已有条目建立历史。
     // 一旦 categories 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
     const categories=sortCategories(
-        Array.isArray(s.categories)?s.categories:entries.map(x=>x.category)
+        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
     );
     // 兼容没有大类历史字段的旧数据：首次从已有条目建立历史。
     // 一旦 groups 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
     const groups=sortCategories(
-        Array.isArray(s.groups)?s.groups:entries.map(x=>x.group)
+        Array.isArray(s.groups)?s.groups:entries.flatMap(x=>x.group)
     );
     // 标签无预置内容；所有已输入标签都会进入历史，并按数字从小到大排序。
-    const tags=sortTags([
-        ...(Array.isArray(s.tags)?s.tags:[]),
-        ...entries.map(x=>x.tag)
-    ]);
+    const tags=sortTags(
+        Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
+    );
     return{schemaVersion:1,entries,categories,groups,tags}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
@@ -304,39 +322,72 @@ function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.t
 function saveLocal(){state=norm(state);ls(STATE_KEY,JSON.stringify(state))}
 function loadLocal(){const s=lg(STATE_KEY);if(!s)return null;try{return norm(JSON.parse(s))}catch(e){return null}}
 function updateAdmin(){const on=admin(),wasHidden=addSection.classList.contains('hidden');addSection.classList.toggle('hidden',!on);syncBtn.classList.toggle('hidden',!on);importBtn.classList.toggle('hidden',!on);if(on&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)}
-function renderCategoryOptions(which){
-    const input=which==='add'?categoryInput:editCategory;
-    const box=which==='add'?categoryOptions:editCategoryOptions;
-    const q=key(input.value);
-    const values=state.categories.filter(v=>!q||key(v).includes(q));
+function multiMeta(type,which){
+    const edit=which==='edit';
+    const map={
+        category:{
+            label:'书架',historyKey:'categories',
+            input:edit?editCategory:categoryInput,
+            panel:edit?editCategoryPanel:categoryPanel,
+            options:edit?editCategoryOptions:categoryOptions,
+            selectedBox:edit?editCategorySelected:categorySelected
+        },
+        group:{
+            label:'大类',historyKey:'groups',
+            input:edit?editGroup:groupInput,
+            panel:edit?editGroupPanel:groupPanel,
+            options:edit?editGroupOptions:groupOptions,
+            selectedBox:edit?editGroupSelected:groupSelected
+        },
+        tag:{
+            label:'标签',historyKey:'tags',
+            input:edit?editTag:tagInput,
+            panel:edit?editTagPanel:tagPanel,
+            options:edit?editTagOptions:tagOptions,
+            selectedBox:edit?editTagSelected:tagSelected
+        }
+    };
+    const meta=map[type];
+    meta.selection=edit?editSelections[type]:addSelections[type];
+    return meta
+}
+function sortHistory(type,values){
+    return type==='tag'?sortTags(values):sortCategories(values)
+}
+function renderMultiSelected(type,which){
+    const meta=multiMeta(type,which);
+    meta.selectedBox.innerHTML=meta.selection.map(v=>`
+        <span class="selected-pill">
+            <span class="selected-pill-label">${esc(v)}</span>
+            <button class="selected-pill-remove" type="button" data-remove-value="${attr(v)}" aria-label="移除${meta.label} ${attr(v)}">×</button>
+        </span>
+    `).join('')
+}
+function renderMultiOptions(type,which){
+    const meta=multiMeta(type,which);
+    const q=key(meta.input.value);
+    const history=sortHistory(type,state[meta.historyKey]);
+    const values=history.filter(v=>!q||key(v).includes(q));
+    const selectedKeys=new Set(meta.selection.map(key));
     const list=values.length
-        ? values.map(v=>`<div class="combo-item"><button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button><button class="combo-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除书架 ${attr(v)}">×</button></div>`).join('')
-        : '<div class="combo-empty">暂无书架</div>';
-    const current=clean(input.value);
-    const canAdd=current&&!state.categories.some(v=>key(v)===key(current));
-    box.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到书架</button>`:'')
+        ? `<div class="combo-option-list">${values.map(v=>`
+            <span class="combo-pill${selectedKeys.has(key(v))?' selected':''}">
+                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>
+                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
+            </span>
+        `).join('')}</div>`
+        : `<div class="combo-empty">暂无${meta.label}</div>`;
+    const current=clean(meta.input.value);
+    const canAdd=current&&!history.some(v=>key(v)===key(current));
+    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到${meta.label}</button>`:'')
 }
-function renderGroupOptions(which){
-    const input=which==='add'?groupInput:editGroup;
-    const box=which==='add'?groupOptions:editGroupOptions;
-    const q=key(input.value);
-    const values=state.groups.filter(v=>!q||key(v).includes(q));
-    const list=values.length
-        ? values.map(v=>`<div class="combo-item"><button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button><button class="combo-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除大类 ${attr(v)}">×</button></div>`).join('')
-        : '<div class="combo-empty">暂无大类</div>';
-    const current=clean(input.value);
-    const canAdd=current&&!state.groups.some(v=>key(v)===key(current));
-    box.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到大类</button>`:'')
+function renderMultiField(type,which){
+    renderMultiSelected(type,which);
+    renderMultiOptions(type,which)
 }
-function renderTagOptions(which){
-    const input=which==='add'?tagInput:editTag;
-    const box=which==='add'?tagOptions:editTagOptions;
-    const q=key(input.value);
-    const values=sortTags(state.tags.filter(v=>!q||key(v).includes(q)));
-    box.innerHTML=values.length
-        ? values.map(v=>`<button class="combo-option" type="button" data-value="${attr(v)}">${esc(v)}</button>`).join('')
-        : '<div class="combo-empty">暂无标签</div>'
-}
+function renderCategoryOptions(which){renderMultiField('category',which)}
+function renderGroupOptions(which){renderMultiField('group',which)}
+function renderTagOptions(which){renderMultiField('tag',which)}
 function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
@@ -355,14 +406,14 @@ function render(){
         if(x.bookNo){
             metaRows.push(`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`)
         }
-        if(majorCategory){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">大类：</span>${esc(majorCategory)}</div>`)
+        if(majorCategory.length){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">大类：</span>${esc(majorCategory.join('、'))}</div>`)
         }
-        if(tagValue){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">标签：</span>${esc(tagValue)}</div>`)
+        if(tagValue.length){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">标签：</span>${esc(tagValue.join('、'))}</div>`)
         }
-        if(bookshelf){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">书架：</span>${esc(bookshelf)}</div>`)
+        if(bookshelf.length){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</div>`)
         }
         if(x.code){
             metaRows.push(`<div class="meta-row"><span class="meta-label">编码：</span>${esc(x.code)}</div>`)
@@ -372,112 +423,95 @@ function render(){
     }).join(''):'<div class="empty-state">暂无条目</div>';
     saveLocal()
 }
-function addCategory(v,notify=false){
-    const value=clean(v);
-    if(!value)return false;
-    if(state.categories.some(x=>key(x)===key(value)))return false;
-    state.categories.push(value);
-    state.categories=sortCategories(state.categories);
+function addHistoryOption(type,value,notify=false){
+    const meta=multiMeta(type,'add');
+    const historyKey=meta.historyKey,label=meta.label;
+    const v=clean(value);
+    if(!v)return false;
+    if(state[historyKey].some(x=>key(x)===key(v)))return false;
+    state[historyKey].push(v);
+    state[historyKey]=sortHistory(type,state[historyKey]);
     saveLocal();
     if(admin())schedule();
-    renderCategoryOptions('add');
-    renderCategoryOptions('edit');
-    if(notify)show('已加入书架下拉菜单','success');
+    renderMultiField(type,'add');
+    renderMultiField(type,'edit');
+    if(notify)show(`已加入${label}下拉菜单`,'success');
     return true
 }
-function deleteCategory(v){
-    const value=clean(v);
-    if(!value)return;
-    if(!confirm(`确定从书架下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
-    state.categories=state.categories.filter(x=>key(x)!==key(value));
-    saveLocal();
-    if(admin())schedule();
-    renderCategoryOptions('add');
-    renderCategoryOptions('edit');
-    show('已从书架下拉菜单删除','success')
+function removeSelection(type,which,value){
+    const meta=multiMeta(type,which),targetKey=key(value);
+    const next=meta.selection.filter(v=>key(v)!==targetKey);
+    if(which==='edit')editSelections[type]=next;
+    else addSelections[type]=next;
+    renderMultiField(type,which)
 }
-function chooseCategory(which,value){
-    const input=which==='add'?categoryInput:editCategory;
-    const panel=which==='add'?categoryPanel:editCategoryPanel;
-    input.value=value;panel.classList.add('hidden');input.focus()
-}
-function addCurrentCategory(which){
-    const input=which==='add'?categoryInput:editCategory;
-    if(addCategory(input.value,true)){
-        (which==='add'?categoryPanel:editCategoryPanel).classList.remove('hidden')
+function toggleSelection(type,which,value){
+    const meta=multiMeta(type,which),targetKey=key(value);
+    const exists=meta.selection.some(v=>key(v)===targetKey);
+    if(exists){
+        removeSelection(type,which,value);
+        return
     }
+    const next=[...meta.selection,clean(value)].filter(Boolean);
+    if(which==='edit')editSelections[type]=uniq(next);
+    else addSelections[type]=uniq(next);
+    meta.input.value='';
+    renderMultiField(type,which);
+    meta.panel.classList.remove('hidden');
+    meta.input.focus()
 }
-function addGroup(v,notify=false){
-    const value=clean(v);
-    if(!value)return false;
-    if(state.groups.some(x=>key(x)===key(value)))return false;
-    state.groups.push(value);
-    state.groups=sortCategories(state.groups);
+function deleteHistoryOption(type,value){
+    const meta=multiMeta(type,'add'),targetKey=key(value);
+    if(!confirm(`确定从${meta.label}下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
+    state[meta.historyKey]=state[meta.historyKey].filter(v=>key(v)!==targetKey);
+    addSelections[type]=addSelections[type].filter(v=>key(v)!==targetKey);
+    editSelections[type]=editSelections[type].filter(v=>key(v)!==targetKey);
     saveLocal();
     if(admin())schedule();
-    renderGroupOptions('add');
-    renderGroupOptions('edit');
-    if(notify)show('已加入大类下拉菜单','success');
-    return true
+    renderMultiField(type,'add');
+    renderMultiField(type,'edit');
+    show(`已从${meta.label}下拉菜单删除`,'success')
 }
-function deleteGroup(v){
-    const value=clean(v);
-    if(!value)return;
-    if(!confirm(`确定从大类下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
-    state.groups=state.groups.filter(x=>key(x)!==key(value));
-    saveLocal();
-    if(admin())schedule();
-    renderGroupOptions('add');
-    renderGroupOptions('edit');
-    show('已从大类下拉菜单删除','success')
-}
-function chooseGroup(which,value){
-    const input=which==='add'?groupInput:editGroup;
-    const panel=which==='add'?groupPanel:editGroupPanel;
-    input.value=value;panel.classList.add('hidden');input.focus()
-}
-function addTag(v){
-    const value=clean(v);
+function commitTypedValue(type,which,notify=false){
+    const meta=multiMeta(type,which),value=clean(meta.input.value);
     if(!value)return false;
-    if(state.tags.some(x=>key(x)===key(value)))return false;
-    state.tags.push(value);
-    state.tags=sortTags(state.tags);
+    addHistoryOption(type,value,notify);
+    const current=which==='edit'?editSelections[type]:addSelections[type];
+    if(!current.some(v=>key(v)===key(value))){
+        const next=[...current,value];
+        if(which==='edit')editSelections[type]=uniq(next);
+        else addSelections[type]=uniq(next)
+    }
+    meta.input.value='';
+    renderMultiField(type,which);
     return true
-}
-function chooseTag(which,value){
-    const input=which==='add'?tagInput:editTag;
-    const panel=which==='add'?tagPanel:editTagPanel;
-    input.value=value;panel.classList.add('hidden');input.focus()
 }
 function getEditSnapshot(){
     return JSON.stringify({
         bookName:editBookName.value,
         bookNo:editBookNo.value,
         institution:editInstitution.value,
-        category:editCategory.value,
-        group:editGroup.value,
-        tag:editTag.value
+        category:[...editSelections.category],
+        group:[...editSelections.group],
+        tag:[...editSelections.tag],
+        categoryDraft:editCategory.value,
+        groupDraft:editGroup.value,
+        tagDraft:editTag.value
     })
 }
 function editIsUnchanged(){
     return Boolean(editingId)&&getEditSnapshot()===editInitialSnapshot
 }
-function addCurrentGroup(which){
-    const input=which==='add'?groupInput:editGroup;
-    if(addGroup(input.value,true)){
-        (which==='add'?groupPanel:editGroupPanel).classList.remove('hidden')
-    }
-}
 function addEntry(){
     if(!admin())return;
     const bookName=cleanTitle(bookNameInput.value);
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
-    const category=clean(categoryInput.value);
-    const group=clean(groupInput.value);
-    const tag=clean(tagInput.value);
-    addCategory(category);
-    addGroup(group);
-    addTag(tag);
+    commitTypedValue('category','add');
+    commitTypedValue('group','add');
+    commitTypedValue('tag','add');
+    const category=[...addSelections.category];
+    const group=[...addSelections.group];
+    const tag=[...addSelections.tag];
     let code;
     try{code=randomCode(new Set(state.entries.map(x=>x.code)))}catch(e){show(e.message,'error');return}
     state.entries.push({
@@ -490,13 +524,21 @@ function addEntry(){
         tag,
         code
     });
-    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';groupInput.value='';tagInput.value='';codeInput.value='';
+    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';groupInput.value='';tagInput.value='';codeInput.value='';addSelections={category:[],group:[],tag:[]};
     render();schedule();bookNameInput.focus();show(`已添加，编码 ${code}`,'success')
 }
 function openEdit(id){
     if(!admin())return;
     const x=state.entries.find(e=>e.id===id);if(!x)return;
-    editingId=id;editBookName.value=x.bookName;editBookNo.value=x.bookNo;editInstitution.value=x.institution;editCategory.value=x.category;editGroup.value=x.group||'';editTag.value=x.tag||'';editCode.value=x.code;
+    editingId=id;
+    editBookName.value=x.bookName;
+    editBookNo.value=x.bookNo;
+    editInstitution.value=x.institution;
+    editCategory.value='';
+    editGroup.value='';
+    editTag.value='';
+    editSelections={category:[...x.category],group:[...x.group],tag:[...x.tag]};
+    editCode.value=x.code;
     editInitialSnapshot=getEditSnapshot();
     renderCategoryOptions('edit');renderGroupOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
 }
@@ -504,21 +546,23 @@ function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
     const bookName=cleanTitle(editBookName.value);
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
-    const category=clean(editCategory.value),group=clean(editGroup.value),tag=clean(editTag.value);addCategory(category);addGroup(group);addTag(tag);
+    commitTypedValue('category','edit');
+    commitTypedValue('group','edit');
+    commitTypedValue('tag','edit');
     x.bookName=bookName;
     x.bookNo=clean(editBookNo.value);
     x.institution=clean(editInstitution.value);
-    x.category=category;
-    x.group=group;
-    x.tag=tag;
-    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';
+    x.category=[...editSelections.category];
+    x.group=[...editSelections.group];
+    x.tag=[...editSelections.tag];
+    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
     render();schedule();show('已保存','success')
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
     state.entries=state.entries.filter(e=>e.id!==id);
     if(editingId===id){
-        editingId='';editInitialSnapshot='';
+        editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
         editModal.classList.add('hidden')
     }
     render();schedule();show('已删除','success');return true
@@ -656,75 +700,81 @@ async function loadAdminState(){
     }
 }
 
-categoryToggle.addEventListener('click',e=>{e.stopPropagation();categoryPanel.classList.toggle('hidden');editCategoryPanel.classList.add('hidden');renderCategoryOptions('add')});
-editCategoryToggle.addEventListener('click',e=>{e.stopPropagation();editCategoryPanel.classList.toggle('hidden');categoryPanel.classList.add('hidden');renderCategoryOptions('edit')});
-categoryInput.addEventListener('click',e=>{e.stopPropagation();categoryPanel.classList.remove('hidden');editCategoryPanel.classList.add('hidden');renderCategoryOptions('add')});
-editCategory.addEventListener('click',e=>{e.stopPropagation();editCategoryPanel.classList.remove('hidden');categoryPanel.classList.add('hidden');renderCategoryOptions('edit')});
-categoryInput.addEventListener('input',()=>renderCategoryOptions('add'));
-editCategory.addEventListener('input',()=>renderCategoryOptions('edit'));
-categoryOptions.addEventListener('click',e=>{
-    const del=e.target.closest('.combo-delete[data-delete-value]');
-    if(del)return deleteCategory(del.dataset.deleteValue);
-    const add=e.target.closest('.combo-add[data-add-current]');
-    if(add)return addCurrentCategory('add');
-    const b=e.target.closest('.combo-option[data-value]');
-    if(b)chooseCategory('add',b.dataset.value)
-});
-editCategoryOptions.addEventListener('click',e=>{
-    const del=e.target.closest('.combo-delete[data-delete-value]');
-    if(del)return deleteCategory(del.dataset.deleteValue);
-    const add=e.target.closest('.combo-add[data-add-current]');
-    if(add)return addCurrentCategory('edit');
-    const b=e.target.closest('.combo-option[data-value]');
-    if(b)chooseCategory('edit',b.dataset.value)
-});
+function allMultiPanels(){
+    return [categoryPanel,editCategoryPanel,groupPanel,editGroupPanel,tagPanel,editTagPanel]
+}
+function setupMultiCombo(type,which){
+    const meta=multiMeta(type,which);
+    const toggle=type==='category'
+        ? (which==='edit'?editCategoryToggle:categoryToggle)
+        : type==='group'
+            ? (which==='edit'?editGroupToggle:groupToggle)
+            : (which==='edit'?editTagToggle:tagToggle);
+    const combo=type==='category'
+        ? (which==='edit'?editCategoryCombo:categoryCombo)
+        : type==='group'
+            ? (which==='edit'?editGroupCombo:groupCombo)
+            : (which==='edit'?editTagCombo:tagCombo);
 
-groupToggle.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList.toggle('hidden');editGroupPanel.classList.add('hidden');renderGroupOptions('add')});
-editGroupToggle.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.toggle('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
-groupInput.addEventListener('click',e=>{e.stopPropagation();groupPanel.classList.remove('hidden');editGroupPanel.classList.add('hidden');renderGroupOptions('add')});
-editGroup.addEventListener('click',e=>{e.stopPropagation();editGroupPanel.classList.remove('hidden');groupPanel.classList.add('hidden');renderGroupOptions('edit')});
-groupInput.addEventListener('input',()=>renderGroupOptions('add'));
-editGroup.addEventListener('input',()=>renderGroupOptions('edit'));
-groupOptions.addEventListener('click',e=>{
-    const del=e.target.closest('.combo-delete[data-delete-value]');
-    if(del)return deleteGroup(del.dataset.deleteValue);
-    const add=e.target.closest('.combo-add[data-add-current]');
-    if(add)return addCurrentGroup('add');
-    const b=e.target.closest('.combo-option[data-value]');
-    if(b)chooseGroup('add',b.dataset.value)
-});
-editGroupOptions.addEventListener('click',e=>{
-    const del=e.target.closest('.combo-delete[data-delete-value]');
-    if(del)return deleteGroup(del.dataset.deleteValue);
-    const add=e.target.closest('.combo-add[data-add-current]');
-    if(add)return addCurrentGroup('edit');
-    const b=e.target.closest('.combo-option[data-value]');
-    if(b)chooseGroup('edit',b.dataset.value)
-});
+    toggle.addEventListener('click',e=>{
+        e.stopPropagation();
+        const willOpen=meta.panel.classList.contains('hidden');
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        if(willOpen){
+            meta.panel.classList.remove('hidden');
+            renderMultiField(type,which)
+        }
+    });
+    meta.input.addEventListener('click',e=>{
+        e.stopPropagation();
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        meta.panel.classList.remove('hidden');
+        renderMultiField(type,which)
+    });
+    meta.input.addEventListener('input',()=>renderMultiOptions(type,which));
+    meta.input.addEventListener('keydown',e=>{
+        if(e.key==='Enter'){
+            e.preventDefault();
+            commitTypedValue(type,which,true);
+            meta.panel.classList.remove('hidden')
+        }
+    });
+    meta.options.addEventListener('click',e=>{
+        e.stopPropagation();
+        const del=e.target.closest('.combo-pill-delete[data-delete-value]');
+        if(del)return deleteHistoryOption(type,del.dataset.deleteValue);
+        const add=e.target.closest('.combo-add[data-add-current]');
+        if(add){
+            commitTypedValue(type,which,true);
+            meta.panel.classList.remove('hidden');
+            return
+        }
+        const select=e.target.closest('.combo-pill-select[data-select-value]');
+        if(select)return toggleSelection(type,which,select.dataset.selectValue)
+    });
+    meta.selectedBox.addEventListener('click',e=>{
+        e.stopPropagation();
+        const remove=e.target.closest('.selected-pill-remove[data-remove-value]');
+        if(remove)return removeSelection(type,which,remove.dataset.removeValue)
+    });
+    combo.addEventListener('click',e=>e.stopPropagation())
+}
+setupMultiCombo('category','add');
+setupMultiCombo('category','edit');
+setupMultiCombo('group','add');
+setupMultiCombo('group','edit');
+setupMultiCombo('tag','add');
+setupMultiCombo('tag','edit');
 
-tagToggle.addEventListener('click',e=>{e.stopPropagation();tagPanel.classList.toggle('hidden');editTagPanel.classList.add('hidden');renderTagOptions('add')});
-editTagToggle.addEventListener('click',e=>{e.stopPropagation();editTagPanel.classList.toggle('hidden');tagPanel.classList.add('hidden');renderTagOptions('edit')});
-tagInput.addEventListener('click',e=>{e.stopPropagation();tagPanel.classList.remove('hidden');editTagPanel.classList.add('hidden');renderTagOptions('add')});
-editTag.addEventListener('click',e=>{e.stopPropagation();editTagPanel.classList.remove('hidden');tagPanel.classList.add('hidden');renderTagOptions('edit')});
-tagInput.addEventListener('input',()=>renderTagOptions('add'));
-editTag.addEventListener('input',()=>renderTagOptions('edit'));
-tagOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseTag('add',b.dataset.value)});
-editTagOptions.addEventListener('click',e=>{const b=e.target.closest('.combo-option[data-value]');if(b)chooseTag('edit',b.dataset.value)});
-
-document.addEventListener('click',e=>{
-    if(!categoryCombo.contains(e.target))categoryPanel.classList.add('hidden');
-    if(!editCategoryCombo.contains(e.target))editCategoryPanel.classList.add('hidden');
-    if(!groupCombo.contains(e.target))groupPanel.classList.add('hidden');
-    if(!editGroupCombo.contains(e.target))editGroupPanel.classList.add('hidden');
-    if(!tagCombo.contains(e.target))tagPanel.classList.add('hidden');
-    if(!editTagCombo.contains(e.target))editTagPanel.classList.add('hidden')
+document.addEventListener('click',()=>{
+    allMultiPanels().forEach(panel=>panel.classList.add('hidden'))
 });
 
 addBtn.addEventListener('click',addEntry);
 bookNameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addEntry()}});
 pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id)});
 editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
-editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editModal.classList.add('hidden')});
+editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};editModal.classList.add('hidden')});
 editSave.addEventListener('click',saveEdit);
 
 // 只有“按下”和“松开”都发生在遮罩层本身时，才视为真正点击弹窗外。
@@ -739,6 +789,7 @@ editModal.addEventListener('pointerup',e=>{
     if(!editIsUnchanged())return;
     editingId='';
     editInitialSnapshot='';
+    editSelections={category:[],group:[],tag:[]};
     editModal.classList.add('hidden')
 });
 editModal.addEventListener('pointercancel',()=>{
