@@ -6,9 +6,13 @@
       "bookName": "毛泽东思想与阿尔都塞",
       "bookNo": "7-01-025700",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
-      "category": "",
-      "group": "A马克思主义、列宁主义、毛泽东思想、邓小平理论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "271259"
     },
     {
@@ -16,9 +20,13 @@
       "bookName": "我的二本学生",
       "bookNo": "7-02-016187",
       "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
-      "category": "",
-      "group": "I文学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "252936"
     },
     {
@@ -26,9 +34,13 @@
       "bookName": "马克思的生态学",
       "bookNo": "7-04-018379",
       "institution": "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
-      "category": "",
-      "group": "A马克思主义、列宁主义、毛泽东思想、邓小平理论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "206430"
     },
     {
@@ -36,9 +48,13 @@
       "bookName": "近代的超克",
       "bookNo": "7-108-02192",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": "",
-      "group": "C社会科学总论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "194307"
     },
     {
@@ -46,9 +62,13 @@
       "bookName": "中产阶级的孩子们：60年代与话语权",
       "bookNo": "7-108-02458",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "194590"
     },
     {
@@ -56,9 +76,13 @@
       "bookName": "早年毛泽东：传记、史料与回忆",
       "bookNo": "7-108-03750",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": "",
-      "group": "A马克思主义、列宁主义、毛泽东思想、邓小平理论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "157389"
     },
     {
@@ -66,9 +90,13 @@
       "bookName": "黄河青山：黄仁宇回忆录",
       "bookNo": "7-108-05373",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "190010"
     },
     {
@@ -76,9 +104,13 @@
       "bookName": "人工智能的五张面孔",
       "bookNo": "7-121-51824",
       "institution": "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
-      "category": "",
-      "group": "T工业技术",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "T工业技术"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "123415"
     },
     {
@@ -86,9 +118,13 @@
       "bookName": "“韩琨事件”揭秘",
       "bookNo": "7-208-07867",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
-      "category": "",
-      "group": "I文学",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "130892"
     },
     {
@@ -96,9 +132,13 @@
       "bookName": "压缩现代性的逻辑",
       "bookNo": "7-214-29501",
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "168585"
     },
     {
@@ -106,9 +146,13 @@
       "bookName": "元代江南政治社会史研究",
       "bookNo": "7-214-29756",
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "188771"
     },
     {
@@ -116,9 +160,13 @@
       "bookName": "明宫彤史：明代宫廷女性",
       "bookNo": "7-214-30262",
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "215224"
     },
     {
@@ -126,9 +174,13 @@
       "bookName": "唐诗中的历史：战争、王朝与兴衰之歌",
       "bookNo": "7-220-13551",
       "institution": "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
-      "category": "",
-      "group": "I文学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "261959"
     },
     {
@@ -136,9 +188,14 @@
       "bookName": "[马克思\"不惑之年\"的思考](https://book.douban.com/subject/30312735/)",
       "bookNo": "7-300-01445",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
-      "category": "",
-      "group": "A马克思主义、列宁主义、毛泽东思想、邓小平理论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "11图书",
+        "21读书"
+      ],
       "code": "153048"
     },
     {
@@ -146,9 +203,13 @@
       "bookName": "潮起：中国创新型企业的诞生",
       "bookNo": "7-300-31957",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "202415"
     },
     {
@@ -156,9 +217,11 @@
       "bookName": "[身在田野：步步深入做质性研究](https://book.douban.com/subject/38560310/)",
       "bookNo": "7-300-35216",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
-      "category": "",
-      "group": "",
-      "tag": "21读书",
+      "category": [],
+      "group": [],
+      "tag": [
+        "21读书"
+      ],
       "code": "180160"
     },
     {
@@ -166,9 +229,13 @@
       "bookName": "三线记忆：六盘水口述史",
       "bookNo": "7-313-32928",
       "institution": "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "214153"
     },
     {
@@ -176,9 +243,13 @@
       "bookName": "三线记忆：攀枝花口述史",
       "bookNo": "7-313-33153",
       "institution": "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "110139"
     },
     {
@@ -186,9 +257,13 @@
       "bookName": "农村流动儿童调查报告",
       "bookNo": "7-5097-7588",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "187329"
     },
     {
@@ -196,9 +271,13 @@
       "bookName": "雍正帝：中国的独裁君主",
       "bookNo": "7-5097-9463",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "151677"
     },
     {
@@ -206,9 +285,13 @@
       "bookName": "从桂省到壮乡：现代国家构建中的壮族研究",
       "bookNo": "7-5097-9656",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "101336"
     },
     {
@@ -216,9 +299,13 @@
       "bookName": "烟台纪事：党支部领办合作社之路",
       "bookNo": "7-5115-6932",
       "institution": "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "214200"
     },
     {
@@ -226,9 +313,13 @@
       "bookName": "1927：生死转折",
       "bookNo": "7-5201-8442",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "160843"
     },
     {
@@ -236,9 +327,13 @@
       "bookName": "低空经济：中国经济发展新引擎",
       "bookNo": "7-5217-7000",
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "289834"
     },
     {
@@ -246,9 +341,13 @@
       "bookName": "英伟达之道",
       "bookNo": "7-5217-7016",
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "218340"
     },
     {
@@ -256,9 +355,13 @@
       "bookName": "马匹与文明的缔造",
       "bookNo": "7-5217-7729",
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
-      "category": "",
-      "group": "S农业科学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "S农业科学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "234227"
     },
     {
@@ -266,9 +369,13 @@
       "bookName": "童年的社会学视野：国外童年社会学研究",
       "bookNo": "7-5228-3910",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "C社会科学总论",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "205979"
     },
     {
@@ -276,9 +383,11 @@
       "bookName": "马、车轮和语言：青铜时代的欧亚草原骑手与现代世界的形成",
       "bookNo": "7-5228-7842",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": "",
-      "group": "",
-      "tag": "14图书",
+      "category": [],
+      "group": [],
+      "tag": [
+        "14图书"
+      ],
       "code": "133985"
     },
     {
@@ -286,9 +395,13 @@
       "bookName": "澄明之境：陶渊明新论",
       "bookNo": "7-5321-7232",
       "institution": "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "108177"
     },
     {
@@ -296,9 +409,13 @@
       "bookName": "北方厨房：一个家庭的烹饪史",
       "bookNo": "7-5321-7908",
       "institution": "",
-      "category": "",
-      "group": "I文学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "294412"
     },
     {
@@ -306,9 +423,13 @@
       "bookName": "寻路中国：从乡村到工厂的自驾之旅",
       "bookNo": "7-5327-5280",
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
-      "category": "",
-      "group": "I文学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "172093"
     },
     {
@@ -316,9 +437,13 @@
       "bookName": "[江城](https://book.douban.com/subject/37264649/)",
       "bookNo": "7-5327-5672",
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "249993"
     },
     {
@@ -326,9 +451,13 @@
       "bookName": "美国1960年代",
       "bookNo": "7-5327-9752",
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "117441"
     },
     {
@@ -336,9 +465,13 @@
       "bookName": "寻找薛定谔的猫",
       "bookNo": "7-5443-5994",
       "institution": "[海南出版社](https://book.douban.com/press/2554/?order=time)",
-      "category": "",
-      "group": "O数理科学和化学",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "O数理科学和化学"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "168091"
     },
     {
@@ -346,9 +479,13 @@
       "bookName": "学做工：工人阶级子弟为何继承父业",
       "bookNo": "7-5447-3176",
       "institution": "[译林出版社](https://book.douban.com/press/2331/?order=time)",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "219439"
     },
     {
@@ -356,9 +493,15 @@
       "bookName": "上海乡绅李待问",
       "bookNo": "7-5486-0999",
       "institution": "[学林出版社](https://book.douban.com/press/2521/?order=time)",
-      "category": "正架2行",
-      "group": "K历史、地理",
-      "tag": "13图书",
+      "category": [
+        "正架2行"
+      ],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "13图书"
+      ],
       "code": "257428"
     },
     {
@@ -366,9 +509,13 @@
       "bookName": "华北村治：权力、话语和制度变迁（1875-1936）",
       "bookNo": "7-5598-7992",
       "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "135436"
     },
     {
@@ -376,9 +523,13 @@
       "bookName": "在“模范殖民地”胶州湾的统治与抵抗：1897-1914年中国与德国的相互作用",
       "bookNo": "7-5607-2917",
       "institution": "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "181617"
     },
     {
@@ -386,9 +537,13 @@
       "bookName": "美国对撒哈拉沙漠以南的非洲政策研究（20世纪40-60年代）",
       "bookNo": "7-5615-4985",
       "institution": "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "14图书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "14图书"
+      ],
       "code": "181890"
     },
     {
@@ -396,9 +551,13 @@
       "bookName": "斯大林与铁托——苏南冲突的起因及其结果",
       "bookNo": "7-5633-3521",
       "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
-      "category": "",
-      "group": "D政治、法律",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "208321"
     },
     {
@@ -406,9 +565,13 @@
       "bookName": "数字文艺复兴：数据和经济学揭示流行文化的未来",
       "bookNo": "7-5654-3918",
       "institution": "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "24读书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "24读书"
+      ],
       "code": "187702"
     },
     {
@@ -416,9 +579,13 @@
       "bookName": "阿金库尔战役：百年战争中最传奇的胜利",
       "bookNo": "7-5658-4162",
       "institution": "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-      "category": "",
-      "group": "E军事",
-      "tag": "21读书",
+      "category": [],
+      "group": [
+        "E军事"
+      ],
+      "tag": [
+        "21读书"
+      ],
       "code": "297864"
     },
     {
@@ -426,9 +593,13 @@
       "bookName": "马克思与法国大革命",
       "bookNo": "7-5675-3880",
       "institution": "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
-      "category": "",
-      "group": "A马克思主义、列宁主义、毛泽东思想、邓小平理论",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "139798"
     },
     {
@@ -436,9 +607,13 @@
       "bookName": "遇见陶渊明：陶渊明心灵游记",
       "bookNo": "7-80772-177",
       "institution": "[大有书局](https://book.douban.com/press/2926/?order=time)",
-      "category": "",
-      "group": "K历史、地理",
-      "tag": "14图书",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "14图书"
+      ],
       "code": "133065"
     },
     {
@@ -446,9 +621,13 @@
       "bookName": "[明清时期的原始工业化](https://book.douban.com/subject/3800840/)",
       "bookNo": "7-81122-665",
       "institution": "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "123364"
     },
     {
@@ -456,9 +635,13 @@
       "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
       "bookNo": "统一书号2088·73",
       "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
-      "category": "",
-      "group": "F经济",
-      "tag": "11图书",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
       "code": "194363"
     }
   ],
