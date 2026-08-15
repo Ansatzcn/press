@@ -264,6 +264,20 @@
       "code": "138660"
     },
     {
+      "id": "47786467-8a52-488d-8b65-8e71ad1feb88",
+      "bookName": "抗战时期的中国思想",
+      "bookNo": "7-219-11956",
+      "institution": "[广西人民出版社](https://book.douban.com/press/2541/?order=time)",
+      "category": [],
+      "group": [
+        "B哲学、宗教"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "163148"
+    },
+    {
       "id": "ca4bf4fd-b90f-403a-85c0-71faeffcd135",
       "bookName": "[唐诗中的历史：战争、王朝与兴衰之歌](https://book.douban.com/subject/37348675/)",
       "bookNo": "7-220-13551",
@@ -1080,20 +1094,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "47786467-8a52-488d-8b65-8e71ad1feb88",
-      "bookName": "抗战时期的中国思想",
-      "bookNo": "7-219-11956",
-      "institution": "[广西人民出版社](https://book.douban.com/press/2541/?order=time)",
-      "category": [],
-      "group": [
-        "B哲学、宗教"
-      ],
-      "tag": [
-        "24读书"
-      ],
-      "code": "163148"
     }
   ],
   "institutions": [
@@ -1109,6 +1109,7 @@
     "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
     "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
     "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
+    "[广西人民出版社](https://book.douban.com/press/2541/?order=time)",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
     "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
@@ -1140,8 +1141,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[广西人民出版社](https://book.douban.com/press/2541/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
