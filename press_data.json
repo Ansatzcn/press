@@ -938,6 +938,20 @@
         "14图书"
       ],
       "code": "133065"
+    },
+    {
+      "id": "fcb6d06b-ee4a-4f46-9fba-eaa761e4e8ef",
+      "bookName": "用后即弃的人：全球经济中的新奴隶制",
+      "bookNo": "7-305-22289",
+      "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "220214"
     }
   ],
   "institutions": [
@@ -976,7 +990,8 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★"
   ],
   "categories": [
     "正架2行"
