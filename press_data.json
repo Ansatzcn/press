@@ -585,6 +585,20 @@
       "code": "208321"
     },
     {
+      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
+      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
+      "bookNo": "统一书号2088·73",
+      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "194363"
+    },
+    {
       "id": "2c8875c5-7be3-4f66-a2f7-070116e62217",
       "bookName": "爆发：大数据时代预见未来的新思维",
       "bookNo": "7-5596-0346",
@@ -611,20 +625,6 @@
         "11图书"
       ],
       "code": "181617"
-    },
-    {
-      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
-      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
-      "bookNo": "统一书号2088·73",
-      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "194363"
     },
     {
       "id": "5b3a40c0-3408-4190-aeae-d46e773acf65",
@@ -748,9 +748,9 @@
     "[天地出版社](https://book.douban.com/press/2712/?order=time)",
     "[学林出版社](https://book.douban.com/press/2521/?order=time)",
     "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
-    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
