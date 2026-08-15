@@ -1066,6 +1066,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "349ab0ac-b923-491f-9d17-dc4cc3e58e99",
+      "bookName": "算法的起源：莱布尼茨与二进制",
+      "bookNo": "7-5236-1797",
+      "institution": "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
+      "category": [],
+      "group": [
+        "O数理科学和化学"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "261132"
     }
   ],
   "institutions": [
@@ -1111,7 +1125,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)"
   ],
   "categories": [
     "黑架2行",
