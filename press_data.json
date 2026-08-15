@@ -624,6 +624,20 @@
       "code": "105209"
     },
     {
+      "id": "d0cf280f-e73b-4efd-b75e-25014c5396e4",
+      "bookName": "中国女工",
+      "bookNo": "7-5108-0784",
+      "institution": "[九州出版社](https://book.douban.com/press/2655/?order=time)★",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "122483"
+    },
+    {
       "id": "d5d6ce21-14fb-473c-af62-89e21631de93",
       "bookName": "[烟台纪事：党支部领办合作社之路](https://book.douban.com/subject/35510394/)",
       "bookNo": "7-5115-6932",
@@ -1024,20 +1038,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "d0cf280f-e73b-4efd-b75e-25014c5396e4",
-      "bookName": "中国女工",
-      "bookNo": "7-5108-0784",
-      "institution": "[九州出版社](https://book.douban.com/press/2655/?order=time)★",
-      "category": [],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "122483"
     }
   ],
   "institutions": [
@@ -1064,6 +1064,7 @@
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
     "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
+    "[九州出版社](https://book.douban.com/press/2655/?order=time)★",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
     "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
@@ -1080,8 +1081,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[九州出版社](https://book.douban.com/press/2655/?order=time)★"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
