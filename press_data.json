@@ -30,6 +30,20 @@
       "code": "252936"
     },
     {
+      "id": "12b12897-91f1-4365-a93c-cf8f2409d67d",
+      "bookName": "[气候变化背景下的天山山区同位素水文研究](https://book.douban.com/subject/36164178/)",
+      "bookNo": "7-03-062613",
+      "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
+      "category": [],
+      "group": [
+        "P天文学、地球科学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "122572"
+    },
+    {
       "id": "72465569-1262-4817-9941-2045378241f5",
       "bookName": "马克思的生态学",
       "bookNo": "7-04-018379",
@@ -759,25 +773,12 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "12b12897-91f1-4365-a93c-cf8f2409d67d",
-      "bookName": "[气候变化背景下的天山山区同位素水文研究](https://book.douban.com/subject/36164178/)",
-      "bookNo": "7-03-062613",
-      "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
-      "category": [],
-      "group": [
-        "P天文学、地球科学"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "122572"
     }
   ],
   "institutions": [
     "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
     "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
+    "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
     "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
     "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
     "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
@@ -805,8 +806,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[科学出版社](https://book.douban.com/press/2633/?order=time)★"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
