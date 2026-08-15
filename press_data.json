@@ -279,6 +279,18 @@
       "code": "110139"
     },
     {
+      "id": "a8e6d0d4-10f8-4601-b559-bc6b6cad35f0",
+      "bookName": "[中国特色社会主义财政基础理论及相关实践研究——基于马克思主义政治经济学的视角](https://book.douban.com/subject/38584710/)",
+      "bookNo": "7-5223-4817",
+      "institution": "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
+      "category": [],
+      "group": [],
+      "tag": [
+        "13图书"
+      ],
+      "code": "159346"
+    },
+    {
       "id": "71bb502d-4617-4ac9-a415-40fd218cb7f8",
       "bookName": "低空经济：中国经济发展新引擎",
       "bookNo": "7-5217-7000",
@@ -401,18 +413,6 @@
         "14图书"
       ],
       "code": "133985"
-    },
-    {
-      "id": "a8e6d0d4-10f8-4601-b559-bc6b6cad35f0",
-      "bookName": "[中国特色社会主义财政基础理论及相关实践研究——基于马克思主义政治经济学的视角](https://book.douban.com/subject/38584710/)",
-      "bookNo": "7-5223-4817",
-      "institution": "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
-      "category": [],
-      "group": [],
-      "tag": [
-        "13图书"
-      ],
-      "code": "159346"
     },
     {
       "id": "d5d6ce21-14fb-473c-af62-89e21631de93",
@@ -737,9 +737,9 @@
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
+    "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-    "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
