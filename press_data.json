@@ -374,6 +374,20 @@
       "code": "278182"
     },
     {
+      "id": "d7d0adf6-55dc-4e2f-91ea-1394d26a1066",
+      "bookName": "《资本论》及其手稿中的劳动关系理论研究",
+      "bookNo": "7-311-06824",
+      "institution": "[兰州大学出版社](https://book.douban.com/press/2837/?order=time)★",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "23读书"
+      ],
+      "code": "281579"
+    },
+    {
       "id": "fd225759-c523-44b0-9aca-d40870ba5c87",
       "bookName": "三线记忆：六盘水口述史",
       "bookNo": "7-313-32928",
@@ -1038,20 +1052,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "d7d0adf6-55dc-4e2f-91ea-1394d26a1066",
-      "bookName": "《资本论》及其手稿中的劳动关系理论研究",
-      "bookNo": "7-311-06824",
-      "institution": "[兰州大学出版社](https://book.douban.com/press/2837/?order=time)★",
-      "category": [],
-      "group": [
-        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
-      ],
-      "tag": [
-        "23读书"
-      ],
-      "code": "281579"
     }
   ],
   "institutions": [
@@ -1071,6 +1071,7 @@
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
     "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
     "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
+    "[兰州大学出版社](https://book.douban.com/press/2837/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
     "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
@@ -1095,8 +1096,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[兰州大学出版社](https://book.douban.com/press/2837/?order=time)★"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
