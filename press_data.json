@@ -856,6 +856,18 @@
         "14图书"
       ],
       "code": "133065"
+    },
+    {
+      "id": "b9e866fa-63d1-42ce-97bf-ae9d7749c950",
+      "bookName": "[脱不下的长衫](https://book.douban.com/subject/37823876/)",
+      "bookNo": "7-218-18839",
+      "institution": "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
+      "category": [],
+      "group": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "138660"
     }
   ],
   "institutions": [
@@ -891,7 +903,8 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★"
   ],
   "categories": [
     "正架2行"
