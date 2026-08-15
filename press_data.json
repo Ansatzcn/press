@@ -996,6 +996,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "f4872995-ed4f-4c51-88dc-160c7169ca09",
+      "bookName": "“封建”考论",
+      "bookNo": "7-5004-8815",
+      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "173620"
     }
   ],
   "institutions": [
@@ -1037,7 +1051,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★"
   ],
   "categories": [
     "黑架2行",
