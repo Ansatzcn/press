@@ -952,6 +952,20 @@
         "14图书"
       ],
       "code": "133065"
+    },
+    {
+      "id": "ead9e37b-282b-4994-b5b4-4174c029072c",
+      "bookName": "[非西方社会发展理论与马克思](https://book.douban.com/subject/3079337/)",
+      "bookNo": "7-213-00854",
+      "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "296369"
     }
   ],
   "institutions": [
@@ -991,7 +1005,8 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)"
   ],
   "categories": [
     "正架2行"
