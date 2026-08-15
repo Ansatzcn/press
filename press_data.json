@@ -1249,6 +1249,22 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "7150b0d0-e193-4bb8-8311-43c4d8cd7918",
+      "bookName": "宏观经济账户与分析通论",
+      "bookNo": "7-5049-4636",
+      "institution": "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
+      "category": [
+        "侧架1行"
+      ],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "13图书"
+      ],
+      "code": "272639"
     }
   ],
   "institutions": [
@@ -1299,7 +1315,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[中国金融出版社](https://book.douban.com/press/2546/?order=time)"
   ],
   "categories": [
     "黑架2行",
