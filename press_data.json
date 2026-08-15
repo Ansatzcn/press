@@ -306,6 +306,20 @@
       "code": "180160"
     },
     {
+      "id": "2c887e78-ee0b-48c0-877f-d5ee445c858c",
+      "bookName": "资本积累理论与现代资本主义——理论和实证的分析",
+      "bookNo": "7-310-00366",
+      "institution": "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "278182"
+    },
+    {
       "id": "fd225759-c523-44b0-9aca-d40870ba5c87",
       "bookName": "三线记忆：六盘水口述史",
       "bookNo": "7-313-32928",
@@ -828,20 +842,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "2c887e78-ee0b-48c0-877f-d5ee445c858c",
-      "bookName": "资本积累理论与现代资本主义——理论和实证的分析",
-      "bookNo": "7-310-00366",
-      "institution": "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "278182"
     }
   ],
   "institutions": [
@@ -857,6 +857,7 @@
     "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+    "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
@@ -875,8 +876,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
