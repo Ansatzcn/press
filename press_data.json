@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "entries": [
     {
       "id": "c809a8df-1f05-4da7-b364-cc2bd466512e",
@@ -321,20 +321,6 @@
       "code": "101336"
     },
     {
-      "id": "d5d6ce21-14fb-473c-af62-89e21631de93",
-      "bookName": "烟台纪事：党支部领办合作社之路",
-      "bookNo": "7-5115-6932",
-      "institution": "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "214200"
-    },
-    {
       "id": "700e9ea9-afd3-4a24-a784-eda1d259eb60",
       "bookName": "1927：生死转折",
       "bookNo": "7-5201-8442",
@@ -347,6 +333,32 @@
         "21读书"
       ],
       "code": "160843"
+    },
+    {
+      "id": "5b1f0519-9dcb-46ca-a59b-8a213c1c9a94",
+      "bookName": "童年的社会学视野：国外童年社会学研究",
+      "bookNo": "7-5228-3910",
+      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "205979"
+    },
+    {
+      "id": "8283cf87-5267-4dab-b634-0299ef678d35",
+      "bookName": "马、车轮和语言：青铜时代的欧亚草原骑手与现代世界的形成",
+      "bookNo": "7-5228-7842",
+      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+      "category": [],
+      "group": [],
+      "tag": [
+        "14图书"
+      ],
+      "code": "133985"
     },
     {
       "id": "71bb502d-4617-4ac9-a415-40fd218cb7f8",
@@ -391,6 +403,20 @@
       "code": "234227"
     },
     {
+      "id": "d5d6ce21-14fb-473c-af62-89e21631de93",
+      "bookName": "烟台纪事：党支部领办合作社之路",
+      "bookNo": "7-5115-6932",
+      "institution": "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "214200"
+    },
+    {
       "id": "a8e6d0d4-10f8-4601-b559-bc6b6cad35f0",
       "bookName": "[中国特色社会主义财政基础理论及相关实践研究——基于马克思主义政治经济学的视角](https://book.douban.com/subject/38584710/)",
       "bookNo": "7-5223-4817",
@@ -401,32 +427,6 @@
         "13图书"
       ],
       "code": "159346"
-    },
-    {
-      "id": "5b1f0519-9dcb-46ca-a59b-8a213c1c9a94",
-      "bookName": "童年的社会学视野：国外童年社会学研究",
-      "bookNo": "7-5228-3910",
-      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": [],
-      "group": [
-        "C社会科学总论"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "205979"
-    },
-    {
-      "id": "8283cf87-5267-4dab-b634-0299ef678d35",
-      "bookName": "马、车轮和语言：青铜时代的欧亚草原骑手与现代世界的形成",
-      "bookNo": "7-5228-7842",
-      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": [],
-      "group": [],
-      "tag": [
-        "14图书"
-      ],
-      "code": "133985"
     },
     {
       "id": "a426e092-b0cc-468a-87b9-ffce3bd9124c",
@@ -441,20 +441,6 @@
         "21读书"
       ],
       "code": "108177"
-    },
-    {
-      "id": "7837fb5c-06b5-4cc7-ad9c-ac0a92037b62",
-      "bookName": "北方厨房：一个家庭的烹饪史",
-      "bookNo": "7-5321-7908",
-      "institution": "",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "294412"
     },
     {
       "id": "3025aa9f-83ec-4a45-8499-162b7b105387",
@@ -599,6 +585,20 @@
       "code": "135436"
     },
     {
+      "id": "92afe3cc-ebec-4f85-8e62-1bb48a2692c5",
+      "bookName": "斯大林与铁托——苏南冲突的起因及其结果",
+      "bookNo": "7-5633-3521",
+      "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "208321"
+    },
+    {
       "id": "cc3e3c90-cc20-4322-bbe3-00c3e50f233a",
       "bookName": "在“模范殖民地”胶州湾的统治与抵抗：1897-1914年中国与德国的相互作用",
       "bookNo": "7-5607-2917",
@@ -627,20 +627,6 @@
       "code": "181890"
     },
     {
-      "id": "92afe3cc-ebec-4f85-8e62-1bb48a2692c5",
-      "bookName": "斯大林与铁托——苏南冲突的起因及其结果",
-      "bookNo": "7-5633-3521",
-      "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
-      "category": [],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "208321"
-    },
-    {
       "id": "4b9ee803-3607-4796-9dc7-5b2bf948685b",
       "bookName": "数字文艺复兴：数据和经济学揭示流行文化的未来",
       "bookNo": "7-5654-3918",
@@ -653,6 +639,20 @@
         "24读书"
       ],
       "code": "187702"
+    },
+    {
+      "id": "bebaf642-38a3-405f-acdc-5b9339969803",
+      "bookName": "[明清时期的原始工业化](https://book.douban.com/subject/3800840/)",
+      "bookNo": "7-81122-665",
+      "institution": "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "123364"
     },
     {
       "id": "bc3b0988-c120-4fbc-a1d1-010dc8d9d893",
@@ -697,20 +697,6 @@
       "code": "133065"
     },
     {
-      "id": "bebaf642-38a3-405f-acdc-5b9339969803",
-      "bookName": "[明清时期的原始工业化](https://book.douban.com/subject/3800840/)",
-      "bookNo": "7-81122-665",
-      "institution": "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "123364"
-    },
-    {
       "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
       "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
       "bookNo": "统一书号2088·73",
@@ -723,7 +709,53 @@
         "11图书"
       ],
       "code": "194363"
+    },
+    {
+      "id": "7837fb5c-06b5-4cc7-ad9c-ac0a92037b62",
+      "bookName": "北方厨房：一个家庭的烹饪史",
+      "bookNo": "7-5321-7908",
+      "institution": "",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "294412"
     }
+  ],
+  "institutions": [
+    "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+    "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
+    "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
+    "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+    "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
+    "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
+    "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+    "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
+    "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
+    "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+    "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
+    "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+    "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+    "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
+    "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
+    "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
+    "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
+    "[海南出版社](https://book.douban.com/press/2554/?order=time)",
+    "[译林出版社](https://book.douban.com/press/2331/?order=time)",
+    "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+    "[学林出版社](https://book.douban.com/press/2521/?order=time)",
+    "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
+    "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+    "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
+    "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
+    "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
+    "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
+    "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)"
   ],
   "categories": [
     "正架2行"
