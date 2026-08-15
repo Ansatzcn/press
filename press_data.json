@@ -599,6 +599,22 @@
       "code": "261132"
     },
     {
+      "id": "7150b0d0-e193-4bb8-8311-43c4d8cd7918",
+      "bookName": "宏观经济账户与分析通论",
+      "bookNo": "7-5049-4636",
+      "institution": "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
+      "category": [
+        "侧架1行"
+      ],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "13图书"
+      ],
+      "code": "272639"
+    },
+    {
       "id": "71bb502d-4617-4ac9-a415-40fd218cb7f8",
       "bookName": "低空经济：中国经济发展新引擎",
       "bookNo": "7-5217-7000",
@@ -1249,22 +1265,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "7150b0d0-e193-4bb8-8311-43c4d8cd7918",
-      "bookName": "宏观经济账户与分析通论",
-      "bookNo": "7-5049-4636",
-      "institution": "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
-      "category": [
-        "侧架1行"
-      ],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "13图书"
-      ],
-      "code": "272639"
     }
   ],
   "institutions": [
@@ -1292,6 +1292,7 @@
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
     "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
+    "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
     "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
@@ -1315,8 +1316,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[中国金融出版社](https://book.douban.com/press/2546/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
