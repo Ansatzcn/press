@@ -538,6 +538,20 @@
       "code": "214200"
     },
     {
+      "id": "66f6957a-61e6-4d80-aef4-1f84d86a310f",
+      "bookName": "[明代政争探源](https://book.douban.com/subject/26094518/)",
+      "bookNo": "7-5134-0553",
+      "institution": "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "230733"
+    },
+    {
       "id": "a426e092-b0cc-468a-87b9-ffce3bd9124c",
       "bookName": "澄明之境：陶渊明新论",
       "bookNo": "7-5321-7232",
@@ -868,20 +882,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "66f6957a-61e6-4d80-aef4-1f84d86a310f",
-      "bookName": "[明代政争探源](https://book.douban.com/subject/26094518/)",
-      "bookNo": "7-5134-0553",
-      "institution": "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
-      "category": [],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "230733"
     }
   ],
   "institutions": [
@@ -905,6 +905,7 @@
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
     "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
+    "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[海南出版社](https://book.douban.com/press/2554/?order=time)",
@@ -918,8 +919,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[故宫出版社](https://book.douban.com/press/2396/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
