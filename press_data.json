@@ -402,6 +402,20 @@
       "code": "110139"
     },
     {
+      "id": "f4872995-ed4f-4c51-88dc-160c7169ca09",
+      "bookName": "“封建”考论",
+      "bookNo": "7-5004-8815",
+      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "173620"
+    },
+    {
       "id": "a8e6d0d4-10f8-4601-b559-bc6b6cad35f0",
       "bookName": "[中国特色社会主义财政基础理论及相关实践研究——基于马克思主义政治经济学的视角](https://book.douban.com/subject/38584710/)",
       "bookNo": "7-5223-4817",
@@ -996,20 +1010,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "f4872995-ed4f-4c51-88dc-160c7169ca09",
-      "bookName": "“封建”考论",
-      "bookNo": "7-5004-8815",
-      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
-      "category": [],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "173620"
     }
   ],
   "institutions": [
@@ -1030,6 +1030,7 @@
     "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
     "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
+    "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
@@ -1051,8 +1052,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
