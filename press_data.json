@@ -332,6 +332,20 @@
       "code": "180160"
     },
     {
+      "id": "fcb6d06b-ee4a-4f46-9fba-eaa761e4e8ef",
+      "bookName": "用后即弃的人：全球经济中的新奴隶制",
+      "bookNo": "7-305-22289",
+      "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "220214"
+    },
+    {
       "id": "2c887e78-ee0b-48c0-877f-d5ee445c858c",
       "bookName": "资本积累理论与现代资本主义——理论和实证的分析",
       "bookNo": "7-310-00366",
@@ -938,20 +952,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "fcb6d06b-ee4a-4f46-9fba-eaa761e4e8ef",
-      "bookName": "用后即弃的人：全球经济中的新奴隶制",
-      "bookNo": "7-305-22289",
-      "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "220214"
     }
   ],
   "institutions": [
@@ -968,6 +968,7 @@
     "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+    "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
     "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
@@ -990,8 +991,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
