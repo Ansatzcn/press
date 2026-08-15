@@ -406,7 +406,9 @@
       "bookName": "[中国特色社会主义财政基础理论及相关实践研究——基于马克思主义政治经济学的视角](https://book.douban.com/subject/38584710/)",
       "bookNo": "7-5223-4817",
       "institution": "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
-      "category": [],
+      "category": [
+        "黑架2行"
+      ],
       "group": [],
       "tag": [
         "13图书"
@@ -966,6 +968,20 @@
         "14图书"
       ],
       "code": "133065"
+    },
+    {
+      "id": "6f11de7f-aee7-43f0-8e47-eaf6ce90ddd0",
+      "bookName": "中国现代国家的起源",
+      "bookNo": "962-996-603",
+      "institution": "香港中文大学出版社",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "198595"
     }
   ],
   "institutions": [
@@ -1006,7 +1022,8 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
