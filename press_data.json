@@ -1080,6 +1080,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "47786467-8a52-488d-8b65-8e71ad1feb88",
+      "bookName": "抗战时期的中国思想",
+      "bookNo": "7-219-11956",
+      "institution": "[广西人民出版社](https://book.douban.com/press/2541/?order=time)",
+      "category": [],
+      "group": [
+        "B哲学、宗教"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "163148"
     }
   ],
   "institutions": [
@@ -1126,7 +1140,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[广西人民出版社](https://book.douban.com/press/2541/?order=time)"
   ],
   "categories": [
     "黑架2行",
