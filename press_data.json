@@ -641,6 +641,20 @@
       "code": "139798"
     },
     {
+      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
+      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
+      "bookNo": "统一书号2088·73",
+      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "194363"
+    },
+    {
       "id": "4b9ee803-3607-4796-9dc7-5b2bf948685b",
       "bookName": "数字文艺复兴：数据和经济学揭示流行文化的未来",
       "bookNo": "7-5654-3918",
@@ -681,20 +695,6 @@
         "21读书"
       ],
       "code": "297864"
-    },
-    {
-      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
-      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
-      "bookNo": "统一书号2088·73",
-      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "194363"
     },
     {
       "id": "dd9e456d-170e-46ca-b24c-f15834df7b22",
@@ -752,9 +752,9 @@
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
+    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
