@@ -21,12 +21,16 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .combo{position:relative}.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}.combo-toggle{min-height:44px;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#475569;font-weight:700}.combo-toggle:hover{background:#f1f5f9}
 .combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.6rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
 .combo-selected{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.combo-selected:empty{display:none}
-.combo-option-list{display:flex;flex-wrap:wrap;gap:7px}
+.combo-option-list{display:flex;flex-direction:column;gap:6px}
 .combo-pill,.selected-pill{display:inline-flex;align-items:center;max-width:100%;min-height:34px;border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;overflow:hidden}
+.combo-pill{display:flex;width:100%;border-radius:11px}
 .combo-pill.selected{border-color:#93b4ff;background:#eaf1ff}
-.combo-pill-select{min-width:0;padding:.4rem .34rem .4rem .72rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.combo-pill-select{flex:1;min-width:0;padding:.5rem .7rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
 .combo-pill-select:hover{background:rgba(226,232,240,.7)}
-.combo-pill-delete,.selected-pill-remove{flex:0 0 30px;width:30px;height:30px;margin-right:2px;border:0;border-radius:50%;background:transparent;color:#991b1b;font-size:1rem;font-weight:700;line-height:1}
+.combo-order{display:flex;align-items:center;gap:1px;padding-left:3px;border-left:1px solid #e2e8f0}
+.combo-move{flex:0 0 25px;width:25px;height:30px;border:0;background:transparent;color:#64748b;font-size:.78rem;line-height:1}
+.combo-move:hover:not(:disabled){background:#e2e8f0;color:#0f172a}.combo-move:disabled{opacity:.25;cursor:default}
+.combo-pill-delete,.selected-pill-remove{flex:0 0 28px;width:28px;height:30px;margin-right:2px;border:0;border-radius:50%;background:transparent;color:#991b1b;font-size:.95rem;font-weight:700;line-height:1}
 .combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
 .selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
 .combo-add{display:block;width:100%;margin-top:.55rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{width:100%;padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
@@ -74,7 +78,13 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 </div>
 <div class="form-group full">
 <label for="institutionInput">出版</label>
+<div class="combo" id="institutionCombo">
+<div class="combo-row">
 <input type="text" id="institutionInput" autocomplete="off">
+<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
+</div>
 </div>
 <div class="three-fields-row">
 <div class="form-group">
@@ -127,7 +137,16 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <h3>编辑</h3>
 <div class="form-group"><label for="editBookName">书名</label><input type="text" id="editBookName" autocomplete="off"></div>
 <div class="form-group"><label for="editBookNo">书号</label><input type="text" id="editBookNo" autocomplete="off"></div>
-<div class="form-group"><label for="editInstitution">出版</label><input type="text" id="editInstitution" autocomplete="off"></div>
+<div class="form-group">
+<label for="editInstitution">出版</label>
+<div class="combo" id="editInstitutionCombo">
+<div class="combo-row">
+<input type="text" id="editInstitution" autocomplete="off">
+<button class="combo-toggle" id="editInstitutionToggle" type="button" aria-label="展开出版历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
+</div>
+</div>
 <div class="form-group">
 <label for="editGroup">大类</label>
 <div class="combo" id="editGroupCombo">
@@ -194,11 +213,11 @@ const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token
 const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
-addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionInput=$('institutionInput'),groupCombo=$('groupCombo'),groupSelected=$('groupSelected'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitution=$('editInstitution'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
+addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),groupCombo=$('groupCombo'),groupSelected=$('groupSelected'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
+pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],categories:[],groups:[],tags:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],institutions:[],categories:[],groups:[],tags:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -209,22 +228,10 @@ function attr(v){return esc(v).replace(/"/g,'&quot;')}
 function uid(){return crypto?.randomUUID?crypto.randomUUID():`press_${Date.now()}_${Math.random().toString(36).slice(2,9)}`}
 function key(v){return clean(v).toLocaleLowerCase('zh-CN')}
 function uniq(values){const m=new Map();for(const raw of values||[]){const v=clean(raw);if(v&&!m.has(key(v)))m.set(key(v),v)}return [...m.values()]}
-function sortCategories(values){return uniq(values).sort((a,b)=>collator.compare(a,b))}
+function sortAuto(values){return uniq(values).sort((a,b)=>collator.compare(a,b))}
 function normalizeMulti(value){
     const values=Array.isArray(value)?value:[value];
     return uniq(values)
-}
-function sortTags(values){
-    return uniq(values).sort((a,b)=>{
-        const aNum=/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(a);
-        const bNum=/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(b);
-        if(aNum&&bNum){
-            const diff=Number(a)-Number(b);
-            if(diff!==0)return diff
-        }
-        if(aNum!==bNum)return aNum?-1:1;
-        return collator.compare(a,b)
-    })
 }
 function renderInstitution(raw){
     const s=clean(raw);
@@ -281,7 +288,35 @@ function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
     const usedCodes=new Set();
     const entries=(Array.isArray(s.entries)?s.entries:[]).map(x=>normEntry(x,usedCodes)).filter(Boolean);
+
+    // 出版、书架使用历史数组自身的顺序，供人工调整。
+    // 旧数据没有对应历史字段时，仅首次按现有条目出现顺序建立历史。
+    const institutions=uniq(
+        Array.isArray(s.institutions)?s.institutions:entries.map(x=>x.institution).filter(Boolean)
+    );
+    const categories=uniq(
+        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
+    );
+
+    // 大类、标签不能人工排序，始终按首字母/首数字的自然顺序排列。
+    const groups=sortAuto(
+        Array.isArray(s.groups)?s.groups:entries.flatMap(x=>x.group)
+    );
+    const tags=sortAuto(
+        Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
+    );
+
+    // 总表：先按“出版”下拉菜单顺序；出版相同再按书号排序。
+    // 已从出版历史中删除、但仍被旧条目使用的出版放在已配置出版之后。
+    const institutionOrder=new Map(institutions.map((v,i)=>[key(v),i]));
     entries.sort((a,b)=>{
+        const ai=institutionOrder.has(key(a.institution))?institutionOrder.get(key(a.institution)):Number.MAX_SAFE_INTEGER;
+        const bi=institutionOrder.has(key(b.institution))?institutionOrder.get(key(b.institution)):Number.MAX_SAFE_INTEGER;
+        if(ai!==bi)return ai-bi;
+        if(ai===Number.MAX_SAFE_INTEGER){
+            const byInstitution=collator.compare(a.institution,b.institution);
+            if(byInstitution!==0)return byInstitution
+        }
         if(a.bookNo&&!b.bookNo)return-1;
         if(!a.bookNo&&b.bookNo)return 1;
         const byNo=collator.compare(a.bookNo,b.bookNo);
@@ -290,21 +325,7 @@ function norm(v){
         if(byName!==0)return byName;
         return a.code.localeCompare(b.code)
     });
-    // 兼容没有书架历史字段的旧数据：首次从已有条目建立历史。
-    // 一旦 categories 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
-    const categories=sortCategories(
-        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
-    );
-    // 兼容没有大类历史字段的旧数据：首次从已有条目建立历史。
-    // 一旦 groups 已存在，就以历史本身为准，避免删除后又被旧条目自动加回来。
-    const groups=sortCategories(
-        Array.isArray(s.groups)?s.groups:entries.flatMap(x=>x.group)
-    );
-    // 标签无预置内容；所有已输入标签都会进入历史，并按数字从小到大排序。
-    const tags=sortTags(
-        Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
-    );
-    return{schemaVersion:1,entries,categories,groups,tags}
+    return{schemaVersion:2,entries,institutions,categories,groups,tags}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -322,6 +343,17 @@ function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.t
 function saveLocal(){state=norm(state);ls(STATE_KEY,JSON.stringify(state))}
 function loadLocal(){const s=lg(STATE_KEY);if(!s)return null;try{return norm(JSON.parse(s))}catch(e){return null}}
 function updateAdmin(){const on=admin(),wasHidden=addSection.classList.contains('hidden');addSection.classList.toggle('hidden',!on);syncBtn.classList.toggle('hidden',!on);importBtn.classList.toggle('hidden',!on);if(on&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)}
+function institutionMeta(which){
+    const edit=which==='edit';
+    return{
+        label:'出版',historyKey:'institutions',
+        input:edit?editInstitution:institutionInput,
+        panel:edit?editInstitutionPanel:institutionPanel,
+        options:edit?editInstitutionOptions:institutionOptions,
+        combo:edit?editInstitutionCombo:institutionCombo,
+        toggle:edit?editInstitutionToggle:institutionToggle
+    }
+}
 function multiMeta(type,which){
     const edit=which==='edit';
     const map={
@@ -352,7 +384,7 @@ function multiMeta(type,which){
     return meta
 }
 function sortHistory(type,values){
-    return type==='tag'?sortTags(values):sortCategories(values)
+    return type==='group'||type==='tag'?sortAuto(values):uniq(values)
 }
 function renderMultiSelected(type,which){
     const meta=multiMeta(type,which);
@@ -369,13 +401,20 @@ function renderMultiOptions(type,which){
     const history=sortHistory(type,state[meta.historyKey]);
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
+    const manualOrder=type==='category';
     const list=values.length
-        ? `<div class="combo-option-list">${values.map(v=>`
-            <span class="combo-pill${selectedKeys.has(key(v))?' selected':''}">
+        ? `<div class="combo-option-list">${values.map(v=>{
+            const historyIndex=history.findIndex(x=>key(x)===key(v));
+            const orderButtons=manualOrder?`<span class="combo-order">
+                <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="-1" aria-label="上移${meta.label} ${attr(v)}" ${historyIndex<=0?'disabled':''}>↑</button>
+                <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="1" aria-label="下移${meta.label} ${attr(v)}" ${historyIndex>=history.length-1?'disabled':''}>↓</button>
+            </span>`:'';
+            return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}">
                 <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>
+                ${orderButtons}
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
-            </span>
-        `).join('')}</div>`
+            </span>`
+        }).join('')}</div>`
         : `<div class="combo-empty">暂无${meta.label}</div>`;
     const current=clean(meta.input.value);
     const canAdd=current&&!history.some(v=>key(v)===key(current));
@@ -388,8 +427,46 @@ function renderMultiField(type,which){
 function renderCategoryOptions(which){renderMultiField('category',which)}
 function renderGroupOptions(which){renderMultiField('group',which)}
 function renderTagOptions(which){renderMultiField('tag',which)}
+function renderInstitutionOptions(which){
+    const meta=institutionMeta(which);
+    const history=uniq(state.institutions);
+    const values=history;
+    const list=values.length
+        ? `<div class="combo-option-list">${values.map(v=>{
+            const historyIndex=history.findIndex(x=>key(x)===key(v));
+            return `<span class="combo-pill${key(meta.input.value)===key(v)?' selected':''}">
+                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}">${esc(v)}</button>
+                <span class="combo-order">
+                    <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="-1" aria-label="上移出版 ${attr(v)}" ${historyIndex<=0?'disabled':''}>↑</button>
+                    <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="1" aria-label="下移出版 ${attr(v)}" ${historyIndex>=history.length-1?'disabled':''}>↓</button>
+                </span>
+                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
+            </span>`
+        }).join('')}</div>`
+        : `<div class="combo-empty">暂无出版</div>`;
+    const current=clean(meta.input.value);
+    const canAdd=current&&!history.some(v=>key(v)===key(current));
+    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
+}
+function moveHistoryOption(type,value,dir){
+    const historyKey=type==='institution'?'institutions':multiMeta(type,'add').historyKey;
+    if(type!=='institution'&&type!=='category')return;
+    const history=uniq(state[historyKey]),targetKey=key(value),index=history.findIndex(v=>key(v)===targetKey);
+    const nextIndex=index+Number(dir);
+    if(index<0||nextIndex<0||nextIndex>=history.length)return;
+    [history[index],history[nextIndex]]=[history[nextIndex],history[index]];
+    state[historyKey]=history;
+    saveLocal();
+    if(admin())schedule();
+    if(type==='institution'){
+        renderInstitutionOptions('add');renderInstitutionOptions('edit')
+    }else{
+        renderMultiField(type,'add');renderMultiField(type,'edit')
+    }
+    render()
+}
 function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
@@ -436,6 +513,36 @@ function addHistoryOption(type,value,notify=false){
     renderMultiField(type,'add');
     renderMultiField(type,'edit');
     if(notify)show(`已加入${label}下拉菜单`,'success');
+    return true
+}
+function addInstitutionHistory(value,notify=false){
+    const v=clean(value);
+    if(!v)return false;
+    if(state.institutions.some(x=>key(x)===key(v)))return false;
+    state.institutions.push(v);
+    state.institutions=uniq(state.institutions);
+    saveLocal();
+    if(admin())schedule();
+    renderInstitutionOptions('add');renderInstitutionOptions('edit');
+    if(notify)show('已加入出版下拉菜单','success');
+    return true
+}
+function deleteInstitutionHistory(value){
+    const targetKey=key(value);
+    if(!confirm(`确定从出版下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
+    state.institutions=state.institutions.filter(v=>key(v)!==targetKey);
+    saveLocal();
+    if(admin())schedule();
+    renderInstitutionOptions('add');renderInstitutionOptions('edit');
+    render();
+    show('已从出版下拉菜单删除','success')
+}
+function commitInstitution(which,notify=false){
+    const meta=institutionMeta(which),value=clean(meta.input.value);
+    if(!value)return false;
+    addInstitutionHistory(value,notify);
+    meta.input.value=value;
+    renderInstitutionOptions(which);
     return true
 }
 function removeSelection(type,which,value){
@@ -506,6 +613,7 @@ function addEntry(){
     if(!admin())return;
     const bookName=cleanTitle(bookNameInput.value);
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
+    commitInstitution('add');
     commitTypedValue('category','add');
     commitTypedValue('group','add');
     commitTypedValue('tag','add');
@@ -540,12 +648,13 @@ function openEdit(id){
     editSelections={category:[...x.category],group:[...x.group],tag:[...x.tag]};
     editCode.value=x.code;
     editInitialSnapshot=getEditSnapshot();
-    renderCategoryOptions('edit');renderGroupOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
+    renderInstitutionOptions('edit');renderCategoryOptions('edit');renderGroupOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
 }
 function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
     const bookName=cleanTitle(editBookName.value);
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
+    commitInstitution('edit');
     commitTypedValue('category','edit');
     commitTypedValue('group','edit');
     commitTypedValue('tag','edit');
@@ -626,7 +735,7 @@ async function readRemote(){
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
         return{exists:true,sha:d.sha,state:norm(JSON.parse(fromB64(d.content)))}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:{entries:[],categories:[],groups:[],tags:[]}};
+        if(e.status===404)return{exists:false,sha:null,state:{entries:[],institutions:[],categories:[],groups:[],tags:[]}};
         throw e
     }
 }
@@ -681,7 +790,7 @@ async function loadPublic(){
         state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||{entries:[],categories:[],groups:[],tags:[]};render();status('offline','公开数据读取失败');
+        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('offline','公开数据读取失败');
         lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
@@ -693,15 +802,62 @@ async function loadAdminState(){
         if(remote.exists){
             state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接')
         }else{
-            state=cached||{entries:[],categories:[],groups:[],tags:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
+            state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
         }
     }catch(e){
-        console.error(e);state=cached||{entries:[],categories:[],groups:[],tags:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
+        console.error(e);state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
     }
 }
 
 function allMultiPanels(){
-    return [categoryPanel,editCategoryPanel,groupPanel,editGroupPanel,tagPanel,editTagPanel]
+    return [institutionPanel,editInstitutionPanel,categoryPanel,editCategoryPanel,groupPanel,editGroupPanel,tagPanel,editTagPanel]
+}
+function setupInstitutionCombo(which){
+    const meta=institutionMeta(which);
+    meta.toggle.addEventListener('click',e=>{
+        e.stopPropagation();
+        const willOpen=meta.panel.classList.contains('hidden');
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        if(willOpen){
+            meta.panel.classList.remove('hidden');
+            renderInstitutionOptions(which)
+        }
+    });
+    meta.input.addEventListener('click',e=>{
+        e.stopPropagation();
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        meta.panel.classList.remove('hidden');
+        renderInstitutionOptions(which)
+    });
+    meta.input.addEventListener('input',()=>renderInstitutionOptions(which));
+    meta.input.addEventListener('keydown',e=>{
+        if(e.key==='Enter'){
+            e.preventDefault();
+            commitInstitution(which,true);
+            meta.panel.classList.remove('hidden')
+        }
+    });
+    meta.options.addEventListener('click',e=>{
+        e.stopPropagation();
+        const del=e.target.closest('.combo-pill-delete[data-delete-value]');
+        if(del)return deleteInstitutionHistory(del.dataset.deleteValue);
+        const move=e.target.closest('.combo-move[data-move-value]');
+        if(move)return moveHistoryOption('institution',move.dataset.moveValue,move.dataset.moveDir);
+        const add=e.target.closest('.combo-add[data-add-current]');
+        if(add){
+            commitInstitution(which,true);
+            meta.panel.classList.remove('hidden');
+            return
+        }
+        const select=e.target.closest('.combo-pill-select[data-select-value]');
+        if(select){
+            meta.input.value=select.dataset.selectValue;
+            renderInstitutionOptions(which);
+            meta.panel.classList.add('hidden');
+            meta.input.focus()
+        }
+    });
+    meta.combo.addEventListener('click',e=>e.stopPropagation())
 }
 function setupMultiCombo(type,which){
     const meta=multiMeta(type,which);
@@ -743,6 +899,8 @@ function setupMultiCombo(type,which){
         e.stopPropagation();
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
         if(del)return deleteHistoryOption(type,del.dataset.deleteValue);
+        const move=e.target.closest('.combo-move[data-move-value]');
+        if(move)return moveHistoryOption(type,move.dataset.moveValue,move.dataset.moveDir);
         const add=e.target.closest('.combo-add[data-add-current]');
         if(add){
             commitTypedValue(type,which,true);
@@ -759,6 +917,8 @@ function setupMultiCombo(type,which){
     });
     combo.addEventListener('click',e=>e.stopPropagation())
 }
+setupInstitutionCombo('add');
+setupInstitutionCombo('edit');
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 setupMultiCombo('group','add');
@@ -805,6 +965,8 @@ importBtn.addEventListener('click',()=>fileInput.click());
 fileInput.addEventListener('change',()=>{importFile(fileInput.files?.[0]);fileInput.value=''});
 document.addEventListener('keydown',e=>{
     if(e.key!=='Escape')return;
+    institutionPanel.classList.add('hidden');
+    editInstitutionPanel.classList.add('hidden');
     categoryPanel.classList.add('hidden');
     editCategoryPanel.classList.add('hidden');
     groupPanel.classList.add('hidden');
@@ -817,7 +979,7 @@ document.addEventListener('keydown',e=>{
 backToTopBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
 
-loadConfig();loadMeta();updateAdmin();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
 if(admin())loadAdminState();else loadPublic();
 })();
 </script>
