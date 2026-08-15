@@ -27,9 +27,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .combo-pill.selected{border-color:#93b4ff;background:#eaf1ff}
 .combo-pill-select{flex:1;min-width:0;padding:.5rem .7rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
 .combo-pill-select:hover{background:rgba(226,232,240,.7)}
-.combo-order{display:flex;align-items:center;gap:1px;padding-left:3px;border-left:1px solid #e2e8f0}
-.combo-move{flex:0 0 25px;width:25px;height:30px;border:0;background:transparent;color:#64748b;font-size:.78rem;line-height:1}
-.combo-move:hover:not(:disabled){background:#e2e8f0;color:#0f172a}.combo-move:disabled{opacity:.25;cursor:default}
+.combo-drag{flex:0 0 32px;width:32px;align-self:stretch;border:0;border-right:1px solid #e2e8f0;background:transparent;color:#64748b;font-size:1rem;font-weight:700;line-height:1;cursor:grab;touch-action:none}
+.combo-drag:hover{background:#e2e8f0;color:#0f172a}.combo-drag:active,.combo-pill.dragging .combo-drag{cursor:grabbing}
+.combo-pill.manual-order.dragging{opacity:.52}
+.combo-pill.drag-before{box-shadow:inset 0 3px 0 #2563eb}.combo-pill.drag-after{box-shadow:inset 0 -3px 0 #2563eb}
+body.reordering{user-select:none}
 .combo-pill-delete,.selected-pill-remove{flex:0 0 28px;width:28px;height:30px;margin-right:2px;border:0;border-radius:50%;background:transparent;color:#991b1b;font-size:.95rem;font-weight:700;line-height:1}
 .combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
 .selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
@@ -404,14 +406,10 @@ function renderMultiOptions(type,which){
     const manualOrder=type==='category';
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>{
-            const historyIndex=history.findIndex(x=>key(x)===key(v));
-            const orderButtons=manualOrder?`<span class="combo-order">
-                <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="-1" aria-label="上移${meta.label} ${attr(v)}" ${historyIndex<=0?'disabled':''}>↑</button>
-                <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="1" aria-label="下移${meta.label} ${attr(v)}" ${historyIndex>=history.length-1?'disabled':''}>↓</button>
-            </span>`:'';
-            return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}">
+            const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
+            return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
+                ${dragHandle}
                 <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>
-                ${orderButtons}
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
             </span>`
         }).join('')}</div>`
@@ -432,38 +430,87 @@ function renderInstitutionOptions(which){
     const history=uniq(state.institutions);
     const values=history;
     const list=values.length
-        ? `<div class="combo-option-list">${values.map(v=>{
-            const historyIndex=history.findIndex(x=>key(x)===key(v));
-            return `<span class="combo-pill${key(meta.input.value)===key(v)?' selected':''}">
+        ? `<div class="combo-option-list">${values.map(v=>`
+            <span class="combo-pill manual-order${key(meta.input.value)===key(v)?' selected':''}" data-drag-value="${attr(v)}">
+                <button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动出版 ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>
                 <button class="combo-pill-select" type="button" data-select-value="${attr(v)}">${esc(v)}</button>
-                <span class="combo-order">
-                    <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="-1" aria-label="上移出版 ${attr(v)}" ${historyIndex<=0?'disabled':''}>↑</button>
-                    <button class="combo-move" type="button" data-move-value="${attr(v)}" data-move-dir="1" aria-label="下移出版 ${attr(v)}" ${historyIndex>=history.length-1?'disabled':''}>↓</button>
-                </span>
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
-            </span>`
-        }).join('')}</div>`
+            </span>
+        `).join('')}</div>`
         : `<div class="combo-empty">暂无出版</div>`;
     const current=clean(meta.input.value);
     const canAdd=current&&!history.some(v=>key(v)===key(current));
     meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
 }
-function moveHistoryOption(type,value,dir){
+function reorderHistoryOption(type,sourceValue,targetValue,after){
     const historyKey=type==='institution'?'institutions':multiMeta(type,'add').historyKey;
     if(type!=='institution'&&type!=='category')return;
-    const history=uniq(state[historyKey]),targetKey=key(value),index=history.findIndex(v=>key(v)===targetKey);
-    const nextIndex=index+Number(dir);
-    if(index<0||nextIndex<0||nextIndex>=history.length)return;
-    [history[index],history[nextIndex]]=[history[nextIndex],history[index]];
+    const history=uniq(state[historyKey]),sourceKey=key(sourceValue),targetKey=key(targetValue);
+    const sourceIndex=history.findIndex(v=>key(v)===sourceKey);
+    if(sourceIndex<0||sourceKey===targetKey)return;
+    const [item]=history.splice(sourceIndex,1);
+    let targetIndex=history.findIndex(v=>key(v)===targetKey);
+    if(targetIndex<0)return;
+    if(after)targetIndex+=1;
+    history.splice(targetIndex,0,item);
     state[historyKey]=history;
-    saveLocal();
-    if(admin())schedule();
-    if(type==='institution'){
-        renderInstitutionOptions('add');renderInstitutionOptions('edit')
-    }else{
-        renderMultiField(type,'add');renderMultiField(type,'edit')
+    render();
+    if(admin())schedule()
+}
+function setupManualDrag(optionsEl,type){
+    let drag=null;
+    function clearMarks(){
+        optionsEl.querySelectorAll('.drag-before,.drag-after').forEach(el=>el.classList.remove('drag-before','drag-after'))
     }
-    render()
+    function cleanup(){
+        clearMarks();
+        if(drag?.row)drag.row.classList.remove('dragging');
+        document.body.classList.remove('reordering');
+        drag=null
+    }
+    optionsEl.addEventListener('pointerdown',e=>{
+        const handle=e.target.closest('.combo-drag[data-drag-value]');
+        if(!handle||!optionsEl.contains(handle))return;
+        const row=handle.closest('.combo-pill[data-drag-value]');
+        if(!row)return;
+        e.preventDefault();
+        e.stopPropagation();
+        drag={pointerId:e.pointerId,sourceValue:handle.dataset.dragValue,row,targetValue:'',after:false,handle};
+        row.classList.add('dragging');
+        document.body.classList.add('reordering');
+        try{handle.setPointerCapture(e.pointerId)}catch(err){}
+    });
+    optionsEl.addEventListener('pointermove',e=>{
+        if(!drag||e.pointerId!==drag.pointerId)return;
+        e.preventDefault();
+        const panel=optionsEl.closest('.combo-panel');
+        if(panel){
+            const pr=panel.getBoundingClientRect(),edge=34;
+            if(e.clientY<pr.top+edge)panel.scrollTop-=12;
+            else if(e.clientY>pr.bottom-edge)panel.scrollTop+=12
+        }
+        clearMarks();
+        const hit=document.elementFromPoint(e.clientX,e.clientY);
+        const target=hit?.closest?.('.combo-pill[data-drag-value]');
+        if(!target||!optionsEl.contains(target)||target===drag.row){
+            drag.targetValue='';
+            return
+        }
+        const rect=target.getBoundingClientRect();
+        drag.after=e.clientY>=rect.top+rect.height/2;
+        drag.targetValue=target.dataset.dragValue;
+        target.classList.add(drag.after?'drag-after':'drag-before')
+    });
+    function finish(e){
+        if(!drag||e.pointerId!==drag.pointerId)return;
+        e.preventDefault();
+        const sourceValue=drag.sourceValue,targetValue=drag.targetValue,after=drag.after;
+        try{drag.handle.releasePointerCapture(e.pointerId)}catch(err){}
+        cleanup();
+        if(targetValue)reorderHistoryOption(type,sourceValue,targetValue,after)
+    }
+    optionsEl.addEventListener('pointerup',finish);
+    optionsEl.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pointerId)cleanup()})
 }
 function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
@@ -841,8 +888,6 @@ function setupInstitutionCombo(which){
         e.stopPropagation();
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
         if(del)return deleteInstitutionHistory(del.dataset.deleteValue);
-        const move=e.target.closest('.combo-move[data-move-value]');
-        if(move)return moveHistoryOption('institution',move.dataset.moveValue,move.dataset.moveDir);
         const add=e.target.closest('.combo-add[data-add-current]');
         if(add){
             commitInstitution(which,true);
@@ -899,8 +944,6 @@ function setupMultiCombo(type,which){
         e.stopPropagation();
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
         if(del)return deleteHistoryOption(type,del.dataset.deleteValue);
-        const move=e.target.closest('.combo-move[data-move-value]');
-        if(move)return moveHistoryOption(type,move.dataset.moveValue,move.dataset.moveDir);
         const add=e.target.closest('.combo-add[data-add-current]');
         if(add){
             commitTypedValue(type,which,true);
@@ -921,6 +964,10 @@ setupInstitutionCombo('add');
 setupInstitutionCombo('edit');
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
+setupManualDrag(institutionOptions,'institution');
+setupManualDrag(editInstitutionOptions,'institution');
+setupManualDrag(categoryOptions,'category');
+setupManualDrag(editCategoryOptions,'category');
 setupMultiCombo('group','add');
 setupMultiCombo('group','edit');
 setupMultiCombo('tag','add');
