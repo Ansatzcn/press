@@ -956,6 +956,20 @@
       "code": "298541"
     },
     {
+      "id": "d30736a4-cfa9-447c-8673-7ef08cc8bed0",
+      "bookName": "马克思与自然：一个红与绿的视角",
+      "bookNo": "7-5693-3777",
+      "institution": "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "181373"
+    },
+    {
       "id": "cc3e3c90-cc20-4322-bbe3-00c3e50f233a",
       "bookName": "在“模范殖民地”胶州湾的统治与抵抗：1897-1914年中国与德国的相互作用",
       "bookNo": "7-5607-2917",
@@ -1094,20 +1108,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "d30736a4-cfa9-447c-8673-7ef08cc8bed0",
-      "bookName": "马克思与自然：一个红与绿的视角",
-      "bookNo": "7-5693-3777",
-      "institution": "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
-      "category": [],
-      "group": [
-        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "181373"
     }
   ],
   "institutions": [
@@ -1149,14 +1149,14 @@
     "[学林出版社](https://book.douban.com/press/2521/?order=time)",
     "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
+    "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
