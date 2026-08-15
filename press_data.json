@@ -360,6 +360,20 @@
       "code": "159346"
     },
     {
+      "id": "bba01c92-f70e-4052-97b7-31bf9d873386",
+      "bookName": "[唐诗中的帝国](https://book.douban.com/subject/2076700/)",
+      "bookNo": "7-80175-563",
+      "institution": "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "105209"
+    },
+    {
       "id": "71bb502d-4617-4ac9-a415-40fd218cb7f8",
       "bookName": "低空经济：中国经济发展新引擎",
       "bookNo": "7-5217-7000",
@@ -842,20 +856,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "bba01c92-f70e-4052-97b7-31bf9d873386",
-      "bookName": "[唐诗中的帝国](https://book.douban.com/subject/2076700/)",
-      "bookNo": "7-80175-563",
-      "institution": "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "105209"
     }
   ],
   "institutions": [
@@ -874,6 +874,7 @@
     "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
+    "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
@@ -890,8 +891,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[中国长安出版社](https://book.douban.com/press/2519/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
