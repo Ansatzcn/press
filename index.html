@@ -287,7 +287,7 @@ addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookN
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],institutions:[],categories:[],groups:[],tags:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -340,6 +340,7 @@ function renderBookName(raw){
     }
     return html+esc(s.slice(last))
 }
+function validCode(v){return /^(1\d{5}|2\d{5})$/.test(clean(v))}
 function randomCode(usedSet){
     const used=usedSet||new Set(state.entries.map(x=>x.code));
     if(used.size>=200000)throw new Error('可用编码已用尽');
@@ -359,6 +360,12 @@ function randomCode(usedSet){
     }
     throw new Error('无法生成唯一编码')
 }
+function nextCode(usedSet){
+    const used=usedSet||new Set(state.entries.map(x=>x.code));
+    // 删除条目释放的自动编码优先复用；只有释放池为空时才重新随机生成。
+    const released=(state.releasedCodes||[]).find(code=>validCode(code)&&!used.has(code));
+    return released||randomCode(used)
+}
 function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
@@ -373,6 +380,9 @@ function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
     const usedCodes=new Set();
     const entries=(Array.isArray(s.entries)?s.entries:[]).map(x=>normEntry(x,usedCodes)).filter(Boolean);
+    // releasedCodes 只保存当前未被任何条目占用的合法编码，并保留释放先后顺序。
+    const releasedCodes=uniq(Array.isArray(s.releasedCodes)?s.releasedCodes:[])
+        .filter(code=>validCode(code)&&!usedCodes.has(code));
 
     // 出版、书架使用历史数组自身的顺序，供人工调整。
     // 旧数据没有对应历史字段时，仅首次按现有条目出现顺序建立历史。
@@ -410,7 +420,7 @@ function norm(v){
         if(byName!==0)return byName;
         return a.code.localeCompare(b.code)
     });
-    return{schemaVersion:2,entries,institutions,categories,groups,tags}
+    return{schemaVersion:3,entries,institutions,categories,groups,tags,releasedCodes}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -751,7 +761,7 @@ function addEntry(){
     const group=[...addSelections.group];
     const tag=[...addSelections.tag];
     let code;
-    try{code=randomCode(new Set(state.entries.map(x=>x.code)))}catch(e){show(e.message,'error');return}
+    try{code=nextCode(new Set(state.entries.map(x=>x.code)))}catch(e){show(e.message,'error');return}
     state.entries.push({
         id:uid(),
         bookName,
@@ -762,6 +772,8 @@ function addEntry(){
         tag,
         code
     });
+    // 若本次使用的是已释放编码，则从释放池中移除，避免再次分配。
+    state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==code);
     bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';groupInput.value='';tagInput.value='';codeInput.value='';addSelections={category:[],group:[],tag:[]};
     render();schedule();bookNameInput.focus();show(`已添加，编码 ${code}`,'success')
 }
@@ -799,12 +811,17 @@ function saveEdit(){
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
+    const releasedCode=clean(x.code);
     state.entries=state.entries.filter(e=>e.id!==id);
+    // 删除条目后，其自动编码立即释放，进入复用池，供后续新增条目优先使用。
+    if(validCode(releasedCode)&&!state.entries.some(e=>clean(e.code)===releasedCode)){
+        state.releasedCodes=uniq([...(state.releasedCodes||[]),releasedCode])
+    }
     if(editingId===id){
         editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
         editModal.classList.add('hidden')
     }
-    render();schedule();show('已删除','success');return true
+    render();schedule();show(`已删除，编码 ${releasedCode} 已释放`,'success');return true
 }
 function downloadJson(){
     const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
@@ -875,7 +892,7 @@ async function readRemote(){
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
         return{exists:true,sha:d.sha,state:norm(JSON.parse(fromB64(d.content)))}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:{entries:[],institutions:[],categories:[],groups:[],tags:[]}};
+        if(e.status===404)return{exists:false,sha:null,state:{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]}};
         throw e
     }
 }
@@ -930,7 +947,7 @@ async function loadPublic(){
         state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('offline','公开数据读取失败');
+        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('offline','公开数据读取失败');
         lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
@@ -942,10 +959,10 @@ async function loadAdminState(){
         if(remote.exists){
             state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接')
         }else{
-            state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
+            state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
         }
     }catch(e){
-        console.error(e);state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
+        console.error(e);state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
     }
 }
 
