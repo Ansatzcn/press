@@ -457,6 +457,20 @@
       "code": "108177"
     },
     {
+      "id": "7837fb5c-06b5-4cc7-ad9c-ac0a92037b62",
+      "bookName": "北方厨房：一个家庭的烹饪史",
+      "bookNo": "7-5321-7908",
+      "institution": "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "294412"
+    },
+    {
       "id": "3025aa9f-83ec-4a45-8499-162b7b105387",
       "bookName": "寻路中国：从乡村到工厂的自驾之旅",
       "bookNo": "7-5327-5280",
@@ -709,20 +723,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "7837fb5c-06b5-4cc7-ad9c-ac0a92037b62",
-      "bookName": "北方厨房：一个家庭的烹饪史",
-      "bookNo": "7-5321-7908",
-      "institution": "",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "294412"
     }
   ],
   "institutions": [
