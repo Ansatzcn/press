@@ -494,6 +494,7 @@ function renderMultiOptions(type,which){
     const meta=multiMeta(type,which);
     const q=key(meta.input.value);
     const history=sortHistory(type,state[meta.historyKey]);
+    // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
     const manualOrder=type==='category';
@@ -506,7 +507,7 @@ function renderMultiOptions(type,which){
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
             </span>`
         }).join('')}</div>`
-        : `<div class="combo-empty">暂无${meta.label}</div>`;
+        : `<div class="combo-empty">${q?`没有匹配的${meta.label}`:`暂无${meta.label}`}</div>`;
     const current=clean(meta.input.value);
     const canAdd=current&&!history.some(v=>key(v)===key(current));
     meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到${meta.label}</button>`:'')
@@ -520,8 +521,10 @@ function renderGroupOptions(which){renderMultiField('group',which)}
 function renderTagOptions(which){renderMultiField('tag',which)}
 function renderInstitutionOptions(which){
     const meta=institutionMeta(which);
+    const q=key(meta.input.value);
     const history=uniq(state.institutions);
-    const values=history;
+    // “出版”字段与其它下拉字段一致，支持任意部分文字实时搜索。
+    const values=history.filter(v=>!q||key(v).includes(q));
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>`
             <span class="combo-pill manual-order${key(meta.input.value)===key(v)?' selected':''}" data-drag-value="${attr(v)}">
@@ -530,7 +533,7 @@ function renderInstitutionOptions(which){
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
             </span>
         `).join('')}</div>`
-        : `<div class="combo-empty">暂无出版</div>`;
+        : `<div class="combo-empty">${q?'没有匹配的出版':'暂无出版'}</div>`;
     const current=clean(meta.input.value);
     const canAdd=current&&!history.some(v=>key(v)===key(current));
     meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
@@ -986,7 +989,11 @@ function setupInstitutionCombo(which){
         meta.panel.classList.remove('hidden');
         renderInstitutionOptions(which)
     });
-    meta.input.addEventListener('input',()=>renderInstitutionOptions(which));
+    meta.input.addEventListener('input',()=>{
+        // 输入搜索词时自动展开，并立即刷新匹配结果。
+        meta.panel.classList.remove('hidden');
+        renderInstitutionOptions(which)
+    });
     meta.input.addEventListener('keydown',e=>{
         if(e.key==='Enter'){
             e.preventDefault();
@@ -1042,7 +1049,11 @@ function setupMultiCombo(type,which){
         meta.panel.classList.remove('hidden');
         renderMultiField(type,which)
     });
-    meta.input.addEventListener('input',()=>renderMultiOptions(type,which));
+    meta.input.addEventListener('input',()=>{
+        // 输入搜索词时自动展开，并立即刷新匹配结果。
+        meta.panel.classList.remove('hidden');
+        renderMultiOptions(type,which)
+    });
     meta.input.addEventListener('keydown',e=>{
         if(e.key==='Enter'){
             e.preventDefault();
