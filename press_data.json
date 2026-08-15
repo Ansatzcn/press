@@ -126,6 +126,20 @@
       "code": "262488"
     },
     {
+      "id": "34909b72-b9f3-49cb-99c3-16e8c9f74d47",
+      "bookName": "[大漠丰碑：出土文献所见西域史地](https://book.douban.com/subject/37280739/)",
+      "bookNo": "7-101-17060",
+      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "210848"
+    },
+    {
       "id": "ee6ea21f-fad8-48c6-804c-e40d08748598",
       "bookName": "近代的超克",
       "bookNo": "7-108-02192",
@@ -1221,20 +1235,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "34909b72-b9f3-49cb-99c3-16e8c9f74d47",
-      "bookName": "[大漠丰碑：出土文献所见西域史地](https://book.douban.com/subject/37280739/)",
-      "bookNo": "7-101-17060",
-      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "24读书"
-      ],
-      "code": "210848"
     }
   ],
   "institutions": [
@@ -1243,6 +1243,7 @@
     "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
     "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
     "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+    "[中华书局](https://book.douban.com/press/2838/?order=time)★",
     "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
     "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
     "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
@@ -1284,8 +1285,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[中华书局](https://book.douban.com/press/2838/?order=time)★"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
