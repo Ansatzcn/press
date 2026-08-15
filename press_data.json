@@ -126,6 +126,20 @@
       "code": "123415"
     },
     {
+      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
+      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
+      "bookNo": "统一书号2088·73",
+      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "194363"
+    },
+    {
       "id": "ddecbb08-16e0-4826-a7b2-90310d343333",
       "bookName": "“韩琨事件”揭秘",
       "bookNo": "7-208-07867",
@@ -194,20 +208,6 @@
         "21读书"
       ],
       "code": "215224"
-    },
-    {
-      "id": "1d825cc0-af7b-407d-93ac-cfc369d33657",
-      "bookName": "“黄金时代”的终结：当代发达资本主义国家经济浅论",
-      "bookNo": "统一书号2088·73",
-      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "194363"
     },
     {
       "id": "ca4bf4fd-b90f-403a-85c0-71faeffcd135",
@@ -732,9 +732,9 @@
     "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
     "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
     "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
+    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
     "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
-    "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
     "[上海交通大学出版社](https://book.douban.com/press/2363/?order=time)★",
