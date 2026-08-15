@@ -842,6 +842,20 @@
         "14图书"
       ],
       "code": "133065"
+    },
+    {
+      "id": "bba01c92-f70e-4052-97b7-31bf9d873386",
+      "bookName": "[唐诗中的帝国](https://book.douban.com/subject/2076700/)",
+      "bookNo": "7-80175-563",
+      "institution": "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "105209"
     }
   ],
   "institutions": [
@@ -876,7 +890,8 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)",
+    "[中国长安出版社](https://book.douban.com/press/2519/?order=time)"
   ],
   "categories": [
     "正架2行"
