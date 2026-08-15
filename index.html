@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Press</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -46,6 +46,74 @@ body.reordering{user-select:none}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#2563eb;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
 .back-to-top{position:fixed;right:16px;top:70%;z-index:900;padding:.45rem .72rem;transform:translateY(-50%);border:1px solid rgba(148,163,184,.45);border-radius:999px;background:rgba(255,255,255,.82);color:#64748b;font-size:.76rem;opacity:0;visibility:hidden;pointer-events:none}.back-to-top.visible{opacity:.55;visibility:visible;pointer-events:auto}
 @media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#editModal .dialog-actions .btn{flex:0 0 auto}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
+</style>
+
+<style id="mobile-config-hard-fix">
+/* 手机端配置弹窗：使用确定的 visual viewport + CSS Grid，彻底避免 flex 收缩导致表单/按钮不可见。 */
+@media (max-width:700px){
+  #configModal{
+    top:var(--press-vv-top,0px)!important;
+    right:0!important;
+    bottom:auto!important;
+    left:0!important;
+    width:100%!important;
+    height:var(--press-vv-height,100dvh)!important;
+    padding:0!important;
+    align-items:stretch!important;
+    justify-content:stretch!important;
+    overflow:hidden!important;
+  }
+  #configForm{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    border-radius:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,1fr) auto!important;
+    overflow:hidden!important;
+  }
+  #configForm .dialog-scroll{
+    grid-row:1!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    overflow-y:scroll!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;
+    scrollbar-gutter:stable!important;
+    scrollbar-width:auto;
+    scrollbar-color:#94a3b8 #f1f5f9;
+    padding:max(1.2rem,env(safe-area-inset-top)) 1.2rem 1.2rem!important;
+  }
+  #configForm .dialog-scroll::-webkit-scrollbar{width:8px}
+  #configForm .dialog-scroll::-webkit-scrollbar-track{background:#f1f5f9}
+  #configForm .dialog-scroll::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:999px;border:2px solid #f1f5f9}
+  #configForm .dialog-actions{
+    grid-row:2!important;
+    position:static!important;
+    z-index:10!important;
+    width:100%!important;
+    min-width:0!important;
+    flex:0 0 auto!important;
+    padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))!important;
+    border-top:1px solid #dbe3ed!important;
+    background:#fff!important;
+    box-shadow:0 -8px 20px rgba(15,23,42,.10)!important;
+  }
+  #configForm .dialog-actions .btn{
+    min-width:0!important;
+    min-height:44px!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -222,6 +290,21 @@ configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),c
 let state={entries:[],institutions:[],categories:[],groups:[],tags:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
+
+// 使用 Visual Viewport 驱动手机配置弹窗高度。虚拟键盘/地址栏变化时，保存按钮仍保持在可视区域内。
+function updateVisualViewport(){
+    const vv=window.visualViewport;
+    const h=Math.max(240,Math.round(vv?vv.height:window.innerHeight));
+    const top=Math.max(0,Math.round(vv?vv.offsetTop:0));
+    document.documentElement.style.setProperty('--press-vv-height',`${h}px`);
+    document.documentElement.style.setProperty('--press-vv-top',`${top}px`)
+}
+updateVisualViewport();
+window.addEventListener('resize',updateVisualViewport,{passive:true});
+if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',updateVisualViewport,{passive:true});
+    window.visualViewport.addEventListener('scroll',updateVisualViewport,{passive:true})
+}
 
 function clean(v){return String(v??'').normalize('NFKC').trim()}
 function cleanTitle(v){return String(v??'').trim()}
@@ -752,8 +835,18 @@ function saveConfigForm(e){
     configModal.classList.add('hidden');updateAdmin();render();show('配置已保存','success');sync(true)
 }
 function openConfig(){
+    updateVisualViewport();
     cfgOwner.value=config.owner;cfgRepo.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(lg(TOKEN_LOCAL));
-    configModal.classList.remove('hidden');setTimeout(()=>cfgToken.focus(),30)
+    configModal.classList.remove('hidden');
+    requestAnimationFrame(()=>{
+        updateVisualViewport();
+        const scroller=configForm.querySelector('.dialog-scroll');
+        if(scroller)scroller.scrollTop=0
+    });
+    // 桌面端保留快捷聚焦；手机端禁止自动 focus，避免打开配置时软键盘立即遮住操作区。
+    if(window.matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches){
+        setTimeout(()=>cfgToken.focus(),30)
+    }
 }
 function loadMeta(){try{const x=JSON.parse(lg(META_KEY)||'{}')||{};meta={target:clean(x.target),fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,sha:clean(x.sha)||null,lastSyncAt:clean(x.lastSyncAt)||null}}catch(e){}}
 function saveMeta(){ls(META_KEY,JSON.stringify(meta))}
