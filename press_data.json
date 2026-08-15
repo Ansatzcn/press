@@ -1052,6 +1052,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "a565cb98-d646-4c20-8910-bce3ef70cd46",
+      "bookName": "天上深渊：鲁迅十二论",
+      "bookNo": "7-5339-7297",
+      "institution": "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "226220"
     }
   ],
   "institutions": [
@@ -1096,7 +1110,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)"
   ],
   "categories": [
     "黑架2行",
