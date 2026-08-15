@@ -655,20 +655,6 @@
       "code": "123364"
     },
     {
-      "id": "bc3b0988-c120-4fbc-a1d1-010dc8d9d893",
-      "bookName": "阿金库尔战役：百年战争中最传奇的胜利",
-      "bookNo": "7-5658-4162",
-      "institution": "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-      "category": [],
-      "group": [
-        "E军事"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "297864"
-    },
-    {
       "id": "9f912d2e-0fc3-4de5-bbec-218f2d3d7e67",
       "bookName": "马克思与法国大革命",
       "bookNo": "7-5675-3880",
@@ -681,6 +667,20 @@
         "11图书"
       ],
       "code": "139798"
+    },
+    {
+      "id": "bc3b0988-c120-4fbc-a1d1-010dc8d9d893",
+      "bookName": "阿金库尔战役：百年战争中最传奇的胜利",
+      "bookNo": "7-5658-4162",
+      "institution": "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
+      "category": [],
+      "group": [
+        "E军事"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "297864"
     },
     {
       "id": "dd9e456d-170e-46ca-b24c-f15834df7b22",
@@ -752,8 +752,8 @@
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
-    "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
+    "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "[山西人民出版社](https://book.douban.com/press/2803/?order=time)"
   ],
