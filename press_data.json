@@ -182,6 +182,20 @@
       "code": "130892"
     },
     {
+      "id": "ead9e37b-282b-4994-b5b4-4174c029072c",
+      "bookName": "[非西方社会发展理论与马克思](https://book.douban.com/subject/3079337/)",
+      "bookNo": "7-213-00854",
+      "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "296369"
+    },
+    {
       "id": "89768f47-1537-4912-9a5c-58f90c4df99c",
       "bookName": "革命与历史：中国马克思主义历史学的起源（1919-1937）",
       "bookNo": "7-214-03881",
@@ -952,20 +966,6 @@
         "14图书"
       ],
       "code": "133065"
-    },
-    {
-      "id": "ead9e37b-282b-4994-b5b4-4174c029072c",
-      "bookName": "[非西方社会发展理论与马克思](https://book.douban.com/subject/3079337/)",
-      "bookNo": "7-213-00854",
-      "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
-      "category": [],
-      "group": [
-        "C社会科学总论"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "296369"
     }
   ],
   "institutions": [
@@ -978,6 +978,7 @@
     "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
     "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+    "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
     "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
     "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
@@ -1005,8 +1006,7 @@
     "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
-    "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)"
+    "[大有书局](https://book.douban.com/press/2926/?order=time)"
   ],
   "categories": [
     "正架2行"
