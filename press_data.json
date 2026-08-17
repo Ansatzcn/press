@@ -1613,6 +1613,20 @@
         "14图书"
       ],
       "code": "243662"
+    },
+    {
+      "id": "f6ef1750-fd61-4699-a472-2236bfb8724e",
+      "bookName": "[剑起乌江：三线厂纪事](https://book.douban.com/subject/36110303/)",
+      "bookNo": "7-5126-9530",
+      "institution": "[团结出版社](https://book.douban.com/press/2477/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "282687"
     }
   ],
   "institutions": [
@@ -1679,7 +1693,8 @@
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
-    "现代文艺出版社"
+    "现代文艺出版社",
+    "[团结出版社](https://book.douban.com/press/2477/?order=time)"
   ],
   "categories": [
     "黑架2行",
