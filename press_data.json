@@ -1589,6 +1589,20 @@
       "code": "161113"
     },
     {
+      "id": "af180aed-9a65-49d2-9667-de1d279b8d7f",
+      "bookName": "[彭德怀在三线](https://book.douban.com/subject/37457313/)",
+      "bookNo": "7-80524-148",
+      "institution": "[四川省社会科学院出版社](https://book.douban.com/press/2220/?order=time)",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "253384"
+    },
+    {
       "id": "dd9e456d-170e-46ca-b24c-f15834df7b22",
       "bookName": "遇见陶渊明：陶渊明心灵游记",
       "bookNo": "7-80772-177",
@@ -1627,20 +1641,6 @@
         "14图书"
       ],
       "code": "243662"
-    },
-    {
-      "id": "af180aed-9a65-49d2-9667-de1d279b8d7f",
-      "bookName": "[彭德怀在三线](https://book.douban.com/subject/37457313/)",
-      "bookNo": "7-80524-148",
-      "institution": "[四川省社会科学院出版社](https://book.douban.com/press/2220/?order=time)",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "253384"
     }
   ],
   "institutions": [
@@ -1706,10 +1706,10 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
+    "[四川省社会科学院出版社](https://book.douban.com/press/2220/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
-    "现代文艺出版社",
-    "[四川省社会科学院出版社](https://book.douban.com/press/2220/?order=time)"
+    "现代文艺出版社"
   ],
   "categories": [
     "黑架2行",
