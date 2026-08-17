@@ -1075,6 +1075,20 @@
       "code": "230733"
     },
     {
+      "id": "528b4880-6bc1-48c9-9d0a-9ea8cf8d303a",
+      "bookName": "[六盘水三线建设志](https://book.douban.com/subject/38363192/)",
+      "bookNo": "7-5154-0302",
+      "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
+      "category": [],
+      "group": [
+        "T工业技术"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "215009"
+    },
+    {
       "id": "a426e092-b0cc-468a-87b9-ffce3bd9124c",
       "bookName": "澄明之境：陶渊明新论",
       "bookNo": "7-5321-7232",
@@ -1545,20 +1559,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "528b4880-6bc1-48c9-9d0a-9ea8cf8d303a",
-      "bookName": "[六盘水三线建设志](https://book.douban.com/subject/38363192/)",
-      "bookNo": "7-5154-0302",
-      "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
-      "category": [],
-      "group": [
-        "T工业技术"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "215009"
     }
   ],
   "institutions": [
@@ -1602,6 +1602,7 @@
     "[中国华侨出版社](https://book.douban.com/press/2830/?order=time)",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
     "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
+    "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
@@ -1621,8 +1622,7 @@
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[当代中国出版社](https://book.douban.com/press/2604/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
