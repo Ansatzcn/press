@@ -475,6 +475,20 @@
       "code": "261959"
     },
     {
+      "id": "b3accae7-8ed7-44d7-8c2f-7ca04177ccb2",
+      "bookName": "[丰碑：襄渝铁路建设纪实](https://book.douban.com/subject/36769020/)",
+      "bookNo": "7-224-13930",
+      "institution": "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "120299"
+    },
+    {
       "id": "971382f9-fa67-4e83-a4be-fab02e1ab6d7",
       "bookName": "[马克思\"不惑之年\"的思考](https://book.douban.com/subject/30312735/)",
       "bookNo": "7-300-01445",
@@ -1531,20 +1545,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "b3accae7-8ed7-44d7-8c2f-7ca04177ccb2",
-      "bookName": "[丰碑：襄渝铁路建设纪实](https://book.douban.com/subject/36769020/)",
-      "bookNo": "7-224-13930",
-      "institution": "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "120299"
     }
   ],
   "institutions": [
@@ -1566,6 +1566,7 @@
     "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
     "[广西人民出版社](https://book.douban.com/press/2541/?order=time)",
     "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
+    "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
     "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
     "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
     "[南开大学出版社](https://book.douban.com/press/2439/?order=time)★",
@@ -1606,8 +1607,7 @@
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
