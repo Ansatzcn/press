@@ -697,6 +697,20 @@
       "code": "190551"
     },
     {
+      "id": "f271fa1d-cdb2-46f6-b18a-1cd46f875a1b",
+      "bookName": "[城市空间演化与交通的互馈解析](https://book.douban.com/subject/3181074/)",
+      "bookNo": "7-5024-4590",
+      "institution": "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)",
+      "category": [],
+      "group": [
+        "U交通运输"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "102218"
+    },
+    {
       "id": "349ab0ac-b923-491f-9d17-dc4cc3e58e99",
       "bookName": "[算法的起源：莱布尼茨与二进制](https://book.douban.com/subject/38176223/)",
       "bookNo": "7-5236-1797",
@@ -1503,20 +1517,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "f271fa1d-cdb2-46f6-b18a-1cd46f875a1b",
-      "bookName": "[城市空间演化与交通的互馈解析](https://book.douban.com/subject/3181074/)",
-      "bookNo": "7-5024-4590",
-      "institution": "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)",
-      "category": [],
-      "group": [
-        "U交通运输"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "102218"
     }
   ],
   "institutions": [
@@ -1546,6 +1546,7 @@
     "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
     "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
     "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
+    "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)",
     "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
     "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
     "[红旗出版社](https://book.douban.com/press/2710/?order=time)",
@@ -1577,8 +1578,7 @@
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
