@@ -963,6 +963,20 @@
       "code": "210706"
     },
     {
+      "id": "af4c3218-0591-46cd-a7c7-20c6b5ac88d2",
+      "bookName": "[卡尔·马克思经济思想的形成：从1843年到《资本论》](https://book.douban.com/subject/32566949/)",
+      "bookNo": "7-5194-3003",
+      "institution": "[光明日报出版社](https://book.douban.com/press/2858/?order=time)",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "23读书"
+      ],
+      "code": "190536"
+    },
+    {
       "id": "d5d6ce21-14fb-473c-af62-89e21631de93",
       "bookName": "[烟台纪事：党支部领办合作社之路](https://book.douban.com/subject/35510394/)",
       "bookNo": "7-5115-6932",
@@ -1433,20 +1447,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "af4c3218-0591-46cd-a7c7-20c6b5ac88d2",
-      "bookName": "[卡尔·马克思经济思想的形成：从1843年到《资本论》](https://book.douban.com/subject/32566949/)",
-      "bookNo": "7-5194-3003",
-      "institution": "[光明日报出版社](https://book.douban.com/press/2858/?order=time)",
-      "category": [],
-      "group": [
-        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
-      ],
-      "tag": [
-        "23读书"
-      ],
-      "code": "190536"
     }
   ],
   "institutions": [
@@ -1483,6 +1483,7 @@
     "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
     "[九州出版社](https://book.douban.com/press/2655/?order=time)★",
     "[中国华侨出版社](https://book.douban.com/press/2830/?order=time)",
+    "[光明日报出版社](https://book.douban.com/press/2858/?order=time)",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
     "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
@@ -1503,8 +1504,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[光明日报出版社](https://book.douban.com/press/2858/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
