@@ -1265,6 +1265,20 @@
       "code": "168091"
     },
     {
+      "id": "b4267ac1-6d47-40cf-a9be-2d660412d510",
+      "bookName": "[口述上海：小三线建设](https://book.douban.com/subject/26766959/)",
+      "bookNo": "7-5444-6470",
+      "institution": "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "199090"
+    },
+    {
       "id": "5f9d3823-911a-4574-9896-2ecbbf5249b1",
       "bookName": "学做工：工人阶级子弟为何继承父业",
       "bookNo": "7-5447-3176",
@@ -1641,20 +1655,6 @@
         "14图书"
       ],
       "code": "243662"
-    },
-    {
-      "id": "b4267ac1-6d47-40cf-a9be-2d660412d510",
-      "bookName": "[口述上海：小三线建设](https://book.douban.com/subject/26766959/)",
-      "bookNo": "7-5444-6470",
-      "institution": "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "199090"
     }
   ],
   "institutions": [
@@ -1706,6 +1706,7 @@
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
     "[海南出版社](https://book.douban.com/press/2554/?order=time)",
+    "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
     "[译林出版社](https://book.douban.com/press/2331/?order=time)",
     "[天地出版社](https://book.douban.com/press/2712/?order=time)",
     "[学林出版社](https://book.douban.com/press/2521/?order=time)",
@@ -1723,8 +1724,7 @@
     "[四川省社会科学院出版社](https://book.douban.com/press/2220/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
-    "现代文艺出版社",
-    "[上海教育出版社](https://book.douban.com/press/2527/?order=time)"
+    "现代文艺出版社"
   ],
   "categories": [
     "黑架2行",
