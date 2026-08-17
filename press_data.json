@@ -935,6 +935,20 @@
       "code": "222999"
     },
     {
+      "id": "d8d6eae3-edea-4b41-bec7-fbe8d6ed54e0",
+      "bookName": "[非法集资犯罪司法疑难问题裁判指引](https://book.douban.com/subject/38592837/)",
+      "bookNo": "7-5109-4724",
+      "institution": "[人民法院出版社](https://book.douban.com/press/2752/?order=time)",
+      "category": [],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "102248"
+    },
+    {
       "id": "af4c3218-0591-46cd-a7c7-20c6b5ac88d2",
       "bookName": "[卡尔·马克思经济思想的形成：从1843年到《资本论》](https://book.douban.com/subject/32566949/)",
       "bookNo": "7-5194-3003",
@@ -1447,20 +1461,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "d8d6eae3-edea-4b41-bec7-fbe8d6ed54e0",
-      "bookName": "[非法集资犯罪司法疑难问题裁判指引](https://book.douban.com/subject/38592837/)",
-      "bookNo": "7-5109-4724",
-      "institution": "[人民法院出版社](https://book.douban.com/press/2752/?order=time)",
-      "category": [],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "102248"
     }
   ],
   "institutions": [
@@ -1496,6 +1496,7 @@
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
     "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
     "[九州出版社](https://book.douban.com/press/2655/?order=time)★",
+    "[人民法院出版社](https://book.douban.com/press/2752/?order=time)",
     "[光明日报出版社](https://book.douban.com/press/2858/?order=time)",
     "[中国华侨出版社](https://book.douban.com/press/2830/?order=time)",
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
@@ -1518,8 +1519,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[人民法院出版社](https://book.douban.com/press/2752/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
