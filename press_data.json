@@ -1531,6 +1531,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "b3accae7-8ed7-44d7-8c2f-7ca04177ccb2",
+      "bookName": "[丰碑：襄渝铁路建设纪实](https://book.douban.com/subject/36769020/)",
+      "bookNo": "7-224-13930",
+      "institution": "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "120299"
     }
   ],
   "institutions": [
@@ -1592,7 +1606,8 @@
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)"
   ],
   "categories": [
     "黑架2行",
