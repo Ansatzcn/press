@@ -1449,6 +1449,20 @@
       "code": "297864"
     },
     {
+      "id": "a4dc891b-b6f5-492a-9c0e-44ffb3459fdb",
+      "bookName": "[三线人的社会生活与文化认同](https://book.douban.com/subject/35703770/)",
+      "bookNo": "7-5671-4339",
+      "institution": "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "161113"
+    },
+    {
       "id": "dd9e456d-170e-46ca-b24c-f15834df7b22",
       "bookName": "遇见陶渊明：陶渊明心灵游记",
       "bookNo": "7-80772-177",
@@ -1475,20 +1489,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "a4dc891b-b6f5-492a-9c0e-44ffb3459fdb",
-      "bookName": "[三线人的社会生活与文化认同](https://book.douban.com/subject/35703770/)",
-      "bookNo": "7-5671-4339",
-      "institution": "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "161113"
     }
   ],
   "institutions": [
@@ -1546,9 +1546,9 @@
     "[华中师范大学出版社](https://book.douban.com/press/2580/?order=time)",
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
+    "[上海大学出版社](https://book.douban.com/press/2575/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[上海大学出版社](https://book.douban.com/press/2575/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
