@@ -295,6 +295,20 @@
       "code": "178049"
     },
     {
+      "id": "b2af887e-0612-448b-9f96-12d08d6ec4ef",
+      "bookName": "[砺剑：江西军工的辉煌历程](https://book.douban.com/subject/32575305/)",
+      "bookNo": "7-210-09387",
+      "institution": "[江西人民出版社](https://book.douban.com/press/2145/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "169477"
+    },
+    {
       "id": "ead9e37b-282b-4994-b5b4-4174c029072c",
       "bookName": "[非西方社会发展理论与马克思](https://book.douban.com/subject/3079337/)",
       "bookNo": "7-213-00854",
@@ -1377,20 +1391,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "b2af887e-0612-448b-9f96-12d08d6ec4ef",
-      "bookName": "[砺剑：江西军工的辉煌历程](https://book.douban.com/subject/32575305/)",
-      "bookNo": "7-210-09387",
-      "institution": "[江西人民出版社](https://book.douban.com/press/2145/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "169477"
     }
   ],
   "institutions": [
@@ -1405,6 +1405,7 @@
     "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
     "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+    "[江西人民出版社](https://book.douban.com/press/2145/?order=time)",
     "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
     "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
     "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
@@ -1445,8 +1446,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[江西人民出版社](https://book.douban.com/press/2145/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
