@@ -196,6 +196,20 @@
       "code": "190010"
     },
     {
+      "id": "90630c54-13e5-4b66-8c34-b13b5bff0425",
+      "bookName": "[傅志寰自传](https://book.douban.com/subject/30493126/)",
+      "bookNo": "7-113-23855",
+      "institution": "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "23读书"
+      ],
+      "code": "138582"
+    },
+    {
       "id": "9b3bab34-f45b-4aea-902d-326e3623f77c",
       "bookName": "人工智能的五张面孔",
       "bookNo": "7-121-51824",
@@ -1321,20 +1335,6 @@
         "11图书"
       ],
       "code": "198595"
-    },
-    {
-      "id": "90630c54-13e5-4b66-8c34-b13b5bff0425",
-      "bookName": "[傅志寰自传](https://book.douban.com/subject/30493126/)",
-      "bookNo": "7-113-23855",
-      "institution": "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "23读书"
-      ],
-      "code": "138582"
     }
   ],
   "institutions": [
@@ -1345,6 +1345,7 @@
     "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
     "[中华书局](https://book.douban.com/press/2838/?order=time)★",
     "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
+    "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)",
     "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
     "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
     "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
@@ -1388,8 +1389,7 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社",
-    "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)"
+    "香港中文大学出版社"
   ],
   "categories": [
     "黑架2行",
