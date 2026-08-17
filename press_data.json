@@ -1293,6 +1293,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "f380f17a-675b-4c14-b7f7-bf3e32de77d8",
+      "bookName": "[大厂小民：我在互联网公司的1480天](https://book.douban.com/subject/38208793/)",
+      "bookNo": "7-5496-4683",
+      "institution": "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "126127"
     }
   ],
   "institutions": [
@@ -1344,7 +1358,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[文汇出版社](https://book.douban.com/press/2585/?order=time)"
   ],
   "categories": [
     "黑架2行",
