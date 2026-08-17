@@ -1085,20 +1085,6 @@
       "code": "257428"
     },
     {
-      "id": "f380f17a-675b-4c14-b7f7-bf3e32de77d8",
-      "bookName": "[大厂小民：我在互联网公司的1480天](https://book.douban.com/subject/38208793/)",
-      "bookNo": "7-5496-4683",
-      "institution": "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "126127"
-    },
-    {
       "id": "9c2ed243-7964-411d-8204-9527f619851f",
       "bookName": "[出身：不平等的选拔与精英的自我复制](https://book.douban.com/subject/34431781/)",
       "bookNo": "7-5598-1768",
@@ -1139,6 +1125,20 @@
         "21读书"
       ],
       "code": "208321"
+    },
+    {
+      "id": "f380f17a-675b-4c14-b7f7-bf3e32de77d8",
+      "bookName": "[大厂小民：我在互联网公司的1480天](https://book.douban.com/subject/38208793/)",
+      "bookNo": "7-5496-4683",
+      "institution": "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "126127"
     },
     {
       "id": "2c8875c5-7be3-4f66-a2f7-070116e62217",
@@ -1307,6 +1307,20 @@
         "11图书"
       ],
       "code": "198595"
+    },
+    {
+      "id": "806876ca-3c00-4d23-b20a-a3e951eefb8f",
+      "bookName": "[嘉冶记忆：嘉兴冶金机械厂工业遗产保护与更新调查案例研究](https://book.douban.com/subject/37897602/)",
+      "bookNo": "7-5051-5494",
+      "institution": "[红旗出版社](https://book.douban.com/press/2710/?order=time)",
+      "category": [],
+      "group": [
+        "T工业技术"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "149770"
     }
   ],
   "institutions": [
@@ -1349,8 +1363,8 @@
     "[译林出版社](https://book.douban.com/press/2331/?order=time)",
     "[天地出版社](https://book.douban.com/press/2712/?order=time)",
     "[学林出版社](https://book.douban.com/press/2521/?order=time)",
-    "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
     "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+    "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
     "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
@@ -1359,7 +1373,8 @@
     "[东北财经大学出版社](https://book.douban.com/press/2313/?order=time)",
     "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
-    "香港中文大学出版社"
+    "香港中文大学出版社",
+    "[红旗出版社](https://book.douban.com/press/2710/?order=time)"
   ],
   "categories": [
     "黑架2行",
