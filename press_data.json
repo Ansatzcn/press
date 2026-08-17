@@ -2,6 +2,20 @@
   "schemaVersion": 3,
   "entries": [
     {
+      "id": "7e7a7588-4402-4932-91ac-c3f8004bc439",
+      "bookName": "[巴山蜀水“三线”情](https://book.douban.com/subject/30411463/)",
+      "bookNo": "7-01-019008",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "127199"
+    },
+    {
       "id": "21093854-e12e-4e86-9032-b7a7432cac2a",
       "bookName": "[抗战时期重庆马克思主义学术研究的发展](https://book.douban.com/subject/35790639/)",
       "bookNo": "7-01-023315",
@@ -84,20 +98,6 @@
         "11图书"
       ],
       "code": "206430"
-    },
-    {
-      "id": "7e7a7588-4402-4932-91ac-c3f8004bc439",
-      "bookName": "[巴山蜀水“三线”情](https://book.douban.com/subject/30411463/)",
-      "bookNo": "7-01-019008",
-      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "127199"
     },
     {
       "id": "9365e463-7927-4983-9efb-bb50d499c393",
