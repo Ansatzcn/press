@@ -27,6 +27,12 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .combo-pill.selected{border-color:#93b4ff;background:#eaf1ff}
 .combo-pill-select{flex:1;min-width:0;padding:.5rem .7rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
 .combo-pill-select:hover{background:rgba(226,232,240,.7)}
+.combo-pill-select.keyboard-active{
+    background:#dbeafe;
+    color:#1d4ed8;
+    font-weight:800;
+    box-shadow:inset 0 0 0 2px #93c5fd;
+}
 .combo-drag{flex:0 0 32px;width:32px;align-self:stretch;border:0;border-right:1px solid #e2e8f0;background:transparent;color:#64748b;font-size:1rem;font-weight:700;line-height:1;cursor:grab;touch-action:none}
 .combo-drag:hover{background:#e2e8f0;color:#0f172a}.combo-drag:active,.combo-pill.dragging .combo-drag{cursor:grabbing}
 .combo-pill.manual-order.dragging{opacity:.52}
@@ -44,7 +50,7 @@ body.reordering{user-select:none}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-end;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:auto}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#2563eb;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
-.back-to-top{position:fixed;right:16px;top:70%;z-index:900;padding:.45rem .72rem;transform:translateY(-50%);border:1px solid rgba(148,163,184,.45);border-radius:999px;background:rgba(255,255,255,.82);color:#64748b;font-size:.76rem;opacity:0;visibility:hidden;pointer-events:none}.back-to-top.visible{opacity:.55;visibility:visible;pointer-events:auto}
+.back-to-top{position:fixed;right:16px;top:70%;z-index:900;padding:.45rem .72rem;transform:translateY(-50%);border:1px solid #2563eb;border-radius:999px;background:#2563eb;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1rem;font-weight:900;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1d4ed8;border-color:#1d4ed8;color:#fff;opacity:1;outline:none}
 @media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#editModal .dialog-actions .btn{flex:0 0 auto}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
 </style>
 
@@ -974,10 +980,52 @@ function allMultiPanels(){
 }
 function setupInstitutionCombo(which){
     const meta=institutionMeta(which);
+    let keyboardIndex=-1;
+
+    function keyboardOptions(){
+        return [...meta.options.querySelectorAll('.combo-pill-select[data-select-value]')]
+    }
+    function clearKeyboardActive(){
+        keyboardIndex=-1;
+        keyboardOptions().forEach(option=>{
+            option.classList.remove('keyboard-active');
+            option.removeAttribute('aria-selected')
+        })
+    }
+    function setKeyboardActive(nextIndex){
+        const options=keyboardOptions();
+        if(!options.length){keyboardIndex=-1;return false}
+        keyboardIndex=((nextIndex%options.length)+options.length)%options.length;
+        options.forEach((option,index)=>{
+            const active=index===keyboardIndex;
+            option.classList.toggle('keyboard-active',active);
+            if(active)option.setAttribute('aria-selected','true');
+            else option.removeAttribute('aria-selected')
+        });
+        options[keyboardIndex].scrollIntoView({block:'nearest'});
+        return true
+    }
+    function openForKeyboard(){
+        if(meta.panel.classList.contains('hidden')){
+            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+            meta.panel.classList.remove('hidden');
+            renderInstitutionOptions(which);
+            keyboardIndex=-1
+        }
+    }
+    function selectKeyboardValue(value){
+        meta.input.value=value;
+        keyboardIndex=-1;
+        renderInstitutionOptions(which);
+        meta.panel.classList.add('hidden');
+        meta.input.focus()
+    }
+
     meta.toggle.addEventListener('click',e=>{
         e.stopPropagation();
         const willOpen=meta.panel.classList.contains('hidden');
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        keyboardIndex=-1;
         if(willOpen){
             meta.panel.classList.remove('hidden');
             renderInstitutionOptions(which)
@@ -987,32 +1035,66 @@ function setupInstitutionCombo(which){
         e.stopPropagation();
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
         meta.panel.classList.remove('hidden');
+        keyboardIndex=-1;
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('input',()=>{
         // 输入搜索词时自动展开，并立即刷新匹配结果。
         meta.panel.classList.remove('hidden');
+        keyboardIndex=-1;
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('keydown',e=>{
-        if(e.key==='Enter'){
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
             e.preventDefault();
+            e.stopPropagation();
+            openForKeyboard();
+            const options=keyboardOptions();
+            if(!options.length)return;
+            if(keyboardIndex<0){
+                setKeyboardActive(e.key==='ArrowDown'?0:options.length-1)
+            }else{
+                setKeyboardActive(keyboardIndex+(e.key==='ArrowDown'?1:-1))
+            }
+            return
+        }
+        if(e.key==='Enter'){
+            if(!meta.panel.classList.contains('hidden')&&keyboardIndex>=0){
+                const option=keyboardOptions()[keyboardIndex];
+                if(option){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectKeyboardValue(option.dataset.selectValue);
+                    return
+                }
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            keyboardIndex=-1;
             commitInstitution(which,true);
             meta.panel.classList.remove('hidden')
+        }
+        if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
+            e.preventDefault();
+            e.stopPropagation();
+            clearKeyboardActive();
+            meta.panel.classList.add('hidden')
         }
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
-        if(del)return deleteInstitutionHistory(del.dataset.deleteValue);
+        if(del){clearKeyboardActive();return deleteInstitutionHistory(del.dataset.deleteValue)}
         const add=e.target.closest('.combo-add[data-add-current]');
         if(add){
+            clearKeyboardActive();
             commitInstitution(which,true);
             meta.panel.classList.remove('hidden');
             return
         }
         const select=e.target.closest('.combo-pill-select[data-select-value]');
         if(select){
+            clearKeyboardActive();
             meta.input.value=select.dataset.selectValue;
             renderInstitutionOptions(which);
             meta.panel.classList.add('hidden');
@@ -1033,11 +1115,49 @@ function setupMultiCombo(type,which){
         : type==='group'
             ? (which==='edit'?editGroupCombo:groupCombo)
             : (which==='edit'?editTagCombo:tagCombo);
+    let keyboardIndex=-1;
+
+    function keyboardOptions(){
+        return [...meta.options.querySelectorAll('.combo-pill-select[data-select-value]')]
+    }
+    function clearKeyboardActive(){
+        keyboardIndex=-1;
+        keyboardOptions().forEach(option=>{
+            option.classList.remove('keyboard-active');
+            option.removeAttribute('aria-selected')
+        })
+    }
+    function setKeyboardActive(nextIndex){
+        const options=keyboardOptions();
+        if(!options.length){keyboardIndex=-1;return false}
+        keyboardIndex=((nextIndex%options.length)+options.length)%options.length;
+        options.forEach((option,index)=>{
+            const active=index===keyboardIndex;
+            option.classList.toggle('keyboard-active',active);
+            if(active)option.setAttribute('aria-selected','true');
+            else option.removeAttribute('aria-selected')
+        });
+        options[keyboardIndex].scrollIntoView({block:'nearest'});
+        return true
+    }
+    function openForKeyboard(){
+        if(meta.panel.classList.contains('hidden')){
+            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+            meta.panel.classList.remove('hidden');
+            renderMultiField(type,which);
+            keyboardIndex=-1
+        }
+    }
+    function selectKeyboardValue(value){
+        keyboardIndex=-1;
+        toggleSelection(type,which,value)
+    }
 
     toggle.addEventListener('click',e=>{
         e.stopPropagation();
         const willOpen=meta.panel.classList.contains('hidden');
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        keyboardIndex=-1;
         if(willOpen){
             meta.panel.classList.remove('hidden');
             renderMultiField(type,which)
@@ -1047,37 +1167,76 @@ function setupMultiCombo(type,which){
         e.stopPropagation();
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
         meta.panel.classList.remove('hidden');
+        keyboardIndex=-1;
         renderMultiField(type,which)
     });
     meta.input.addEventListener('input',()=>{
         // 输入搜索词时自动展开，并立即刷新匹配结果。
         meta.panel.classList.remove('hidden');
+        keyboardIndex=-1;
         renderMultiOptions(type,which)
     });
     meta.input.addEventListener('keydown',e=>{
-        if(e.key==='Enter'){
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
             e.preventDefault();
+            e.stopPropagation();
+            openForKeyboard();
+            const options=keyboardOptions();
+            if(!options.length)return;
+            if(keyboardIndex<0){
+                setKeyboardActive(e.key==='ArrowDown'?0:options.length-1)
+            }else{
+                setKeyboardActive(keyboardIndex+(e.key==='ArrowDown'?1:-1))
+            }
+            return
+        }
+        if(e.key==='Enter'){
+            if(!meta.panel.classList.contains('hidden')&&keyboardIndex>=0){
+                const option=keyboardOptions()[keyboardIndex];
+                if(option){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectKeyboardValue(option.dataset.selectValue);
+                    return
+                }
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            keyboardIndex=-1;
             commitTypedValue(type,which,true);
             meta.panel.classList.remove('hidden')
+        }
+        if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
+            e.preventDefault();
+            e.stopPropagation();
+            clearKeyboardActive();
+            meta.panel.classList.add('hidden')
         }
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
-        if(del)return deleteHistoryOption(type,del.dataset.deleteValue);
+        if(del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.deleteValue)}
         const add=e.target.closest('.combo-add[data-add-current]');
         if(add){
+            clearKeyboardActive();
             commitTypedValue(type,which,true);
             meta.panel.classList.remove('hidden');
             return
         }
         const select=e.target.closest('.combo-pill-select[data-select-value]');
-        if(select)return toggleSelection(type,which,select.dataset.selectValue)
+        if(select){
+            clearKeyboardActive();
+            return toggleSelection(type,which,select.dataset.selectValue)
+        }
     });
     meta.selectedBox.addEventListener('click',e=>{
         e.stopPropagation();
         const remove=e.target.closest('.selected-pill-remove[data-remove-value]');
-        if(remove)return removeSelection(type,which,remove.dataset.removeValue)
+        if(remove){
+            clearKeyboardActive();
+            return removeSelection(type,which,remove.dataset.removeValue)
+        }
     });
     combo.addEventListener('click',e=>e.stopPropagation())
 }
