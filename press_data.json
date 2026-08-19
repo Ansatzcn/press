@@ -697,22 +697,6 @@
       "code": "285835"
     },
     {
-      "id": "6aaa1178-4e2e-4733-9793-0985b8e4edfa",
-      "bookName": "中国特色社会主义政治经济学教程新编（上）",
-      "bookNo": "7-5223-1377",
-      "institution": "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
-      "category": [
-        "正架1行"
-      ],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "13图书"
-      ],
-      "code": "104921"
-    },
-    {
       "id": "df891f84-0904-4f4d-8701-2e92edaf15aa",
       "bookName": "中国特色社会主义政治经济学教程新编（上）",
       "bookNo": "7-5223-1377",
@@ -1818,5 +1802,7 @@
     "23读书",
     "24读书"
   ],
-  "releasedCodes": []
+  "releasedCodes": [
+    "104921"
+  ]
 }
