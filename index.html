@@ -50,7 +50,7 @@ body.reordering{user-select:none}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-end;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:auto}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#2563eb;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
-.back-to-top{position:fixed;right:16px;top:70%;z-index:900;padding:.45rem .72rem;transform:translateY(-50%);border:1px solid #2563eb;border-radius:999px;background:#2563eb;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1rem;font-weight:900;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1d4ed8;border-color:#1d4ed8;color:#fff;opacity:1;outline:none}
+.back-to-top{position:fixed;right:16px;top:70%;z-index:900;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;transform:translateY(-50%);border:1px solid #2563eb;border-radius:50%;background:#2563eb;color:#2563eb;font-size:0;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1d4ed8;border-color:#1d4ed8;color:#1d4ed8;opacity:1;outline:none}
 @media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#editModal .dialog-actions .btn{flex:0 0 auto}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
 </style>
 
@@ -150,7 +150,7 @@ body.reordering{user-select:none}
 </div>
 <div class="form-group">
 <label for="codeInput">编码</label>
-<input type="text" id="codeInput" readonly>
+<input type="text" id="codeInput" autocomplete="off" spellcheck="false">
 </div>
 <div class="form-group full">
 <label for="institutionInput">出版</label>
@@ -277,7 +277,7 @@ body.reordering{user-select:none}
 </form>
 </section>
 
-<button class="back-to-top" id="backToTopBtn" type="button" aria-label="回到顶部" title="回到顶部">↑</button>
+<button class="back-to-top" id="backToTopBtn" type="button" aria-label="回到顶部" title="回到顶部"><span aria-hidden="true">↑</span></button>
 <div class="toast hidden" id="toast"></div>
 
 <script>
@@ -378,7 +378,11 @@ function normEntry(x,usedCodes){
     const bookNo=clean(x.bookNo),institution=clean(x.institution);
     const category=normalizeMulti(x.category),group=normalizeMulti(x.group),tag=normalizeMulti(x.tag);
     let code=clean(x.code);
-    if(!/^(1\d{5}|2\d{5})$/.test(code)||usedCodes.has(code))code=randomCode(usedCodes);
+
+    // 手工填写的编码允许原样保存，不受自动编码格式限制。
+    // 只有编码为空，或导入/旧数据中出现重复编码时，才自动生成一个唯一编码。
+    if(!code||usedCodes.has(code))code=randomCode(usedCodes);
+
     usedCodes.add(code);
     return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,group,tag,code}
 }
@@ -769,8 +773,22 @@ function addEntry(){
     const category=[...addSelections.category];
     const group=[...addSelections.group];
     const tag=[...addSelections.tag];
+    const requestedCode=clean(codeInput.value);
+    const usedCodes=new Set(state.entries.map(x=>clean(x.code)).filter(Boolean));
     let code;
-    try{code=nextCode(new Set(state.entries.map(x=>x.code)))}catch(e){show(e.message,'error');return}
+
+    if(requestedCode){
+        if(usedCodes.has(requestedCode)){
+            show(`编码“${requestedCode}”已存在，请修改代码后再提交`,'error');
+            codeInput.focus();
+            codeInput.select();
+            return
+        }
+        code=requestedCode
+    }else{
+        try{code=nextCode(usedCodes)}catch(e){show(e.message,'error');return}
+    }
+
     state.entries.push({
         id:uid(),
         bookName,
