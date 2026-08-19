@@ -990,6 +990,22 @@
       "code": "102218"
     },
     {
+      "id": "84905f9e-2eaa-4ac7-9a58-25cdff4fa730",
+      "bookName": "[宝安口述史（深圳经济特区建立前）](https://book.douban.com/subject/36979219/)",
+      "bookNo": "7-5205-4635",
+      "institution": "[中国文史出版社](https://book.douban.com/press/2671/?order=time)",
+      "category": [
+        "正架1行"
+      ],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "13图书"
+      ],
+      "code": "171116"
+    },
+    {
       "id": "349ab0ac-b923-491f-9d17-dc4cc3e58e99",
       "bookName": "[算法的起源：莱布尼茨与二进制](https://book.douban.com/subject/38176223/)",
       "bookNo": "7-5236-1797",
@@ -1952,22 +1968,6 @@
         "14图书"
       ],
       "code": "222738"
-    },
-    {
-      "id": "84905f9e-2eaa-4ac7-9a58-25cdff4fa730",
-      "bookName": "[宝安口述史（深圳经济特区建立前）](https://book.douban.com/subject/36979219/)",
-      "bookNo": "7-5205-4635",
-      "institution": "[中国文史出版社](https://book.douban.com/press/2671/?order=time)",
-      "category": [
-        "正架1行"
-      ],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "13图书"
-      ],
-      "code": "171116"
     }
   ],
   "institutions": [
@@ -2002,6 +2002,7 @@
     "[世界知识出版社](https://book.douban.com/press/2344/?order=time)",
     "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
     "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)",
+    "[中国文史出版社](https://book.douban.com/press/2671/?order=time)",
     "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
     "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
     "[红旗出版社](https://book.douban.com/press/2710/?order=time)",
@@ -2041,8 +2042,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[中国文史出版社](https://book.douban.com/press/2671/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
