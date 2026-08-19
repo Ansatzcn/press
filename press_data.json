@@ -1386,6 +1386,20 @@
       "code": "215009"
     },
     {
+      "id": "cd569869-cf7c-49b7-955f-1ea698323b4b",
+      "bookName": "[县中：中国县域教育田野透视](https://book.douban.com/subject/36946515/)",
+      "bookNo": "7-5154-1339",
+      "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
+      "category": [],
+      "group": [
+        "G文化、科学、教育、体育"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "104921"
+    },
+    {
       "id": "e829d4e9-fa27-4d15-97ec-1d45a61e66bf",
       "bookName": "[张闻天传](https://book.douban.com/subject/1409664/)",
       "bookNo": "7-80092-927",
@@ -2044,7 +2058,5 @@
     "23读书",
     "24读书"
   ],
-  "releasedCodes": [
-    "104921"
-  ]
+  "releasedCodes": []
 }
