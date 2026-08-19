@@ -38,7 +38,10 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .combo-pill.manual-order.dragging{opacity:.52}
 .combo-pill.drag-before{box-shadow:inset 0 3px 0 #2563eb}.combo-pill.drag-after{box-shadow:inset 0 -3px 0 #2563eb}
 body.reordering{user-select:none}
-.combo-pill-delete,.selected-pill-remove{flex:0 0 28px;width:28px;height:30px;margin-right:2px;border:0;border-radius:50%;background:transparent;color:#991b1b;font-size:.95rem;font-weight:700;line-height:1}
+.combo-pill-edit,.combo-pill-delete,.selected-pill-remove{flex:0 0 28px;width:28px;height:30px;border:0;border-radius:50%;background:transparent;font-size:.95rem;font-weight:800;line-height:1}
+.combo-pill-edit{color:#15803d}
+.combo-pill-edit:hover{background:#dcfce7;color:#166534}
+.combo-pill-delete,.selected-pill-remove{margin-right:2px;color:#991b1b}
 .combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
 .selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
 .combo-add{display:block;width:100%;margin-top:.55rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{width:100%;padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
@@ -514,6 +517,7 @@ function renderMultiOptions(type,which){
             return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
                 ${dragHandle}
                 <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>
+                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑${meta.label} ${attr(v)}" title="编辑">✓</button>
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
             </span>`
         }).join('')}</div>`
@@ -540,6 +544,7 @@ function renderInstitutionOptions(which){
             <span class="combo-pill manual-order${key(meta.input.value)===key(v)?' selected':''}" data-drag-value="${attr(v)}">
                 <button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动出版 ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>
                 <button class="combo-pill-select" type="button" data-select-value="${attr(v)}">${esc(v)}</button>
+                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑出版 ${attr(v)}" title="编辑">✓</button>
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
             </span>
         `).join('')}</div>`
@@ -681,6 +686,37 @@ function addInstitutionHistory(value,notify=false){
     if(notify)show('已加入出版下拉菜单','success');
     return true
 }
+function editInstitutionHistory(value){
+    const oldValue=clean(value),oldKey=key(oldValue);
+    const index=state.institutions.findIndex(v=>key(v)===oldKey);
+    if(index<0)return;
+
+    const nextRaw=prompt('修改出版选项：',state.institutions[index]);
+    if(nextRaw===null)return;
+    const nextValue=clean(nextRaw);
+    if(!nextValue){show('出版选项不能为空','error');return}
+    if(key(nextValue)===oldKey)return;
+
+    if(state.institutions.some((v,i)=>i!==index&&key(v)===key(nextValue))){
+        show(`出版选项“${nextValue}”已存在，请换一个名称`,'error');
+        return
+    }
+
+    // 保留“出版”人工排序的位置，只替换当前历史选项文字。
+    state.institutions[index]=nextValue;
+    state.institutions=uniq(state.institutions);
+
+    // 当前添加/编辑界面的临时输入若正好使用旧选项，则同步为新文字。
+    [institutionInput,editInstitution].forEach(input=>{
+        if(key(input.value)===oldKey)input.value=nextValue
+    });
+
+    saveLocal();
+    if(admin())schedule();
+    renderInstitutionOptions('add');
+    renderInstitutionOptions('edit');
+    show(`已修改出版选项为“${nextValue}”`,'success')
+}
 function deleteInstitutionHistory(value){
     const targetKey=key(value);
     if(!confirm(`确定从出版下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
@@ -720,6 +756,43 @@ function toggleSelection(type,which,value){
     renderMultiField(type,which);
     meta.panel.classList.remove('hidden');
     meta.input.focus()
+}
+function editHistoryOption(type,value){
+    const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
+    const oldValue=clean(value),oldKey=key(oldValue);
+    const history=[...state[historyKey]];
+    const index=history.findIndex(v=>key(v)===oldKey);
+    if(index<0)return;
+
+    const nextRaw=prompt(`修改${label}选项：`,history[index]);
+    if(nextRaw===null)return;
+    const nextValue=clean(nextRaw);
+    if(!nextValue){show(`${label}选项不能为空`,'error');return}
+    if(key(nextValue)===oldKey)return;
+
+    if(history.some((v,i)=>i!==index&&key(v)===key(nextValue))){
+        show(`${label}选项“${nextValue}”已存在，请换一个名称`,'error');
+        return
+    }
+
+    history[index]=nextValue;
+    // 书架保留人工排列位置；大类、标签继续按原自动排序规则。
+    state[historyKey]=type==='category'?uniq(history):sortHistory(type,history);
+
+    const renamePending=values=>uniq(values.map(v=>key(v)===oldKey?nextValue:v));
+    addSelections[type]=renamePending(addSelections[type]);
+    editSelections[type]=renamePending(editSelections[type]);
+
+    const addMeta=multiMeta(type,'add');
+    const editMeta=multiMeta(type,'edit');
+    if(key(addMeta.input.value)===oldKey)addMeta.input.value=nextValue;
+    if(key(editMeta.input.value)===oldKey)editMeta.input.value=nextValue;
+
+    saveLocal();
+    if(admin())schedule();
+    renderMultiField(type,'add');
+    renderMultiField(type,'edit');
+    show(`已修改${label}选项为“${nextValue}”`,'success')
 }
 function deleteHistoryOption(type,value){
     const meta=multiMeta(type,'add'),targetKey=key(value);
@@ -1116,6 +1189,8 @@ function setupInstitutionCombo(which){
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
+        const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
+        if(edit){clearKeyboardActive();return editInstitutionHistory(edit.dataset.editValue)}
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
         if(del){clearKeyboardActive();return deleteInstitutionHistory(del.dataset.deleteValue)}
         const add=e.target.closest('.combo-add[data-add-current]');
@@ -1263,6 +1338,8 @@ function setupMultiCombo(type,which){
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
+        const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
+        if(edit){clearKeyboardActive();return editHistoryOption(type,edit.dataset.editValue)}
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
         if(del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.deleteValue)}
         const add=e.target.closest('.combo-add[data-add-current]');
