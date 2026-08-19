@@ -1064,6 +1064,22 @@
       "code": "149770"
     },
     {
+      "id": "3ab56bc1-3b08-4113-b9bd-b0e89a2b45af",
+      "bookName": "习近平关于基层工作方法论述摘编",
+      "bookNo": "7-5073-5153",
+      "institution": "[中央文献出版社](https://book.douban.com/press/2494/?order=time)★",
+      "category": [
+        "正架1行"
+      ],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "13图书"
+      ],
+      "code": "171117"
+    },
+    {
       "id": "71bb502d-4617-4ac9-a415-40fd218cb7f8",
       "bookName": "低空经济：中国经济发展新引擎",
       "bookNo": "7-5217-7000",
@@ -1968,22 +1984,6 @@
         "14图书"
       ],
       "code": "222738"
-    },
-    {
-      "id": "3ab56bc1-3b08-4113-b9bd-b0e89a2b45af",
-      "bookName": "习近平关于基层工作方法论述摘编",
-      "bookNo": "7-5073-5153",
-      "institution": "[中央文献出版社](https://book.douban.com/press/2494/?order=time)★",
-      "category": [
-        "正架1行"
-      ],
-      "group": [
-        "D政治、法律"
-      ],
-      "tag": [
-        "13图书"
-      ],
-      "code": "171117"
     }
   ],
   "institutions": [
@@ -2022,6 +2022,7 @@
     "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
     "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
     "[红旗出版社](https://book.douban.com/press/2710/?order=time)",
+    "[中央文献出版社](https://book.douban.com/press/2494/?order=time)★",
     "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
     "[中国法治出版社](https://book.douban.com/press/2437/?order=time)",
     "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
@@ -2058,8 +2059,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[中央文献出版社](https://book.douban.com/press/2494/?order=time)★"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
