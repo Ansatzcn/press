@@ -623,8 +623,8 @@ function render(){
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
-        // 出版 → 书号 → 大类 → 标签 → 书架 → 编码
-        // 注意：历史内部字段 group=大类、category=书架，这里先按含义映射，避免后续改名造成顺序混淆。
+        // 出版 → 书号 → 大类 → 标签 → 编码 → 书架
+        // 注意：仅调整总表显示顺序；添加板块、编辑字段和数据结构保持不变。
         const publication=x.institution;
         const majorCategory=x.group;
         const tagValue=x.tag;
@@ -642,11 +642,11 @@ function render(){
         if(tagValue.length){
             metaRows.push(`<div class="meta-row"><span class="meta-label">标签：</span>${esc(tagValue.join('、'))}</div>`)
         }
-        if(bookshelf.length){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</div>`)
-        }
         if(x.code){
             metaRows.push(`<div class="meta-row code-row"><span class="code-text"><span class="meta-label">编码：</span>${esc(x.code)}</span>${editLink}</div>`)
+        }
+        if(bookshelf.length){
+            metaRows.push(`<div class="meta-row"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</div>`)
         }
         const metaHtml=metaRows.join('');
         return `<article class="press-item"><div class="press-head"><div class="press-content"><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}</div></div></article>`
