@@ -1674,10 +1674,14 @@
       "id": "e167ca74-3af1-4bc7-879a-6cb87a272ad1",
       "bookName": "Technology and Capital in the Age of Lean Production: A Marxian Critique of the \"New Economy\"",
       "bookNo": "0-7914-4600",
-      "institution": "",
+      "institution": "State University of New York Press",
       "category": [],
-      "group": [],
-      "tag": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "14图书"
+      ],
       "code": "222738"
     }
   ],
