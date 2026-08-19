@@ -366,6 +366,20 @@
       "code": "130892"
     },
     {
+      "id": "5d82803d-a0f9-4880-bd67-5514d6a58eba",
+      "bookName": "[战略性工业化的曲折展开：中国机械工业的演化（1900-1957）](https://book.douban.com/subject/26383062/)",
+      "bookNo": "7-208-12939",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "117101"
+    },
+    {
       "id": "ce1c99ca-82a8-4a4a-abfd-f42c11bd661d",
       "bookName": "[回到马克思：国外马克思主义经济理论研究](https://book.douban.com/subject/36334001/)",
       "bookNo": "7-208-16607",
@@ -1917,7 +1931,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "117101",
     "104921"
   ]
 }
