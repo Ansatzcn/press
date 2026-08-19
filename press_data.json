@@ -1889,6 +1889,22 @@
         "14图书"
       ],
       "code": "222738"
+    },
+    {
+      "id": "4c6d72d4-596c-44b8-a841-2e698ecb4ee1",
+      "bookName": "[中华人民共和国农村集体经济组织法理解与适用](https://book.douban.com/subject/37845196/)",
+      "bookNo": "7-5216-4619",
+      "institution": "[中国法治出版社](https://book.douban.com/press/2437/?order=time)",
+      "category": [
+        "正架1行"
+      ],
+      "group": [
+        "D政治、法律"
+      ],
+      "tag": [
+        "13图书"
+      ],
+      "code": "171113"
     }
   ],
   "institutions": [
@@ -1961,7 +1977,8 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press"
+    "State University of New York Press",
+    "[中国法治出版社](https://book.douban.com/press/2437/?order=time)"
   ],
   "categories": [
     "黑架2行",
