@@ -1090,7 +1090,8 @@ function setupInstitutionCombo(which){
             e.stopPropagation();
             keyboardIndex=-1;
             commitInstitution(which,true);
-            meta.panel.classList.remove('hidden')
+            meta.panel.classList.add('hidden');
+            meta.input.focus()
         }
         if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
             e.preventDefault();
@@ -1168,7 +1169,9 @@ function setupMultiCombo(type,which){
     }
     function selectKeyboardValue(value){
         keyboardIndex=-1;
-        toggleSelection(type,which,value)
+        toggleSelection(type,which,value);
+        meta.panel.classList.add('hidden');
+        meta.input.focus()
     }
 
     toggle.addEventListener('click',e=>{
@@ -1222,7 +1225,8 @@ function setupMultiCombo(type,which){
             e.stopPropagation();
             keyboardIndex=-1;
             commitTypedValue(type,which,true);
-            meta.panel.classList.remove('hidden')
+            meta.panel.classList.add('hidden');
+            meta.input.focus()
         }
         if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
             e.preventDefault();
