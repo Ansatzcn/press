@@ -167,6 +167,15 @@ body.reordering{user-select:none}
 <input type="text" id="codeInput" autocomplete="off" spellcheck="false">
 </div>
 </div>
+<div class="form-group">
+<label for="editGroup">大类</label>
+<div class="combo" id="editGroupCombo">
+<div class="combo-selected" id="editGroupSelected"></div>
+<div class="combo-row">
+<input type="text" id="editGroup" autocomplete="off">
+<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
+</div>
+<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
 <div class="three-fields-row">
 <div class="form-group">
 <label for="groupInput">大类</label>
@@ -243,15 +252,7 @@ body.reordering{user-select:none}
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
 </div>
 </div>
-<div class="form-group">
-<label for="editGroup">大类</label>
-<div class="combo" id="editGroupCombo">
-<div class="combo-selected" id="editGroupSelected"></div>
-<div class="combo-row">
-<input type="text" id="editGroup" autocomplete="off">
-<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
+
 </div>
 </div>
 <div class="form-group">
