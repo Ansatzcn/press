@@ -397,6 +397,28 @@ function nextCode(usedSet){
     const released=(state.releasedCodes||[]).find(code=>validCode(code)&&!used.has(code));
     return released||randomCode(used)
 }
+
+// 指定标签的自动编码区间。仅在“新增条目且编码留空”时生效；手动编码不受这些区间限制。
+const AUTO_CODE_RULES=[
+    {tag:'11图书',start:100001,end:129999},
+    {tag:'13图书',start:130001,end:139999},
+    {tag:'14图书',start:140001,end:149999},
+    {tag:'21读书',start:200001,end:229999},
+    {tag:'23读书',start:230001,end:239999},
+    {tag:'24读书',start:240001,end:249999}
+];
+function autoCodeRuleForTags(tags){
+    const selectedKeys=new Set(normalizeMulti(tags).map(key));
+    return AUTO_CODE_RULES.find(rule=>selectedKeys.has(key(rule.tag)))||null
+}
+function nextCodeInRange(rule,usedSet){
+    const used=usedSet||new Set(state.entries.map(x=>clean(x.code)).filter(Boolean));
+    for(let n=rule.start;n<=rule.end;n++){
+        const code=String(n);
+        if(!used.has(code))return code
+    }
+    throw new Error(`标签“${rule.tag}”的自动编码区间 ${rule.start}–${rule.end} 已用尽`)
+}
 function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
@@ -1005,7 +1027,10 @@ function addEntry(){
         }
         code=requestedCode
     }else{
-        try{code=nextCode(usedCodes)}catch(e){show(e.message,'error');return}
+        try{
+            const rule=autoCodeRuleForTags(tag);
+            code=rule?nextCodeInRange(rule,usedCodes):nextCode(usedCodes)
+        }catch(e){show(e.message,'error');return}
     }
 
     state.entries.push({
