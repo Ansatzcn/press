@@ -846,6 +846,20 @@
       "code": "194023"
     },
     {
+      "id": "cc0f7568-a437-4e56-b76e-7a424e28e471",
+      "bookName": "[描述的科学：欧洲文艺复兴时期的自然志](https://book.douban.com/subject/35556932/)",
+      "bookNo": "7-301-32284",
+      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
+      "category": [],
+      "group": [
+        "N自然科学总论"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240001"
+    },
+    {
       "id": "fcb6d06b-ee4a-4f46-9fba-eaa761e4e8ef",
       "bookName": "[用后即弃的人：全球经济中的新奴隶制](https://book.douban.com/subject/33658304/)",
       "bookNo": "7-305-22289",
@@ -2276,7 +2290,6 @@
   ],
   "releasedCodes": [
     "253272",
-    "240001",
     "298539",
     "187302",
     "182255",
