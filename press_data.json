@@ -888,6 +888,20 @@
       "code": "110139"
     },
     {
+      "id": "d6c876a9-3c0d-4764-add6-a53fde7ee639",
+      "bookName": "[中印文化交流史](https://book.douban.com/subject/26977316/)",
+      "bookNo": "7-5000-9997",
+      "institution": "[中国大百科全书出版社](https://book.douban.com/press/2641/?order=time)",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "14图书"
+      ],
+      "code": "130438"
+    },
+    {
       "id": "458d908a-7b0b-4fa9-8a98-a6718f79b60d",
       "bookName": "[美术经典中的红色中国](https://book.douban.com/subject/36485200/)",
       "bookNo": "7-5003-2512",
@@ -2040,16 +2054,6 @@
         "14图书"
       ],
       "code": "222738"
-    },
-    {
-      "id": "d6c876a9-3c0d-4764-add6-a53fde7ee639",
-      "bookName": "[中印文化交流史](https://book.douban.com/subject/26977316/)",
-      "bookNo": "7-5000-9997",
-      "institution": "",
-      "category": [],
-      "group": [],
-      "tag": [],
-      "code": "130438"
     }
   ],
   "institutions": [
