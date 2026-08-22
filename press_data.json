@@ -1734,6 +1734,20 @@
       "code": "226220"
     },
     {
+      "id": "d6c1e442-c88e-4dd3-9293-32a19be29d41",
+      "bookName": "[亚洲腹地旅行记](https://book.douban.com/subject/27005544/)",
+      "bookNo": "7-5399-9342",
+      "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
+      "category": [],
+      "group": [
+        "K历史、地理"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240004"
+    },
+    {
       "id": "dc8da0be-5fdf-44de-a43e-4cf3b31015ec",
       "bookName": "[大脑与自然——为什么我们需要世界之美](https://book.douban.com/subject/37173738/)",
       "bookNo": "7-5428-8321",
@@ -2178,20 +2192,6 @@
         "14图书"
       ],
       "code": "222738"
-    },
-    {
-      "id": "d6c1e442-c88e-4dd3-9293-32a19be29d41",
-      "bookName": "[亚洲腹地旅行记](https://book.douban.com/subject/27005544/)",
-      "bookNo": "7-5399-9342",
-      "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
-      "category": [],
-      "group": [
-        "K历史、地理"
-      ],
-      "tag": [
-        "24读书"
-      ],
-      "code": "240004"
     }
   ],
   "institutions": [
@@ -2289,6 +2289,7 @@
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
+    "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
     "[上海科技教育出版社](https://book.douban.com/press/2324/?order=time)",
     "[海南出版社](https://book.douban.com/press/2554/?order=time)",
     "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
@@ -2310,8 +2311,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
