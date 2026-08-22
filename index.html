@@ -231,6 +231,17 @@ body.reordering{user-select:none}
 <div class="form-group"><label for="editBookNo">书号</label><input type="text" id="editBookNo" autocomplete="off"></div>
 <div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" autocomplete="off" spellcheck="false"></div>
 </div>
+<div class="form-group">
+<label for="editGroup">大类</label>
+<div class="combo" id="editGroupCombo">
+<div class="combo-selected" id="editGroupSelected"></div>
+<div class="combo-row">
+<input type="text" id="editGroup" autocomplete="off">
+<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
+</div>
+<div class="combo-panel hidden"><div id="editGroupOptions"></div></div>
+</div>
+</div>
 <div class="three-fields-row">
 <div class="form-group">
 <label for="editTag">标签</label>
@@ -244,17 +255,6 @@ body.reordering{user-select:none}
 </div>
 </div>
 <div class="form-group">
-<label for="editGroup">大类</label>
-<div class="combo" id="editGroupCombo">
-<div class="combo-selected" id="editGroupSelected"></div>
-<div class="combo-row">
-<input type="text" id="editGroup" autocomplete="off">
-<button class="combo-toggle" id="editGroupToggle" type="button" aria-label="展开大类历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
-</div>
-</div>
-<div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-selected" id="editCategorySelected"></div>
@@ -263,6 +263,8 @@ body.reordering{user-select:none}
 <button class="combo-toggle" id="editCategoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
+</div>
+</div>
 </div>
 </div>
 </div></div>
