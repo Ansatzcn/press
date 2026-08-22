@@ -2000,6 +2000,18 @@
       "code": "298541"
     },
     {
+      "id": "1a50715e-ced1-4a02-8618-9a9eeb72a2a5",
+      "bookName": "赴金山：19世纪淘金热中的华人移民与全球政治",
+      "bookNo": "7-5538-2652",
+      "institution": "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
+      "category": [],
+      "group": [],
+      "tag": [
+        "14图书"
+      ],
+      "code": "140006"
+    },
+    {
       "id": "d30736a4-cfa9-447c-8673-7ef08cc8bed0",
       "bookName": "[马克思与自然：一个红与绿的视角](https://book.douban.com/subject/37426483/)",
       "bookNo": "7-5693-3777",
@@ -2248,18 +2260,6 @@
         "14图书"
       ],
       "code": "222738"
-    },
-    {
-      "id": "1a50715e-ced1-4a02-8618-9a9eeb72a2a5",
-      "bookName": "赴金山：19世纪淘金热中的华人移民与全球政治",
-      "bookNo": "7-5538-2652",
-      "institution": "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
-      "category": [],
-      "group": [],
-      "tag": [
-        "14图书"
-      ],
-      "code": "140006"
     }
   ],
   "institutions": [
@@ -2367,6 +2367,7 @@
     "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
     "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
+    "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
     "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
@@ -2379,8 +2380,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[岳麓书社](https://book.douban.com/press/2358/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
