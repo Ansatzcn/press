@@ -888,20 +888,6 @@
       "code": "171105"
     },
     {
-      "id": "31c1c40f-afdd-4fb7-a723-0cfd01944e9f",
-      "bookName": "[描述的科学：欧洲文艺复兴时期的自然志](https://book.douban.com/subject/35556932/)",
-      "bookNo": "7-301-32284",
-      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
-      "category": [],
-      "group": [
-        "N自然科学总论"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "194023"
-    },
-    {
       "id": "cc0f7568-a437-4e56-b76e-7a424e28e471",
       "bookName": "[描述的科学：欧洲文艺复兴时期的自然志](https://book.douban.com/subject/35556932/)",
       "bookNo": "7-301-32284",
@@ -2456,6 +2442,7 @@
     "249993",
     "261132",
     "207357",
-    "163148"
+    "163148",
+    "194023"
   ]
 }
