@@ -658,6 +658,20 @@
       "code": "215224"
     },
     {
+      "id": "79e81be7-1961-41f8-9ba4-04e18a5aa62c",
+      "bookName": "[切尔诺贝利：一部悲剧史](https://book.douban.com/subject/36223226/)",
+      "bookNo": "7-218-16433",
+      "institution": "[广东人民出版社](https://book.douban.com/press/2707/?order=time)★",
+      "category": [],
+      "group": [
+        "T工业技术"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "200015"
+    },
+    {
       "id": "b9e866fa-63d1-42ce-97bf-ae9d7749c950",
       "bookName": "[脱不下的长衫](https://book.douban.com/subject/37823876/)",
       "bookNo": "7-218-18839",
@@ -783,7 +797,7 @@
       "tag": [
         "21读书"
       ],
-      "code": "118875"
+      "code": "200014"
     },
     {
       "id": "b5f67c09-ed19-4685-8e0e-e3cf16dac6b0",
@@ -1246,6 +1260,20 @@
         "13图书"
       ],
       "code": "171117"
+    },
+    {
+      "id": "cdea82dc-da00-46ef-8e24-94c3edbc1d08",
+      "bookName": "[八堂自然课：大自然教给我们的生存之道](https://book.douban.com/subject/35694370/)",
+      "bookNo": "7-5217-3631",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "group": [
+        "N自然科学总论"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "200016"
     },
     {
       "id": "250352c3-1bec-4495-92a8-bad388f12b4e",
@@ -2375,6 +2403,7 @@
     "168117",
     "197420",
     "202415",
-    "220214"
+    "220214",
+    "118875"
   ]
 }
