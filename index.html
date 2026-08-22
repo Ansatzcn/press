@@ -559,15 +559,19 @@ function renderInstitutionOptions(which){
     const meta=institutionMeta(which);
     const q=key(meta.input.value);
     const history=uniq(state.institutions);
-    // “出版”下拉菜单只负责搜索与选择；顺序由“出版管理”的行号维护，但下拉菜单不显示行号。
+    // “出版”下拉菜单只显示出版名称；排序由“出版管理”的行号维护。
+    // 添加板块保留“新增到下拉菜单”能力，但不在下拉菜单中提供修改、删除或拖拽。
     const values=history.filter(v=>!q||key(v).includes(q));
-    meta.options.innerHTML=values.length
+    const current=clean(meta.input.value);
+    const canAdd=which==='add'&&current&&!history.some(v=>key(v)===key(current));
+    const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>`
             <span class="combo-pill${key(meta.input.value)===key(v)?' selected':''}">
                 <button class="combo-pill-select institution-choice" type="button" data-select-value="${attr(v)}">${esc(v)}</button>
             </span>
         `).join('')}</div>`
-        : `<div class="combo-empty">${q?'没有匹配的出版':'暂无出版'}</div>`
+        : `<div class="combo-empty">${q?'没有匹配的出版':'暂无出版'}</div>`;
+    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
 }
 function renderManageInstitutionOptions(){
     const history=uniq(state.institutions);
@@ -807,6 +811,20 @@ function addHistoryOption(type,value,notify=false){
     if(notify)show(`已加入${label}下拉菜单`,'success');
     return true
 }
+function addInstitutionHistory(value,notify=false){
+    const v=clean(value);
+    if(!v)return false;
+    if(state.institutions.some(x=>key(x)===key(v)))return false;
+    // 从添加板块新增的出版选项默认追加到末行；如需精确调整位置，可在“管理”页输入目标行号。
+    state.institutions=uniq([...state.institutions,v]);
+    saveLocal();
+    if(admin())schedule();
+    renderInstitutionOptions('add');
+    renderInstitutionOptions('edit');
+    renderManageInstitutionOptions();
+    if(notify)show('已加入出版下拉菜单','success');
+    return true
+}
 function editInstitutionHistory(value){
     const oldValue=clean(value),oldKey=key(oldValue);
     const index=state.institutions.findIndex(v=>key(v)===oldKey);
@@ -852,11 +870,14 @@ function deleteInstitutionHistory(value){
 function commitInstitution(which,notify=false){
     const meta=institutionMeta(which),value=clean(meta.input.value);
     if(!value)return false;
-    // 输入框可保留自由文本，但“出版”下拉选项只能在管理页新增并指定行号。
-    const exists=state.institutions.some(v=>key(v)===key(value));
+    let exists=state.institutions.some(v=>key(v)===key(value));
+    // 添加板块允许直接把新出版加入下拉菜单；编辑板块不会新增历史选项。
+    if(which==='add'&&!exists){
+        addInstitutionHistory(value,notify);
+        exists=true
+    }
     meta.input.value=value;
     renderInstitutionOptions(which);
-    if(notify&&!exists)show('该出版未加入下拉菜单；如需加入，请在“管理”中指定行号','info');
     return exists
 }
 function removeSelection(type,which,value){
@@ -1302,6 +1323,19 @@ function setupInstitutionCombo(which){
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
+        const add=e.target.closest('.combo-add[data-add-current]');
+        if(add&&which==='add'){
+            clearKeyboardActive();
+            const value=clean(meta.input.value);
+            if(value){
+                addInstitutionHistory(value,true);
+                meta.input.value=value;
+                renderInstitutionOptions(which);
+                meta.panel.classList.remove('hidden');
+                meta.input.focus()
+            }
+            return
+        }
         const select=e.target.closest('.combo-pill-select[data-select-value]');
         if(select){
             clearKeyboardActive();
