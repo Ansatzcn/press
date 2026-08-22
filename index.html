@@ -259,7 +259,7 @@ body.reordering{user-select:none}
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
 </div>
-<div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" readonly></div>
+<div class="form-group"><label for="editCode">编码</label><input type="text" id="editCode" autocomplete="off" spellcheck="false"></div>
 </div>
 <div class="dialog-actions"><button class="btn btn-danger" id="editDelete" type="button">删除</button><button class="btn" id="editCancel" type="button">取消</button><button class="btn btn-primary" id="editSave" type="button">保存</button></div>
 </div>
@@ -1077,8 +1077,37 @@ function saveEdit(){
     x.category=[...editSelections.category];
     x.group=[...editSelections.group];
     x.tag=[...editSelections.tag];
+
+    const oldCode=clean(x.code);
+    const requestedCode=clean(editCode.value);
+    const usedCodes=new Set(state.entries.filter(e=>e.id!==x.id).map(e=>clean(e.code)).filter(Boolean));
+
+    if(requestedCode){
+        if(usedCodes.has(requestedCode)){
+            show(`编码“${requestedCode}”已存在，请修改代码后再提交`,'error');
+            editCode.focus();
+            editCode.select();
+            return
+        }
+        x.code=requestedCode
+    }else{
+        // 编辑时删除原编码并提交：释放原编码，同时按当前标签规则重新自动分配。
+        if(oldCode&&validCode(oldCode)){
+            state.releasedCodes=uniq([...(state.releasedCodes||[]),oldCode]);
+        }
+        const rule=autoCodeRuleForTags(x.tag);
+        try{
+            x.code=rule?nextCodeInRange(rule,usedCodes):nextCode(usedCodes);
+        }catch(e){
+            show(e.message,'error');
+            return
+        }
+    }
+    if(oldCode!==x.code){
+        state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code)
+    }
     editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
-    render();schedule();show('已保存','success')
+    render();schedule();show(`已保存，编码 ${x.code}`,'success')
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
