@@ -623,11 +623,53 @@ function reorderHistoryOption(type,sourceValue,targetValue,after){
     if(admin())schedule()
 }
 function setupManualDrag(optionsEl,type){
-    let drag=null;
+    let drag=null,autoScrollFrame=0;
     function clearMarks(){
         optionsEl.querySelectorAll('.drag-before,.drag-after').forEach(el=>el.classList.remove('drag-before','drag-after'))
     }
+    function scrollContainer(){
+        // 下拉菜单在自身面板内滚动；“出版管理”则滚动整个弹窗内容区。
+        return optionsEl.closest('.combo-panel')||optionsEl.closest('.dialog-scroll')
+    }
+    function updateDropTarget(clientX,clientY){
+        if(!drag)return;
+        clearMarks();
+        const hit=document.elementFromPoint(clientX,clientY);
+        const target=hit?.closest?.('.combo-pill[data-drag-value]');
+        if(!target||!optionsEl.contains(target)||target===drag.row){
+            drag.targetValue='';
+            return
+        }
+        const rect=target.getBoundingClientRect();
+        drag.after=clientY>=rect.top+rect.height/2;
+        drag.targetValue=target.dataset.dragValue;
+        target.classList.add(drag.after?'drag-after':'drag-before')
+    }
+    function autoScrollStep(){
+        autoScrollFrame=0;
+        if(!drag)return;
+        const scroller=scrollContainer();
+        if(scroller){
+            const rect=scroller.getBoundingClientRect();
+            const edge=Math.min(82,Math.max(46,rect.height*.18));
+            let speed=0;
+            if(drag.clientY<rect.top+edge){
+                const strength=Math.min(1,Math.max(0,(rect.top+edge-drag.clientY)/edge));
+                speed=-(4+24*strength)
+            }else if(drag.clientY>rect.bottom-edge){
+                const strength=Math.min(1,Math.max(0,(drag.clientY-(rect.bottom-edge))/edge));
+                speed=4+24*strength
+            }
+            if(speed){
+                const before=scroller.scrollTop;
+                scroller.scrollTop+=speed;
+                if(scroller.scrollTop!==before)updateDropTarget(drag.clientX,drag.clientY)
+            }
+        }
+        autoScrollFrame=requestAnimationFrame(autoScrollStep)
+    }
     function cleanup(){
+        if(autoScrollFrame){cancelAnimationFrame(autoScrollFrame);autoScrollFrame=0}
         clearMarks();
         if(drag?.row)drag.row.classList.remove('dragging');
         document.body.classList.remove('reordering');
@@ -640,31 +682,18 @@ function setupManualDrag(optionsEl,type){
         if(!row)return;
         e.preventDefault();
         e.stopPropagation();
-        drag={pointerId:e.pointerId,sourceValue:handle.dataset.dragValue,row,targetValue:'',after:false,handle};
+        drag={pointerId:e.pointerId,sourceValue:handle.dataset.dragValue,row,targetValue:'',after:false,handle,clientX:e.clientX,clientY:e.clientY};
         row.classList.add('dragging');
         document.body.classList.add('reordering');
         try{handle.setPointerCapture(e.pointerId)}catch(err){}
+        autoScrollFrame=requestAnimationFrame(autoScrollStep)
     });
     optionsEl.addEventListener('pointermove',e=>{
         if(!drag||e.pointerId!==drag.pointerId)return;
         e.preventDefault();
-        const panel=optionsEl.closest('.combo-panel');
-        if(panel){
-            const pr=panel.getBoundingClientRect(),edge=34;
-            if(e.clientY<pr.top+edge)panel.scrollTop-=12;
-            else if(e.clientY>pr.bottom-edge)panel.scrollTop+=12
-        }
-        clearMarks();
-        const hit=document.elementFromPoint(e.clientX,e.clientY);
-        const target=hit?.closest?.('.combo-pill[data-drag-value]');
-        if(!target||!optionsEl.contains(target)||target===drag.row){
-            drag.targetValue='';
-            return
-        }
-        const rect=target.getBoundingClientRect();
-        drag.after=e.clientY>=rect.top+rect.height/2;
-        drag.targetValue=target.dataset.dragValue;
-        target.classList.add(drag.after?'drag-after':'drag-before')
+        drag.clientX=e.clientX;
+        drag.clientY=e.clientY;
+        updateDropTarget(e.clientX,e.clientY)
     });
     function finish(e){
         if(!drag||e.pointerId!==drag.pointerId)return;
