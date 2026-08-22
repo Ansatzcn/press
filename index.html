@@ -54,6 +54,7 @@ body.reordering{user-select:none}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#2563eb;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
 .back-to-top{position:fixed;right:16px;top:70%;z-index:900;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;transform:translateY(-50%);border:1px solid #2563eb;border-radius:50%;background:#2563eb;color:#2563eb;font-size:0;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1d4ed8;border-color:#1d4ed8;color:#1d4ed8;opacity:1;outline:none}
+.manage-add-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.manage-add-row .btn{min-height:44px;padding-inline:1.2rem}.manage-list{margin-top:1rem}.manage-option-label{flex:1;min-width:0;padding:.5rem .7rem;color:#0f172a;white-space:normal;overflow-wrap:anywhere}.manage-empty{padding:1.3rem .8rem;border:1px dashed #cbd5e1;border-radius:14px;color:#94a3b8;text-align:center;font-size:.86rem}
 @media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#editModal .dialog-actions .btn{flex:0 0 auto}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
 </style>
 
@@ -133,9 +134,8 @@ body.reordering{user-select:none}
 <div class="toolbar-group">
 <button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
 <button class="btn" id="configBtn" type="button">配置</button>
+<button class="btn" id="manageBtn" type="button">管理</button>
 <button class="btn" id="exportBtn" type="button">导出</button>
-<button class="btn hidden" id="importBtn" type="button">导入</button>
-<input type="file" id="fileInput" accept=".json,application/json" hidden>
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
@@ -269,7 +269,7 @@ body.reordering{user-select:none}
 <form class="dialog" id="configForm" autocomplete="on">
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
-<p class="dialog-desc">任何人均可直接浏览 press_data.json 中的公开数据，无需 Token。只有配置 Token 后才可新增、编辑、删除、导入和同步。</p>
+<p class="dialog-desc">任何人均可直接浏览 press_data.json 中的公开数据，无需 Token。只有配置 Token 后才可新增、编辑、删除、管理出版选项和同步。</p>
 <div class="form-group"><label for="cfgOwner">仓库所有者</label><input id="cfgOwner" name="github-owner" type="text" autocomplete="username"></div>
 <div class="form-group"><label for="cfgRepo">仓库名称</label><input id="cfgRepo" type="text" autocomplete="off"></div>
 <div class="form-group"><label for="cfgFile">数据文件路径</label><input id="cfgFile" type="text" value="press_data.json" autocomplete="off"></div>
@@ -278,6 +278,24 @@ body.reordering{user-select:none}
 </div>
 <div class="dialog-actions"><button class="btn" id="configCancel" type="button">取消</button><button class="btn btn-primary" type="submit">保存并连接</button></div>
 </form>
+</section>
+
+<section class="overlay hidden" id="manageModal">
+<div class="dialog">
+<div class="dialog-scroll">
+<h3>出版管理</h3>
+<p class="dialog-desc">这里直接管理“出版”下拉菜单选项。新增、改名、删除和拖动排序会立即同步到添加与编辑界面的“出版”下拉菜单。</p>
+<div class="form-group">
+<label for="manageInstitutionInput">新增出版选项</label>
+<div class="manage-add-row">
+<input type="text" id="manageInstitutionInput" autocomplete="off">
+<button class="btn btn-primary" id="manageInstitutionAdd" type="button">添加</button>
+</div>
+</div>
+<div class="manage-list" id="manageInstitutionOptions"></div>
+</div>
+<div class="dialog-actions"><button class="btn btn-primary" id="manageClose" type="button">完成</button></div>
+</div>
 </section>
 
 <button class="back-to-top" id="backToTopBtn" type="button" aria-label="回到顶部" title="回到顶部"><span aria-hidden="true">↑</span></button>
@@ -291,10 +309,10 @@ const PUBLIC_FILE='press_data.json',NS='press_public_v1';
 const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token_local`,TOKEN_SESSION=`${NS}:token_session`,META_KEY=`${NS}:meta`;
 const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
-const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
+const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),groupCombo=$('groupCombo'),groupSelected=$('groupSelected'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
-configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
+configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
 let state={entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
@@ -450,7 +468,7 @@ function show(msg,type='info'){toast.textContent=msg;toast.className=`toast ${ty
 function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.textContent=text}
 function saveLocal(){state=norm(state);ls(STATE_KEY,JSON.stringify(state))}
 function loadLocal(){const s=lg(STATE_KEY);if(!s)return null;try{return norm(JSON.parse(s))}catch(e){return null}}
-function updateAdmin(){const on=admin(),wasHidden=addSection.classList.contains('hidden');addSection.classList.toggle('hidden',!on);syncBtn.classList.toggle('hidden',!on);importBtn.classList.toggle('hidden',!on);if(on&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)}
+function updateAdmin(){const on=admin(),wasHidden=addSection.classList.contains('hidden');addSection.classList.toggle('hidden',!on);syncBtn.classList.toggle('hidden',!on);if(!on)manageModal.classList.add('hidden');if(on&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)}
 function institutionMeta(which){
     const edit=which==='edit';
     return{
@@ -553,6 +571,42 @@ function renderInstitutionOptions(which){
     const canAdd=current&&!history.some(v=>key(v)===key(current));
     meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
 }
+function renderManageInstitutionOptions(){
+    const history=uniq(state.institutions);
+    manageInstitutionOptions.innerHTML=history.length
+        ? `<div class="combo-option-list">${history.map(v=>`
+            <span class="combo-pill manual-order" data-drag-value="${attr(v)}">
+                <button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动出版 ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>
+                <span class="manage-option-label">${esc(v)}</span>
+                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑出版 ${attr(v)}" title="编辑">✓</button>
+                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
+            </span>
+        `).join('')}</div>`
+        : '<div class="manage-empty">暂无出版选项</div>'
+}
+
+function openManage(){
+    if(!admin()){show('请先完成管理配置','error');return}
+    manageInstitutionInput.value='';
+    renderManageInstitutionOptions();
+    manageModal.classList.remove('hidden');
+    setTimeout(()=>manageInstitutionInput.focus(),30)
+}
+function closeManage(){manageModal.classList.add('hidden')}
+function addManagedInstitution(){
+    const value=clean(manageInstitutionInput.value);
+    if(!value){show('出版选项不能为空','error');manageInstitutionInput.focus();return}
+    if(!addInstitutionHistory(value,true)){
+        show(`出版选项“${value}”已存在`,'error');
+        manageInstitutionInput.focus();
+        manageInstitutionInput.select();
+        return
+    }
+    manageInstitutionInput.value='';
+    renderManageInstitutionOptions();
+    manageInstitutionInput.focus()
+}
+
 function reorderHistoryOption(type,sourceValue,targetValue,after){
     const historyKey=type==='institution'?'institutions':multiMeta(type,'add').historyKey;
     if(type!=='institution'&&type!=='category')return;
@@ -624,7 +678,7 @@ function setupManualDrag(optionsEl,type){
     optionsEl.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pointerId)cleanup()})
 }
 function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
@@ -682,7 +736,7 @@ function addInstitutionHistory(value,notify=false){
     state.institutions=uniq(state.institutions);
     saveLocal();
     if(admin())schedule();
-    renderInstitutionOptions('add');renderInstitutionOptions('edit');
+    renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();
     if(notify)show('已加入出版下拉菜单','success');
     return true
 }
@@ -715,6 +769,7 @@ function editInstitutionHistory(value){
     if(admin())schedule();
     renderInstitutionOptions('add');
     renderInstitutionOptions('edit');
+    renderManageInstitutionOptions();
     show(`已修改出版选项为“${nextValue}”`,'success')
 }
 function deleteInstitutionHistory(value){
@@ -723,7 +778,7 @@ function deleteInstitutionHistory(value){
     state.institutions=state.institutions.filter(v=>key(v)!==targetKey);
     saveLocal();
     if(admin())schedule();
-    renderInstitutionOptions('add');renderInstitutionOptions('edit');
+    renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();
     render();
     show('已从出版下拉菜单删除','success')
 }
@@ -927,17 +982,6 @@ function deleteEntry(id){
 function downloadJson(){
     const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
     a.href=url;a.download=`press_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url)
-}
-function importFile(file){
-    if(!admin()||!file)return;
-    if(file.size>MAX_BYTES){show('文件超过 750 KB','error');return}
-    const r=new FileReader();
-    r.onload=e=>{try{
-        const incoming=norm(JSON.parse(e.target.result));
-        if(!confirm('导入会替换当前数据，确定继续吗？'))return;
-        state=incoming;render();schedule();show('导入成功','success')
-    }catch(err){show(`导入失败：${err.message}`,'error')}};
-    r.readAsText(file,'utf-8')
 }
 function loadConfig(){
     let baseCfg={};try{baseCfg=JSON.parse(lg(CONFIG_KEY)||'{}')||{}}catch(e){}
@@ -1371,6 +1415,7 @@ setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 setupManualDrag(institutionOptions,'institution');
 setupManualDrag(editInstitutionOptions,'institution');
+setupManualDrag(manageInstitutionOptions,'institution');
 setupManualDrag(categoryOptions,'category');
 setupManualDrag(editCategoryOptions,'category');
 setupMultiCombo('group','add');
@@ -1416,12 +1461,22 @@ editModal.addEventListener('pointercancel',()=>{
 });
 
 configBtn.addEventListener('click',openConfig);
+manageBtn.addEventListener('click',openManage);
+manageClose.addEventListener('click',closeManage);
+manageInstitutionAdd.addEventListener('click',addManagedInstitution);
+manageInstitutionInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addManagedInstitution()}});
+manageInstitutionOptions.addEventListener('click',e=>{
+    e.stopPropagation();
+    const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
+    if(edit)return editInstitutionHistory(edit.dataset.editValue);
+    const del=e.target.closest('.combo-pill-delete[data-delete-value]');
+    if(del)return deleteInstitutionHistory(del.dataset.deleteValue)
+});
+manageModal.addEventListener('click',e=>{if(e.target===manageModal)closeManage()});
 configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
 syncBtn.addEventListener('click',()=>sync(true));
 exportBtn.addEventListener('click',downloadJson);
-importBtn.addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change',()=>{importFile(fileInput.files?.[0]);fileInput.value=''});
 document.addEventListener('keydown',e=>{
     if(e.key!=='Escape')return;
     institutionPanel.classList.add('hidden');
@@ -1433,12 +1488,26 @@ document.addEventListener('keydown',e=>{
     tagPanel.classList.add('hidden');
     editTagPanel.classList.add('hidden');
     editModal.classList.add('hidden');
-    configModal.classList.add('hidden')
+    configModal.classList.add('hidden');
+    manageModal.classList.add('hidden')
 });
-backToTopBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+function fastSmoothScrollToTop(){
+    const start=Math.max(0,window.scrollY||document.documentElement.scrollTop||0);
+    if(start<=0)return;
+    const duration=50,startAt=performance.now();
+    const easeOut=t=>1-Math.pow(1-t,3);
+    function step(now){
+        const progress=Math.min(1,(now-startAt)/duration);
+        window.scrollTo(0,Math.round(start*(1-easeOut(progress))));
+        if(progress<1)requestAnimationFrame(step);
+        else window.scrollTo(0,0)
+    }
+    requestAnimationFrame(step)
+}
+backToTopBtn.addEventListener('click',fastSmoothScrollToTop);
 addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
 
-loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
 if(admin())loadAdminState();else loadPublic();
 })();
 </script>
