@@ -214,20 +214,6 @@
       "code": "140001"
     },
     {
-      "id": "368e77f1-ad8c-4a04-8b3b-161b6dc980ae",
-      "bookName": "[历史情感、集体记忆与身份认同：三线建设亲历者的口述史研究](https://book.douban.com/subject/37897207/)",
-      "bookNo": "7-100-25637",
-      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "14图书"
-      ],
-      "code": "298539"
-    },
-    {
       "id": "af57b08b-d385-4163-a7bd-749b4b740037",
       "bookName": "[冬攀时代：8000米极高峰冬季探险的欲望、承诺与生死](https://book.douban.com/subject/37920834/)",
       "bookNo": "7-100-26039",
@@ -2249,6 +2235,7 @@
   ],
   "releasedCodes": [
     "253272",
-    "240001"
+    "240001",
+    "298539"
   ]
 }
