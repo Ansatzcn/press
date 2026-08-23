@@ -1010,6 +1010,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "50cf0618-bfb1-478f-85e5-fa5fdecc8000",
+      "bookName": "学术祛魅：实证研究十讲",
+      "bookNo": "7-300-34045",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "group": [
+        "C社会科学总论"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240011",
+      "codeEditCount": 0
+    },
+    {
       "id": "e27861c6-1af7-40c9-ae68-81318998b6b2",
       "bookName": "身在田野：步步深入做质性研究",
       "bookNo": "7-300-35216",
@@ -2832,7 +2847,6 @@
     "173620",
     "102218",
     "223033",
-    "240011",
     "180160"
   ]
 }
