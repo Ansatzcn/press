@@ -170,6 +170,111 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="edit-selected-pill-size-fix">
+/* 编辑弹窗：已选中的“大类 / 标签 / 书架”改为同一行内的小号椭圆标签。
+   combo 外框固定为原始高度，选中后不再被 selected-pill 撑高。 */
+#editGroupCombo,
+#editTagCombo,
+#editCategoryCombo{
+    height:54px;
+    min-height:54px;
+}
+
+/* 有已选项时：已选椭圆、继续输入框、下拉按钮保持在同一行 */
+#editGroupCombo:has(> .combo-selected:not(:empty)),
+#editTagCombo:has(> .combo-selected:not(:empty)),
+#editCategoryCombo:has(> .combo-selected:not(:empty)){
+    display:grid;
+    grid-template-columns:minmax(0,42%) minmax(0,1fr) 44px;
+    align-items:center;
+    gap:5px;
+}
+
+#editGroupCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty),
+#editCategoryCombo > .combo-selected:not(:empty){
+    grid-column:1;
+    grid-row:1;
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:3px;
+    min-width:0;
+    max-width:100%;
+    height:24px;
+    margin:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+}
+
+#editGroupCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#editTagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#editCategoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
+    display:none;
+}
+
+#editGroupCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
+    display:contents;
+}
+
+#editGroupCombo > .combo-selected:not(:empty) + .combo-row input,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row input,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row input{
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+    min-height:38px;
+}
+
+#editGroupCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
+    grid-column:3;
+    grid-row:1;
+    min-height:38px;
+}
+
+/* 只缩小编辑框内的已选椭圆，不影响下拉菜单选项本身 */
+#editModal #editGroupSelected .selected-pill,
+#editModal #editTagSelected .selected-pill,
+#editModal #editCategorySelected .selected-pill{
+    flex:0 0 auto;
+    min-height:20px;
+    height:20px;
+    max-width:118px;
+    font-size:.66rem;
+    line-height:1;
+}
+
+#editModal #editGroupSelected .selected-pill-label,
+#editModal #editTagSelected .selected-pill-label,
+#editModal #editCategorySelected .selected-pill-label{
+    min-width:0;
+    max-width:92px;
+    padding:.1rem .1rem .1rem .42rem;
+    font-size:.66rem;
+    line-height:1;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+#editModal #editGroupSelected .selected-pill-remove,
+#editModal #editTagSelected .selected-pill-remove,
+#editModal #editCategorySelected .selected-pill-remove{
+    flex:0 0 18px;
+    width:18px;
+    height:18px;
+    margin-right:1px;
+    font-size:.68rem;
+    line-height:18px;
+}
+</style>
+
 </head>
 <body>
 <main class="container">
