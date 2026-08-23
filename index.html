@@ -275,6 +275,111 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="add-selected-pill-size-fix">
+/* 添加板块：已选中的“大类 / 标签 / 书架”与编辑框保持同样的紧凑显示。
+   外框高度固定，选中后不再被 selected-pill 撑高。 */
+#groupCombo,
+#tagCombo,
+#categoryCombo{
+    height:54px;
+    min-height:54px;
+}
+
+/* 有已选项时：已选椭圆、继续输入框、下拉按钮保持在同一行 */
+#groupCombo:has(> .combo-selected:not(:empty)),
+#tagCombo:has(> .combo-selected:not(:empty)),
+#categoryCombo:has(> .combo-selected:not(:empty)){
+    display:grid;
+    grid-template-columns:minmax(0,42%) minmax(0,1fr) 44px;
+    align-items:center;
+    gap:5px;
+}
+
+#groupCombo > .combo-selected:not(:empty),
+#tagCombo > .combo-selected:not(:empty),
+#categoryCombo > .combo-selected:not(:empty){
+    grid-column:1;
+    grid-row:1;
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:3px;
+    min-width:0;
+    max-width:100%;
+    height:24px;
+    margin:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+}
+
+#groupCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#tagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#categoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
+    display:none;
+}
+
+#groupCombo > .combo-selected:not(:empty) + .combo-row,
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#categoryCombo > .combo-selected:not(:empty) + .combo-row{
+    display:contents;
+}
+
+#groupCombo > .combo-selected:not(:empty) + .combo-row input,
+#tagCombo > .combo-selected:not(:empty) + .combo-row input,
+#categoryCombo > .combo-selected:not(:empty) + .combo-row input{
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+    min-height:38px;
+}
+
+#groupCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+#tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+#categoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
+    grid-column:3;
+    grid-row:1;
+    min-height:38px;
+}
+
+/* 只缩小添加板块内的已选椭圆，不影响下拉菜单选项本身 */
+#addSection #groupSelected .selected-pill,
+#addSection #tagSelected .selected-pill,
+#addSection #categorySelected .selected-pill{
+    flex:0 0 auto;
+    min-height:20px;
+    height:20px;
+    max-width:118px;
+    font-size:.66rem;
+    line-height:1;
+}
+
+#addSection #groupSelected .selected-pill-label,
+#addSection #tagSelected .selected-pill-label,
+#addSection #categorySelected .selected-pill-label{
+    min-width:0;
+    max-width:92px;
+    padding:.1rem .1rem .1rem .42rem;
+    font-size:.66rem;
+    line-height:1;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+#addSection #groupSelected .selected-pill-remove,
+#addSection #tagSelected .selected-pill-remove,
+#addSection #categorySelected .selected-pill-remove{
+    flex:0 0 18px;
+    width:18px;
+    height:18px;
+    margin-right:1px;
+    font-size:.68rem;
+    line-height:18px;
+}
+</style>
+
 </head>
 <body>
 <main class="container">
