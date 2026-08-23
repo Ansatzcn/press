@@ -2214,6 +2214,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "4acbe0a3-89a9-4639-bccf-99837ed9cf98",
+      "bookName": "写给非哲学家的哲学入门",
+      "bookNo": "7-5604-5699",
+      "institution": "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
+      "category": [],
+      "group": [
+        "B哲学、宗教"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240009",
+      "codeEditCount": 0
+    },
+    {
       "id": "d30736a4-cfa9-447c-8673-7ef08cc8bed0",
       "bookName": "[马克思与自然：一个红与绿的视角](https://book.douban.com/subject/37426483/)",
       "bookNo": "7-5693-3777",
@@ -2480,21 +2495,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "4acbe0a3-89a9-4639-bccf-99837ed9cf98",
-      "bookName": "写给非哲学家的哲学入门",
-      "bookNo": "7-5604-5699",
-      "institution": "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
-      "category": [],
-      "group": [
-        "B哲学、宗教"
-      ],
-      "tag": [
-        "24读书"
-      ],
-      "code": "240009",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -2613,6 +2613,7 @@
     "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
     "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
+    "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
     "[西安交通大学出版社](https://book.douban.com/press/2825/?order=time)",
     "[山东大学出版社](https://book.douban.com/press/2704/?order=time)",
     "[厦门大学出版社](https://book.douban.com/press/2771/?order=time)",
@@ -2625,8 +2626,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[西北大学出版社](https://book.douban.com/press/2859/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
