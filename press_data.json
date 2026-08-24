@@ -2199,6 +2199,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "86319854-b484-4425-9a3e-23f6284323da",
+      "bookName": "梁庄十年",
+      "bookNo": "7-5426-7305",
+      "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "200066",
+      "codeEditCount": 0
+    },
+    {
       "id": "dc8da0be-5fdf-44de-a43e-4cf3b31015ec",
       "bookName": "[大脑与自然——为什么我们需要世界之美](https://book.douban.com/subject/37173738/)",
       "bookNo": "7-5428-8321",
@@ -2851,21 +2866,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "86319854-b484-4425-9a3e-23f6284323da",
-      "bookName": "梁庄十年",
-      "bookNo": "7-5426-7305",
-      "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "200066",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -2975,6 +2975,7 @@
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
     "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
+    "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
     "[上海科技教育出版社](https://book.douban.com/press/2324/?order=time)",
     "[山西教育出版社](https://book.douban.com/press/2804/?order=time)",
     "[海南出版社](https://book.douban.com/press/2554/?order=time)",
@@ -3000,8 +3001,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[上海三联书店](https://book.douban.com/press/2723/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
