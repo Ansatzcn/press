@@ -2229,6 +2229,19 @@
       "codeEditCount": 0
     },
     {
+      "id": "485de444-f07e-4855-be43-e5a2f1456608",
+      "bookName": "马克思入门",
+      "bookNo": "7-5473-3081",
+      "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
+      "category": [],
+      "group": [],
+      "tag": [
+        "14图书"
+      ],
+      "code": "140029",
+      "codeEditCount": 0
+    },
+    {
       "id": "b279c01a-498b-46dd-ad6f-71691699e07f",
       "bookName": "上海乡绅李待问",
       "bookNo": "7-5486-0999",
@@ -2690,19 +2703,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "485de444-f07e-4855-be43-e5a2f1456608",
-      "bookName": "马克思入门",
-      "bookNo": "7-5473-3081",
-      "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
-      "category": [],
-      "group": [],
-      "tag": [
-        "14图书"
-      ],
-      "code": "140029",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -2817,6 +2817,7 @@
     "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
     "[译林出版社](https://book.douban.com/press/2331/?order=time)",
     "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+    "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
     "[学林出版社](https://book.douban.com/press/2521/?order=time)",
     "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
     "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
@@ -2835,8 +2836,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[东方出版中心](https://book.douban.com/press/2321/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
