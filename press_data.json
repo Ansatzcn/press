@@ -579,7 +579,7 @@
     },
     {
       "id": "5d82803d-a0f9-4880-bd67-5514d6a58eba",
-      "bookName": "[战略性工业化的曲折展开：中国机械工业的演化（1900-1957）](https://book.douban.com/subject/26383062/)",
+      "bookName": "战略性工业化的曲折展开：中国机械工业的演化（1900-1957）",
       "bookNo": "7-208-12939",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
@@ -589,8 +589,8 @@
       "tag": [
         "24读书"
       ],
-      "code": "117101",
-      "codeEditCount": 0
+      "code": "240016",
+      "codeEditCount": 1
     },
     {
       "id": "ce1c99ca-82a8-4a4a-abfd-f42c11bd661d",
@@ -2915,6 +2915,7 @@
     "263278",
     "261959",
     "265521",
-    "123415"
+    "123415",
+    "117101"
   ]
 }
