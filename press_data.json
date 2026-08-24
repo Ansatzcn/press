@@ -1434,21 +1434,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "fde202ad-d952-458b-a204-da073651eeff",
-      "bookName": "[唐诗中的大唐](https://book.douban.com/subject/33433607/)",
-      "bookNo": "7-5183-2749",
-      "institution": "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "190551",
-      "codeEditCount": 0
-    },
-    {
       "id": "f7ce01f0-5a2c-42a2-8b08-67c169efbf17",
       "bookName": "唐诗中的大唐",
       "bookNo": "7-5183-2749",
@@ -3126,6 +3111,7 @@
     "123415",
     "117101",
     "127199",
-    "257607"
+    "257607",
+    "190551"
   ]
 }
