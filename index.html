@@ -53,7 +53,7 @@ body.reordering{user-select:none}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
 .press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{position:relative;padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
 .press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.book-title a{color:#2563eb;text-decoration:none}.book-title a:hover,.book-title a:focus-visible{color:#1d4ed8;text-decoration:underline;outline:none}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
-.press-content{flex:1;min-width:0;padding-bottom:0}.code-row,.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.code-text,.bookshelf-text{min-width:0;overflow-wrap:anywhere}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font-size:.9rem;font-family:inherit;font-weight:400;line-height:1.55;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
+.press-content{flex:1;min-width:0;padding-bottom:0}.code-row,.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.code-text,.bookshelf-text{min-width:0;overflow-wrap:anywhere}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font-size:.9rem;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;font-weight:400;line-height:1.55;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
 .overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(15,23,42,.45);backdrop-filter:blur(5px)}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-start;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:0}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
@@ -726,11 +726,11 @@ function nextCode(usedSet){
 // 每个标签可以对应一个或多个区间；始终按区间与编码数值从小到大寻找第一个未使用编码。
 // 手动填写编码不受这些自动编码区间限制。
 const AUTO_CODE_RULES=[
-    {tag:'11图书',ranges:[[100001,129999],[150001,169999]]},
-    {tag:'13图书',ranges:[[139001,139999]]},
+    {tag:'11图书',ranges:[[110001,119999],[150001,169999],[190001,199999]]},
+    {tag:'13图书',ranges:[[130001,139999],[170001,179999]]},
     {tag:'14图书',ranges:[[140001,149999],[180001,189999]]},
-    {tag:'21读书',ranges:[[200001,229999],[250001,269999]]},
-    {tag:'23读书',ranges:[[239001,239999]]},
+    {tag:'21读书',ranges:[[210001,219999],[250001,269999],[290001,299999]]},
+    {tag:'23读书',ranges:[[230001,239999],[270001,279999]]},
     {tag:'24读书',ranges:[[240001,249999],[280001,289999]]}
 ];
 function autoCodeRuleForTags(tags){
@@ -1143,7 +1143,7 @@ function render(){
             metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
         }
         const metaHtml=metaRows.join('');
-        return `<article class="press-item"><div class="press-head"><div class="press-content"><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}${editLink}</div></div></article>`
+        return `<article class="press-item"><div class="press-head"><div class="press-content"><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}</div>${editLink}</div></article>`
     }).join(''):'<div class="empty-state">暂无条目</div>';
     saveLocal()
 }
