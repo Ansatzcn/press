@@ -382,6 +382,24 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="institution-all-link-blue-fix">
+/* 所有出版字段中的 [文字](链接) 均强制显示为蓝色链接，保留 ★ 等原文本符号。 */
+.institution a,
+.institution-choice a,
+.combo-pill-select.institution-choice a,
+.manage-option-label a{
+    color:#2563eb !important;
+    text-decoration:none;
+}
+.institution a:hover,
+.institution-choice a:hover,
+.combo-pill-select.institution-choice a:hover,
+.manage-option-label a:hover{
+    color:#1d4ed8 !important;
+    text-decoration:underline;
+}
+</style>
 </head>
 <body>
 <main class="container">
