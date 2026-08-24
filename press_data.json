@@ -1554,6 +1554,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "066a6d6e-9697-4215-a86b-6059cb005c64",
+      "bookName": "二十世纪中国经济思想简史——马克思主义经济学在中国",
+      "bookNo": "7-5035-2021",
+      "institution": "[中共中央党校出版社](https://book.douban.com/press/2513/?order=time)★",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110006",
+      "codeEditCount": 0
+    },
+    {
       "id": "349ab0ac-b923-491f-9d17-dc4cc3e58e99",
       "bookName": "[算法的起源：莱布尼茨与二进制](https://book.douban.com/subject/38176223/)",
       "bookNo": "7-5236-1797",
@@ -3029,21 +3044,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "066a6d6e-9697-4215-a86b-6059cb005c64",
-      "bookName": "二十世纪中国经济思想简史——马克思主义经济学在中国",
-      "bookNo": "7-5035-2021",
-      "institution": "[中共中央党校出版社](https://book.douban.com/press/2513/?order=time)★",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "11图书"
-      ],
-      "code": "110006",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -3130,6 +3130,7 @@
     "[石油工业出版社](https://book.douban.com/press/2208/?order=time)",
     "[冶金工业出版社](https://book.douban.com/press/2623/?order=time)",
     "[中国文史出版社](https://book.douban.com/press/2671/?order=time)",
+    "[中共中央党校出版社](https://book.douban.com/press/2513/?order=time)★",
     "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
     "[中国金融出版社](https://book.douban.com/press/2546/?order=time)",
     "[红旗出版社](https://book.douban.com/press/2710/?order=time)",
@@ -3181,8 +3182,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[中共中央党校出版社](https://book.douban.com/press/2513/?order=time)★"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
