@@ -51,9 +51,9 @@ body.reordering{user-select:none}
 .selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
 .combo-add{display:block;width:100%;margin-top:.55rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#2563eb;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{width:100%;padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
-.press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
+.press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{position:relative;padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
 .press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}.book-title a{color:#2563eb;text-decoration:none}.book-title a:hover,.book-title a:focus-visible{color:#1d4ed8;text-decoration:underline;outline:none}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#2563eb;text-decoration:none}.institution a:hover{color:#1d4ed8;text-decoration:underline}
-.press-content{flex:1;min-width:0;position:relative;padding-bottom:1.5rem}.code-row,.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.code-text,.bookshelf-text{min-width:0;overflow-wrap:anywhere}.edit-btn{flex:0 0 auto;position:absolute;right:0;bottom:0;padding:0;border:0;background:transparent;color:#64748b;font:inherit;font-weight:400;line-height:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
+.press-content{flex:1;min-width:0;padding-bottom:0}.code-row,.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.code-text,.bookshelf-text{min-width:0;overflow-wrap:anywhere}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font:inherit;font-weight:400;line-height:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
 .overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(15,23,42,.45);backdrop-filter:blur(5px)}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-start;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:0}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
@@ -174,7 +174,7 @@ body.reordering{user-select:none}
 
 
 <style id="edit-selected-pill-size-fix">
-/* 编辑弹窗：已选中的“大类 / 标签 / 书架”改为同一行内的小号椭圆标签。
+/* 编辑弹窗：已选中的“分类 / 标签 / 书架”改为同一行内的小号椭圆标签。
    combo 外框固定为原始高度，选中后不再被 selected-pill 撑高。 */
 #editGroupCombo,
 #editTagCombo,
@@ -279,7 +279,7 @@ body.reordering{user-select:none}
 
 
 <style id="add-selected-pill-size-fix">
-/* 添加板块：已选中的“大类 / 标签 / 书架”与编辑框保持同样的紧凑显示。
+/* 添加板块：已选中的“分类 / 标签 / 书架”与编辑框保持同样的紧凑显示。
    外框高度固定，选中后不再被 selected-pill 撑高。 */
 #groupCombo,
 #tagCombo,
@@ -465,12 +465,12 @@ body.reordering{user-select:none}
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
 </div><div class="form-group">
-<label for="groupInput">大类</label>
+<label for="groupInput">分类</label>
 <div class="combo" id="groupCombo">
 <div class="combo-selected" id="groupSelected"></div>
 <div class="combo-row">
 <input type="text" id="groupInput" autocomplete="off">
-<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开大类历史">▾</button>
+<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开分类历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
 </div>
@@ -499,7 +499,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3>
+<h3>编辑</h3><p class="dialog-desc">修改标签时，如果没有删除原有标签，而只是添加新标签，则不变更代码；只有删除原有标签或标签实际发生替换时，才重新分配代码。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -552,12 +552,12 @@ body.reordering{user-select:none}
 </div>
 
 <div class="form-group">
-<label for="editGroup">大类</label>
+<label for="editGroup">分类</label>
 <div class="combo" id="editGroupCombo">
 <div class="combo-selected" id="editGroupSelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editGroup" type="text"/>
-<button aria-label="展开大类历史" class="combo-toggle" id="editGroupToggle" type="button">▾</button>
+<button aria-label="展开分类历史" class="combo-toggle" id="editGroupToggle" type="button">▾</button>
 </div>
 <div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
 </div>
@@ -781,7 +781,7 @@ function norm(v){
         Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
     );
 
-    // 大类、标签不能人工排序，始终按首字母/首数字的自然顺序排列。
+    // 分类、标签不能人工排序，始终按首字母/首数字的自然顺序排列。
     const groups=sortAuto(
         Array.isArray(s.groups)?s.groups:entries.flatMap(x=>x.group)
     );
@@ -848,7 +848,7 @@ function multiMeta(type,which){
             selectedBox:edit?editCategorySelected:categorySelected
         },
         group:{
-            label:'大类',historyKey:'groups',
+            label:'分类',historyKey:'groups',
             input:edit?editGroup:groupInput,
             panel:edit?editGroupPanel:groupPanel,
             options:edit?editGroupOptions:groupOptions,
@@ -1118,7 +1118,7 @@ function render(){
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
-        // 出版 → 标签 → 大类 → 编码 → 书号 → 书架
+        // 出版 → 标签 → 分类 → 编码 → 书号 → 书架
         const publication=x.institution;
         const majorCategory=x.group;
         const tagValue=x.tag;
@@ -1137,7 +1137,7 @@ function render(){
             metaRows.push(`<div class="meta-row code-row"><span class="code-text"><span class="meta-label">编码：</span>${esc(x.code)}</span></div>`)
         }
         if(majorCategory.length){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">大类：</span>${esc(majorCategory.join('、'))}</div>`)
+            metaRows.push(`<div class="meta-row"><span class="meta-label">分类：</span>${esc(majorCategory.join('、'))}</div>`)
         }
         if(bookshelf.length){
             metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
@@ -1281,7 +1281,7 @@ function editHistoryOption(type,value){
     }
 
     history[index]=nextValue;
-    // 书架保留人工排列位置；大类、标签继续按原自动排序规则。
+    // 书架保留人工排列位置；分类、标签继续按原自动排序规则。
     state[historyKey]=type==='category'?uniq(history):sortHistory(type,history);
 
     const renamePending=values=>uniq(values.map(v=>key(v)===oldKey?nextValue:v));
@@ -1314,6 +1314,15 @@ function deleteHistoryOption(type,value){
 function commitTypedValue(type,which,notify=false){
     const meta=multiMeta(type,which),value=clean(meta.input.value);
     if(!value)return false;
+    if(type==='group'){
+        const currentGroup=which==='edit'?editSelections.group:addSelections.group;
+        if(currentGroup.length>=1){
+            meta.input.value='';
+            show('分类只能选择一项；如需更换，请先删除当前分类','error');
+            renderMultiField(type,which);
+            return false;
+        }
+    }
     addHistoryOption(type,value,notify);
     const current=which==='edit'?editSelections[type]:addSelections[type];
     if(!current.some(v=>key(v)===key(value))){
