@@ -424,17 +424,6 @@ body.reordering{user-select:none}
 </div>
 <div class="three-fields-row">
 <div class="form-group">
-<label for="groupInput">大类</label>
-<div class="combo" id="groupCombo">
-<div class="combo-selected" id="groupSelected"></div>
-<div class="combo-row">
-<input type="text" id="groupInput" autocomplete="off">
-<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开大类历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
-</div>
-</div>
-<div class="form-group">
 <label for="tagInput">标签</label>
 <div class="combo" id="tagCombo">
 <div class="combo-selected" id="tagSelected"></div>
@@ -444,8 +433,17 @@ body.reordering{user-select:none}
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
+</div><div class="form-group">
+<label for="groupInput">大类</label>
+<div class="combo" id="groupCombo">
+<div class="combo-selected" id="groupSelected"></div>
+<div class="combo-row">
+<input type="text" id="groupInput" autocomplete="off">
+<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开大类历史">▾</button>
 </div>
-<div class="form-group">
+<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
+</div>
+</div><div class="form-group">
 <label for="categoryInput">书架</label>
 <div class="combo" id="categoryCombo">
 <div class="combo-selected" id="categorySelected"></div>
