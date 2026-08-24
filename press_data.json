@@ -2040,6 +2040,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "b9c61645-ca38-48b1-87db-f4d47a3ecbd9",
+      "bookName": "中国在梁庄",
+      "bookNo": "7-5168-0997",
+      "institution": "[台海出版社](https://book.douban.com/press/2502/?order=time)",
+      "category": [],
+      "group": [
+        "I文学"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "200067",
+      "codeEditCount": 0
+    },
+    {
       "id": "a426e092-b0cc-468a-87b9-ffce3bd9124c",
       "bookName": "澄明之境：陶渊明新论",
       "bookNo": "7-5321-7232",
@@ -2866,21 +2881,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "b9c61645-ca38-48b1-87db-f4d47a3ecbd9",
-      "bookName": "中国在梁庄",
-      "bookNo": "7-5168-0997",
-      "institution": "[台海出版社](https://book.douban.com/press/2502/?order=time)",
-      "category": [],
-      "group": [
-        "I文学"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "200067",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -2986,6 +2986,7 @@
     "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[文化发展出版社](https://book.douban.com/press/2401/?order=time)",
     "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
+    "[台海出版社](https://book.douban.com/press/2502/?order=time)",
     "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
     "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
@@ -3016,8 +3017,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[台海出版社](https://book.douban.com/press/2502/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
