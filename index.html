@@ -490,25 +490,9 @@ body.reordering{user-select:none}
 <div class="dialog-scroll">
 <h3>编辑</h3>
 
-<div class="edit-title-row">
 <div class="form-group">
 <label for="editBookName">书名</label>
 <input autocomplete="off" id="editBookName" type="text"/>
-</div>
-<div class="form-group">
-<label for="editBookNo">书号</label>
-<div class="clearable-field">
-<input autocomplete="off" id="editBookNo" type="text"/>
-<button class="clear-field-btn" id="clearEditBookNoTop" type="button" aria-label="删除书号">×</button>
-</div>
-</div>
-<div class="form-group">
-<label for="editCode">编码</label>
-<div class="clearable-field">
-<input autocomplete="off" id="editCode" spellcheck="false" type="text"/>
-<button class="clear-field-btn" id="clearEditCodeTop" type="button" aria-label="删除编码">×</button>
-</div>
-</div>
 </div>
 
 <div class="form-group">
@@ -522,7 +506,23 @@ body.reordering{user-select:none}
 </div>
 </div>
 
+<div class="code-bookno-row">
+<div class="form-group">
+<label for="editBookNo">书号</label>
+<div class="clearable-field">
+<input autocomplete="off" id="editBookNo" type="text"/>
+<button class="clear-field-btn" id="clearEditBookNo" type="button" aria-label="删除书号">×</button>
+</div>
+</div>
 
+<div class="form-group">
+<label for="editCode">编码</label>
+<div class="clearable-field">
+<input autocomplete="off" id="editCode" spellcheck="false" type="text"/>
+<button class="clear-field-btn" id="clearEditCode" type="button" aria-label="删除编码">×</button>
+</div>
+</div>
+</div>
 
 <div class="edit-two-column-row">
 <div class="form-group">
