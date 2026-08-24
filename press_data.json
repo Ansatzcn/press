@@ -1130,6 +1130,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "ed13af33-1a55-427b-88fa-2a4c323f22a4",
+      "bookName": "马克思资本概念的逻辑结构",
+      "bookNo": "7-305-28774",
+      "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
+      "category": [],
+      "group": [
+        "A马克思主义、列宁主义、毛泽东思想、邓小平理论"
+      ],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240017",
+      "codeEditCount": 0
+    },
+    {
       "id": "2c887e78-ee0b-48c0-877f-d5ee445c858c",
       "bookName": "[资本积累理论与现代资本主义——理论和实证的分析](https://book.douban.com/subject/37333359/)",
       "bookNo": "7-310-00366",
@@ -2947,7 +2962,6 @@
     "265521",
     "123415",
     "117101",
-    "240017",
     "127199"
   ]
 }
