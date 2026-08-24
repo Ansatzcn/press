@@ -2212,6 +2212,21 @@
       "codeEditCount": 0
     },
     {
+      "id": "4ebbe2b8-9d65-4115-b827-2604ec3218a4",
+      "bookName": "扫地出门：美国城市的贫穷与暴利",
+      "bookNo": "7-5703-2287",
+      "institution": "[山西教育出版社](https://book.douban.com/press/2804/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "200062",
+      "codeEditCount": 0
+    },
+    {
       "id": "ff746ee3-0a3d-42ce-8e57-208405d15835",
       "bookName": "寻找薛定谔的猫",
       "bookNo": "7-5443-5994",
@@ -2806,21 +2821,6 @@
       ],
       "code": "140017",
       "codeEditCount": 0
-    },
-    {
-      "id": "4ebbe2b8-9d65-4115-b827-2604ec3218a4",
-      "bookName": "扫地出门：美国城市的贫穷与暴利",
-      "bookNo": "7-5703-2287",
-      "institution": "[山西教育出版社](https://book.douban.com/press/2804/?order=time)",
-      "category": [],
-      "group": [
-        "F经济"
-      ],
-      "tag": [
-        "21读书"
-      ],
-      "code": "200062",
-      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -2931,6 +2931,7 @@
     "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
     "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
     "[上海科技教育出版社](https://book.douban.com/press/2324/?order=time)",
+    "[山西教育出版社](https://book.douban.com/press/2804/?order=time)",
     "[海南出版社](https://book.douban.com/press/2554/?order=time)",
     "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
     "[译林出版社](https://book.douban.com/press/2331/?order=time)",
@@ -2954,8 +2955,7 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press",
-    "[山西教育出版社](https://book.douban.com/press/2804/?order=time)"
+    "State University of New York Press"
   ],
   "categories": [
     "黑架2行",
