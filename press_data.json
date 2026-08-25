@@ -1524,6 +1524,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "95602adf-9c23-4761-88ae-fcbda406b292",
+      "bookName": "新下层：日本的社会阶层与贫困遗传",
+      "bookNo": "7-5236-0366",
+      "institution": "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210011",
+      "codeEditCount": 0
+    },
+    {
       "id": "42233302-ae90-4fd4-ab80-e6feb750a09d",
       "bookName": "范式革命：通用人工智能的必由之路",
       "bookNo": "7-5236-1657",
@@ -2933,18 +2945,6 @@
         "14图书"
       ],
       "code": "140017",
-      "codeEditCount": 0
-    },
-    {
-      "id": "95602adf-9c23-4761-88ae-fcbda406b292",
-      "bookName": "新下层：日本的社会阶层与贫困遗传",
-      "bookNo": "7-5236-0366",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "210011",
       "codeEditCount": 0
     }
   ],
