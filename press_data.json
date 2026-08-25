@@ -1774,17 +1774,15 @@
       "bookName": "[中华人民共和国农村集体经济组织法理解与适用](https://book.douban.com/subject/37845196/)",
       "bookNo": "7-5216-4619",
       "institution": "[中国法治出版社](https://book.douban.com/press/2437/?order=time)",
-      "category": [
-        "正架1行"
-      ],
+      "category": [],
       "group": [
         "D政治、法律"
       ],
       "tag": [
         "13图书"
       ],
-      "code": "171113",
-      "codeEditCount": 0
+      "code": "130005",
+      "codeEditCount": 1
     },
     {
       "id": "53499c06-7b5e-45c2-be91-31aa568fc73b",
@@ -3381,6 +3379,7 @@
     "100020",
     "171101",
     "171102",
-    "272639"
+    "272639",
+    "171113"
   ]
 }
