@@ -1660,18 +1660,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "53ad081c-5406-437f-b3b7-741473f9f6a9",
-      "bookName": "万物定理",
-      "bookNo": "7-5217-3625",
-      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "253272",
-      "codeEditCount": 0
-    },
-    {
       "id": "cdea82dc-da00-46ef-8e24-94c3edbc1d08",
       "bookName": "[八堂自然课：大自然教给我们的生存之道](https://book.douban.com/subject/35694370/)",
       "bookNo": "7-5217-3631",
@@ -3307,6 +3295,7 @@
     "100009",
     "200064",
     "200024",
-    "200060"
+    "200060",
+    "253272"
   ]
 }
