@@ -722,7 +722,7 @@ function nextCode(usedSet){
     return released||randomCode(used)
 }
 
-// 指定标签的自动编码区间。新增条目未手动填写编码时，以及编辑标签触发自动重编码时使用。
+// 指定标签的自动编码区间。新增条目未手动填写编码时，以及编辑时清空编码或删除/替换原有标签触发系统自动重编码时使用。
 // 每个标签可以对应一个或多个区间；始终按区间与编码数值从小到大寻找第一个未使用编码。
 // 手动填写编码不受这些自动编码区间限制。
 const AUTO_CODE_RULES=[
@@ -1342,6 +1342,7 @@ function getEditSnapshot(){
         category:[...editSelections.category],
         group:[...editSelections.group],
         tag:[...editSelections.tag],
+        code:editCode.value,
         categoryDraft:editCategory.value,
         groupDraft:editGroup.value,
         tagDraft:editTag.value
@@ -1430,14 +1431,17 @@ function saveEdit(){
     const oldCode=clean(x.code);
     const requestedCode=clean(editCode.value);
     const codeChanged=requestedCode!==oldCode;
-    const tagChanged=JSON.stringify(oldTag)!==JSON.stringify(x.tag);
+    const newTagKeys=new Set(x.tag.map(key));
+    // 只有原有标签被删除/替换时才需要系统重编；仅新增标签不改变编码。
+    const originalTagRemoved=oldTag.some(v=>!newTagKeys.has(key(v)));
     const usedCodes=new Set(state.entries.filter(e=>e.id!==x.id).map(e=>clean(e.code)).filter(Boolean));
 
-    if(tagChanged){
-        // 标签变化必须自动重新赋码，而且不占用唯一一次人工修改机会。
-        // 本次分配时暂时把旧编码视为占用，确保标签修改后编码实际发生变化；
-        // 新编码确定后再释放旧编码，使其重新进入后续“从小到大”的可用序列。
+    // 点击编码右侧 ×（或把编码清空）表示放弃人工指定，交由系统自动重新分配。
+    // 这属于系统自动改码，不占用、也不受“仅 1 次手动修改编码”限制。
+    // 删除/替换原有标签同样触发系统自动重新分配。
+    if((codeChanged&&!requestedCode)||originalTagRemoved){
         const usedForReassign=new Set(usedCodes);
+        // 暂时把旧编码视为占用，确保系统确实分配一个不同的新编码。
         if(oldCode)usedForReassign.add(oldCode);
         const rule=autoCodeRuleForTags(x.tag);
         let newCode;
@@ -1453,7 +1457,8 @@ function saveEdit(){
         }
         state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code);
     }else if(codeChanged&&(Number(x.codeEditCount)||0)>=1){
-        show('每个条目的编码只有1次手动修改机会','error');
+        // 只有“直接输入另一个非空编码”才属于人工改码，并受一次机会限制。
+        show('每个条目的编码只有1次手动修改机会；如需系统自动重编，请点击编码右侧 ×','error');
         editCode.value=oldCode;
         return
     }else if(requestedCode){
@@ -1470,24 +1475,6 @@ function saveEdit(){
             }
         }
         x.code=requestedCode
-    }else if(codeChanged){
-        // 手动清空编码也算一次人工修改；保存时按当前标签规则自动补发新编码。
-        const usedForReassign=new Set(usedCodes);
-        if(oldCode)usedForReassign.add(oldCode);
-        const rule=autoCodeRuleForTags(x.tag);
-        let newCode;
-        try{
-            newCode=rule?nextCodeInRange(rule,usedForReassign):nextCode(usedForReassign);
-        }catch(e){
-            show(e.message,'error');
-            return
-        }
-        x.code=newCode;
-        x.codeEditCount=1;
-        if(oldCode&&validCode(oldCode)){
-            state.releasedCodes=uniq([...(state.releasedCodes||[]),oldCode]);
-        }
-        state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code);
     }
     if(oldCode!==x.code){
         state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code)
@@ -1971,9 +1958,9 @@ editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';edi
 editSave.addEventListener('click',saveEdit);
 clearEditBookName?.addEventListener('click',()=>{editBookName.value='';editBookName.focus()});
 clearEditBookNo?.addEventListener('click',()=>{editBookNo.value='';editBookNo.focus()});
-clearEditCode?.addEventListener('click',()=>{if(!editCode.disabled){editCode.value='';editCode.focus()}else{show('编码已手动修改1次，不能再次修改','error')}});
+clearEditCode?.addEventListener('click',()=>{editCode.value='';if(!editCode.disabled)editCode.focus()});
 clearEditBookNoTop?.addEventListener('click',()=>{editBookNo.value='';editBookNo.focus()});
-clearEditCodeTop?.addEventListener('click',()=>{if(!editCode.disabled){editCode.value='';editCode.focus()}else{show('编码已手动修改1次，不能再次修改','error')}});
+clearEditCodeTop?.addEventListener('click',()=>{editCode.value='';if(!editCode.disabled)editCode.focus()});
 
 // 只有“按下”和“松开”都发生在遮罩层本身时，才视为真正点击弹窗外。
 // 从输入框/下拉框内部开始拖选文字，即使鼠标松到遮罩层，也不会关闭弹窗。
