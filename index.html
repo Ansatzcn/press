@@ -885,20 +885,24 @@ function renderMultiOptions(type,which){
     // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
-    const manualOrder=type==='category';
+    // 标签、分类、书架的下拉菜单维护功能只保留在“添加”板块。
+    // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
+    const canManage=which==='add';
+    const manualOrder=canManage&&type==='category';
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>{
             const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
+            const manageButtons=canManage?`
+                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑${meta.label} ${attr(v)}" title="编辑">✓</button>
+                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>`:'';
             return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
                 ${dragHandle}
-                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>
-                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑${meta.label} ${attr(v)}" title="编辑">✓</button>
-                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>
+                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>${manageButtons}
             </span>`
         }).join('')}</div>`
         : `<div class="combo-empty">${q?`没有匹配的${meta.label}`:`暂无${meta.label}`}</div>`;
     const current=clean(meta.input.value);
-    const canAdd=current&&!history.some(v=>key(v)===key(current));
+    const canAdd=canManage&&current&&!history.some(v=>key(v)===key(current));
     meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到${meta.label}</button>`:'')
 }
 function renderMultiField(type,which){
@@ -912,11 +916,9 @@ function renderInstitutionOptions(which){
     const meta=institutionMeta(which);
     const q=key(meta.input.value);
     const history=uniq(state.institutions);
-    // “出版”下拉菜单只显示出版名称；排序由“出版管理”的行号维护。
-    // 添加板块保留“新增到下拉菜单”能力，但不在下拉菜单中提供修改、删除或拖拽。
+    // “出版”下拉菜单在添加和编辑界面只负责选择已有出版。
+    // 出版选项的新增、改名、删除和排序全部只保留在“出版管理”页面。
     const values=history.filter(v=>!q||key(v).includes(q));
-    const current=clean(meta.input.value);
-    const canAdd=which==='add'&&current&&!history.some(v=>key(v)===key(current));
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>`
             <span class="combo-pill${key(meta.input.value)===key(v)?' selected':''}">
@@ -924,7 +926,7 @@ function renderInstitutionOptions(which){
             </span>
         `).join('')}</div>`
         : `<div class="combo-empty">${q?'没有匹配的出版':'暂无出版'}</div>`;
-    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到出版</button>`:'')
+    meta.options.innerHTML=list
 }
 function renderManageInstitutionOptions(){
     const history=uniq(state.institutions);
@@ -1162,20 +1164,6 @@ function addHistoryOption(type,value,notify=false){
     if(notify)show(`已加入${label}下拉菜单`,'success');
     return true
 }
-function addInstitutionHistory(value,notify=false){
-    const v=clean(value);
-    if(!v)return false;
-    if(state.institutions.some(x=>key(x)===key(v)))return false;
-    // 从添加板块新增的出版选项默认追加到末行；如需精确调整位置，可在“管理”页输入目标行号。
-    state.institutions=uniq([...state.institutions,v]);
-    saveLocal();
-    if(admin())schedule();
-    renderInstitutionOptions('add');
-    renderInstitutionOptions('edit');
-    renderManageInstitutionOptions();
-    if(notify)show('已加入出版下拉菜单','success');
-    return true
-}
 function editInstitutionHistory(value){
     const oldValue=clean(value),oldKey=key(oldValue);
     const index=state.institutions.findIndex(v=>key(v)===oldKey);
@@ -1221,12 +1209,8 @@ function deleteInstitutionHistory(value){
 function commitInstitution(which,notify=false){
     const meta=institutionMeta(which),value=clean(meta.input.value);
     if(!value)return false;
-    let exists=state.institutions.some(v=>key(v)===key(value));
-    // 添加板块允许直接把新出版加入下拉菜单；编辑板块不会新增历史选项。
-    if(which==='add'&&!exists){
-        addInstitutionHistory(value,notify);
-        exists=true
-    }
+    // 添加/编辑界面不再维护出版下拉菜单；新建、改名、删除、排序统一到“出版管理”。
+    const exists=state.institutions.some(v=>key(v)===key(value));
     meta.input.value=value;
     renderInstitutionOptions(which);
     return exists
@@ -1323,10 +1307,22 @@ function commitTypedValue(type,which,notify=false){
             return false;
         }
     }
-    addHistoryOption(type,value,notify);
+
+    const history=sortHistory(type,state[meta.historyKey]);
+    const matched=history.find(v=>key(v)===key(value));
+    if(which==='edit'&&!matched){
+        // 编辑弹窗只能选择添加板块已经维护好的下拉菜单选项，不能在这里新增选项。
+        meta.input.value='';
+        show(`编辑窗口只能选择已有${meta.label}；如需新增或修改选项，请在添加板块操作`,'error');
+        renderMultiField(type,which);
+        return false
+    }
+
+    const selectedValue=matched||value;
+    if(which==='add')addHistoryOption(type,selectedValue,notify);
     const current=which==='edit'?editSelections[type]:addSelections[type];
-    if(!current.some(v=>key(v)===key(value))){
-        const next=[...current,value];
+    if(!current.some(v=>key(v)===key(selectedValue))){
+        const next=[...current,selectedValue];
         if(which==='edit')editSelections[type]=uniq(next);
         else addSelections[type]=uniq(next)
     }
@@ -1750,19 +1746,6 @@ function setupInstitutionCombo(which){
     });
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
-        const add=e.target.closest('.combo-add[data-add-current]');
-        if(add&&which==='add'){
-            clearKeyboardActive();
-            const value=clean(meta.input.value);
-            if(value){
-                addInstitutionHistory(value,true);
-                meta.input.value=value;
-                renderInstitutionOptions(which);
-                meta.panel.classList.remove('hidden');
-                meta.input.focus()
-            }
-            return
-        }
         const select=e.target.closest('.combo-pill-select[data-select-value]');
         if(select){
             clearKeyboardActive();
@@ -1902,11 +1885,11 @@ function setupMultiCombo(type,which){
     meta.options.addEventListener('click',e=>{
         e.stopPropagation();
         const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
-        if(edit){clearKeyboardActive();return editHistoryOption(type,edit.dataset.editValue)}
+        if(which==='add'&&edit){clearKeyboardActive();return editHistoryOption(type,edit.dataset.editValue)}
         const del=e.target.closest('.combo-pill-delete[data-delete-value]');
-        if(del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.deleteValue)}
+        if(which==='add'&&del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.deleteValue)}
         const add=e.target.closest('.combo-add[data-add-current]');
-        if(add){
+        if(which==='add'&&add){
             clearKeyboardActive();
             commitTypedValue(type,which,true);
             meta.panel.classList.remove('hidden');
@@ -1933,7 +1916,6 @@ setupInstitutionCombo('edit');
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 setupManualDrag(categoryOptions,'category');
-setupManualDrag(editCategoryOptions,'category');
 setupMultiCombo('group','add');
 setupMultiCombo('group','edit');
 setupMultiCombo('tag','add');
