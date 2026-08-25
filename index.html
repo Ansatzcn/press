@@ -501,6 +501,49 @@ body.reordering{user-select:none}
     }
 }
 </style>
+
+
+<style id="edit-dialog-natural-height-fix">
+/* 编辑弹窗：内容较少时按内容自然收缩；只有内容超过可视高度时才滚动。
+   这样“标签 / 书架”后不会出现大片空白，同时底部操作按钮始终保留。 */
+#editModal > .dialog{
+    height:auto!important;
+    max-height:min(760px,calc(100vh - 24px))!important;
+    max-height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))!important;
+    display:flex!important;
+    flex-direction:column!important;
+}
+#editModal .dialog-scroll{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+}
+#editModal .dialog-actions{
+    flex:0 0 auto!important;
+}
+#editModal .dialog-scroll > .edit-two-column-row:last-child .form-group{
+    margin-bottom:0!important;
+}
+
+@media(max-width:700px){
+    #editModal{
+        align-items:center!important;
+        justify-content:center!important;
+        padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))!important;
+    }
+    #editModal > .dialog{
+        width:100%!important;
+        height:auto!important;
+        max-height:calc(var(--press-vv-height,100dvh) - 16px)!important;
+        border-radius:20px!important;
+    }
+    #editModal .dialog-scroll{
+        padding:1.2rem 1.2rem .8rem!important;
+        overflow-y:auto!important;
+    }
+}
+</style>
+
 </head>
 <body>
 <main class="container">
