@@ -3179,6 +3179,21 @@
       ],
       "code": "140017",
       "codeEditCount": 0
+    },
+    {
+      "id": "06111407-c968-4f63-bc5b-6f50a219b2bb",
+      "bookName": "解读中国经济指标：数字中锁定投资机会",
+      "bookNo": "7-5136-1444",
+      "institution": "[中国经济出版社](https://book.douban.com/press/2640/?order=time)",
+      "category": [],
+      "group": [
+        "F经济"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110013",
+      "codeEditCount": 0
     }
   ],
   "institutions": [
@@ -3322,7 +3337,8 @@
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "香港中文大学出版社",
     "现代文艺出版社",
-    "State University of New York Press"
+    "State University of New York Press",
+    "[中国经济出版社](https://book.douban.com/press/2640/?order=time)"
   ],
   "categories": [
     "组架6列",
