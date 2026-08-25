@@ -1665,7 +1665,9 @@
       "bookNo": "7-5217-3625",
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "21读书"
+      ],
       "code": "253272",
       "codeEditCount": 0
     },
