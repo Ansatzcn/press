@@ -15,7 +15,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 .toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:1.7rem;padding-bottom:1rem;border-bottom:1px solid #e8edf4}
 .toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.btn-danger:hover{background:#fecaca}.btn-sync{border-color:#2563eb;background:#2563eb;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
 .add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}.add-section h2,.list-header h2{font-size:1.3rem}.add-section h2{margin-bottom:1rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.three-fields-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.code-bookno-row,.tag-category-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.three-fields-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.code-bookno-row,.tag-category-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
 .form-group input,.form-group select{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.clearable-field{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px;align-items:center}.edit-title-field{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px;align-items:center}.clear-field-btn{height:44px;width:36px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;font-weight:800}.clear-field-btn:hover{background:#f1f5f9;color:#0f172a}.form-group input:focus,.form-group select:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
 .add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
 .combo{position:relative;border:1px solid #cbd5e1;border-radius:15px;background:#fff;padding:.45rem;min-height:44px}
@@ -61,7 +61,7 @@ body.reordering{user-select:none}
 .back-to-top{position:fixed;right:16px;top:70%;z-index:900;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;transform:translateY(-50%);border:1px solid #2563eb;border-radius:50%;background:#2563eb;color:#2563eb;font-size:0;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1d4ed8;border-color:#1d4ed8;color:#1d4ed8;opacity:1;outline:none}
 .manage-dialog{height:min(760px,calc(100vh - 24px));height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))}.manage-fixed-top{flex:0 0 auto;padding:1.7rem 1.7rem .9rem;border-bottom:1px solid #e8edf4;background:#fff}.manage-fixed-top .dialog-desc{margin-bottom:1rem}.manage-fixed-top .form-group{margin-bottom:0}.manage-table-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:.55rem 1.7rem 1rem;background:#fff}.manage-add-row{display:grid;grid-template-columns:minmax(0,1fr) 92px auto;gap:8px;align-items:center}.manage-add-row input{min-width:0}.manage-add-row .btn{min-height:44px;padding-inline:1.2rem}.manage-line-head{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;margin:.25rem 0 .4rem;padding:0 .3rem;color:#94a3b8;font-size:.75rem;font-weight:700}.manage-list{margin-top:.35rem}.manage-option-row{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;min-height:46px;padding:.35rem .4rem;border:1px solid #cbd5e1;border-radius:12px;background:#fff}.manage-option-row+.manage-option-row{margin-top:7px}.manage-option-label{min-width:0;padding:.35rem .25rem;color:#0f172a;white-space:normal;overflow-wrap:anywhere}.manage-line-input{width:100%;min-width:0;height:34px;padding:.3rem .4rem;border:1px solid #cbd5e1;border-radius:9px;background:#fff;text-align:center;font-weight:700;outline:none}.manage-line-input:focus{border-color:#93c5fd;box-shadow:0 0 0 2px #dbeafe}.manage-empty{padding:1.3rem .8rem;border:1px dashed #cbd5e1;border-radius:14px;color:#94a3b8;text-align:center;font-size:.86rem}.institution-choice{display:flex;align-items:center;width:100%}@media(max-width:700px){.manage-dialog{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none}.manage-fixed-top{padding:1.2rem 1.2rem .8rem}.manage-table-scroll{padding:.55rem 1.2rem .8rem}.manage-add-row{grid-template-columns:minmax(0,1fr) 78px}.manage-add-row .btn{grid-column:1/-1}.manage-line-head{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-row{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-label{font-size:.88rem}}
 @media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row,.code-bookno-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
-.edit-two-column-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;grid-column:1/-1}
+.edit-two-column-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;grid-column:1/-1}
 .edit-title-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;grid-column:1/-1}
 @media(max-width:700px){.edit-title-row{grid-template-columns:1fr}}
 </style>
@@ -75,7 +75,7 @@ body.reordering{user-select:none}
     bottom:auto!important;
     left:0!important;
     width:100%!important;
-    height:var(--press-vv-height,100dvh)!important;
+    height:min(var(--press-vv-height,100dvh),100dvh)!important;
     padding:0!important;
     align-items:stretch!important;
     justify-content:stretch!important;
@@ -174,26 +174,25 @@ body.reordering{user-select:none}
 
 
 <style id="edit-selected-pill-size-fix">
-/* 编辑弹窗：已选中的“分类 / 标签 / 书架”改为同一行内的小号椭圆标签。
-   combo 外框固定为原始高度，选中后不再被 selected-pill 撑高。 */
-#editGroupCombo,
+/* 编辑弹窗：标签 / 书架选中后仍保持单行紧凑显示。
+   combo 使用两层固定网格；倒三角始终占据最右侧 44px，不会因已选项而换行。 */
 #editTagCombo,
 #editCategoryCombo{
     height:54px;
     min-height:54px;
+    min-width:0;
 }
 
-/* 有已选项时：已选椭圆、继续输入框、下拉按钮保持在同一行 */
-#editGroupCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)),
 #editCategoryCombo:has(> .combo-selected:not(:empty)){
     display:grid;
-    grid-template-columns:minmax(0,42%) minmax(0,1fr) 44px;
+    grid-template-columns:minmax(0,42%) minmax(0,1fr);
     align-items:center;
     gap:5px;
+    width:100%;
+    min-width:0;
 }
 
-#editGroupCombo > .combo-selected:not(:empty),
 #editTagCombo > .combo-selected:not(:empty),
 #editCategoryCombo > .combo-selected:not(:empty){
     grid-column:1;
@@ -211,37 +210,36 @@ body.reordering{user-select:none}
     scrollbar-width:none;
 }
 
-#editGroupCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
 #editTagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
-#editCategoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
-    display:none;
-}
+#editCategoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{display:none}
 
-#editGroupCombo > .combo-selected:not(:empty) + .combo-row,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row,
 #editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
-    display:contents;
-}
-
-#editGroupCombo > .combo-selected:not(:empty) + .combo-row input,
-#editTagCombo > .combo-selected:not(:empty) + .combo-row input,
-#editCategoryCombo > .combo-selected:not(:empty) + .combo-row input{
     grid-column:2;
     grid-row:1;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 44px;
+    gap:5px;
+    width:100%;
     min-width:0;
+}
+
+#editTagCombo > .combo-selected:not(:empty) + .combo-row input,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row input{
+    min-width:0;
+    width:100%;
     min-height:38px;
 }
 
-#editGroupCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
 #editCategoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
-    grid-column:3;
-    grid-row:1;
+    width:44px;
+    min-width:44px;
     min-height:38px;
+    grid-column:2;
+    grid-row:1;
 }
 
-/* 只缩小编辑框内的已选椭圆，不影响下拉菜单选项本身 */
-#editModal #editGroupSelected .selected-pill,
 #editModal #editTagSelected .selected-pill,
 #editModal #editCategorySelected .selected-pill{
     flex:0 0 auto;
@@ -252,7 +250,6 @@ body.reordering{user-select:none}
     line-height:1;
 }
 
-#editModal #editGroupSelected .selected-pill-label,
 #editModal #editTagSelected .selected-pill-label,
 #editModal #editCategorySelected .selected-pill-label{
     min-width:0;
@@ -265,7 +262,6 @@ body.reordering{user-select:none}
     text-overflow:ellipsis;
 }
 
-#editModal #editGroupSelected .selected-pill-remove,
 #editModal #editTagSelected .selected-pill-remove,
 #editModal #editCategorySelected .selected-pill-remove{
     flex:0 0 18px;
@@ -279,26 +275,25 @@ body.reordering{user-select:none}
 
 
 <style id="add-selected-pill-size-fix">
-/* 添加板块：已选中的“分类 / 标签 / 书架”与编辑框保持同样的紧凑显示。
-   外框高度固定，选中后不再被 selected-pill 撑高。 */
-#groupCombo,
+/* 添加板块：标签 / 书架选中后保持与编辑框相同的紧凑布局。
+   倒三角固定在最右侧 44px，手机端选中后也不会被挤到下一行。 */
 #tagCombo,
 #categoryCombo{
     height:54px;
     min-height:54px;
+    min-width:0;
 }
 
-/* 有已选项时：已选椭圆、继续输入框、下拉按钮保持在同一行 */
-#groupCombo:has(> .combo-selected:not(:empty)),
 #tagCombo:has(> .combo-selected:not(:empty)),
 #categoryCombo:has(> .combo-selected:not(:empty)){
     display:grid;
-    grid-template-columns:minmax(0,42%) minmax(0,1fr) 44px;
+    grid-template-columns:minmax(0,42%) minmax(0,1fr);
     align-items:center;
     gap:5px;
+    width:100%;
+    min-width:0;
 }
 
-#groupCombo > .combo-selected:not(:empty),
 #tagCombo > .combo-selected:not(:empty),
 #categoryCombo > .combo-selected:not(:empty){
     grid-column:1;
@@ -316,37 +311,36 @@ body.reordering{user-select:none}
     scrollbar-width:none;
 }
 
-#groupCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
 #tagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
-#categoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
-    display:none;
-}
+#categoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{display:none}
 
-#groupCombo > .combo-selected:not(:empty) + .combo-row,
 #tagCombo > .combo-selected:not(:empty) + .combo-row,
 #categoryCombo > .combo-selected:not(:empty) + .combo-row{
-    display:contents;
-}
-
-#groupCombo > .combo-selected:not(:empty) + .combo-row input,
-#tagCombo > .combo-selected:not(:empty) + .combo-row input,
-#categoryCombo > .combo-selected:not(:empty) + .combo-row input{
     grid-column:2;
     grid-row:1;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 44px;
+    gap:5px;
+    width:100%;
     min-width:0;
+}
+
+#tagCombo > .combo-selected:not(:empty) + .combo-row input,
+#categoryCombo > .combo-selected:not(:empty) + .combo-row input{
+    min-width:0;
+    width:100%;
     min-height:38px;
 }
 
-#groupCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
 #tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
 #categoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
-    grid-column:3;
-    grid-row:1;
+    width:44px;
+    min-width:44px;
     min-height:38px;
+    grid-column:2;
+    grid-row:1;
 }
 
-/* 只缩小添加板块内的已选椭圆，不影响下拉菜单选项本身 */
-#addSection #groupSelected .selected-pill,
 #addSection #tagSelected .selected-pill,
 #addSection #categorySelected .selected-pill{
     flex:0 0 auto;
@@ -357,7 +351,6 @@ body.reordering{user-select:none}
     line-height:1;
 }
 
-#addSection #groupSelected .selected-pill-label,
 #addSection #tagSelected .selected-pill-label,
 #addSection #categorySelected .selected-pill-label{
     min-width:0;
@@ -370,7 +363,6 @@ body.reordering{user-select:none}
     text-overflow:ellipsis;
 }
 
-#addSection #groupSelected .selected-pill-remove,
 #addSection #tagSelected .selected-pill-remove,
 #addSection #categorySelected .selected-pill-remove{
     flex:0 0 18px;
@@ -409,6 +401,104 @@ body.reordering{user-select:none}
 
 #manageModal .dialog-actions .btn{
     margin-left:auto;
+}
+</style>
+
+
+<style id="edit-dialog-scroll-fix">
+/* 编辑弹窗：内容区独立滚动，底部操作栏始终可见。 */
+#editModal > .dialog{
+    height:min(760px,calc(100vh - 24px));
+    height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr) auto;
+}
+#editModal .dialog-scroll{
+    grid-row:1;
+    min-width:0;
+    min-height:0;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-y:contain;
+    touch-action:pan-y;
+    scrollbar-gutter:stable;
+    scrollbar-width:auto;
+    scrollbar-color:#94a3b8 #f1f5f9;
+}
+#editModal .dialog-scroll::-webkit-scrollbar{width:8px}
+#editModal .dialog-scroll::-webkit-scrollbar-track{background:#f1f5f9}
+#editModal .dialog-scroll::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:999px;border:2px solid #f1f5f9}
+#editModal .dialog-actions{
+    grid-row:2;
+    position:relative;
+    z-index:5;
+    width:100%;
+    min-width:0;
+}
+
+@media(max-width:700px){
+    #editModal{
+        top:var(--press-vv-top,0px)!important;
+        right:0!important;
+        bottom:auto!important;
+        left:0!important;
+        width:100%!important;
+        height:var(--press-vv-height,100dvh)!important;
+        padding:0!important;
+        align-items:stretch!important;
+        justify-content:stretch!important;
+        overflow:hidden!important;
+    }
+    #editModal > .dialog{
+        width:100%!important;
+        height:100%!important;
+        max-width:none!important;
+        max-height:none!important;
+        margin:0!important;
+        border-radius:0!important;
+        display:grid!important;
+        grid-template-rows:minmax(0,1fr) auto!important;
+        overflow:hidden!important;
+    }
+    #editModal .dialog-scroll{
+        min-height:0!important;
+        overflow-y:scroll!important;
+        padding:max(1.2rem,env(safe-area-inset-top)) 1.2rem 1.2rem!important;
+        scroll-padding-bottom:1rem;
+    }
+    #editModal .dialog-actions{
+        padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))!important;
+        background:#fff!important;
+        box-shadow:0 -8px 20px rgba(15,23,42,.10)!important;
+    }
+
+    /* 手机端再次锁死已选下拉的右侧按钮列，避免任何字体/内容宽度把倒三角挤换行。 */
+    #tagCombo:has(> .combo-selected:not(:empty)),
+    #categoryCombo:has(> .combo-selected:not(:empty)),
+    #editTagCombo:has(> .combo-selected:not(:empty)),
+    #editCategoryCombo:has(> .combo-selected:not(:empty)){
+        grid-template-columns:minmax(0,38%) minmax(0,1fr)!important;
+    }
+    #tagCombo > .combo-selected:not(:empty) + .combo-row,
+    #categoryCombo > .combo-selected:not(:empty) + .combo-row,
+    #editTagCombo > .combo-selected:not(:empty) + .combo-row,
+    #editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
+        grid-template-columns:minmax(0,1fr) 44px!important;
+        width:100%!important;
+        min-width:0!important;
+    }
+    #tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+    #categoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+    #editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+    #editCategoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
+        width:44px!important;
+        min-width:44px!important;
+        max-width:44px!important;
+        grid-column:2!important;
+        grid-row:1!important;
+    }
 }
 </style>
 </head>
@@ -463,16 +553,6 @@ body.reordering{user-select:none}
 <button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
-</div>
-</div><div class="form-group">
-<label for="groupInput">分类</label>
-<div class="combo" id="groupCombo">
-<div class="combo-selected" id="groupSelected"></div>
-<div class="combo-row">
-<input type="text" id="groupInput" autocomplete="off">
-<button class="combo-toggle" id="groupToggle" type="button" aria-label="展开分类历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="groupPanel"><div id="groupOptions"></div></div>
 </div>
 </div><div class="form-group">
 <label for="categoryInput">书架</label>
@@ -552,18 +632,6 @@ body.reordering{user-select:none}
 </div>
 
 <div class="form-group">
-<label for="editGroup">分类</label>
-<div class="combo" id="editGroupCombo">
-<div class="combo-selected" id="editGroupSelected"></div>
-<div class="combo-row">
-<input autocomplete="off" id="editGroup" type="text"/>
-<button aria-label="展开分类历史" class="combo-toggle" id="editGroupToggle" type="button">▾</button>
-</div>
-<div class="combo-panel hidden" id="editGroupPanel"><div id="editGroupOptions"></div></div>
-</div>
-</div>
-
-<div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-selected" id="editCategorySelected"></div>
@@ -635,11 +703,11 @@ const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token
 const MAX_BYTES=750*1024,AUTO_DELAY=700;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
-addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),groupCombo=$('groupCombo'),groupSelected=$('groupSelected'),groupInput=$('groupInput'),groupToggle=$('groupToggle'),groupPanel=$('groupPanel'),groupOptions=$('groupOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editGroupCombo=$('editGroupCombo'),editGroupSelected=$('editGroupSelected'),editGroup=$('editGroup'),editGroupToggle=$('editGroupToggle'),editGroupPanel=$('editGroupPanel'),editGroupOptions=$('editGroupOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),clearEditBookNo=$('clearEditBookNo'),clearEditCode=$('clearEditCode'),clearEditBookNoTop=$('clearEditBookNoTop'),clearEditCodeTop=$('clearEditCodeTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
+addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
+pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),clearEditBookNo=$('clearEditBookNo'),clearEditCode=$('clearEditCode'),clearEditBookNoTop=$('clearEditBookNoTop'),clearEditCodeTop=$('clearEditCodeTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]},addSelections={category:[],group:[],tag:[]},editSelections={category:[],group:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let state={entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
 let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
@@ -754,7 +822,7 @@ function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),institution=clean(x.institution);
-    const category=normalizeMulti(x.category),group=normalizeMulti(x.group),tag=normalizeMulti(x.tag);
+    const category=normalizeMulti(x.category),tag=normalizeMulti(x.tag);
     let code=clean(x.code);
 
     // 手工填写的编码允许原样保存，不受自动编码格式限制。
@@ -762,7 +830,7 @@ function normEntry(x,usedCodes){
     if(!code||usedCodes.has(code))code=randomCode(usedCodes);
 
     usedCodes.add(code);
-    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,group,tag,code,codeEditCount:Math.min(1,Math.max(0,Number(x.codeEditCount)||0))}
+    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,tag,code,codeEditCount:Math.min(1,Math.max(0,Number(x.codeEditCount)||0))}
 }
 function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
@@ -781,10 +849,7 @@ function norm(v){
         Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
     );
 
-    // 分类、标签不能人工排序，始终按首字母/首数字的自然顺序排列。
-    const groups=sortAuto(
-        Array.isArray(s.groups)?s.groups:entries.flatMap(x=>x.group)
-    );
+    // 标签不能人工排序，始终按首字母/首数字的自然顺序排列。
     const tags=sortAuto(
         Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
     );
@@ -808,7 +873,7 @@ function norm(v){
         if(byName!==0)return byName;
         return a.code.localeCompare(b.code)
     });
-    return{schemaVersion:3,entries,institutions,categories,groups,tags,releasedCodes}
+    return{schemaVersion:3,entries,institutions,categories,tags,releasedCodes}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -847,13 +912,6 @@ function multiMeta(type,which){
             options:edit?editCategoryOptions:categoryOptions,
             selectedBox:edit?editCategorySelected:categorySelected
         },
-        group:{
-            label:'分类',historyKey:'groups',
-            input:edit?editGroup:groupInput,
-            panel:edit?editGroupPanel:groupPanel,
-            options:edit?editGroupOptions:groupOptions,
-            selectedBox:edit?editGroupSelected:groupSelected
-        },
         tag:{
             label:'标签',historyKey:'tags',
             input:edit?editTag:tagInput,
@@ -867,7 +925,7 @@ function multiMeta(type,which){
     return meta
 }
 function sortHistory(type,values){
-    return type==='group'||type==='tag'?sortAuto(values):uniq(values)
+    return type==='tag'?sortAuto(values):uniq(values)
 }
 function renderMultiSelected(type,which){
     const meta=multiMeta(type,which);
@@ -885,7 +943,7 @@ function renderMultiOptions(type,which){
     // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
-    // 标签、分类、书架的下拉菜单维护功能只保留在“添加”板块。
+    // 标签、书架的下拉菜单维护功能只保留在“添加”板块。
     // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
     const canManage=which==='add';
     const manualOrder=canManage&&type==='category';
@@ -910,7 +968,6 @@ function renderMultiField(type,which){
     renderMultiOptions(type,which)
 }
 function renderCategoryOptions(which){renderMultiField('category',which)}
-function renderGroupOptions(which){renderMultiField('group',which)}
 function renderTagOptions(which){renderMultiField('tag',which)}
 function renderInstitutionOptions(which){
     const meta=institutionMeta(which);
@@ -1115,13 +1172,12 @@ function setupManualDrag(optionsEl,type){
     optionsEl.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pointerId)cleanup()})
 }
 function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
-        // 出版 → 标签 → 分类 → 编码 → 书号 → 书架
+        // 出版 → 标签 → 编码 → 书号 → 书架
         const publication=x.institution;
-        const majorCategory=x.group;
         const tagValue=x.tag;
         const bookshelf=x.category;
         const metaRows=[];
@@ -1136,9 +1192,6 @@ function render(){
         }
         if(x.code){
             metaRows.push(`<div class="meta-row code-row"><span class="code-text"><span class="meta-label">编码：</span>${esc(x.code)}</span></div>`)
-        }
-        if(majorCategory.length){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">分类：</span>${esc(majorCategory.join('、'))}</div>`)
         }
         if(bookshelf.length){
             metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
@@ -1223,15 +1276,6 @@ function removeSelection(type,which,value){
 }
 function toggleSelection(type,which,value){
     const meta=multiMeta(type,which),targetKey=key(value);
-    if(type==='group'){
-        if(which==='edit')editSelections.group=[clean(value)];
-        else addSelections.group=[clean(value)];
-        meta.input.value='';
-        renderMultiField(type,which);
-        meta.panel.classList.remove('hidden');
-        meta.input.focus();
-        return
-    }
     const exists=meta.selection.some(v=>key(v)===targetKey);
     if(exists){
         removeSelection(type,which,value);
@@ -1264,7 +1308,7 @@ function editHistoryOption(type,value){
     }
 
     history[index]=nextValue;
-    // 书架保留人工排列位置；分类、标签继续按原自动排序规则。
+    // 书架保留人工排列位置；标签继续按原自动排序规则。
     state[historyKey]=type==='category'?uniq(history):sortHistory(type,history);
 
     const renamePending=values=>uniq(values.map(v=>key(v)===oldKey?nextValue:v));
@@ -1297,16 +1341,6 @@ function deleteHistoryOption(type,value){
 function commitTypedValue(type,which,notify=false){
     const meta=multiMeta(type,which),value=clean(meta.input.value);
     if(!value)return false;
-    if(type==='group'){
-        const currentGroup=which==='edit'?editSelections.group:addSelections.group;
-        if(currentGroup.length>=1){
-            meta.input.value='';
-            show('分类只能选择一项；如需更换，请先删除当前分类','error');
-            renderMultiField(type,which);
-            return false;
-        }
-    }
-
     const history=sortHistory(type,state[meta.historyKey]);
     const matched=history.find(v=>key(v)===key(value));
     if(which==='edit'&&!matched){
@@ -1335,11 +1369,9 @@ function getEditSnapshot(){
         bookNo:editBookNo.value,
         institution:editInstitution.value,
         category:[...editSelections.category],
-        group:[...editSelections.group],
         tag:[...editSelections.tag],
         code:editCode.value,
         categoryDraft:editCategory.value,
-        groupDraft:editGroup.value,
         tagDraft:editTag.value
     })
 }
@@ -1352,10 +1384,8 @@ function addEntry(){
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
     commitInstitution('add');
     commitTypedValue('category','add');
-    commitTypedValue('group','add');
     commitTypedValue('tag','add');
     const category=[...addSelections.category];
-    const group=[...addSelections.group];
     const tag=[...addSelections.tag];
     const requestedCode=clean(codeInput.value);
     const usedCodes=new Set(state.entries.map(x=>clean(x.code)).filter(Boolean));
@@ -1382,13 +1412,12 @@ function addEntry(){
         bookNo:clean(bookNoInput.value),
         category,
         institution:clean(institutionInput.value),
-        group,
         tag,
         code
     });
     // 若本次使用的是已释放编码，则从释放池中移除，避免再次分配。
     state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==code);
-    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';groupInput.value='';tagInput.value='';codeInput.value='';addSelections={category:[],group:[],tag:[]};
+    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';tagInput.value='';codeInput.value='';addSelections={category:[],tag:[]};
     render();schedule();bookNameInput.focus();show(`已添加，编码 ${code}`,'success')
 }
 function openEdit(id){
@@ -1399,13 +1428,12 @@ function openEdit(id){
     editBookNo.value=x.bookNo;
     editInstitution.value=x.institution;
     editCategory.value='';
-    editGroup.value='';
     editTag.value='';
-    editSelections={category:[...x.category],group:[...x.group],tag:[...x.tag]};
+    editSelections={category:[...x.category],tag:[...x.tag]};
     editCode.value=x.code;
     editCode.disabled=(Number(x.codeEditCount)||0)>=1;
     editInitialSnapshot=getEditSnapshot();
-    renderInstitutionOptions('edit');renderCategoryOptions('edit');renderGroupOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
+    renderInstitutionOptions('edit');renderCategoryOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
 }
 function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
@@ -1413,14 +1441,12 @@ function saveEdit(){
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
     commitInstitution('edit');
     commitTypedValue('category','edit');
-    commitTypedValue('group','edit');
     commitTypedValue('tag','edit');
     x.bookName=bookName;
     x.bookNo=clean(editBookNo.value);
     x.institution=clean(editInstitution.value);
     const oldTag=[...(x.tag||[])];
     x.category=[...editSelections.category];
-    x.group=[...editSelections.group];
     x.tag=[...editSelections.tag];
 
     const oldCode=clean(x.code);
@@ -1474,7 +1500,7 @@ function saveEdit(){
     if(oldCode!==x.code){
         state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code)
     }
-    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
+    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
     render();schedule();show(`已保存，编码 ${x.code}`,'success')
 }
 function deleteEntry(id){
@@ -1486,7 +1512,7 @@ function deleteEntry(id){
         state.releasedCodes=uniq([...(state.releasedCodes||[]),releasedCode])
     }
     if(editingId===id){
-        editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};
+        editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
         editModal.classList.add('hidden')
     }
     render();schedule();show(`已删除，编码 ${releasedCode} 已释放`,'success');return true
@@ -1549,7 +1575,7 @@ async function readRemote(){
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
         return{exists:true,sha:d.sha,state:norm(JSON.parse(fromB64(d.content)))}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]}};
+        if(e.status===404)return{exists:false,sha:null,state:{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]}};
         throw e
     }
 }
@@ -1604,7 +1630,7 @@ async function loadPublic(){
         state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('offline','公开数据读取失败');
+        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('offline','公开数据读取失败');
         lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
@@ -1616,15 +1642,15 @@ async function loadAdminState(){
         if(remote.exists){
             state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接')
         }else{
-            state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
+            state=cached||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
         }
     }catch(e){
-        console.error(e);state=cached||{entries:[],institutions:[],categories:[],groups:[],tags:[],releasedCodes:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
+        console.error(e);state=cached||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
     }
 }
 
 function allMultiPanels(){
-    return [institutionPanel,editInstitutionPanel,categoryPanel,editCategoryPanel,groupPanel,editGroupPanel,tagPanel,editTagPanel]
+    return [institutionPanel,editInstitutionPanel,categoryPanel,editCategoryPanel,tagPanel,editTagPanel]
 }
 function setupInstitutionCombo(which){
     const meta=institutionMeta(which);
@@ -1760,14 +1786,10 @@ function setupMultiCombo(type,which){
     const meta=multiMeta(type,which);
     const toggle=type==='category'
         ? (which==='edit'?editCategoryToggle:categoryToggle)
-        : type==='group'
-            ? (which==='edit'?editGroupToggle:groupToggle)
-            : (which==='edit'?editTagToggle:tagToggle);
+        : (which==='edit'?editTagToggle:tagToggle);
     const combo=type==='category'
         ? (which==='edit'?editCategoryCombo:categoryCombo)
-        : type==='group'
-            ? (which==='edit'?editGroupCombo:groupCombo)
-            : (which==='edit'?editTagCombo:tagCombo);
+        : (which==='edit'?editTagCombo:tagCombo);
     let keyboardIndex=-1;
 
     function keyboardOptions(){
@@ -1915,8 +1937,6 @@ setupInstitutionCombo('edit');
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 setupManualDrag(categoryOptions,'category');
-setupMultiCombo('group','add');
-setupMultiCombo('group','edit');
 setupMultiCombo('tag','add');
 setupMultiCombo('tag','edit');
 
@@ -1935,7 +1955,7 @@ addBtn.addEventListener('click',addEntry);
 });
 pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id)});
 editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
-editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editSelections={category:[],group:[],tag:[]};editModal.classList.add('hidden')});
+editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};editModal.classList.add('hidden')});
 editSave.addEventListener('click',saveEdit);
 clearEditBookName?.addEventListener('click',()=>{editBookName.value='';editBookName.focus()});
 clearEditBookNo?.addEventListener('click',()=>{editBookNo.value='';editBookNo.focus()});
@@ -1955,7 +1975,7 @@ editModal.addEventListener('pointerup',e=>{
     if(!editIsUnchanged())return;
     editingId='';
     editInitialSnapshot='';
-    editSelections={category:[],group:[],tag:[]};
+    editSelections={category:[],tag:[]};
     editModal.classList.add('hidden')
 });
 editModal.addEventListener('pointercancel',()=>{
@@ -1997,8 +2017,6 @@ document.addEventListener('keydown',e=>{
     editInstitutionPanel.classList.add('hidden');
     categoryPanel.classList.add('hidden');
     editCategoryPanel.classList.add('hidden');
-    groupPanel.classList.add('hidden');
-    editGroupPanel.classList.add('hidden');
     tagPanel.classList.add('hidden');
     editTagPanel.classList.add('hidden');
     editModal.classList.add('hidden');
@@ -2021,7 +2039,7 @@ function fastSmoothScrollToTop(){
 backToTopBtn.addEventListener('click',fastSmoothScrollToTop);
 addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
 
-loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderGroupOptions('add');renderGroupOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
 if(admin())loadAdminState();else loadPublic();
 })();
 </script>
