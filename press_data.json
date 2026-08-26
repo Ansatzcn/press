@@ -2360,6 +2360,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "ccd0999d-9f79-4bd6-ad48-fc5856d84af4",
+      "bookName": "人间正道",
+      "bookNo": "7-5594-0697",
+      "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210076",
+      "codeEditCount": 0
+    },
+    {
       "id": "86319854-b484-4425-9a3e-23f6284323da",
       "bookName": "梁庄十年",
       "bookNo": "7-5426-7305",
@@ -3416,7 +3428,6 @@
     "100005",
     "100026",
     "100030",
-    "130109",
-    "210076"
+    "130109"
   ]
 }
