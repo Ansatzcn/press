@@ -1825,16 +1825,8 @@ function setupInstitutionCombo(which){
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('keydown',e=>{
-        if(multiMeta(type,which).selection.length){
-            if(e.key==='Escape'){
-                meta.panel.classList.add('hidden');
-                clearKeyboardActive()
-            }
-            e.preventDefault();
-            e.stopPropagation();
-            return
-        }
-
+        // 出版菜单支持与标签/书架一致的键盘浏览：
+        // ↑ / ↓ 移动高亮，Enter 选中，Escape 收起。
         if(e.key==='ArrowDown'||e.key==='ArrowUp'){
             e.preventDefault();
             e.stopPropagation();
