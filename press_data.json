@@ -587,7 +587,7 @@
     },
     {
       "id": "a18a6634-c69a-43a9-ac3b-9a221280246b",
-      "bookName": "[发展·效率·公平：上海市社会科学界第五届学术年会文集（2007年度）经济、管理科学卷](https://book.douban.com/subject/2344624/)",
+      "bookName": "发展·效率·公平：上海市社会科学界第五届学术年会文集（2007年度）经济、管理科学卷",
       "bookNo": "7-208-07521",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [
@@ -596,7 +596,7 @@
       "tag": [
         "13图书"
       ],
-      "code": "130111",
+      "code": "130015",
       "codeEditCount": 1
     },
     {
@@ -625,7 +625,7 @@
     },
     {
       "id": "ce1c99ca-82a8-4a4a-abfd-f42c11bd661d",
-      "bookName": "[回到马克思：国外马克思主义经济理论研究](https://book.douban.com/subject/36334001/)",
+      "bookName": "回到马克思：国外马克思主义经济理论研究",
       "bookNo": "7-208-16607",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
@@ -649,7 +649,7 @@
     },
     {
       "id": "40256e7a-0142-46be-b6dd-7787c8c0bfae",
-      "bookName": "[县中的孩子：中国县域教育生态](https://book.douban.com/subject/36407364/)",
+      "bookName": "县中的孩子：中国县域教育生态",
       "bookNo": "7-208-18271",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [
@@ -3361,6 +3361,7 @@
     "200070",
     "200014",
     "200073",
-    "200061"
+    "200061",
+    "130111"
   ]
 }
