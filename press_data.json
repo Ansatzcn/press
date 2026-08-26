@@ -474,6 +474,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "145dc0e9-24d9-40b0-b832-e28cd2c032ad",
+      "bookName": "泰恩河上的黄龙旗：阿姆斯特朗公司与中国近代海军",
+      "bookNo": "7-108-06822",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210122",
+      "codeEditCount": 0
+    },
+    {
       "id": "a7b6897a-13d1-40a9-93cb-bcbaf4f94cf9",
       "bookName": "程允亨的十九世纪",
       "bookNo": "7-108-07854",
@@ -3738,7 +3750,6 @@
     "100013",
     "298539",
     "130103",
-    "210122",
     "210123"
   ]
 }
