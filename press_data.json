@@ -2360,6 +2360,16 @@
       "codeEditCount": 1
     },
     {
+      "id": "cc2cb2db-3a24-4ba7-9a71-a0d631b16ad4",
+      "bookName": "物的追问：康德关于先验原理的学说",
+      "bookNo": "",
+      "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
+      "category": [],
+      "tag": [],
+      "code": "298539",
+      "codeEditCount": 0
+    },
+    {
       "id": "a565cb98-d646-4c20-8910-bce3ef70cd46",
       "bookName": "天上深渊：鲁迅十二论",
       "bookNo": "7-5339-7297",
@@ -3286,7 +3296,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "298539",
     "187302",
     "182255",
     "283119",
