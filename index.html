@@ -1008,6 +1008,11 @@ function renderMultiOptions(type,which){
 }
 function renderMultiField(type,which){
     renderMultiSelected(type,which);
+    const meta=multiMeta(type,which);
+    const tagLocked=type==='tag'&&meta.selection.length>0;
+    meta.input.readOnly=tagLocked;
+    meta.input.setAttribute('aria-readonly',tagLocked?'true':'false');
+    meta.input.title=tagLocked?'请先删除当前标签，再选择或输入新标签':'';
     renderMultiOptions(type,which)
 }
 function renderCategoryOptions(which){renderMultiField('category',which)}
@@ -1315,22 +1320,39 @@ function removeSelection(type,which,value){
     const next=meta.selection.filter(v=>key(v)!==targetKey);
     if(which==='edit')editSelections[type]=next;
     else addSelections[type]=next;
-    renderMultiField(type,which)
+    meta.input.value='';
+    renderMultiField(type,which);
+    meta.panel.classList.add('hidden')
 }
 function toggleSelection(type,which,value){
     const meta=multiMeta(type,which),targetKey=key(value);
     const exists=meta.selection.some(v=>key(v)===targetKey);
+
+    // 再点当前唯一选项 = 删除当前选择。
     if(exists){
         removeSelection(type,which,value);
-        return
+        meta.panel.classList.add('hidden');
+        return true
     }
-    const next=[...meta.selection,clean(value)].filter(Boolean);
-    if(which==='edit')editSelections[type]=uniq(next);
-    else addSelections[type]=uniq(next);
+
+    // 标签必须先删除原选择，才能选择新的标签。
+    if(type==='tag'&&meta.selection.length){
+        meta.panel.classList.add('hidden');
+        show('请先删除当前标签，再选择新的标签','error');
+        return false
+    }
+
+    // 标签、书架都只允许一个选项。
+    const next=[clean(value)].filter(Boolean);
+    if(which==='edit')editSelections[type]=next;
+    else addSelections[type]=next;
+
     meta.input.value='';
     renderMultiField(type,which);
-    meta.panel.classList.remove('hidden');
-    meta.input.focus()
+
+    // 选中后立即收起，绝不继续停留在第二个选项位置。
+    meta.panel.classList.add('hidden');
+    return true
 }
 function editHistoryOption(type,value){
     const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
@@ -1384,6 +1406,18 @@ function deleteHistoryOption(type,value){
 function commitTypedValue(type,which,notify=false){
     const meta=multiMeta(type,which),value=clean(meta.input.value);
     if(!value)return false;
+
+    const current=which==='edit'?editSelections[type]:addSelections[type];
+
+    // 标签已有选择时，不允许通过输入框或 Enter 再写入第二个标签。
+    if(type==='tag'&&current.length){
+        meta.input.value='';
+        meta.panel.classList.add('hidden');
+        renderMultiField(type,which);
+        show('请先删除当前标签，再输入新的标签','error');
+        return false
+    }
+
     const history=sortHistory(type,state[meta.historyKey]);
     const matched=history.find(v=>key(v)===key(value));
     if(which==='edit'&&!matched){
@@ -1396,14 +1430,14 @@ function commitTypedValue(type,which,notify=false){
 
     const selectedValue=matched||value;
     if(which==='add')addHistoryOption(type,selectedValue,notify);
-    const current=which==='edit'?editSelections[type]:addSelections[type];
-    if(!current.some(v=>key(v)===key(selectedValue))){
-        const next=[...current,selectedValue];
-        if(which==='edit')editSelections[type]=uniq(next);
-        else addSelections[type]=uniq(next)
-    }
+
+    // 标签、书架均只保留一个选项。
+    if(which==='edit')editSelections[type]=[selectedValue];
+    else addSelections[type]=[selectedValue];
+
     meta.input.value='';
     renderMultiField(type,which);
+    meta.panel.classList.add('hidden');
     return true
 }
 function getEditSnapshot(){
@@ -1762,6 +1796,16 @@ function setupInstitutionCombo(which){
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('keydown',e=>{
+        if(type==='tag'&&multiMeta(type,which).selection.length){
+            if(e.key==='Escape'){
+                meta.panel.classList.add('hidden');
+                clearKeyboardActive()
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            return
+        }
+
         if(e.key==='ArrowDown'||e.key==='ArrowUp'){
             e.preventDefault();
             e.stopPropagation();
@@ -1869,8 +1913,7 @@ function setupMultiCombo(type,which){
     function selectKeyboardValue(value){
         keyboardIndex=-1;
         toggleSelection(type,which,value);
-        meta.panel.classList.add('hidden');
-        meta.input.focus()
+        meta.panel.classList.add('hidden')
     }
 
     toggle.addEventListener('click',e=>{
@@ -1885,12 +1928,26 @@ function setupMultiCombo(type,which){
     });
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
+
+        // 标签已有选择时，输入栏锁定；只能先点已选标签的 × 删除。
+        if(type==='tag'&&multiMeta(type,which).selection.length){
+            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+            keyboardIndex=-1;
+            return
+        }
+
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
         meta.panel.classList.remove('hidden');
         keyboardIndex=-1;
         renderMultiField(type,which)
     });
     meta.input.addEventListener('input',()=>{
+        if(type==='tag'&&multiMeta(type,which).selection.length){
+            meta.input.value='';
+            meta.panel.classList.add('hidden');
+            keyboardIndex=-1;
+            return
+        }
         // 输入搜索词时自动展开，并立即刷新匹配结果。
         meta.panel.classList.remove('hidden');
         keyboardIndex=-1;
@@ -1956,7 +2013,7 @@ function setupMultiCombo(type,which){
         if(which==='add'&&add){
             clearKeyboardActive();
             commitTypedValue(type,which,true);
-            meta.panel.classList.remove('hidden');
+            meta.panel.classList.add('hidden');
             return
         }
         const select=e.target.closest('.combo-pill-select[data-select-value]');
