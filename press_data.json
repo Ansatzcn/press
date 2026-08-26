@@ -2180,18 +2180,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "66f6957a-61e6-4d80-aef4-1f84d86a310f",
-      "bookName": "明代政争探源",
-      "bookNo": "7-5134-0553",
-      "institution": "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
-      "category": [],
-      "tag": [
-        "14图书"
-      ],
-      "code": "140023",
-      "codeEditCount": 1
-    },
-    {
       "id": "f749182a-96f2-434e-892b-6a77ec54385d",
       "bookName": "敦煌传：四大文明汇流之地",
       "bookNo": "7-5133-5287",
@@ -2202,6 +2190,18 @@
       ],
       "code": "210100",
       "codeEditCount": 0
+    },
+    {
+      "id": "66f6957a-61e6-4d80-aef4-1f84d86a310f",
+      "bookName": "明代政争探源",
+      "bookNo": "7-5134-0553",
+      "institution": "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
+      "category": [],
+      "tag": [
+        "14图书"
+      ],
+      "code": "140023",
+      "codeEditCount": 1
     },
     {
       "id": "580a9d4e-443b-415a-aca2-ddf29f777c6e",
@@ -3311,8 +3311,8 @@
     "[人民日报出版社](https://book.douban.com/press/2299/?order=time)",
     "[中央编译出版社](https://book.douban.com/press/2440/?order=time)★",
     "[团结出版社](https://book.douban.com/press/2477/?order=time)",
-    "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[新星出版社](https://book.douban.com/press/2643/?order=time)",
+    "[故宫出版社](https://book.douban.com/press/2396/?order=time)",
     "[文化发展出版社](https://book.douban.com/press/2401/?order=time)",
     "[学习出版社](https://book.douban.com/press/2338/?order=time)★",
     "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
