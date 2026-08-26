@@ -845,14 +845,14 @@
     },
     {
       "id": "ca4bf4fd-b90f-403a-85c0-71faeffcd135",
-      "bookName": "[唐诗中的历史：战争、王朝与兴衰之歌](https://book.douban.com/subject/37348675/)",
+      "bookName": "唐诗中的历史：战争、王朝与兴衰之歌",
       "bookNo": "7-220-13551",
       "institution": "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
       "category": [],
       "tag": [
         "21读书"
       ],
-      "code": "200058",
+      "code": "210074",
       "codeEditCount": 1
     },
     {
@@ -3362,6 +3362,7 @@
     "200014",
     "200073",
     "200061",
-    "130111"
+    "130111",
+    "200058"
   ]
 }
