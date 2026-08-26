@@ -893,14 +893,14 @@
     },
     {
       "id": "971382f9-fa67-4e83-a4be-fab02e1ab6d7",
-      "bookName": "[马克思“不惑之年”的思考](https://book.douban.com/subject/30312735/)",
+      "bookName": "马克思“不惑之年”的思考",
       "bookNo": "7-300-01445",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
         "11图书"
       ],
-      "code": "100004",
+      "code": "110029",
       "codeEditCount": 0
     },
     {
@@ -3363,6 +3363,7 @@
     "200073",
     "200061",
     "130111",
-    "200058"
+    "200058",
+    "100004"
   ]
 }
