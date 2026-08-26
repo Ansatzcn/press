@@ -2444,16 +2444,6 @@
       "codeEditCount": 1
     },
     {
-      "id": "cc2cb2db-3a24-4ba7-9a71-a0d631b16ad4",
-      "bookName": "物的追问：康德关于先验原理的学说",
-      "bookNo": "",
-      "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
-      "category": [],
-      "tag": [],
-      "code": "298539",
-      "codeEditCount": 0
-    },
-    {
       "id": "0389d8a2-5c02-44e1-8837-37003368dfce",
       "bookName": "重走梁林路：我们的古建考察笔记",
       "bookNo": "7-5333-4663",
@@ -3710,6 +3700,7 @@
     "100017",
     "100024",
     "100027",
-    "100013"
+    "100013",
+    "298539"
   ]
 }
