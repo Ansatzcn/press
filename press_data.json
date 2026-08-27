@@ -2792,6 +2792,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "137fb561-d7bc-48dd-ae70-a4d17556336d",
+      "bookName": "长城之外：北境与大明边防",
+      "bookNo": "7-5455-7737",
+      "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210123",
+      "codeEditCount": 0
+    },
+    {
       "id": "085cd211-984b-4a4a-b017-f1586d3f90d3",
       "bookName": "大战场：敌后抗战田野调查笔记",
       "bookNo": "7-5455-8947",
@@ -3761,7 +3773,6 @@
     "100027",
     "100013",
     "298539",
-    "130103",
-    "210123"
+    "130103"
   ]
 }
