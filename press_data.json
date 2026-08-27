@@ -976,6 +976,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "2f8b575a-20d9-4782-8c15-ec28ce5e7655",
+      "bookName": "西南联大日记",
+      "bookNo": "7-222-23551",
+      "institution": "[云南人民出版社](https://book.douban.com/press/2398/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210142",
+      "codeEditCount": 0
+    },
+    {
       "id": "ddb5b1f7-1df4-4f52-8ca0-4d95a92f6c7e",
       "bookName": "从鸭绿江到奇穷河：一个摄影记者的随军纪实",
       "bookNo": "7-224-13183",
@@ -2526,6 +2538,18 @@
       ],
       "code": "210098",
       "codeEditCount": 1
+    },
+    {
+      "id": "70f18b17-c886-49e7-8ebf-baafc774fe06",
+      "bookName": "陈丹燕的上海",
+      "bookNo": "7-5321-7674",
+      "institution": "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210143",
+      "codeEditCount": 0
     },
     {
       "id": "7837fb5c-06b5-4cc7-ad9c-ac0a92037b62",
