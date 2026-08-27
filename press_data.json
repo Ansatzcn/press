@@ -2816,6 +2816,16 @@
       "codeEditCount": 0
     },
     {
+      "id": "f2b3d4cf-5699-4f58-b8ea-bf6349a1ec8f",
+      "bookName": "皇帝的账本",
+      "bookNo": "7-5455-9048",
+      "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+      "category": [],
+      "tag": [],
+      "code": "187302",
+      "codeEditCount": 0
+    },
+    {
       "id": "485de444-f07e-4855-be43-e5a2f1456608",
       "bookName": "马克思入门",
       "bookNo": "7-5473-3081",
@@ -3518,7 +3528,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "187302",
     "182255",
     "283119",
     "108999",
