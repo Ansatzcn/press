@@ -792,6 +792,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "ec385e4f-9299-445e-9c94-b26361785da4",
+      "bookName": "月亮照在阿姆河上",
+      "bookNo": "7-208-17899",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210173",
+      "codeEditCount": 0
+    },
+    {
       "id": "2ff7de08-d935-4168-b2b3-f3b54d1e95eb",
       "bookName": "学历之死：美国博士消亡史",
       "bookNo": "7-208-18163",
@@ -3631,6 +3643,18 @@
         "21读书"
       ],
       "code": "210007",
+      "codeEditCount": 0
+    },
+    {
+      "id": "91c5a357-103e-42d1-b637-8e67ee6edbbd",
+      "bookName": "人生如寄：大宋名士浮沉录",
+      "bookNo": "7-5538-2426",
+      "institution": "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210174",
       "codeEditCount": 0
     },
     {
