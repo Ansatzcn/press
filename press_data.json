@@ -598,6 +598,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "5a01af51-c17e-4b7b-b507-3d2cdd97f724",
+      "bookName": "用Python动手学统计学",
+      "bookNo": "7-115-56028",
+      "institution": "[人民邮电出版社](https://book.douban.com/press/2609/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210168",
+      "codeEditCount": 0
+    },
+    {
       "id": "217186b5-4b97-449b-be30-499b958130e7",
       "bookName": "数学的雨伞下：理解世界的乐趣",
       "bookNo": "7-115-61640",
@@ -3065,6 +3077,18 @@
         "21读书"
       ],
       "code": "210081",
+      "codeEditCount": 0
+    },
+    {
+      "id": "78dc65bc-4e82-4895-a73e-af830caa65e4",
+      "bookName": "东京八平米",
+      "bookNo": "7-5426-7865",
+      "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210169",
       "codeEditCount": 0
     },
     {
