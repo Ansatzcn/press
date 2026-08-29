@@ -2862,6 +2862,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "c2cbcbd2-d8b7-4e0c-a706-46538de5eef7",
+      "bookName": "丹心素裹：中共情报员沈安娜口述实录",
+      "bookNo": "7-5098-3890",
+      "institution": "[中共党史出版社](https://book.douban.com/press/2164/?order=time)",
+      "category": [],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240018",
+      "codeEditCount": 0
+    },
+    {
       "id": "bba01c92-f70e-4052-97b7-31bf9d873386",
       "bookName": "唐诗中的帝国",
       "bookNo": "7-80175-563",
@@ -5015,7 +5027,6 @@
     "100013",
     "298539",
     "130103",
-    "187302",
-    "240018"
+    "187302"
   ]
 }
