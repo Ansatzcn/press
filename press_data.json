@@ -3044,6 +3044,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "4dae76c8-95fe-4ff6-9aeb-004282c5e869",
+      "bookName": "旧制度下的俄国",
+      "bookNo": "7-5139-4123",
+      "institution": "[民主与建设出版社](https://book.douban.com/press/2806/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210131",
+      "codeEditCount": 0
+    },
+    {
       "id": "580a9d4e-443b-415a-aca2-ddf29f777c6e",
       "bookName": "白色市场：美国商业麻醉品问题纪实",
       "bookNo": "7-5142-4499",
@@ -4363,18 +4375,6 @@
         "14图书"
       ],
       "code": "140017",
-      "codeEditCount": 0
-    },
-    {
-      "id": "4dae76c8-95fe-4ff6-9aeb-004282c5e869",
-      "bookName": "旧制度下的俄国",
-      "bookNo": "7-5139-4123",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "210131",
       "codeEditCount": 0
     },
     {
