@@ -2157,7 +2157,7 @@ document.addEventListener('keydown',e=>{
 function fastSmoothScrollToTop(){
     const start=Math.max(0,window.scrollY||document.documentElement.scrollTop||0);
     if(start<=0)return;
-    const duration=50,startAt=performance.now();
+    const duration=10,startAt=performance.now();
     const easeOut=t=>1-Math.pow(1-t,3);
     function step(now){
         const progress=Math.min(1,(now-startAt)/duration);
