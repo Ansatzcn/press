@@ -4043,6 +4043,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "11f50a95-c9d0-44c2-b7c3-07e9971f69c4",
+      "bookName": "在汉帝国的阴影下：南朝初期的士人思想和社会",
+      "bookNo": "7-5475-1463",
+      "institution": "[中西书局](https://book.douban.com/press/2883/?order=time)",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110055",
+      "codeEditCount": 0
+    },
+    {
       "id": "b279c01a-498b-46dd-ad6f-71691699e07f",
       "bookName": "上海乡绅李待问",
       "bookNo": "7-5486-0999",
@@ -4055,6 +4067,18 @@
       ],
       "code": "130006",
       "codeEditCount": 1
+    },
+    {
+      "id": "ff05c4c4-b1e3-4fad-a4f8-06881e109cbd",
+      "bookName": "浦江筑梦：为建广厦千万间",
+      "bookNo": "7-5486-2086",
+      "institution": "[学林出版社](https://book.douban.com/press/2521/?order=time)",
+      "category": [],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240038",
+      "codeEditCount": 0
     },
     {
       "id": "73992c0a-2990-4ba7-a180-f37c7b91577c",
@@ -5232,7 +5256,6 @@
     "298539",
     "130103",
     "187302",
-    "240038",
     "240042"
   ]
 }
