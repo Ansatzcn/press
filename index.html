@@ -65,26 +65,22 @@ body.reordering{user-select:none}
 .edit-title-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;grid-column:1/-1}
 @media(max-width:700px){.edit-title-row{grid-template-columns:1fr}}
 
-/* 标签 / 书架严格单选：
-   选中后只显示当前唯一选项，输入框与下拉按钮整体隐藏；
-   删除当前选项后才重新出现输入区域，彻底杜绝“第二个选项位置”。 */
+/* 添加时标签 / 书架严格单选；编辑时书架仍严格单选。
+   编辑标签例外：允许保留原标签并继续增加或删除多个标签。 */
 #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
 #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#editTagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
 #editCategoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
     display:none!important;
 }
 
 #tagCombo:has(> .combo-selected:not(:empty)),
 #categoryCombo:has(> .combo-selected:not(:empty)),
-#editTagCombo:has(> .combo-selected:not(:empty)),
 #editCategoryCombo:has(> .combo-selected:not(:empty)){
     display:block!important;
 }
 
 #tagCombo > .combo-selected:not(:empty),
 #categoryCombo > .combo-selected:not(:empty),
-#editTagCombo > .combo-selected:not(:empty),
 #editCategoryCombo > .combo-selected:not(:empty){
     display:flex!important;
     width:100%!important;
@@ -203,8 +199,8 @@ body.reordering{user-select:none}
 
 
 <style id="edit-selected-pill-size-fix">
-/* 编辑弹窗：标签 / 书架选中后仍保持单行紧凑显示。
-   combo 使用两层固定网格；倒三角始终占据最右侧 44px，不会因已选项而换行。 */
+/* 编辑弹窗：标签可多选，书架仍单选；已选项保持单行紧凑显示。
+   编辑标签在左侧横向排列多个已选标签，右侧继续保留搜索输入框与倒三角。 */
 #editTagCombo,
 #editCategoryCombo{
     height:54px;
@@ -999,6 +995,10 @@ function multiMeta(type,which){
 function sortHistory(type,values){
     return type==='tag'?sortAuto(values):uniq(values)
 }
+function multiAllowsMultiple(type,which){
+    // 只有“编辑条目 → 标签”允许多选；添加标签与书架继续严格单选。
+    return type==='tag'&&which==='edit'
+}
 function renderMultiSelected(type,which){
     const meta=multiMeta(type,which);
     meta.selectedBox.innerHTML=meta.selection.map(v=>`
@@ -1038,7 +1038,7 @@ function renderMultiOptions(type,which){
 function renderMultiField(type,which){
     renderMultiSelected(type,which);
     const meta=multiMeta(type,which);
-    const locked=meta.selection.length>0;
+    const locked=meta.selection.length>0&&!multiAllowsMultiple(type,which);
     meta.input.readOnly=locked;
     meta.input.setAttribute('aria-readonly',locked?'true':'false');
     meta.input.title=locked?`请先删除当前${meta.label}，再选择或输入新的${meta.label}`:'';
@@ -1344,43 +1344,43 @@ function commitInstitution(which,notify=false){
     renderInstitutionOptions(which);
     return exists
 }
-function removeSelection(type,which,value){
+function removeSelection(type,which,value,keepPanelOpen=false){
     const meta=multiMeta(type,which),targetKey=key(value);
     const next=meta.selection.filter(v=>key(v)!==targetKey);
     if(which==='edit')editSelections[type]=next;
     else addSelections[type]=next;
     meta.input.value='';
     renderMultiField(type,which);
-    meta.panel.classList.add('hidden')
+    meta.panel.classList.toggle('hidden',!keepPanelOpen)
 }
 function toggleSelection(type,which,value){
     const meta=multiMeta(type,which),targetKey=key(value);
+    const allowMultiple=multiAllowsMultiple(type,which);
     const exists=meta.selection.some(v=>key(v)===targetKey);
 
-    // 再点当前唯一选项 = 删除当前选择。
+    // 已选项再次点击 = 删除该选择。编辑标签多选时保持下拉菜单打开。
     if(exists){
-        removeSelection(type,which,value);
-        meta.panel.classList.add('hidden');
+        removeSelection(type,which,value,allowMultiple);
         return true
     }
 
-    // 标签 / 书架都必须先删除原选择，才能选择新的选项。
-    if(meta.selection.length){
+    // 除“编辑标签”外，标签 / 书架都必须先删除原选择，才能选择新的选项。
+    if(meta.selection.length&&!allowMultiple){
         meta.panel.classList.add('hidden');
         show(`请先删除当前${meta.label}，再选择新的${meta.label}`,'error');
         return false
     }
 
-    // 标签、书架都只允许一个选项。
-    const next=[clean(value)].filter(Boolean);
+    const selectedValue=clean(value);
+    const next=allowMultiple?uniq([...meta.selection,selectedValue]):[selectedValue].filter(Boolean);
     if(which==='edit')editSelections[type]=next;
     else addSelections[type]=next;
 
     meta.input.value='';
     renderMultiField(type,which);
 
-    // 选中后立即收起，绝不继续停留在第二个选项位置。
-    meta.panel.classList.add('hidden');
+    // 添加标签 / 书架及编辑书架仍单选并立即收起；编辑标签可连续多选。
+    meta.panel.classList.toggle('hidden',!allowMultiple);
     return true
 }
 function editHistoryOption(type,value){
@@ -1438,8 +1438,8 @@ function commitTypedValue(type,which,notify=false){
 
     const current=which==='edit'?editSelections[type]:addSelections[type];
 
-    // 标签 / 书架已有唯一选择时，都不允许再写入第二个选项。
-    if(current.length){
+    // 除“编辑标签”外，已有选择时都不允许再写入第二个选项。
+    if(current.length&&!multiAllowsMultiple(type,which)){
         meta.input.value='';
         meta.panel.classList.add('hidden');
         renderMultiField(type,which);
@@ -1460,13 +1460,15 @@ function commitTypedValue(type,which,notify=false){
     const selectedValue=matched||value;
     if(which==='add')addHistoryOption(type,selectedValue,notify);
 
-    // 标签、书架均只保留一个选项。
-    if(which==='edit')editSelections[type]=[selectedValue];
-    else addSelections[type]=[selectedValue];
+    if(which==='edit'){
+        editSelections[type]=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue]
+    }else{
+        addSelections[type]=[selectedValue]
+    }
 
     meta.input.value='';
     renderMultiField(type,which);
-    meta.panel.classList.add('hidden');
+    meta.panel.classList.toggle('hidden',!multiAllowsMultiple(type,which));
     return true
 }
 function getEditSnapshot(){
@@ -1934,14 +1936,14 @@ function setupMultiCombo(type,which){
     function selectKeyboardValue(value){
         keyboardIndex=-1;
         toggleSelection(type,which,value);
-        meta.panel.classList.add('hidden')
+        if(!multiAllowsMultiple(type,which))meta.panel.classList.add('hidden')
     }
 
     toggle.addEventListener('click',e=>{
         e.stopPropagation();
 
-        // 标签 / 书架已有唯一选择时，不允许再次打开下拉菜单。
-        if(multiMeta(type,which).selection.length){
+        // 单选字段已有选择时不允许再次打开；编辑标签允许继续打开并增加标签。
+        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
             allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
             keyboardIndex=-1;
             return
@@ -1958,9 +1960,8 @@ function setupMultiCombo(type,which){
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
 
-        // 标签 / 书架已有唯一选择时，输入栏都锁定；
-        // 必须先删除当前选项，才能重新输入或选择。
-        if(multiMeta(type,which).selection.length){
+        // 单选字段已有选择时输入栏锁定；编辑标签仍可继续搜索并增加标签。
+        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
             allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
             keyboardIndex=-1;
             return
@@ -1972,7 +1973,7 @@ function setupMultiCombo(type,which){
         renderMultiField(type,which)
     });
     meta.input.addEventListener('input',()=>{
-        if(multiMeta(type,which).selection.length){
+        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
             meta.input.value='';
             meta.panel.classList.add('hidden');
             keyboardIndex=-1;
