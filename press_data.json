@@ -1073,6 +1073,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "a980a929-bbbf-4fc7-9236-ce21edeac626",
+      "bookName": "两访中国茶乡",
+      "bookNo": "7-214-15643",
+      "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210222",
+      "codeEditCount": 0
+    },
+    {
       "id": "7e8d4dbc-8869-4c73-b149-4bad369cb8c0",
       "bookName": "江南三角洲市镇研究",
       "bookNo": "7-214-22422",
@@ -5521,7 +5533,6 @@
     "100013",
     "298539",
     "130103",
-    "187302",
-    "210222"
+    "187302"
   ]
 }
