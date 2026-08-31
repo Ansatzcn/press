@@ -1497,6 +1497,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "90f00742-818f-4b59-82b7-bc88af4b60e8",
+      "bookName": "新火",
+      "bookNo": "7-300-27885",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210072",
+      "codeEditCount": 0
+    },
+    {
       "id": "b5f67c09-ed19-4685-8e0e-e3cf16dac6b0",
       "bookName": "马克思主义与国家：一种分析的方法",
       "bookNo": "7-300-30292",
@@ -5533,7 +5545,6 @@
     "100013",
     "298539",
     "130103",
-    "187302",
-    "210072"
+    "187302"
   ]
 }
