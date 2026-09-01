@@ -1505,6 +1505,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "0e8e3a35-73b3-4952-a14e-d56f16f10f45",
+      "bookName": "真相：信息超载时代如何知道该相信什么",
+      "bookNo": "7-300-18665",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210208",
+      "codeEditCount": 0
+    },
+    {
       "id": "45ba75e6-a23d-4948-a6da-03dcfcd7d194",
       "bookName": "西方经济学主要流派（第二版）",
       "bookNo": "7-300-19854",
@@ -5809,7 +5821,6 @@
     "100013",
     "298539",
     "130103",
-    "187302",
-    "210208"
+    "187302"
   ]
 }
