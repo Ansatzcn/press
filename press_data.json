@@ -6003,6 +6003,16 @@
       "codeEditCount": 0
     },
     {
+      "id": "20d97fdb-2656-48e5-a9b0-ae4a5db44ff2",
+      "bookName": "古代人的自由与现代人的自由",
+      "bookNo": "",
+      "institution": "",
+      "category": [],
+      "tag": [],
+      "code": "108999",
+      "codeEditCount": 0
+    },
+    {
       "id": "49f3e745-f053-469a-b4ac-e89487361b40",
       "bookName": "Structuralist and Behavioral Macroeconomics",
       "bookNo": "1-009-36732",
@@ -6298,7 +6308,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "108999",
     "252936",
     "271259",
     "194590",
