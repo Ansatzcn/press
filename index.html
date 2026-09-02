@@ -768,7 +768,7 @@ body.reordering{user-select:none}
 
 const PUBLIC_FILE='press_data.json',NS='press_public_v1';
 const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token_local`,TOKEN_SESSION=`${NS}:token_session`,META_KEY=`${NS}:meta`;
-const MAX_BYTES=750*1024,AUTO_DELAY=700;
+const MAX_BYTES=750*1024,AUTO_DELAY=700,SYNC_RETRY_LIMIT=4;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
@@ -1656,10 +1656,35 @@ function openConfig(){
         setTimeout(()=>cfgToken.focus(),30)
     }
 }
-function loadMeta(){try{const x=JSON.parse(lg(META_KEY)||'{}')||{};meta={target:clean(x.target),fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,sha:clean(x.sha)||null,lastSyncAt:clean(x.lastSyncAt)||null}}catch(e){}}
+function loadMeta(){
+    try{
+        const x=JSON.parse(lg(META_KEY)||'{}')||{};
+        meta={
+            target:clean(x.target),
+            fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,
+            sha:clean(x.sha)||null,
+            lastSyncAt:clean(x.lastSyncAt)||null,
+            // 保存“上次双方一致”的完整快照，供多平台同时修改时做三方合并。
+            baseState:x.baseState&&typeof x.baseState==='object'?norm(x.baseState):null
+        }
+    }catch(e){
+        meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null}
+    }
+}
 function saveMeta(){ls(META_KEY,JSON.stringify(meta))}
-function ensureTarget(){const t=target();if(meta.target!==t){meta={target:t,fingerprint:null,sha:null,lastSyncAt:null};saveMeta()}}
-function record(snapshot,sha){meta={target:target(),fingerprint:fingerprint(snapshot),sha:sha||null,lastSyncAt:new Date().toISOString()};saveMeta();lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`}
+function ensureTarget(){
+    const t=target();
+    if(meta.target!==t){
+        meta={target:t,fingerprint:null,sha:null,lastSyncAt:null,baseState:null};
+        saveMeta()
+    }
+}
+function record(snapshot,sha){
+    const baseState=norm(snapshot);
+    meta={target:target(),fingerprint:fingerprint(baseState),sha:sha||null,lastSyncAt:new Date().toISOString(),baseState};
+    saveMeta();
+    lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`
+}
 async function api(method,endpoint,body=null){
     const r=await fetch(`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,{
         method,
@@ -1667,6 +1692,7 @@ async function api(method,endpoint,body=null){
             Authorization:`Bearer ${config.token}`,
             Accept:'application/vnd.github+json',
             'X-GitHub-Api-Version':'2026-03-10',
+            // fetch 本身使用 cache:'no-store'；同步层还会在每次写入前重新读取最新 SHA。
             ...(body!==null?{'Content-Type':'application/json'}:{})
         },
         cache:'no-store',
@@ -1695,35 +1721,183 @@ async function writeRemote(snapshot,sha){
     const r=await api('PUT',`contents/${pathEncode(config.file)}`,body);
     return r?.content?.sha||null
 }
+function jsonEqual(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+function entryShape(x){
+    if(!x)return null;
+    return{
+        id:clean(x.id),bookName:cleanTitle(x.bookName),bookNo:clean(x.bookNo),institution:clean(x.institution),
+        category:normalizeMulti(x.category),tag:normalizeMulti(x.tag),code:clean(x.code),
+        codeEditCount:Math.min(1,Math.max(0,Number(x.codeEditCount)||0))
+    }
+}
+function entryEqual(a,b){return jsonEqual(entryShape(a),entryShape(b))}
+function mergeScalar(baseValue,localValue,remoteValue){
+    if(jsonEqual(localValue,remoteValue))return{value:localValue,conflict:false};
+    if(jsonEqual(localValue,baseValue))return{value:remoteValue,conflict:false};
+    if(jsonEqual(remoteValue,baseValue))return{value:localValue,conflict:false};
+    // 同一字段被两端同时改成不同值时，以当前操作平台为准；其他字段仍继续三方合并。
+    return{value:localValue,conflict:true}
+}
+function mergeEntry(baseEntry,localEntry,remoteEntry){
+    if(!baseEntry){
+        if(localEntry&&!remoteEntry)return{entry:entryShape(localEntry),conflicts:0};
+        if(!localEntry&&remoteEntry)return{entry:entryShape(remoteEntry),conflicts:0};
+        if(!localEntry&&!remoteEntry)return{entry:null,conflicts:0};
+        if(entryEqual(localEntry,remoteEntry))return{entry:entryShape(localEntry),conflicts:0};
+        // UUID 撞车极罕见；若真的发生，仍以当前平台内容为准并记为冲突。
+        return{entry:entryShape(localEntry),conflicts:1}
+    }
+    if(!localEntry&&!remoteEntry)return{entry:null,conflicts:0};
+    if(!localEntry&&remoteEntry){
+        // 本地删除、远端未改：删除生效；远端已修改：保留远端修改，避免丢内容。
+        return entryEqual(remoteEntry,baseEntry)?{entry:null,conflicts:0}:{entry:entryShape(remoteEntry),conflicts:1}
+    }
+    if(localEntry&&!remoteEntry){
+        // 远端删除、本地未改：删除生效；本地已修改：保留本地修改，避免丢内容。
+        return entryEqual(localEntry,baseEntry)?{entry:null,conflicts:0}:{entry:entryShape(localEntry),conflicts:1}
+    }
+    if(entryEqual(localEntry,remoteEntry))return{entry:entryShape(localEntry),conflicts:0};
+    if(entryEqual(localEntry,baseEntry))return{entry:entryShape(remoteEntry),conflicts:0};
+    if(entryEqual(remoteEntry,baseEntry))return{entry:entryShape(localEntry),conflicts:0};
+
+    const b=entryShape(baseEntry),l=entryShape(localEntry),r=entryShape(remoteEntry);
+    const merged={id:l.id||r.id||b.id};
+    let conflicts=0;
+    for(const field of ['bookName','bookNo','institution','category','tag','code','codeEditCount']){
+        const part=mergeScalar(b[field],l[field],r[field]);
+        merged[field]=part.value;
+        if(part.conflict)conflicts++
+    }
+    return{entry:merged,conflicts}
+}
+function listKeys(values){return new Set((values||[]).map(key))}
+function mergeHistory(baseValues,localValues,remoteValues,autoSort=false){
+    const b=uniq(baseValues||[]),l=uniq(localValues||[]),r=uniq(remoteValues||[]);
+    if(jsonEqual(l,r))return autoSort?sortAuto(l):l;
+    if(jsonEqual(l,b))return autoSort?sortAuto(r):r;
+    if(jsonEqual(r,b))return autoSort?sortAuto(l):l;
+
+    const bs=listKeys(b),ls=listKeys(l),rs=listKeys(r);
+    const include=new Set();
+    // 共同基线中的旧项：任意一端明确删除，就视为删除；新增项：任意一端新增都保留。
+    for(const v of b){const k=key(v);if(ls.has(k)&&rs.has(k))include.add(k)}
+    for(const v of l){const k=key(v);if(!bs.has(k))include.add(k)}
+    for(const v of r){const k=key(v);if(!bs.has(k))include.add(k)}
+
+    const result=[];
+    const seen=new Set();
+    // 两边同时调整顺序时，以 GitHub 当前顺序为骨架，再补入仅本机新增的项，避免覆盖远端排序。
+    for(const source of [r,l]){
+        for(const v of source){
+            const k=key(v);
+            if(include.has(k)&&!seen.has(k)){seen.add(k);result.push(v)}
+        }
+    }
+    return autoSort?sortAuto(result):result
+}
+function resolveBaseState(localSnapshot,remoteSnapshot){
+    if(meta.baseState&&typeof meta.baseState==='object'){
+        try{
+            const b=norm(meta.baseState);
+            if(!meta.fingerprint||fingerprint(b)===meta.fingerprint)return b
+        }catch(e){}
+    }
+    // 兼容升级前旧版本只记录 fingerprint 的情况。
+    if(typeof meta.fingerprint==='string'){
+        if(fingerprint(localSnapshot)===meta.fingerprint)return norm(localSnapshot);
+        if(fingerprint(remoteSnapshot)===meta.fingerprint)return norm(remoteSnapshot)
+    }
+    return null
+}
+function repairMergedCodes(entries,remoteEntries){
+    const remoteIds=new Set((remoteEntries||[]).map(x=>clean(x.id)));
+    const byId=new Map(entries.map(x=>[clean(x.id),x]));
+    const ordered=[];
+    for(const x of remoteEntries||[]){const hit=byId.get(clean(x.id));if(hit)ordered.push(hit)}
+    for(const x of entries){if(!remoteIds.has(clean(x.id)))ordered.push(x)}
+
+    const used=new Set();
+    let reassigned=0;
+    for(const x of ordered){
+        let code=clean(x.code);
+        if(code&&!used.has(code)){used.add(code);continue}
+        const rule=autoCodeRuleForTags(x.tag);
+        code=rule?nextCodeInRange(rule,used):randomCode(used);
+        x.code=code;used.add(code);reassigned++
+    }
+    return reassigned
+}
+function mergeStates(baseState,localState,remoteState){
+    const local=norm(localState),remote=norm(remoteState),base=baseState?norm(baseState):null;
+    const bm=new Map((base?.entries||[]).map(x=>[clean(x.id),x]));
+    const lm=new Map(local.entries.map(x=>[clean(x.id),x]));
+    const rm=new Map(remote.entries.map(x=>[clean(x.id),x]));
+    const ids=[];const seen=new Set();
+    // 以远端当前顺序为主，随后补入本机独有条目。
+    for(const source of [remote.entries,local.entries,base?.entries||[]]){
+        for(const x of source){const id=clean(x.id);if(id&&!seen.has(id)){seen.add(id);ids.push(id)}}
+    }
+    const entries=[];let conflicts=0;
+    for(const id of ids){
+        const part=mergeEntry(bm.get(id)||null,lm.get(id)||null,rm.get(id)||null);
+        if(part.entry)entries.push(part.entry);
+        conflicts+=part.conflicts
+    }
+
+    const mergedRaw={
+        entries,
+        institutions:mergeHistory(base?.institutions||[],local.institutions,remote.institutions,false),
+        categories:mergeHistory(base?.categories||[],local.categories,remote.categories,false),
+        tags:mergeHistory(base?.tags||[],local.tags,remote.tags,true),
+        releasedCodes:uniq([...(local.releasedCodes||[]),...(remote.releasedCodes||[])])
+    };
+    const reassigned=repairMergedCodes(mergedRaw.entries,remote.entries);
+    return{state:norm(mergedRaw),conflicts,reassigned}
+}
+function retryableSyncError(e){return e&&(e.status===409||e.status===422)}
 async function sync(showResult=true){
     if(!admin()){show('请先配置 Token','error');return false}
     if(syncing)return false;
     clearTimeout(autoTimer);autoTimer=null;syncing=true;syncBtn.disabled=true;status('syncing','同步中…');
+
+    // 固定本次操作意图。重试期间即使 GitHub 又变化，也始终拿这份本机改动与最新远端重新合并。
+    const localIntent=norm(state);
+    let lastError=null;
     try{
         ensureTarget();
-        const local=norm(state),localFp=fingerprint(local),remote=await readRemote();
-        if(!remote.exists){
-            const sha=await writeRemote(local,null);record(local,sha);status('online','公开阅读 · 管理已连接');if(showResult)show('已创建云端文件并完成同步','success');return true
+        for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
+            // 强制刷新：每一次写入尝试前都重新读取 GitHub 最新 SHA 与完整数据。
+            const remote=await readRemote();
+            const remoteState=remote.exists?remote.state:{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};
+            const baseState=resolveBaseState(localIntent,remoteState);
+            const mergedInfo=mergeStates(baseState,localIntent,remoteState);
+            const merged=mergedInfo.state;
+
+            if(remote.exists&&fingerprint(merged)===fingerprint(remoteState)){
+                state=merged;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接');
+                if(showResult)show('已刷新并合并 GitHub 最新数据','success');
+                return true
+            }
+
+            try{
+                const sha=await writeRemote(merged,remote.exists?remote.sha:null);
+                state=merged;render();record(state,sha);status('online','公开阅读 · 管理已连接');
+                if(mergedInfo.reassigned>0){
+                    show(`已自动合并；${mergedInfo.reassigned} 个重复编码已重新分配`,'success')
+                }else if(showResult){
+                    show(mergedInfo.conflicts>0?'已合并同步；同字段冲突以本机修改为准':'已强制刷新并合并同步','success')
+                }
+                return true
+            }catch(e){
+                lastError=e;
+                if(retryableSyncError(e)&&attempt<SYNC_RETRY_LIMIT-1){
+                    // 说明刚才读取 SHA 后，另一平台又抢先写入；立即重新读取最新版本再合并，不弹冲突框。
+                    continue
+                }
+                throw e
+            }
         }
-        const remoteFp=fingerprint(remote.state),baseFp=meta.fingerprint;
-        if(localFp===remoteFp){
-            record(local,remote.sha);status('online','公开阅读 · 管理已连接');if(showResult)show('本地与 GitHub 已一致','success');return true
-        }
-        if(typeof baseFp==='string'&&localFp!==baseFp&&remoteFp===baseFp){
-            const sha=await writeRemote(local,remote.sha);record(local,sha);status('online','公开阅读 · 管理已连接');if(showResult)show('已同步到 GitHub','success');return true
-        }
-        if(typeof baseFp==='string'&&localFp===baseFp&&remoteFp!==baseFp){
-            state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接');if(showResult)show('已采用 GitHub 最新数据','success');return true
-        }
-        if(!showResult){
-            status('offline','存在同步冲突');show('本地和 GitHub 都发生了变化，请点击“同步”处理','error');return false
-        }
-        if(confirm('检测到本地和 GitHub 数据不同。\n\n确定：用当前网页数据覆盖 GitHub。\n取消：采用 GitHub 数据。')){
-            const sha=await writeRemote(local,remote.sha);record(local,sha);status('online','公开阅读 · 管理已连接');show('已用当前网页数据覆盖 GitHub','success')
-        }else{
-            state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接');show('已采用 GitHub 数据','success')
-        }
-        return true
+        throw lastError||new Error('多次刷新后仍无法写入 GitHub')
     }catch(e){
         console.error(e);status('offline','管理同步失败');show(`同步失败：${e.message}`,'error');return false
     }finally{
@@ -2140,6 +2314,7 @@ manageInstitutionOptions.addEventListener('keydown',e=>{
 manageModal.addEventListener('click',e=>{if(e.target===manageModal)closeManage()});
 configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
+// 不新增“强制刷新”按钮：现有“同步”按钮与自动同步内部都会先强制刷新并合并。
 syncBtn.addEventListener('click',()=>sync(true));
 exportBtn.addEventListener('click',downloadJson);
 document.addEventListener('keydown',e=>{
