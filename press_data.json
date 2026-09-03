@@ -2,6 +2,18 @@
   "schemaVersion": 3,
   "entries": [
     {
+      "id": "5af56d9c-6e3b-46c1-b83e-2437e8f5a195",
+      "bookName": "马克思恩格斯全集（第二版第31卷）",
+      "bookNo": "7-01-002565",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110064",
+      "codeEditCount": 0
+    },
+    {
       "id": "f5446c6d-1110-4b59-8840-34cd21080557",
       "bookName": "苏联经济体制改革史论",
       "bookNo": "7-01-006386",
