@@ -5317,6 +5317,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "da55379b-75e5-4bcd-89e7-b1bc0ed5b70a",
+      "bookName": "大萧条的孩子们",
+      "bookNo": "7-80657-383",
+      "institution": "[译林出版社](https://book.douban.com/press/2331/?order=time)",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110065",
+      "codeEditCount": 0
+    },
+    {
       "id": "2cfb5e0b-2555-491c-a257-a3939489166e",
       "bookName": "杉木与帝国：早期近代中国的森林革命",
       "bookNo": "7-5452-1932",
@@ -6853,7 +6865,6 @@
     "187302",
     "182255",
     "283119",
-    "108999",
-    "110065"
+    "108999"
   ]
 }
