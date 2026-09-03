@@ -1685,6 +1685,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "7140daf4-426e-41a2-b59e-b87986cbef52",
+      "bookName": "资本理论：价值、分配与增长理论",
+      "bookNo": "7-224-03337",
+      "institution": "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110064",
+      "codeEditCount": 0
+    },
+    {
       "id": "ddb5b1f7-1df4-4f52-8ca0-4d95a92f6c7e",
       "bookName": "从鸭绿江到奇穷河：一个摄影记者的随军纪实",
       "bookNo": "7-224-13183",
@@ -6829,7 +6841,6 @@
     "187302",
     "182255",
     "283119",
-    "108999",
-    "110064"
+    "108999"
   ]
 }
