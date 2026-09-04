@@ -768,15 +768,15 @@ body.reordering{user-select:none}
 
 const PUBLIC_FILE='press_data.json',NS='press_public_v1';
 const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token_local`,TOKEN_SESSION=`${NS}:token_session`,META_KEY=`${NS}:meta`;
-const MAX_BYTES=750*1024,AUTO_DELAY=700,SYNC_RETRY_LIMIT=4;
+const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),clearEditBookNo=$('clearEditBookNo'),clearEditCode=$('clearEditCode'),clearEditBookNoTop=$('clearEditBookNoTop'),clearEditCodeTop=$('clearEditCodeTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
-let syncing=false,autoTimer=null,toastTimer=null,editOverlayPointerDown=false;
+let state={entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
+let syncing=false,syncQueued=false,syncQueuedShowResult=false,autoTimer=null,retryTimer=null,toastTimer=null,editOverlayPointerDown=false,adminReady=false,lastWriteAt=0,syncFailureCount=0;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
 
 // 使用 Visual Viewport 驱动手机配置弹窗高度。虚拟键盘/地址栏变化时，保存按钮仍保持在可视区域内。
@@ -956,9 +956,36 @@ function sg(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function remove(k,store='local'){try{(store==='local'?localStorage:sessionStorage).removeItem(k)}catch(e){}}
 function show(msg,type='info'){toast.textContent=msg;toast.className=`toast ${type}`;clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.add('hidden'),3000)}
 function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.textContent=text}
-function saveLocal(){state=norm(state);ls(STATE_KEY,JSON.stringify(state))}
+function emptyState(){return{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]}}
+function saveLocal(snapshot=state){
+    const normalized=norm(snapshot);
+    if(snapshot===state)state=normalized;
+    return ls(STATE_KEY,JSON.stringify(normalized))
+}
 function loadLocal(){const s=lg(STATE_KEY);if(!s)return null;try{return norm(JSON.parse(s))}catch(e){return null}}
-function updateAdmin(){const on=admin(),wasHidden=addSection.classList.contains('hidden');addSection.classList.toggle('hidden',!on);syncBtn.classList.toggle('hidden',!on);if(!on)manageModal.classList.add('hidden');if(on&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)}
+function currentRevision(){return Math.max(0,Number(meta.revision)||0)}
+function hasLocalContent(snapshot){
+    const s=snapshot?norm(snapshot):null;
+    return Boolean(s&&(s.entries.length||s.institutions.length||s.categories.length||s.tags.length||s.releasedCodes.length))
+}
+function hasUnsyncedLocal(snapshot=loadLocal()){
+    if(!snapshot)return false;
+    if(meta.dirty)return true;
+    try{
+        if(meta.baseState&&typeof meta.baseState==='object')return fingerprint(snapshot)!==fingerprint(meta.baseState);
+        if(typeof meta.fingerprint==='string')return fingerprint(snapshot)!==meta.fingerprint
+    }catch(e){}
+    return false
+}
+function updateAdmin(){
+    const on=admin(),editable=on&&adminReady,wasHidden=addSection.classList.contains('hidden');
+    addSection.classList.toggle('hidden',!editable);
+    syncBtn.classList.toggle('hidden',!on);
+    syncBtn.disabled=Boolean(syncing||!editable);
+    manageBtn.disabled=Boolean(on&&!editable);
+    if(!on)manageModal.classList.add('hidden');
+    if(editable&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)
+}
 function institutionMeta(which){
     const edit=which==='edit';
     return{
@@ -1081,6 +1108,7 @@ function renderManageInstitutionOptions(){
 }
 function openManage(){
     if(!admin()){show('请先完成管理配置','error');return}
+    if(!adminReady){show('正在读取云端最新数据，请稍后再管理','info');return}
     manageInstitutionInput.value='';
     manageInstitutionLineInput.value=String(uniq(state.institutions).length+1);
     renderManageInstitutionOptions();
@@ -1251,7 +1279,7 @@ function setupManualDrag(optionsEl,type){
 function render(){
     state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
-        const editLink=admin()?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
+        const editLink=(admin()&&adminReady)?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         // 总表显示顺序固定为：
         // 出版 → 标签 → 编码 → 书号 → 书架
         const publication=x.institution;
@@ -1275,8 +1303,7 @@ function render(){
         }
         const metaHtml=metaRows.join('');
         return `<article class="press-item"><div class="press-head"><div class="press-content"><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}</div>${editLink}</div></article>`
-    }).join(''):'<div class="empty-state">暂无条目</div>';
-    saveLocal()
+    }).join(''):'<div class="empty-state">暂无条目</div>'
 }
 function addHistoryOption(type,value,notify=false){
     const meta=multiMeta(type,'add');
@@ -1487,7 +1514,7 @@ function editIsUnchanged(){
     return Boolean(editingId)&&getEditSnapshot()===editInitialSnapshot
 }
 function addEntry(){
-    if(!admin())return;
+    if(!admin()||!adminReady)return;
     const bookName=cleanTitle(bookNameInput.value);
     if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
     commitInstitution('add');
@@ -1526,10 +1553,10 @@ function addEntry(){
     // 若本次使用的是已释放编码，则从释放池中移除，避免再次分配。
     state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==code);
     bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';tagInput.value='';codeInput.value='';addSelections={category:[],tag:[]};
-    render();schedule();bookNameInput.focus();show(`已添加，编码 ${code}`,'success')
+    render();const locallySaved=schedule();bookNameInput.focus();if(locallySaved)show(`已保存到本机，等待同步 · 编码 ${code}`,'success')
 }
 function openEdit(id){
-    if(!admin())return;
+    if(!admin()||!adminReady)return;
     const x=state.entries.find(e=>e.id===id);if(!x)return;
     editingId=id;
     editBookName.value=x.bookName;
@@ -1609,7 +1636,7 @@ function saveEdit(){
         state.releasedCodes=(state.releasedCodes||[]).filter(v=>clean(v)!==x.code)
     }
     editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
-    render();schedule();show(`已保存，编码 ${x.code}`,'success')
+    render();const locallySaved=schedule();if(locallySaved)show(`已保存到本机，等待同步 · 编码 ${x.code}`,'success')
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
@@ -1623,7 +1650,7 @@ function deleteEntry(id){
         editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
         editModal.classList.add('hidden')
     }
-    render();schedule();show(`已删除，编码 ${releasedCode} 已释放`,'success');return true
+    render();const locallySaved=schedule();if(locallySaved)show(`已保存到本机，等待同步 · 编码 ${releasedCode} 已释放`,'success');return true
 }
 function downloadJson(){
     const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
@@ -1640,7 +1667,12 @@ function saveConfigForm(e){
     if(!owner||!repo||!token){show('请完整填写仓库和 Token','error');return}
     config={owner,repo,file,token};ls(CONFIG_KEY,JSON.stringify({owner,repo,file}));
     if(rememberToken.checked){ls(TOKEN_LOCAL,token);remove(TOKEN_SESSION,'session')}else{ss(TOKEN_SESSION,token);remove(TOKEN_LOCAL)}
-    configModal.classList.add('hidden');updateAdmin();render();show('配置已保存','success');sync(true)
+    configModal.classList.add('hidden');
+    adminReady=false;
+    updateAdmin();
+    render();
+    show('配置已保存，正在读取云端最新数据','success');
+    loadAdminState()
 }
 function openConfig(){
     updateVisualViewport();
@@ -1664,42 +1696,81 @@ function loadMeta(){
             fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,
             sha:clean(x.sha)||null,
             lastSyncAt:clean(x.lastSyncAt)||null,
-            // 保存“上次双方一致”的完整快照，供多平台同时修改时做三方合并。
-            baseState:x.baseState&&typeof x.baseState==='object'?norm(x.baseState):null
+            // baseState 是上次确认存在于 GitHub 的完整快照，用作三方合并基线。
+            baseState:x.baseState&&typeof x.baseState==='object'?norm(x.baseState):null,
+            // dirty/revision 单独持久化：网络失败或刷新页面后仍知道哪些内容尚未确认进入 GitHub。
+            dirty:Boolean(x.dirty),
+            revision:Math.max(0,Number(x.revision)||0)
         }
     }catch(e){
-        meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null}
+        meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0}
     }
 }
 function saveMeta(){ls(META_KEY,JSON.stringify(meta))}
 function ensureTarget(){
     const t=target();
     if(meta.target!==t){
-        meta={target:t,fingerprint:null,sha:null,lastSyncAt:null,baseState:null};
+        meta={target:t,fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
+        saveMeta();
+        return true
+    }
+    return false
+}
+function saveBaseline(snapshot,sha,{clearDirty=false,markSyncTime=false}={}){
+    const baseState=norm(snapshot);
+    meta.target=target();
+    meta.fingerprint=fingerprint(baseState);
+    meta.sha=sha||null;
+    meta.baseState=baseState;
+    if(clearDirty)meta.dirty=false;
+    if(markSyncTime)meta.lastSyncAt=new Date().toISOString();
+    saveMeta();
+    if(markSyncTime&&meta.lastSyncAt)lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`
+}
+function record(snapshot,sha){saveBaseline(snapshot,sha,{clearDirty:true,markSyncTime:true})}
+function markDirty(){
+    state=norm(state);
+    const saved=saveLocal(state);
+    if(!saved){show('浏览器本地保存失败，请立即导出备份','error');return false}
+    if(admin()){
+        ensureTarget();
+        meta.dirty=true;
+        meta.revision=currentRevision()+1;
         saveMeta()
     }
+    return true
 }
-function record(snapshot,sha){
-    const baseState=norm(snapshot);
-    meta={target:target(),fingerprint:fingerprint(baseState),sha:sha||null,lastSyncAt:new Date().toISOString(),baseState};
-    saveMeta();
-    lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`
-}
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,Math.max(0,ms||0)))}
 async function api(method,endpoint,body=null){
-    const r=await fetch(`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,{
-        method,
-        headers:{
-            Authorization:`Bearer ${config.token}`,
-            Accept:'application/vnd.github+json',
-            'X-GitHub-Api-Version':'2026-03-10',
-            // fetch 本身使用 cache:'no-store'；同步层还会在每次写入前重新读取最新 SHA。
-            ...(body!==null?{'Content-Type':'application/json'}:{})
-        },
-        cache:'no-store',
-        ...(body!==null?{body:JSON.stringify(body)}:{})
-    });
+    let r;
+    try{
+        r=await fetch(`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,{
+            method,
+            headers:{
+                Authorization:`Bearer ${config.token}`,
+                Accept:'application/vnd.github+json',
+                'X-GitHub-Api-Version':'2026-03-10',
+                ...(body!==null?{'Content-Type':'application/json'}:{})
+            },
+            cache:'no-store',
+            ...(body!==null?{body:JSON.stringify(body)}:{})
+        })
+    }catch(cause){
+        const er=new Error(cause?.message||'网络请求失败');
+        er.cause=cause;
+        er.network=true;
+        throw er
+    }
     const raw=await r.text();let data=null;if(raw)try{data=JSON.parse(raw)}catch(e){data={message:raw}};
-    if(!r.ok){const er=new Error(data?.message||`HTTP ${r.status}`);er.status=r.status;throw er}
+    if(!r.ok){
+        const er=new Error(data?.message||`HTTP ${r.status}`);
+        er.status=r.status;
+        er.data=data;
+        er.retryAfter=Number(r.headers.get('retry-after'))||0;
+        er.rateLimitRemaining=Number(r.headers.get('x-ratelimit-remaining'));
+        er.rateLimitReset=Number(r.headers.get('x-ratelimit-reset'))||0;
+        throw er
+    }
     return data
 }
 function toB64(s){const bytes=new TextEncoder().encode(s);let bin='';for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin)}
@@ -1716,6 +1787,9 @@ async function readRemote(){
 async function writeRemote(snapshot,sha){
     const raw=JSON.stringify(norm(snapshot),null,2);
     if(new TextEncoder().encode(raw).length>MAX_BYTES)throw new Error('数据超过 750 KB');
+    const wait=MIN_WRITE_GAP-(Date.now()-lastWriteAt);
+    if(wait>0)await sleep(wait);
+    lastWriteAt=Date.now();
     const body={message:`更新 Press 数据 - ${new Date().toLocaleString()}`,content:toB64(raw)};
     if(sha)body.sha=sha;
     const r=await api('PUT',`contents/${pathEncode(config.file)}`,body);
@@ -1854,80 +1928,278 @@ function mergeStates(baseState,localState,remoteState){
     const reassigned=repairMergedCodes(mergedRaw.entries,remote.entries);
     return{state:norm(mergedRaw),conflicts,reassigned}
 }
-function retryableSyncError(e){return e&&(e.status===409||e.status===422)}
+function errorText(e){
+    let detail='';
+    try{detail=JSON.stringify(e?.data||'')}catch(err){}
+    return `${e?.message||''} ${detail}`.toLowerCase()
+}
+function isShaConflictError(e){
+    if(e?.status===409)return true;
+    if(e?.status!==422)return false;
+    const text=errorText(e);
+    return /sha|conflict|does not match|expected.*sha|version/.test(text)
+}
+function retryDelayForError(e){
+    const statusCode=Number(e?.status)||0;
+    const text=errorText(e);
+    if(statusCode===401)return null;
+    if(statusCode===403||statusCode===429){
+        if(Number(e?.retryAfter)>0)return Math.min(MAX_RETRY_DELAY,Number(e.retryAfter)*1000);
+        if(Number(e?.rateLimitReset)>0){
+            const ms=Number(e.rateLimitReset)*1000-Date.now()+1200;
+            if(ms>0)return Math.min(MAX_RETRY_DELAY,ms)
+        }
+        return /secondary|rate limit|abuse/.test(text)?60000:15000
+    }
+    if(!statusCode||statusCode>=500){
+        return Math.min(MAX_RETRY_DELAY,2000*Math.pow(2,Math.min(syncFailureCount,5)))
+    }
+    if(statusCode===422&&/spam|abuse|too quickly|rate/.test(text))return 60000;
+    return null
+}
+function armRetry(e){
+    const delay=retryDelayForError(e);
+    if(delay===null||!admin()||!adminReady)return false;
+    clearTimeout(retryTimer);
+    retryTimer=setTimeout(()=>{
+        retryTimer=null;
+        if(admin()&&adminReady&&hasUnsyncedLocal(state))sync(false)
+    },delay);
+    lastSyncTime.textContent=`本地数据已保留 · ${Math.max(1,Math.ceil(delay/1000))} 秒后自动重试`;
+    return true
+}
+async function performSyncCycle(localIntent){
+    let lastError=null;
+    for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
+        // 每一次写入前都重新读取最新 SHA；409/明确的 SHA 冲突才在当前轮内部重试。
+        const remote=await readRemote();
+        const remoteState=remote.exists?remote.state:emptyState();
+        const baseState=resolveBaseState(localIntent,remoteState);
+        const mergedInfo=mergeStates(baseState,localIntent,remoteState);
+        const merged=mergedInfo.state;
+
+        if(remote.exists&&fingerprint(merged)===fingerprint(remoteState)){
+            return{merged,sha:remote.sha,remoteState,conflicts:mergedInfo.conflicts,reassigned:mergedInfo.reassigned,wrote:false}
+        }
+        try{
+            const sha=await writeRemote(merged,remote.exists?remote.sha:null);
+            return{merged,sha,remoteState,conflicts:mergedInfo.conflicts,reassigned:mergedInfo.reassigned,wrote:true}
+        }catch(e){
+            lastError=e;
+            if(isShaConflictError(e)&&attempt<SYNC_RETRY_LIMIT-1){
+                await sleep(300*(attempt+1));
+                continue
+            }
+            throw e
+        }
+    }
+    throw lastError||new Error('多次刷新后仍无法写入 GitHub')
+}
 async function sync(showResult=true){
     if(!admin()){show('请先配置 Token','error');return false}
-    if(syncing)return false;
-    clearTimeout(autoTimer);autoTimer=null;syncing=true;syncBtn.disabled=true;status('syncing','同步中…');
+    if(!adminReady){
+        syncQueued=true;
+        syncQueuedShowResult=syncQueuedShowResult||showResult;
+        show('正在读取云端最新数据，完成后会自动同步','info');
+        return false
+    }
+    if(syncing){
+        // 绝不丢弃同步期间到来的新请求；当前轮结束后继续处理最新 state。
+        syncQueued=true;
+        syncQueuedShowResult=syncQueuedShowResult||showResult;
+        return true
+    }
 
-    // 固定本次操作意图。重试期间即使 GitHub 又变化，也始终拿这份本机改动与最新远端重新合并。
-    const localIntent=norm(state);
-    let lastError=null;
+    clearTimeout(autoTimer);autoTimer=null;
+    clearTimeout(retryTimer);retryTimer=null;
+    syncing=true;
+    updateAdmin();
+    status('syncing','同步中…');
+    let wantsResult=showResult||syncQueuedShowResult;
+    syncQueued=false;
+    syncQueuedShowResult=false;
+
     try{
         ensureTarget();
-        for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
-            // 强制刷新：每一次写入尝试前都重新读取 GitHub 最新 SHA 与完整数据。
-            const remote=await readRemote();
-            const remoteState=remote.exists?remote.state:{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};
-            const baseState=resolveBaseState(localIntent,remoteState);
-            const mergedInfo=mergeStates(baseState,localIntent,remoteState);
-            const merged=mergedInfo.state;
+        while(true){
+            const startRevision=currentRevision();
+            const localIntent=norm(state);
+            const result=await performSyncCycle(localIntent);
+            syncFailureCount=0;
 
-            if(remote.exists&&fingerprint(merged)===fingerprint(remoteState)){
-                state=merged;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接');
-                if(showResult)show('已刷新并合并 GitHub 最新数据','success');
-                return true
+            const latestLocal=norm(state);
+            const latestRevision=currentRevision();
+            const changedDuringSync=latestRevision!==startRevision||fingerprint(latestLocal)!==fingerprint(localIntent);
+
+            if(changedDuringSync){
+                // 本轮同步时用户又有新录入：禁止旧 merged 覆盖页面。
+                // 以本轮开始快照为基线，把“最新本地修改”和“刚确认的云端结果”再次三方合并。
+                state=mergeStates(localIntent,latestLocal,result.merged).state;
+                render();
+                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                const stillDirty=fingerprint(state)!==fingerprint(result.merged);
+                saveBaseline(result.merged,result.sha,{clearDirty:!stillDirty,markSyncTime:true});
+                meta.dirty=stillDirty;
+                saveMeta();
+                if(stillDirty){
+                    syncQueued=true;
+                    status('syncing','已合并云端更新 · 继续同步本地修改')
+                }
+            }else{
+                // 只有本轮期间没有任何新本地修改，才允许同步结果直接成为当前页面状态。
+                state=result.merged;
+                render();
+                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                record(state,result.sha);
+                status('online','公开阅读 · 管理已连接')
             }
 
-            try{
-                const sha=await writeRemote(merged,remote.exists?remote.sha:null);
-                state=merged;render();record(state,sha);status('online','公开阅读 · 管理已连接');
-                if(mergedInfo.reassigned>0){
-                    show(`已自动合并；${mergedInfo.reassigned} 个重复编码已重新分配`,'success')
-                }else if(showResult){
-                    show(mergedInfo.conflicts>0?'已合并同步；同字段冲突以本机修改为准':'已强制刷新并合并同步','success')
-                }
-                return true
-            }catch(e){
-                lastError=e;
-                if(retryableSyncError(e)&&attempt<SYNC_RETRY_LIMIT-1){
-                    // 说明刚才读取 SHA 后，另一平台又抢先写入；立即重新读取最新版本再合并，不弹冲突框。
-                    continue
-                }
-                throw e
+            if(syncQueued||meta.dirty){
+                wantsResult=wantsResult||syncQueuedShowResult;
+                syncQueued=false;
+                syncQueuedShowResult=false;
+                continue
             }
+
+            if(result.reassigned>0){
+                show(`已同步；${result.reassigned} 个重复编码已重新分配`,'success')
+            }else if(wantsResult){
+                show(result.conflicts>0?'已合并同步；同字段冲突以本机修改为准':'已同步 GitHub 最新数据','success')
+            }
+            return true
         }
-        throw lastError||new Error('多次刷新后仍无法写入 GitHub')
     }catch(e){
-        console.error(e);status('offline','管理同步失败');show(`同步失败：${e.message}`,'error');return false
+        console.error(e);
+        syncFailureCount++;
+        // 失败只改变同步状态，不得用远端旧数据覆盖 state；当前页面内容再次写入本地保险。
+        saveLocal(state);
+        if(admin()){
+            ensureTarget();
+            if(meta.baseState&&fingerprint(state)!==fingerprint(meta.baseState))meta.dirty=true;
+            else if(!meta.baseState&&hasLocalContent(state))meta.dirty=true;
+            saveMeta()
+        }
+        const retrying=armRetry(e);
+        status('offline','同步暂时失败 · 本地数据已保留');
+        const suffix=retrying?'，将自动重试':'';
+        show(`同步暂时失败，但本地录入不会丢失${suffix}：${e.message}`,'error');
+        return false
     }finally{
-        syncing=false;syncBtn.disabled=false
+        syncing=false;
+        updateAdmin()
     }
 }
-function schedule(){saveLocal();if(!admin())return;clearTimeout(autoTimer);autoTimer=setTimeout(()=>{autoTimer=null;sync(false)},AUTO_DELAY)}
+function armSync(delay=AUTO_DELAY,showResult=false){
+    if(!admin()||!adminReady)return;
+    syncQueued=true;
+    syncQueuedShowResult=syncQueuedShowResult||showResult;
+    if(syncing)return;
+    clearTimeout(autoTimer);
+    autoTimer=setTimeout(()=>{
+        autoTimer=null;
+        const sr=syncQueuedShowResult;
+        syncQueuedShowResult=false;
+        syncQueued=false;
+        sync(sr)
+    },Math.max(0,delay))
+}
+function schedule(){
+    const saved=markDirty();
+    if(!saved)return false;
+    if(!admin())return true;
+    status('syncing','本地已保存 · 等待同步');
+    lastSyncTime.textContent='本地修改已安全保存，等待同步';
+    clearTimeout(retryTimer);retryTimer=null;
+    armSync(AUTO_DELAY,false);
+    return true
+}
 async function loadPublic(){
     status('syncing','正在读取公开数据…');
     try{
         const r=await fetch(publicUrl(),{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`
+        state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`;
+        // 如果浏览器里还有管理模式的未同步数据，公开读取绝不能覆盖那份安全缓存。
+        if(!hasUnsyncedLocal(loadLocal()))saveLocal(state)
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('offline','公开数据读取失败');
+        const local=loadLocal();state=local||emptyState();render();status('offline','公开数据读取失败');
         lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
 async function loadAdminState(){
-    status('syncing','正在读取管理数据…');ensureTarget();
-    const cached=loadLocal();
+    adminReady=false;
+    updateAdmin();
+    status('syncing','正在读取管理数据…');
+    const targetChanged=ensureTarget();
+    let cached=loadLocal();
+    if(cached){
+        state=cached;
+        render();
+        if(!targetChanged&&hasUnsyncedLocal(cached)){
+            status('syncing','正在恢复本地待同步数据…');
+            lastSyncTime.textContent='检测到上次未完成同步的本地数据'
+        }
+    }
+
     try{
         const remote=await readRemote();
+        cached=loadLocal()||cached;
+        const pending=Boolean(!targetChanged&&cached&&hasUnsyncedLocal(cached));
+
         if(remote.exists){
-            state=remote.state;render();record(state,remote.sha);status('online','公开阅读 · 管理已连接')
+            if(pending){
+                const baseState=resolveBaseState(cached,remote.state);
+                state=mergeStates(baseState,cached,remote.state).state;
+                render();
+                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                // 远端当前版本成为新的可靠基线，但本地合并结果仍标记为待同步。
+                saveBaseline(remote.state,remote.sha,{clearDirty:false,markSyncTime:false});
+                meta.dirty=fingerprint(state)!==fingerprint(remote.state);
+                if(meta.dirty&&currentRevision()===0)meta.revision=1;
+                saveMeta();
+                adminReady=true;
+                updateAdmin();
+                status(meta.dirty?'syncing':'online',meta.dirty?'本地数据已恢复 · 等待同步':'公开阅读 · 管理已连接');
+                lastSyncTime.textContent=meta.dirty?'已恢复未同步录入，正在安全合并':'云端与本地已一致';
+                if(meta.dirty)armSync(250,false)
+            }else{
+                state=remote.state;
+                render();
+                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                record(state,remote.sha);
+                adminReady=true;
+                updateAdmin();
+                status('online','公开阅读 · 管理已连接')
+            }
         }else{
-            state=cached||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent='云端数据文件尚未创建'
+            state=cached||emptyState();
+            render();
+            if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+            adminReady=true;
+            updateAdmin();
+            if(hasLocalContent(state)){
+                meta.dirty=true;
+                if(currentRevision()===0)meta.revision=1;
+                saveMeta();
+                status('syncing','本地数据已保留 · 正在创建云端文件');
+                lastSyncTime.textContent='云端数据文件尚未创建';
+                armSync(250,false)
+            }else{
+                saveBaseline(emptyState(),null,{clearDirty:true,markSyncTime:false});
+                status('online','公开阅读 · 管理已连接');
+                lastSyncTime.textContent='云端数据文件尚未创建'
+            }
         }
     }catch(e){
-        console.error(e);state=cached||{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]};render();status('offline','管理云端读取失败');lastSyncTime.textContent=cached?'已保留本地数据':'没有可恢复的本地数据'
+        console.error(e);
+        state=loadLocal()||cached||emptyState();
+        render();
+        saveLocal(state);
+        adminReady=true;
+        updateAdmin();
+        status('offline','管理云端读取失败 · 本地数据已保留');
+        lastSyncTime.textContent=hasLocalContent(state)?'可继续录入；恢复网络后自动重试':'没有可恢复的本地数据';
+        if(meta.dirty)armRetry(e)
     }
 }
 
@@ -2314,7 +2586,7 @@ manageInstitutionOptions.addEventListener('keydown',e=>{
 manageModal.addEventListener('click',e=>{if(e.target===manageModal)closeManage()});
 configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
-// 不新增“强制刷新”按钮：现有“同步”按钮与自动同步内部都会先强制刷新并合并。
+// 不新增“强制刷新”按钮：现有“同步”按钮与自动同步共用安全串行队列，写入前自动读取最新 SHA 并合并。
 syncBtn.addEventListener('click',()=>sync(true));
 exportBtn.addEventListener('click',downloadJson);
 document.addEventListener('keydown',e=>{
@@ -2345,8 +2617,18 @@ function fastSmoothScrollToTop(){
 backToTopBtn.addEventListener('click',fastSmoothScrollToTop);
 addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
 
-loadConfig();loadMeta();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+loadConfig();loadMeta();
+if(admin()){
+    const cached=loadLocal();
+    if(cached)state=cached
+}
+updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
 if(admin())loadAdminState();else loadPublic();
+
+// 网络恢复或重新回到页面时，如果仍有 dirty 数据，自动继续串行同步。
+window.addEventListener('online',()=>{if(admin()&&adminReady&&meta.dirty)armSync(250,false)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&admin()&&adminReady&&meta.dirty)armSync(350,false)});
+window.addEventListener('pagehide',()=>{if(admin()&&meta.dirty)saveLocal(state)});
 })();
 </script>
 </body>
