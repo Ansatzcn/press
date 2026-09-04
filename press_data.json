@@ -5173,6 +5173,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "13991c0e-75f1-4b8e-aab1-9a933ee07a8a",
+      "bookName": "唐诗杂论",
+      "bookNo": "7-5325-8891",
+      "institution": "[上海古籍出版社](https://book.douban.com/press/2170/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210241",
+      "codeEditCount": 0
+    },
+    {
       "id": "5d1fcc5a-6e71-46e9-87d7-5b1619388fcf",
       "bookName": "月亮和六便士",
       "bookNo": "7-5327-4900",
@@ -7044,18 +7056,6 @@
         "21读书"
       ],
       "code": "210242",
-      "codeEditCount": 0
-    },
-    {
-      "id": "13991c0e-75f1-4b8e-aab1-9a933ee07a8a",
-      "bookName": "唐诗杂论",
-      "bookNo": "7-5325-8891",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "210241",
       "codeEditCount": 0
     },
     {
