@@ -2159,6 +2159,7 @@ async function loadAdminState(){
                 saveMeta();
                 adminReady=true;
                 updateAdmin();
+                render();
                 status(meta.dirty?'syncing':'online',meta.dirty?'本地数据已恢复 · 等待同步':'公开阅读 · 管理已连接');
                 lastSyncTime.textContent=meta.dirty?'已恢复未同步录入，正在安全合并':'云端与本地已一致';
                 if(meta.dirty)armSync(250,false)
@@ -2169,6 +2170,7 @@ async function loadAdminState(){
                 record(state,remote.sha);
                 adminReady=true;
                 updateAdmin();
+                render();
                 status('online','公开阅读 · 管理已连接')
             }
         }else{
@@ -2177,6 +2179,7 @@ async function loadAdminState(){
             if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
             adminReady=true;
             updateAdmin();
+            render();
             if(hasLocalContent(state)){
                 meta.dirty=true;
                 if(currentRevision()===0)meta.revision=1;
@@ -2197,6 +2200,7 @@ async function loadAdminState(){
         saveLocal(state);
         adminReady=true;
         updateAdmin();
+        render();
         status('offline','管理云端读取失败 · 本地数据已保留');
         lastSyncTime.textContent=hasLocalContent(state)?'可继续录入；恢复网络后自动重试':'没有可恢复的本地数据';
         if(meta.dirty)armRetry(e)
