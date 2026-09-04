@@ -5113,6 +5113,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "289345fc-48c9-466b-b5dc-b7a468c5f312",
+      "bookName": "大厂小镇",
+      "bookNo": "7-5169-2732",
+      "institution": "[华龄出版社](https://book.douban.com/press/2475/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210242",
+      "codeEditCount": 0
+    },
+    {
       "id": "a426e092-b0cc-468a-87b9-ffce3bd9124c",
       "bookName": "澄明之境：陶渊明新论",
       "bookNo": "7-5321-7232",
@@ -7056,18 +7068,6 @@
         "14图书"
       ],
       "code": "140017",
-      "codeEditCount": 0
-    },
-    {
-      "id": "289345fc-48c9-466b-b5dc-b7a468c5f312",
-      "bookName": "大厂小镇",
-      "bookNo": "7-5169-2732",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "210242",
       "codeEditCount": 0
     },
     {
