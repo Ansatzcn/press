@@ -147,6 +147,20 @@
       "codeEditCount": 1
     },
     {
+      "id": "37be8a8b-a633-4815-b70b-5fe11740f726",
+      "bookName": "最后的皇朝：革命前夜的大清王朝",
+      "bookNo": "7-02-013444",
+      "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
+      "category": [
+        "21"
+      ],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210395",
+      "codeEditCount": 0
+    },
+    {
       "id": "7e0e6df0-4be7-40d8-a70b-906264f7d84c",
       "bookName": "我的二本学生",
       "bookNo": "7-02-016187",
@@ -8070,7 +8084,8 @@
     "黑架2行",
     "正架1行",
     "正架2行",
-    "侧架1行"
+    "侧架1行",
+    "21"
   ],
   "tags": [
     "11图书",
