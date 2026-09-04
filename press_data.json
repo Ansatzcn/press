@@ -6651,6 +6651,16 @@
       "codeEditCount": 0
     },
     {
+      "id": "f38c443b-a789-4902-b747-320063bf868b",
+      "bookName": "断臂上的花朵：人生与法律的奇幻炼金术",
+      "bookNo": "",
+      "institution": "",
+      "category": [],
+      "tag": [],
+      "code": "252936",
+      "codeEditCount": 0
+    },
+    {
       "id": "49f3e745-f053-469a-b4ac-e89487361b40",
       "bookName": "Structuralist and Behavioral Macroeconomics",
       "bookNo": "1-009-36732",
@@ -6946,7 +6956,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "252936",
     "271259",
     "194590",
     "168585",
