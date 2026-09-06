@@ -4362,6 +4362,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "691dbe42-0a57-4a3f-b6c0-83672fe16fe9",
+      "bookName": "美联储主席全传",
+      "bookNo": "7-5075-4482",
+      "institution": "[华文出版社](https://book.douban.com/press/2499/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210430",
+      "codeEditCount": 0
+    },
+    {
       "id": "984c3a3f-cf39-4357-af5e-bfc28903f325",
       "bookName": "大学三问：现代大学与大学人漫谈",
       "bookNo": "7-5075-4924",
@@ -6082,6 +6094,18 @@
         "24读书"
       ],
       "code": "240022",
+      "codeEditCount": 0
+    },
+    {
+      "id": "1444a290-d755-4e95-aef1-268e916cf001",
+      "bookName": "美国病",
+      "bookNo": "7-5327-8204",
+      "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210431",
       "codeEditCount": 0
     },
     {
