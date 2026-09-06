@@ -3101,6 +3101,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "c514163c-c990-4e2c-af6c-ad151fc4e3d8",
+      "bookName": "怒火山河——英日伊洛瓦底会战",
+      "bookNo": "7-307-24742",
+      "institution": "[武汉大学出版社](https://book.douban.com/press/2436/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210427",
+      "codeEditCount": 0
+    },
+    {
       "id": "827110cc-0476-420f-af7a-bbca9c973b3e",
       "bookName": "维特根斯坦传：天才之为责任",
       "bookNo": "7-308-08614",
@@ -8757,7 +8769,6 @@
     "182255",
     "283119",
     "108999",
-    "252936",
-    "210427"
+    "252936"
   ]
 }
