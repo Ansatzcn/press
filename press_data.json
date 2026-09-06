@@ -4495,6 +4495,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "7f0d34d1-9a8f-42a6-9adc-5ff4aac85b78",
+      "bookName": "马克思与《资本论》",
+      "bookNo": "7-5086-8633",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210435",
+      "codeEditCount": 0
+    },
+    {
       "id": "0d15b73e-b347-4bc4-8838-393f0d8d78b0",
       "bookName": "切尔诺贝利的祭祷",
       "bookNo": "7-5086-9046",
@@ -8879,7 +8891,6 @@
     "182255",
     "283119",
     "108999",
-    "252936",
-    "210435"
+    "252936"
   ]
 }
