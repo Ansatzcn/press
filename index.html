@@ -58,9 +58,9 @@ body.reordering{user-select:none}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-start;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:0}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
 .toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#1E40AF;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
-.back-to-top{position:fixed;right:16px;top:70%;z-index:900;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;transform:translateY(-50%);border:1px solid #1E40AF;border-radius:50%;background:#1E40AF;color:#fff;font-size:18px;line-height:1;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 14px rgba(37,99,235,.22);transition:opacity .2s,background .2s,border-color .2s,transform .2s;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.back-to-top.visible{opacity:.95;visibility:visible;pointer-events:auto}.back-to-top:hover,.back-to-top:focus-visible{background:#1E3A8A;border-color:#1E3A8A;color:#fff;opacity:1;outline:none}
+
 .manage-dialog{height:min(760px,calc(100vh - 24px));height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))}.manage-fixed-top{flex:0 0 auto;padding:1.7rem 1.7rem .9rem;border-bottom:1px solid #e8edf4;background:#fff}.manage-fixed-top .dialog-desc{margin-bottom:1rem}.manage-fixed-top .form-group{margin-bottom:0}.manage-table-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:.55rem 1.7rem 1rem;background:#fff}.manage-add-row{display:grid;grid-template-columns:minmax(0,1fr) 92px auto;gap:8px;align-items:center}.manage-add-row input{min-width:0}.manage-add-row .btn{min-height:44px;padding-inline:1.2rem}.manage-line-head{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;margin:.25rem 0 .4rem;padding:0 .3rem;color:#94a3b8;font-size:.75rem;font-weight:700}.manage-list{margin-top:.35rem}.manage-option-row{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;min-height:46px;padding:.35rem .4rem;border:1px solid #cbd5e1;border-radius:12px;background:#fff}.manage-option-row+.manage-option-row{margin-top:7px}.manage-option-label{min-width:0;padding:.35rem .25rem;color:#0f172a;white-space:normal;overflow-wrap:anywhere}.manage-line-input{width:100%;min-width:0;height:34px;padding:.3rem .4rem;border:1px solid #cbd5e1;border-radius:9px;background:#fff;text-align:center;font-weight:700;outline:none}.manage-line-input:focus{border-color:#93c5fd;box-shadow:0 0 0 2px #dbeafe}.manage-empty{padding:1.3rem .8rem;border:1px dashed #cbd5e1;border-radius:14px;color:#94a3b8;text-align:center;font-size:.86rem}.institution-choice{display:flex;align-items:center;width:100%}@media(max-width:700px){.manage-dialog{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none}.manage-fixed-top{padding:1.2rem 1.2rem .8rem}.manage-table-scroll{padding:.55rem 1.2rem .8rem}.manage-add-row{grid-template-columns:minmax(0,1fr) 78px}.manage-add-row .btn{grid-column:1/-1}.manage-line-head{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-row{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-label{font-size:.88rem}}
-@media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row,.code-bookno-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}.back-to-top{right:8px}}
+@media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.three-fields-row,.code-bookno-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}}
 .edit-two-column-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;grid-column:1/-1}
 .edit-title-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;grid-column:1/-1}
 @media(max-width:700px){.edit-title-row{grid-template-columns:1fr}}
@@ -569,8 +569,42 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="return-top-rewrite-style">
+.return-top-control{
+    position:fixed;
+    right:16px;
+    top:70%;
+    z-index:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;
+    height:32px;
+    padding:0;
+    transform:translateY(-50%);
+    border:1px solid #1E40AF;
+    border-radius:50%;
+    background:#1E40AF;
+    color:#fff;
+    font-size:18px;
+    line-height:1;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    box-shadow:0 4px 14px rgba(37,99,235,.22);
+    transition:opacity .2s,background .2s,border-color .2s;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+}
+.return-top-control.is-visible{opacity:.95;visibility:visible;pointer-events:auto}
+.return-top-control:hover,.return-top-control:focus-visible{background:#1E3A8A;border-color:#1E3A8A;opacity:1;outline:none}
+.return-top-control-arrow{display:block;pointer-events:none;transform:translateY(-1px)}
+@media(max-width:700px){.return-top-control{right:8px}}
+</style>
+
 </head>
-<body id="pageTop">
+<body>
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -759,8 +793,111 @@ body.reordering{user-select:none}
 </div>
 </section>
 
-<a class="back-to-top" id="backToTopBtn" href="#pageTop" aria-label="回到顶部" title="回到顶部"><span aria-hidden="true">↑</span></a>
+<button class="return-top-control" id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"><span class="return-top-control-arrow" aria-hidden="true">↑</span></button>
 <div class="toast hidden" id="toast"></div>
+
+<script id="return-top-rewrite-script">
+(()=>{
+'use strict';
+
+const button=document.getElementById('returnTopControl');
+if(!button)return;
+
+const RETURN_TOP_DURATION_MS=10;
+const SHOW_AFTER_PX=260;
+let animationFrameId=0;
+let completionTimerId=0;
+
+function readPageTop(){
+    const root=document.scrollingElement;
+    return Math.max(
+        0,
+        Number(window.pageYOffset)||0,
+        Number(window.scrollY)||0,
+        Number(root&&root.scrollTop)||0,
+        Number(document.documentElement&&document.documentElement.scrollTop)||0,
+        Number(document.body&&document.body.scrollTop)||0
+    );
+}
+
+function writePageTop(value){
+    const y=Math.max(0,Math.round(Number(value)||0));
+    const root=document.scrollingElement;
+
+    // 数字参数兼容旧浏览器和内嵌 WebView。
+    try{window.scrollTo(0,y)}catch(err){}
+
+    // 同时写入所有可能作为页面根滚动容器的节点。
+    if(root)root.scrollTop=y;
+    if(document.documentElement)document.documentElement.scrollTop=y;
+    if(document.body)document.body.scrollTop=y;
+}
+
+function refreshReturnTopVisibility(){
+    button.classList.toggle('is-visible',readPageTop()>SHOW_AFTER_PX);
+}
+
+function cancelReturnTopRun(){
+    if(animationFrameId){
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId=0;
+    }
+    if(completionTimerId){
+        clearTimeout(completionTimerId);
+        completionTimerId=0;
+    }
+}
+
+function returnToTopIn10ms(event){
+    if(event)event.preventDefault();
+    cancelReturnTopRun();
+
+    const start=readPageTop();
+    if(start<=0){
+        writePageTop(0);
+        refreshReturnTopVisibility();
+        return;
+    }
+
+    const startedAt=performance.now();
+    let completed=false;
+
+    function complete(){
+        if(completed)return;
+        completed=true;
+        if(animationFrameId){
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId=0;
+        }
+        writePageTop(0);
+        refreshReturnTopVisibility();
+    }
+
+    function frame(now){
+        if(completed)return;
+        const elapsed=Math.max(0,now-startedAt);
+        const progress=Math.min(1,elapsed/RETURN_TOP_DURATION_MS);
+        const eased=1-Math.pow(1-progress,3);
+        writePageTop(start*(1-eased));
+        if(progress>=1){
+            complete();
+        }else{
+            animationFrameId=requestAnimationFrame(frame);
+        }
+    }
+
+    // 原来的速度要求固定为 10ms。
+    animationFrameId=requestAnimationFrame(frame);
+    completionTimerId=setTimeout(complete,RETURN_TOP_DURATION_MS);
+}
+
+button.addEventListener('click',returnToTopIn10ms,false);
+window.addEventListener('scroll',refreshReturnTopVisibility,{passive:true});
+window.addEventListener('resize',refreshReturnTopVisibility,{passive:true});
+window.addEventListener('pageshow',refreshReturnTopVisibility,{passive:true});
+refreshReturnTopVisibility();
+})();
+</script>
 
 <script>
 (()=>{
@@ -773,7 +910,7 @@ const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),codeInput=$('codeInput'),addBtn=$('addBtn'),
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),editCode=$('editCode'),clearEditBookNo=$('clearEditBookNo'),clearEditCode=$('clearEditCode'),clearEditBookNoTop=$('clearEditBookNoTop'),clearEditCodeTop=$('clearEditCodeTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
-configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),backToTopBtn=$('backToTopBtn'),toast=$('toast');
+configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),toast=$('toast');
 
 let state={entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
 let syncing=false,syncQueued=false,syncQueuedShowResult=false,autoTimer=null,retryTimer=null,toastTimer=null,editOverlayPointerDown=false,adminReady=false,lastWriteAt=0,syncFailureCount=0;
@@ -2605,56 +2742,6 @@ document.addEventListener('keydown',e=>{
     configModal.classList.add('hidden');
     manageModal.classList.add('hidden')
 });
-function getPageScrollTop(){
-    const scrollingEl=document.scrollingElement;
-    return Math.max(
-        0,
-        Number(window.pageYOffset)||0,
-        Number(window.scrollY)||0,
-        Number(scrollingEl&&scrollingEl.scrollTop)||0,
-        Number(document.documentElement&&document.documentElement.scrollTop)||0,
-        Number(document.body&&document.body.scrollTop)||0
-    )
-}
-function setPageScrollTop(top){
-    const y=Math.max(0,Math.round(top));
-    try{window.scrollTo(0,y)}catch(err){}
-    const scrollingEl=document.scrollingElement;
-    if(scrollingEl)scrollingEl.scrollTop=y;
-    if(document.documentElement)document.documentElement.scrollTop=y;
-    if(document.body)document.body.scrollTop=y
-}
-function updateBackToTopVisibility(){
-    backToTopBtn.classList.toggle('visible',getPageScrollTop()>260)
-}
-function fastSmoothScrollToTop(e){
-    const start=getPageScrollTop();
-    if(start<=0)return;
-    // JS 正常时仍沿用旧版 10ms 回顶速度。
-    e.preventDefault();
-    const duration=10,startAt=performance.now();
-    const easeOut=t=>1-Math.pow(1-t,3);
-    function step(now){
-        const progress=Math.min(1,(now-startAt)/duration);
-        setPageScrollTop(start*(1-easeOut(progress)));
-        if(progress<1)requestAnimationFrame(step);
-        else{setPageScrollTop(0);updateBackToTopVisibility()}
-    }
-    requestAnimationFrame(step);
-
-    // 某些 iOS/安卓内嵌 WebView 会静默吞掉 scrollTo/scrollTop。
-    // 24ms 后若仍未到顶，改用浏览器原生 fragment 导航；若整个 JS 没运行，href 本身也会直接生效。
-    setTimeout(()=>{
-        if(getPageScrollTop()>0){
-            try{location.hash='pageTop'}catch(err){}
-        }
-    },24)
-}
-backToTopBtn.addEventListener('click',fastSmoothScrollToTop);
-window.addEventListener('scroll',updateBackToTopVisibility,{passive:true});
-document.addEventListener('scroll',updateBackToTopVisibility,{passive:true,capture:true});
-updateBackToTopVisibility();
-
 loadConfig();loadMeta();
 if(admin()){
     const cached=loadLocal();
