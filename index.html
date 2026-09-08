@@ -790,10 +790,49 @@ body.reordering{user-select:none}
 
 <button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
 <script>
-// 点击后立即跳到网页顶部，不设置延时、不使用滚动动画。
-document.getElementById('returnTopControl').addEventListener('click',function(){
-    window.scrollTo({top:0,left:0,behavior:'instant'});
-});
+// 回到当前“实际滚动区域”的顶部。
+// 主页面使用 document.scrollingElement；弹窗打开时则操作弹窗自己的滚动容器。
+(function(){
+    'use strict';
+
+    const returnTopControl=document.getElementById('returnTopControl');
+
+    function visible(id){
+        const el=document.getElementById(id);
+        return el&&!el.classList.contains('hidden');
+    }
+
+    function activeScrollContainer(){
+        if(visible('editModal')){
+            return document.querySelector('#editModal .dialog-scroll');
+        }
+        if(visible('configModal')){
+            return document.querySelector('#configForm .dialog-scroll');
+        }
+        if(visible('manageModal')){
+            return document.querySelector('#manageModal .manage-table-scroll');
+        }
+        return document.scrollingElement||document.documentElement||document.body;
+    }
+
+    function jumpToTop(){
+        const scroller=activeScrollContainer();
+        if(!scroller)return;
+
+        // 直接设置 scrollTop，避免把 window 与内部滚动容器混为一谈；
+        // 同时不依赖 smooth/instant 等 behavior 兼容性。
+        scroller.scrollTop=0;
+
+        // 主文档额外兜底，兼容不同浏览器对根滚动元素的实现差异。
+        if(scroller===document.scrollingElement||scroller===document.documentElement||scroller===document.body){
+            window.scrollTo(0,0);
+            document.documentElement.scrollTop=0;
+            document.body.scrollTop=0;
+        }
+    }
+
+    returnTopControl.addEventListener('click',jumpToTop);
+})();
 </script>
 
 <div class="toast hidden" id="toast"></div>
