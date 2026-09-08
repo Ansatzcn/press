@@ -577,8 +577,11 @@ body.reordering{user-select:none}
     right:16px;
     top:70%;
     z-index:2147483647;
-    width:30px;
-    height:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;
+    height:44px;
     margin:0;
     padding:0;
     border:0;
@@ -806,11 +809,57 @@ body.reordering{user-select:none}
     type="button"
     aria-label="回到顶部"
     title="回到顶部"
-    onpointerdown="event.preventDefault();event.stopPropagation();setTimeout(function(){window.scrollTo(0,0);},10);"
-    onclick="event.preventDefault();event.stopPropagation();setTimeout(function(){window.scrollTo(0,0);},10);return false;"
 ><svg viewBox="0 0 30 20" width="30" height="20" aria-hidden="true" focusable="false"><polygon points="15,0 0,20 30,20"></polygon></svg></button>
 
 <div class="toast hidden" id="toast"></div>
+
+<script>
+// 独立初始化：回到顶部不依赖数据加载、管理权限或云端同步。
+(()=>{
+    'use strict';
+    const control=document.getElementById('returnTopControl');
+    if(!control)return;
+
+    function resetScroll(element){
+        if(!element)return;
+        // 临时覆盖 smooth，确保一次点击立即完成，不受全局平滑滚动影响。
+        const value=element.style.getPropertyValue('scroll-behavior');
+        const priority=element.style.getPropertyPriority('scroll-behavior');
+        element.style.setProperty('scroll-behavior','auto','important');
+        element.scrollTop=0;
+        if(value)element.style.setProperty('scroll-behavior',value,priority);
+        else element.style.removeProperty('scroll-behavior');
+    }
+
+    control.addEventListener('click',event=>{
+        event.preventDefault();
+        event.stopPropagation();
+
+        // 弹窗独立滚动：回到当前最上层弹窗顶部，不移动背后的页面。
+        const overlays=Array.from(document.querySelectorAll('.overlay')).filter(element=>{
+            const style=getComputedStyle(element);
+            return style.display!=='none'&&style.visibility!=='hidden'&&element.getClientRects().length;
+        });
+        overlays.sort((a,b)=>(parseInt(getComputedStyle(a).zIndex,10)||0)-(parseInt(getComputedStyle(b).zIndex,10)||0));
+        const overlay=overlays[overlays.length-1];
+        if(overlay){
+            overlay.querySelectorAll('.combo-panel').forEach(panel=>panel.classList.add('hidden'));
+            overlay.querySelectorAll('.dialog-scroll,.manage-table-scroll').forEach(resetScroll);
+            resetScroll(overlay);
+            return;
+        }
+
+        document.querySelectorAll('.combo-panel').forEach(panel=>panel.classList.add('hidden'));
+        // 同时兼容主内容被放入独立滚动容器的布局。
+        for(let element=document.querySelector('main.container');element;element=element.parentElement){
+            resetScroll(element);
+        }
+        resetScroll(document.scrollingElement||document.documentElement);
+        resetScroll(document.documentElement);
+        resetScroll(document.body);
+    });
+})();
+</script>
 
 <script>
 (()=>{
