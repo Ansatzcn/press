@@ -583,10 +583,10 @@ body.reordering{user-select:none}
     display:flex;
     align-items:center;
     justify-content:center;
-    width:48px;
-    height:48px;
-    min-width:48px;
-    min-height:48px;
+    width:25px;
+    height:25px;
+    min-width:25px;
+    min-height:25px;
     margin:0;
     padding:0;
     border:0;
@@ -606,7 +606,7 @@ body.reordering{user-select:none}
     margin:0;
     padding:0;
     font-family:Arial,sans-serif;
-    font-size:28px;
+    font-size:17px;
     font-weight:700;
     line-height:1;
     pointer-events:none;
@@ -843,9 +843,7 @@ body.reordering{user-select:none}
         else element.style.removeProperty('scroll-behavior');
     }
 
-    control.addEventListener('click',event=>{
-        event.preventDefault();
-        event.stopPropagation();
+    function returnToTop(){
 
         // 弹窗独立滚动：回到当前最上层弹窗顶部，不移动背后的页面。
         const overlays=Array.from(document.querySelectorAll('.overlay')).filter(element=>{
@@ -869,7 +867,40 @@ body.reordering{user-select:none}
         resetScroll(document.scrollingElement||document.documentElement);
         resetScroll(document.documentElement);
         resetScroll(document.body);
-    });
+    }
+
+    // 使用与鼠标坐标同属视口坐标系的实际圆形边界进行命中判断。
+    // 即使同一文档内的其他元素盖住按钮，也由捕获阶段接收圆内点击。
+    function insideControl(event){
+        const rect=control.getBoundingClientRect();
+        if(!rect.width||!rect.height)return false;
+        const style=getComputedStyle(control);
+        if(style.display==='none'||style.visibility==='hidden')return false;
+        const x=(event.clientX-rect.left-rect.width/2)/(rect.width/2);
+        const y=(event.clientY-rect.top-rect.height/2)/(rect.height/2);
+        return x*x+y*y<=1;
+    }
+    function consume(event){
+        if(event.cancelable)event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+    let handledPointer=false;
+    window.addEventListener('pointerdown',event=>{
+        handledPointer=false;
+        if(event.button!==0||event.isPrimary===false||!insideControl(event))return;
+        handledPointer=true;
+        consume(event);
+        returnToTop();
+    },{capture:true,passive:false});
+    window.addEventListener('pointercancel',()=>{handledPointer=false},{capture:true});
+    window.addEventListener('click',event=>{
+        // Enter / 空格或辅助技术产生的点击仍通过按钮本身触发。
+        const keyboardClick=event.detail===0&&control.contains(event.target);
+        if(!keyboardClick&&(event.button!==0||!insideControl(event)))return;
+        consume(event);
+        if(keyboardClick||!handledPointer)returnToTop();
+        handledPointer=false;
+    },{capture:true,passive:false});
 })();
 </script>
 
