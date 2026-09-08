@@ -572,33 +572,59 @@ body.reordering{user-select:none}
 
 
 <style id="return-top-circle-style">
+/* 回到顶部：桌面 Chrome 最小可靠实现。
+   44×44 是实际鼠标命中区；视觉圆点仍为 25×25。 */
+#pageTopAnchor{
+    position:absolute;
+    top:0;
+    left:0;
+    width:1px;
+    height:1px;
+    pointer-events:none;
+}
 #returnTopControl{
-    appearance:none;
-    -webkit-appearance:none;
     position:fixed;
-    right:16px;
-    top:70%;
+    right:6px;
+    top:calc(70% - 10px);
     z-index:2147483647;
     display:block;
-    width:25px;
-    height:25px;
+    width:44px;
+    height:44px;
     margin:0;
     padding:0;
     border:0;
+    background:transparent;
+    cursor:pointer!important;
+    pointer-events:auto!important;
+    touch-action:manipulation;
+    text-decoration:none;
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-user-drag:none;
+}
+#returnTopControl::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:25px;
+    height:25px;
+    transform:translate(-50%,-50%);
     border-radius:50%;
     background:#1E40AF;
-    cursor:pointer;
-    pointer-events:auto;
-    touch-action:manipulation;
+    pointer-events:none;
 }
+#returnTopControl:hover::before{background:#1E3A8A}
 #returnTopControl:focus-visible{
     outline:2px solid #93c5fd;
-    outline-offset:3px;
+    outline-offset:1px;
+    border-radius:50%;
 }
 </style>
 
 </head>
 <body>
+<div id="pageTopAnchor" aria-hidden="true"></div>
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -788,118 +814,57 @@ body.reordering{user-select:none}
 </section>
 
 
-<button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
+<a id="returnTopControl"
+   href="#pageTopAnchor"
+   draggable="false"
+   aria-label="回到顶部"
+   title="回到顶部"
+   onmousedown="if(event.button===0){window.__pressReturnTop();}"
+   onmouseup="if(event.button===0){window.__pressReturnTop();}"></a>
 <script>
-// 回到顶部（桌面 Chrome 稳定版）
-//
-// 已在实际桌面 Chrome 中验证：
-// 1) window/document 根滚动可以正常从 2800 回到 0；
-// 2) 回顶按钮真实鼠标操作时，mousedown 稳定到达，但 pointerup/click 可能缺失；
-// 3) window 捕获阶段的 mousedown 能稳定命中按钮并完成回顶。
-//
-// 因此桌面鼠标使用 window + capture + mousedown。
-// click 仅作为手机触摸、键盘激活以及正常浏览器事件链的后备。
-(function(){
-    'use strict';
-
-    const control=document.getElementById('returnTopControl');
-    if(!control)return;
-
-    function visible(id){
+// 只做回顶动作，不注册任何 pointer/click 事件。
+// 桌面鼠标：HTML 自身的 mousedown / mouseup；
+// 手机、键盘：<a href="#pageTopAnchor"> 原生锚点。
+window.__pressReturnTop=function(){
+    const visible=id=>{
         const el=document.getElementById(id);
         return Boolean(el&&!el.classList.contains('hidden'));
-    }
-
-    function activeModalScroller(){
-        if(visible('editModal')){
-            return document.querySelector('#editModal .dialog-scroll');
-        }
-        if(visible('configModal')){
-            return document.querySelector('#configForm .dialog-scroll');
-        }
-        if(visible('manageModal')){
-            return document.querySelector('#manageModal .manage-table-scroll');
-        }
-        return null;
-    }
-
-    function writeRootTopZero(){
-        const root=document.scrollingElement||document.documentElement||document.body;
-
-        // Chrome 新版 scrollTo 可能返回 Promise；无论返回值如何，都不依赖它完成后才继续。
-        try{
-            const result=window.scrollTo({top:0,left:0,behavior:'instant'});
-            if(result&&typeof result.catch==='function')result.catch(()=>{});
-        }catch(err){
-            try{window.scrollTo(0,0)}catch(ignore){}
-        }
-
-        if(root)root.scrollTop=0;
-        document.documentElement.scrollTop=0;
-        if(document.body)document.body.scrollTop=0;
-    }
-
-    function goTop(){
-        const modalScroller=activeModalScroller();
-
-        if(modalScroller){
-            try{
-                const result=modalScroller.scrollTo({top:0,left:0,behavior:'instant'});
-                if(result&&typeof result.catch==='function')result.catch(()=>{});
-            }catch(err){
-                modalScroller.scrollTop=0;
-            }
-            modalScroller.scrollTop=0;
-            return;
-        }
-
-        writeRootTopZero();
-
-        // 下一帧再校正一次，防止同一帧布局/焦点更新恢复旧位置。
-        requestAnimationFrame(writeRootTopZero);
-    }
-
-    function isReturnTopTarget(target){
-        return target instanceof Element&&Boolean(target.closest('#returnTopControl'));
-    }
-
-    // 关键：使用已经在该桌面 Chrome 环境中实测成功的捕获阶段 mousedown。
-    window.addEventListener('mousedown',function(event){
-        if(event.button!==0||!isReturnTopTarget(event.target))return;
-        event.preventDefault();
-        goTop();
-    },true);
-
-    // 手机触摸、键盘 Enter/Space，以及事件链正常的环境使用 click 后备。
-    window.addEventListener('click',function(event){
-        if(!isReturnTopTarget(event.target))return;
-        event.preventDefault();
-        goTop();
-    },true);
-
-    // 只用于排查，不参与正常逻辑。
-    window.__returnTopDebug=function(){
-        const root=document.scrollingElement||document.documentElement||document.body;
-        const rect=control.getBoundingClientRect();
-        const hit=document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2);
-        const modalScroller=activeModalScroller();
-        return{
-            version:'desktop-chrome-v7-window-capture-mousedown',
-            windowScrollY:window.scrollY,
-            documentElementScrollTop:document.documentElement.scrollTop,
-            rootScrollTop:root?root.scrollTop:null,
-            modalScroller:modalScroller?{
-                className:modalScroller.className,
-                scrollTop:modalScroller.scrollTop,
-                scrollHeight:modalScroller.scrollHeight,
-                clientHeight:modalScroller.clientHeight
-            }:null,
-            controlTag:control.tagName,
-            controlHitId:hit?hit.id:null,
-            controlHitTag:hit?hit.tagName:null
-        };
     };
-})();
+
+    let scroller=null;
+    if(visible('editModal')) scroller=document.querySelector('#editModal .dialog-scroll');
+    else if(visible('configModal')) scroller=document.querySelector('#configForm .dialog-scroll');
+    else if(visible('manageModal')) scroller=document.querySelector('#manageModal .manage-table-scroll');
+
+    if(scroller){
+        scroller.scrollTop=0;
+        return;
+    }
+
+    try{window.scrollTo({top:0,left:0,behavior:'instant'});}catch(_){window.scrollTo(0,0);}
+    if(document.scrollingElement) document.scrollingElement.scrollTop=0;
+    document.documentElement.scrollTop=0;
+    if(document.body) document.body.scrollTop=0;
+};
+
+window.__returnTopDebug=function(){
+    const c=document.getElementById('returnTopControl');
+    const r=c.getBoundingClientRect();
+    const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
+    return {
+        version:'desktop-chrome-v8-anchor-direct-mouse',
+        controlTag:c.tagName,
+        href:c.getAttribute('href'),
+        cursor:getComputedStyle(c).cursor,
+        pointerEvents:getComputedStyle(c).pointerEvents,
+        hitWidth:r.width,
+        hitHeight:r.height,
+        controlHitId:hit?.id||'',
+        windowScrollY:window.scrollY,
+        htmlScrollTop:document.documentElement.scrollTop,
+        rootScrollTop:document.scrollingElement?.scrollTop||0
+    };
+};
 </script>
 
 <div class="toast hidden" id="toast"></div>
