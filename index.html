@@ -571,18 +571,6 @@ body.reordering{user-select:none}
 
 
 
-<style id="return-top-anchor-style">
-#pageTopAnchor{
-    position:absolute;
-    top:0;
-    left:0;
-    width:1px;
-    height:1px;
-    overflow:hidden;
-    pointer-events:none;
-}
-</style>
-
 <style id="return-top-circle-style">
 #returnTopControl{
     appearance:none;
@@ -602,11 +590,7 @@ body.reordering{user-select:none}
     cursor:pointer;
     pointer-events:auto;
     touch-action:manipulation;
-    text-decoration:none;
-    user-select:none;
-    -webkit-user-select:none;
-    -webkit-user-drag:none;
-} 
+}
 #returnTopControl:focus-visible{
     outline:2px solid #93c5fd;
     outline-offset:3px;
@@ -615,7 +599,6 @@ body.reordering{user-select:none}
 
 </head>
 <body>
-<div id="pageTopAnchor" aria-hidden="true"></div>
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -805,154 +788,115 @@ body.reordering{user-select:none}
 </section>
 
 
-<button id="returnTopControl" type="button" draggable="false" aria-label="回到顶部" title="回到顶部"></button>
+<button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
 <script>
-// 回到顶部：桌面 Chrome mouseup 稳健版。
-// 已由实际事件日志确认：桌面 Chrome 在此页面上可能缺失 pointerup/click，
-// 但 mousedown/mouseup 始终正常。因此桌面鼠标不再依赖 PointerEvent 的释放阶段。
+// 回到顶部（桌面 Chrome 稳定版）
+//
+// 已在实际桌面 Chrome 中验证：
+// 1) window/document 根滚动可以正常从 2800 回到 0；
+// 2) 回顶按钮真实鼠标操作时，mousedown 稳定到达，但 pointerup/click 可能缺失；
+// 3) window 捕获阶段的 mousedown 能稳定命中按钮并完成回顶。
+//
+// 因此桌面鼠标使用 window + capture + mousedown。
+// click 仅作为手机触摸、键盘激活以及正常浏览器事件链的后备。
 (function(){
     'use strict';
 
     const control=document.getElementById('returnTopControl');
     if(!control)return;
 
-    function isVisible(id){
+    function visible(id){
         const el=document.getElementById(id);
         return Boolean(el&&!el.classList.contains('hidden'));
     }
 
-    function activeScroller(){
-        if(isVisible('editModal')){
+    function activeModalScroller(){
+        if(visible('editModal')){
             return document.querySelector('#editModal .dialog-scroll');
         }
-        if(isVisible('configModal')){
+        if(visible('configModal')){
             return document.querySelector('#configForm .dialog-scroll');
         }
-        if(isVisible('manageModal')){
+        if(visible('manageModal')){
             return document.querySelector('#manageModal .manage-table-scroll');
         }
-        return document.scrollingElement||document.documentElement||document.body;
+        return null;
     }
 
-    function isRoot(scroller){
-        return scroller===document.scrollingElement ||
-               scroller===document.documentElement ||
-               scroller===document.body;
+    function writeRootTopZero(){
+        const root=document.scrollingElement||document.documentElement||document.body;
+
+        // Chrome 新版 scrollTo 可能返回 Promise；无论返回值如何，都不依赖它完成后才继续。
+        try{
+            const result=window.scrollTo({top:0,left:0,behavior:'instant'});
+            if(result&&typeof result.catch==='function')result.catch(()=>{});
+        }catch(err){
+            try{window.scrollTo(0,0)}catch(ignore){}
+        }
+
+        if(root)root.scrollTop=0;
+        document.documentElement.scrollTop=0;
+        if(document.body)document.body.scrollTop=0;
     }
 
     function goTop(){
-        const scroller=activeScroller();
-        if(!scroller)return;
+        const modalScroller=activeModalScroller();
 
-        if(isRoot(scroller)){
-            try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(_){
-                try{window.scrollTo(0,0)}catch(__){}
+        if(modalScroller){
+            try{
+                const result=modalScroller.scrollTo({top:0,left:0,behavior:'instant'});
+                if(result&&typeof result.catch==='function')result.catch(()=>{});
+            }catch(err){
+                modalScroller.scrollTop=0;
             }
-            if(document.documentElement)document.documentElement.scrollTop=0;
-            if(document.body)document.body.scrollTop=0;
-            if(document.scrollingElement)document.scrollingElement.scrollTop=0;
-        }else{
-            try{scroller.scrollTo({top:0,left:0,behavior:'instant'})}catch(_){
-                scroller.scrollTop=0;
-                scroller.scrollLeft=0;
-            }
-            scroller.scrollTop=0;
-        }
-
-        // 下一帧校正一次，避免同帧布局/焦点恢复。
-        requestAnimationFrame(()=>{
-            const current=activeScroller();
-            if(!current)return;
-            if(isRoot(current)){
-                if(document.scrollingElement)document.scrollingElement.scrollTop=0;
-                if(document.documentElement)document.documentElement.scrollTop=0;
-                if(document.body)document.body.scrollTop=0;
-            }else{
-                current.scrollTop=0;
-            }
-        });
-    }
-
-    let mouseArmed=false;
-    let lastMouseActivation=0;
-    let mousedownCount=0;
-    let mouseupCount=0;
-    let clickCount=0;
-    let lastMode='';
-
-    function pointIsInsideControl(x,y){
-        const r=control.getBoundingClientRect();
-        return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom;
-    }
-
-    // 桌面鼠标：按下只“武装”，不立即触发。
-    control.addEventListener('mousedown',event=>{
-        if(event.button!==0)return;
-        mouseArmed=true;
-        mousedownCount++;
-        // 阻止空按钮产生文本选择/拖拽焦点副作用，但不依赖 pointer 事件。
-        event.preventDefault();
-    },true);
-
-    // 关键：在 window 捕获阶段监听 mouseup。
-    // 即使 pointerup 被 Chrome/其他逻辑改道，只要物理鼠标左键松开，这里仍可处理。
-    window.addEventListener('mouseup',event=>{
-        if(event.button!==0||!mouseArmed)return;
-        mouseArmed=false;
-        mouseupCount++;
-
-        // 只有松开时鼠标仍位于按钮范围内，才按一次真正的按钮点击处理。
-        if(!pointIsInsideControl(event.clientX,event.clientY))return;
-
-        lastMouseActivation=performance.now();
-        lastMode='window-mouseup';
-        goTop();
-    },true);
-
-    // 手机触摸、触控笔、键盘以及正常产生 click 的浏览器继续走 click。
-    // 若真实鼠标刚刚已经由 mouseup 处理，则去重，不重复滚动。
-    control.addEventListener('click',event=>{
-        clickCount++;
-        if(event.detail>0&&performance.now()-lastMouseActivation<500){
-            event.preventDefault();
+            modalScroller.scrollTop=0;
             return;
         }
+
+        writeRootTopZero();
+
+        // 下一帧再校正一次，防止同一帧布局/焦点更新恢复旧位置。
+        requestAnimationFrame(writeRootTopZero);
+    }
+
+    function isReturnTopTarget(target){
+        return target instanceof Element&&Boolean(target.closest('#returnTopControl'));
+    }
+
+    // 关键：使用已经在该桌面 Chrome 环境中实测成功的捕获阶段 mousedown。
+    window.addEventListener('mousedown',function(event){
+        if(event.button!==0||!isReturnTopTarget(event.target))return;
         event.preventDefault();
-        lastMode=event.detail===0?'keyboard-click':'click-fallback';
         goTop();
     },true);
 
-    // 双保险：明确禁止拖拽；这不是当前根因，但可以消除额外变量。
-    control.draggable=false;
-    control.addEventListener('dragstart',event=>event.preventDefault(),true);
+    // 手机触摸、键盘 Enter/Space，以及事件链正常的环境使用 click 后备。
+    window.addEventListener('click',function(event){
+        if(!isReturnTopTarget(event.target))return;
+        event.preventDefault();
+        goTop();
+    },true);
 
-    window.addEventListener('blur',()=>{mouseArmed=false},{passive:true});
-
-    // 诊断：Chrome 控制台执行 __returnTopDebug()。
+    // 只用于排查，不参与正常逻辑。
     window.__returnTopDebug=function(){
-        const scroller=activeScroller();
+        const root=document.scrollingElement||document.documentElement||document.body;
         const rect=control.getBoundingClientRect();
         const hit=document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2);
-        return {
-            version:'desktop-chrome-v5-window-mouseup',
-            controlTag:control.tagName,
-            draggable:control.draggable,
-            mouseArmed,
-            mousedownCount,
-            mouseupCount,
-            clickCount,
-            lastMode,
+        const modalScroller=activeModalScroller();
+        return{
+            version:'desktop-chrome-v7-window-capture-mousedown',
             windowScrollY:window.scrollY,
-            documentElementScrollTop:document.documentElement?.scrollTop||0,
-            rootScrollTop:document.scrollingElement?.scrollTop||0,
-            activeScroller:scroller?{
-                tagName:scroller.tagName,
-                id:scroller.id||'',
-                className:typeof scroller.className==='string'?scroller.className:'',
-                scrollTop:scroller.scrollTop
+            documentElementScrollTop:document.documentElement.scrollTop,
+            rootScrollTop:root?root.scrollTop:null,
+            modalScroller:modalScroller?{
+                className:modalScroller.className,
+                scrollTop:modalScroller.scrollTop,
+                scrollHeight:modalScroller.scrollHeight,
+                clientHeight:modalScroller.clientHeight
             }:null,
-            controlHitId:hit?.id||'',
-            controlHitTag:hit?.tagName||''
+            controlTag:control.tagName,
+            controlHitId:hit?hit.id:null,
+            controlHitTag:hit?hit.tagName:null
         };
     };
 })();
