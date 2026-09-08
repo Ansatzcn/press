@@ -255,6 +255,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "76efb0f0-8488-4621-8cb1-85d053e022ba",
+      "bookName": "数据科学对社会科学转型的重大影响研究",
+      "bookNo": "7-03-074973",
+      "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
+      "category": [],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240081",
+      "codeEditCount": 0
+    },
+    {
       "id": "72465569-1262-4817-9941-2045378241f5",
       "bookName": "马克思的生态学：唯物主义与自然",
       "bookNo": "7-04-018379",
@@ -4781,6 +4793,18 @@
         "21读书"
       ],
       "code": "210375",
+      "codeEditCount": 0
+    },
+    {
+      "id": "08097376-dd97-4db5-a3ec-39fa6081ec32",
+      "bookName": "生成式AI：人工智能的未来",
+      "bookNo": "7-5217-5578",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210455",
       "codeEditCount": 0
     },
     {
