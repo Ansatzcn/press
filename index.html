@@ -605,7 +605,8 @@ body.reordering{user-select:none}
     text-decoration:none;
     user-select:none;
     -webkit-user-select:none;
-}
+    -webkit-user-drag:none;
+} 
 #returnTopControl:focus-visible{
     outline:2px solid #93c5fd;
     outline-offset:3px;
@@ -804,38 +805,23 @@ body.reordering{user-select:none}
 </section>
 
 
-<a id="returnTopControl" href="#pageTopAnchor" role="button" aria-label="回到顶部" title="回到顶部"></a>
+<button id="returnTopControl" type="button" draggable="false" aria-label="回到顶部" title="回到顶部"></button>
 <script>
-// 回到顶部加强版：
-// 1) href="#pageTopAnchor" 提供无 JavaScript 的原生锚点兜底；
-// 2) 桌面鼠标优先在 pointerup 阶段执行，避免某些环境中 click 被外层组件拦截；
-// 3) 自动识别主文档或当前弹窗的实际滚动容器；
-// 4) 同源 iframe 中同时尝试滚动父页面；跨域 iframe 受浏览器同源策略限制，只能滚动当前网页自身。
+// 回到顶部：桌面 Chrome mouseup 稳健版。
+// 已由实际事件日志确认：桌面 Chrome 在此页面上可能缺失 pointerup/click，
+// 但 mousedown/mouseup 始终正常。因此桌面鼠标不再依赖 PointerEvent 的释放阶段。
 (function(){
     'use strict';
 
     const control=document.getElementById('returnTopControl');
-    const pageTopAnchor=document.getElementById('pageTopAnchor');
     if(!control)return;
-
-    const ROOT_SELECTORS=[
-        '[data-scroll-root]',
-        'main',
-        '.container',
-        '#app',
-        '.app',
-        '.page',
-        '.page-content',
-        '.main-content',
-        '.content'
-    ];
 
     function isVisible(id){
         const el=document.getElementById(id);
         return Boolean(el&&!el.classList.contains('hidden'));
     }
 
-    function visibleModalScroller(){
+    function activeScroller(){
         if(isVisible('editModal')){
             return document.querySelector('#editModal .dialog-scroll');
         }
@@ -845,214 +831,128 @@ body.reordering{user-select:none}
         if(isVisible('manageModal')){
             return document.querySelector('#manageModal .manage-table-scroll');
         }
-        return null;
-    }
-
-    function rootScroller(){
         return document.scrollingElement||document.documentElement||document.body;
     }
 
-    function rootScrollTop(){
-        return Math.max(
-            Number(window.pageYOffset)||0,
-            Number(window.scrollY)||0,
-            Number(document.documentElement?.scrollTop)||0,
-            Number(document.body?.scrollTop)||0
-        );
+    function isRoot(scroller){
+        return scroller===document.scrollingElement ||
+               scroller===document.documentElement ||
+               scroller===document.body;
     }
 
-    function isScrollableElement(el){
-        if(!el||el===document.documentElement||el===document.body)return false;
-        const style=getComputedStyle(el);
-        const canScroll=/(auto|scroll|overlay)/.test(style.overflowY);
-        return canScroll&&el.scrollHeight>el.clientHeight+1;
-    }
+    function goTop(){
+        const scroller=activeScroller();
+        if(!scroller)return;
 
-    function isIgnoredNestedScroller(el){
-        return Boolean(el.closest(
-            '.combo-panel,.dialog-scroll,.manage-table-scroll,.overlay,.toast'
-        ));
-    }
-
-    function detectMainScroller(){
-        const root=rootScroller();
-
-        // Chrome 标准页面通常由 document.scrollingElement（HTML）滚动。
-        if(rootScrollTop()>0)return root;
-
-        // 优先检查页面常见的主滚动容器。
-        for(const selector of ROOT_SELECTORS){
-            for(const el of document.querySelectorAll(selector)){
-                if(isScrollableElement(el)&&el.scrollTop>0)return el;
+        if(isRoot(scroller)){
+            try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(_){
+                try{window.scrollTo(0,0)}catch(__){}
             }
-        }
-
-        // 最后兜底：寻找占据大部分视口、且当前确实已经滚动的元素。
-        const candidates=[];
-        for(const el of document.querySelectorAll('body *')){
-            if(!isScrollableElement(el)||el.scrollTop<=0||isIgnoredNestedScroller(el))continue;
-            const r=el.getBoundingClientRect();
-            if(r.width<window.innerWidth*0.35||r.height<window.innerHeight*0.35)continue;
-            candidates.push(el);
-        }
-        candidates.sort((a,b)=>b.scrollTop-a.scrollTop);
-        return candidates[0]||root;
-    }
-
-    function isRoot(el){
-        return el===document.scrollingElement||
-               el===document.documentElement||
-               el===document.body;
-    }
-
-    function forceRootToTop(){
-        // 原生锚点/scrollIntoView 先执行。对桌面 Chrome 来说这比只写 scrollTop 更稳。
-        try{
-            pageTopAnchor?.scrollIntoView({block:'start',inline:'nearest',behavior:'auto'});
-        }catch(_){
-            pageTopAnchor?.scrollIntoView();
-        }
-
-        const apply=()=>{
-            try{window.scrollTo(0,0)}catch(_){}
             if(document.documentElement)document.documentElement.scrollTop=0;
             if(document.body)document.body.scrollTop=0;
-            const root=rootScroller();
-            if(root)root.scrollTop=0;
-        };
+            if(document.scrollingElement)document.scrollingElement.scrollTop=0;
+        }else{
+            try{scroller.scrollTo({top:0,left:0,behavior:'instant'})}catch(_){
+                scroller.scrollTop=0;
+                scroller.scrollLeft=0;
+            }
+            scroller.scrollTop=0;
+        }
 
-        // 立即 + 连续两帧兜底，防止桌面端焦点恢复/滚动锚定在同一帧把位置写回。
-        apply();
+        // 下一帧校正一次，避免同帧布局/焦点恢复。
         requestAnimationFrame(()=>{
-            apply();
-            requestAnimationFrame(apply);
+            const current=activeScroller();
+            if(!current)return;
+            if(isRoot(current)){
+                if(document.scrollingElement)document.scrollingElement.scrollTop=0;
+                if(document.documentElement)document.documentElement.scrollTop=0;
+                if(document.body)document.body.scrollTop=0;
+            }else{
+                current.scrollTop=0;
+            }
         });
     }
 
-    function forceElementToTop(el){
-        if(!el)return;
-        if(isRoot(el)){
-            forceRootToTop();
-            return;
-        }
-        try{
-            el.scrollTo({top:0,left:0,behavior:'auto'});
-        }catch(_){
-            el.scrollTop=0;
-            el.scrollLeft=0;
-        }
-        el.scrollTop=0;
-        requestAnimationFrame(()=>{el.scrollTop=0});
-    }
+    let mouseArmed=false;
+    let lastMouseActivation=0;
+    let mousedownCount=0;
+    let mouseupCount=0;
+    let clickCount=0;
+    let lastMode='';
 
-    function tryScrollSameOriginParent(){
-        if(window.parent===window)return {framed:false,sameOrigin:true};
-
-        try{
-            // 读取 parent.document 本身就是同源检测；跨域时这里会抛 SecurityError。
-            const parentDocument=window.parent.document;
-            const frame=window.frameElement;
-            try{frame?.scrollIntoView({block:'start',behavior:'auto'})}catch(_){}
-
-            const parentRoot=parentDocument.scrollingElement||
-                             parentDocument.documentElement||
-                             parentDocument.body;
-            if(parentRoot)parentRoot.scrollTop=0;
-            if(parentDocument.documentElement)parentDocument.documentElement.scrollTop=0;
-            if(parentDocument.body)parentDocument.body.scrollTop=0;
-            try{window.parent.scrollTo(0,0)}catch(_){}
-            return {framed:true,sameOrigin:true};
-        }catch(_){
-            return {framed:true,sameOrigin:false};
-        }
-    }
-
-    function blurDesktopFocus(){
-        const active=document.activeElement;
-        if(active&&active!==control&&typeof active.blur==='function'){
-            try{active.blur()}catch(_){}
-        }
-    }
-
-    function goTop(event){
-        if(event){
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        blurDesktopFocus();
-
-        const modalScroller=visibleModalScroller();
-        if(modalScroller){
-            forceElementToTop(modalScroller);
-            return;
-        }
-
-        const mainScroller=detectMainScroller();
-        forceElementToTop(mainScroller);
-
-        // 如果本页位于同源 iframe 中，顺手把外层页面也回到顶部。
-        // 如果是跨域 iframe，浏览器安全策略禁止直接控制 parent；诊断函数会显示 sameOrigin:false。
-        tryScrollSameOriginParent();
-    }
-
-    let lastMousePointerUp=0;
-
-    // 桌面 Chrome：优先在鼠标松开时处理，不完全依赖 click。
-    control.addEventListener('pointerup',event=>{
-        if(event.pointerType!=='mouse'||event.button!==0)return;
-        lastMousePointerUp=performance.now();
-        goTop(event);
-    },true);
-
-    // 手机触摸、键盘激活以及不支持 Pointer Events 的环境继续走 click。
-    control.addEventListener('click',event=>{
-        if(performance.now()-lastMousePointerUp<400){
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-        goTop(event);
-    },true);
-
-    // 暴露只读诊断函数，桌面 Chrome 控制台输入 __returnTopDebug() 即可查看真实环境。
-    window.__returnTopDebug=function(){
-        const modal=visibleModalScroller();
-        const main=detectMainScroller();
-        let framed=false,sameOrigin=true;
-        if(window.parent!==window){
-            framed=true;
-            try{void window.parent.document;sameOrigin=true}catch(_){sameOrigin=false}
-        }
+    function pointIsInsideControl(x,y){
         const r=control.getBoundingClientRect();
-        const centerX=r.left+r.width/2;
-        const centerY=r.top+r.height/2;
-        const hit=document.elementFromPoint(centerX,centerY);
+        return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom;
+    }
+
+    // 桌面鼠标：按下只“武装”，不立即触发。
+    control.addEventListener('mousedown',event=>{
+        if(event.button!==0)return;
+        mouseArmed=true;
+        mousedownCount++;
+        // 阻止空按钮产生文本选择/拖拽焦点副作用，但不依赖 pointer 事件。
+        event.preventDefault();
+    },true);
+
+    // 关键：在 window 捕获阶段监听 mouseup。
+    // 即使 pointerup 被 Chrome/其他逻辑改道，只要物理鼠标左键松开，这里仍可处理。
+    window.addEventListener('mouseup',event=>{
+        if(event.button!==0||!mouseArmed)return;
+        mouseArmed=false;
+        mouseupCount++;
+
+        // 只有松开时鼠标仍位于按钮范围内，才按一次真正的按钮点击处理。
+        if(!pointIsInsideControl(event.clientX,event.clientY))return;
+
+        lastMouseActivation=performance.now();
+        lastMode='window-mouseup';
+        goTop();
+    },true);
+
+    // 手机触摸、触控笔、键盘以及正常产生 click 的浏览器继续走 click。
+    // 若真实鼠标刚刚已经由 mouseup 处理，则去重，不重复滚动。
+    control.addEventListener('click',event=>{
+        clickCount++;
+        if(event.detail>0&&performance.now()-lastMouseActivation<500){
+            event.preventDefault();
+            return;
+        }
+        event.preventDefault();
+        lastMode=event.detail===0?'keyboard-click':'click-fallback';
+        goTop();
+    },true);
+
+    // 双保险：明确禁止拖拽；这不是当前根因，但可以消除额外变量。
+    control.draggable=false;
+    control.addEventListener('dragstart',event=>event.preventDefault(),true);
+
+    window.addEventListener('blur',()=>{mouseArmed=false},{passive:true});
+
+    // 诊断：Chrome 控制台执行 __returnTopDebug()。
+    window.__returnTopDebug=function(){
+        const scroller=activeScroller();
+        const rect=control.getBoundingClientRect();
+        const hit=document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2);
         return {
-            version:'desktop-chrome-v2',
-            framed,
-            sameOrigin,
-            rootTag:rootScroller()?.tagName||null,
+            version:'desktop-chrome-v5-window-mouseup',
+            controlTag:control.tagName,
+            draggable:control.draggable,
+            mouseArmed,
+            mousedownCount,
+            mouseupCount,
+            clickCount,
+            lastMode,
             windowScrollY:window.scrollY,
             documentElementScrollTop:document.documentElement?.scrollTop||0,
-            bodyScrollTop:document.body?.scrollTop||0,
-            modalScroller:modal?{
-                className:modal.className,
-                scrollTop:modal.scrollTop,
-                clientHeight:modal.clientHeight,
-                scrollHeight:modal.scrollHeight
-            }:null,
-            detectedMainScroller:main?{
-                tagName:main.tagName,
-                id:main.id||'',
-                className:typeof main.className==='string'?main.className:'',
-                scrollTop:main.scrollTop||0,
-                clientHeight:main.clientHeight||0,
-                scrollHeight:main.scrollHeight||0
+            rootScrollTop:document.scrollingElement?.scrollTop||0,
+            activeScroller:scroller?{
+                tagName:scroller.tagName,
+                id:scroller.id||'',
+                className:typeof scroller.className==='string'?scroller.className:'',
+                scrollTop:scroller.scrollTop
             }:null,
             controlHitId:hit?.id||'',
-            controlHitTag:hit?.tagName||'',
-            controlRect:{left:r.left,top:r.top,width:r.width,height:r.height}
+            controlHitTag:hit?.tagName||''
         };
     };
 })();
