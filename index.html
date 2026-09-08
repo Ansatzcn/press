@@ -571,45 +571,57 @@ body.reordering{user-select:none}
 
 
 
-<style id="return-top-ultra-simple-style">
+<style id="return-top-circle-style">
+/* 可见圆形就是按钮本体；内部箭头不单独接收指针事件。 */
 #returnTopControl{
+    appearance:none;
+    -webkit-appearance:none;
     position:fixed;
-    right:16px;
+    right:max(16px,env(safe-area-inset-right));
     top:70%;
     z-index:2147483647;
     display:flex;
     align-items:center;
     justify-content:center;
-    width:44px;
-    height:44px;
+    width:48px;
+    height:48px;
+    min-width:48px;
+    min-height:48px;
     margin:0;
     padding:0;
     border:0;
-    background:transparent;
+    border-radius:50%;
+    background:#1E40AF;
+    color:#fff;
+    box-shadow:0 3px 10px rgba(15,23,42,.22);
     cursor:pointer;
     pointer-events:auto;
     touch-action:manipulation;
+    user-select:none;
     -webkit-tap-highlight-color:transparent;
 }
-#returnTopControl svg{
+#returnTopControl > span{
     display:block;
-    width:30px;
-    height:20px;
+    position:static;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+    font-size:28px;
+    font-weight:700;
+    line-height:1;
     pointer-events:none;
+    user-select:none;
 }
-#returnTopControl polygon{
-    fill:#1E40AF;
-}
-#returnTopControl:hover polygon,
-#returnTopControl:focus-visible polygon{
-    fill:#1E3A8A;
+#returnTopControl:hover,
+#returnTopControl:active{
+    background:#1E3A8A;
 }
 #returnTopControl:focus-visible{
-    outline:2px solid #93c5fd;
+    outline:3px solid #93c5fd;
     outline-offset:3px;
 }
 @media(max-width:700px){
-    #returnTopControl{right:10px}
+    #returnTopControl{right:max(10px,env(safe-area-inset-right))}
 }
 </style>
 
@@ -809,7 +821,7 @@ body.reordering{user-select:none}
     type="button"
     aria-label="回到顶部"
     title="回到顶部"
-><svg viewBox="0 0 30 20" width="30" height="20" aria-hidden="true" focusable="false"><polygon points="15,0 0,20 30,20"></polygon></svg></button>
+><span aria-hidden="true">↑</span></button>
 
 <div class="toast hidden" id="toast"></div>
 
