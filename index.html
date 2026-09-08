@@ -821,22 +821,30 @@ function refreshReturnTopVisibility(){
     button.classList.toggle('is-visible',readPageTop()>SHOW_AFTER_PX);
 }
 
-function returnToTopIn10ms(event){
-    if(event){
-        event.preventDefault();
-        event.stopPropagation();
-    }
+/*
+ * Chromium 下实测可用的处理方式：
+ * 在捕获阶段先截获“回到顶部”按钮的 click，
+ * 阻止后续目标/冒泡阶段逻辑，再执行原生 scrollTo。
+ *
+ * 这与控制台中已验证能正常工作的代码保持一致。
+ */
+function handleReturnTopCapture(event){
+    const target=event.target instanceof Element
+        ? event.target.closest('#returnTopControl')
+        : null;
 
-    // 已实测：单次原生 scrollTo 可以可靠回到页面顶部。
-    // 不再使用 requestAnimationFrame + 多次写 scrollTop，
-    // 避免新版浏览器异步滚动调用之间发生竞争。
+    if(!target)return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
     window.scrollTo(0,0);
 
-    // scroll 事件通常会自动刷新；这里再补一次，保证按钮及时隐藏。
+    // scroll 事件会更新一次；下一帧再补一次，保证按钮立即隐藏。
     requestAnimationFrame(refreshReturnTopVisibility);
 }
 
-button.addEventListener('click',returnToTopIn10ms,false);
+document.addEventListener('click',handleReturnTopCapture,true);
 window.addEventListener('scroll',refreshReturnTopVisibility,{passive:true});
 window.addEventListener('resize',refreshReturnTopVisibility,{passive:true});
 window.addEventListener('pageshow',refreshReturnTopVisibility,{passive:true});
