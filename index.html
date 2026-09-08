@@ -803,10 +803,7 @@ body.reordering{user-select:none}
 const button=document.getElementById('returnTopControl');
 if(!button)return;
 
-const RETURN_TOP_DURATION_MS=10;
 const SHOW_AFTER_PX=260;
-let animationFrameId=0;
-let completionTimerId=0;
 
 function readPageTop(){
     const root=document.scrollingElement;
@@ -820,75 +817,23 @@ function readPageTop(){
     );
 }
 
-function writePageTop(value){
-    const y=Math.max(0,Math.round(Number(value)||0));
-    const root=document.scrollingElement;
-
-    // 数字参数兼容旧浏览器和内嵌 WebView。
-    try{window.scrollTo(0,y)}catch(err){}
-
-    // 同时写入所有可能作为页面根滚动容器的节点。
-    if(root)root.scrollTop=y;
-    if(document.documentElement)document.documentElement.scrollTop=y;
-    if(document.body)document.body.scrollTop=y;
-}
-
 function refreshReturnTopVisibility(){
     button.classList.toggle('is-visible',readPageTop()>SHOW_AFTER_PX);
 }
 
-function cancelReturnTopRun(){
-    if(animationFrameId){
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId=0;
-    }
-    if(completionTimerId){
-        clearTimeout(completionTimerId);
-        completionTimerId=0;
-    }
-}
-
 function returnToTopIn10ms(event){
-    if(event)event.preventDefault();
-    cancelReturnTopRun();
-
-    const start=readPageTop();
-    if(start<=0){
-        writePageTop(0);
-        refreshReturnTopVisibility();
-        return;
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
     }
 
-    const startedAt=performance.now();
-    let completed=false;
+    // 已实测：单次原生 scrollTo 可以可靠回到页面顶部。
+    // 不再使用 requestAnimationFrame + 多次写 scrollTop，
+    // 避免新版浏览器异步滚动调用之间发生竞争。
+    window.scrollTo(0,0);
 
-    function complete(){
-        if(completed)return;
-        completed=true;
-        if(animationFrameId){
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId=0;
-        }
-        writePageTop(0);
-        refreshReturnTopVisibility();
-    }
-
-    function frame(now){
-        if(completed)return;
-        const elapsed=Math.max(0,now-startedAt);
-        const progress=Math.min(1,elapsed/RETURN_TOP_DURATION_MS);
-        const eased=1-Math.pow(1-progress,3);
-        writePageTop(start*(1-eased));
-        if(progress>=1){
-            complete();
-        }else{
-            animationFrameId=requestAnimationFrame(frame);
-        }
-    }
-
-    // 原来的速度要求固定为 10ms。
-    animationFrameId=requestAnimationFrame(frame);
-    completionTimerId=setTimeout(complete,RETURN_TOP_DURATION_MS);
+    // scroll 事件通常会自动刷新；这里再补一次，保证按钮及时隐藏。
+    requestAnimationFrame(refreshReturnTopVisibility);
 }
 
 button.addEventListener('click',returnToTopIn10ms,false);
