@@ -572,7 +572,7 @@ body.reordering{user-select:none}
 
 
 <style id="return-top-circle-style">
-/* 可见圆形就是按钮本体；内部箭头不单独接收指针事件。 */
+/* 原生页内链接：整个25px圆形可点击，不需要JavaScript。 */
 #returnTopControl{
     appearance:none;
     -webkit-appearance:none;
@@ -599,19 +599,10 @@ body.reordering{user-select:none}
     touch-action:manipulation;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
+    text-decoration:none;
+    overflow:hidden;
 }
-#returnTopControl > span{
-    display:block;
-    position:static;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
-    font-size:17px;
-    font-weight:700;
-    line-height:1;
-    pointer-events:none;
-    user-select:none;
-}
+
 #returnTopControl:hover,
 #returnTopControl:active{
     background:#1E3A8A;
@@ -627,6 +618,7 @@ body.reordering{user-select:none}
 
 </head>
 <body>
+<span id="press-page-top" aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;"></span>
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -816,93 +808,16 @@ body.reordering{user-select:none}
 </section>
 
 
-<button
+<a
     id="returnTopControl"
-    type="button"
+    href="#press-page-top"
     aria-label="回到顶部"
     title="回到顶部"
-><span aria-hidden="true">↑</span></button>
+></a>
 
 <div class="toast hidden" id="toast"></div>
 
-<script>
-// 独立初始化：回到顶部不依赖数据加载、管理权限或云端同步。
-(()=>{
-    'use strict';
-    const control=document.getElementById('returnTopControl');
-    if(!control)return;
 
-    function resetScroll(element){
-        if(!element)return;
-        // 临时覆盖 smooth，确保一次点击立即完成，不受全局平滑滚动影响。
-        const value=element.style.getPropertyValue('scroll-behavior');
-        const priority=element.style.getPropertyPriority('scroll-behavior');
-        element.style.setProperty('scroll-behavior','auto','important');
-        element.scrollTop=0;
-        if(value)element.style.setProperty('scroll-behavior',value,priority);
-        else element.style.removeProperty('scroll-behavior');
-    }
-
-    function returnToTop(){
-
-        // 弹窗独立滚动：回到当前最上层弹窗顶部，不移动背后的页面。
-        const overlays=Array.from(document.querySelectorAll('.overlay')).filter(element=>{
-            const style=getComputedStyle(element);
-            return style.display!=='none'&&style.visibility!=='hidden'&&element.getClientRects().length;
-        });
-        overlays.sort((a,b)=>(parseInt(getComputedStyle(a).zIndex,10)||0)-(parseInt(getComputedStyle(b).zIndex,10)||0));
-        const overlay=overlays[overlays.length-1];
-        if(overlay){
-            overlay.querySelectorAll('.combo-panel').forEach(panel=>panel.classList.add('hidden'));
-            overlay.querySelectorAll('.dialog-scroll,.manage-table-scroll').forEach(resetScroll);
-            resetScroll(overlay);
-            return;
-        }
-
-        document.querySelectorAll('.combo-panel').forEach(panel=>panel.classList.add('hidden'));
-        // 同时兼容主内容被放入独立滚动容器的布局。
-        for(let element=document.querySelector('main.container');element;element=element.parentElement){
-            resetScroll(element);
-        }
-        resetScroll(document.scrollingElement||document.documentElement);
-        resetScroll(document.documentElement);
-        resetScroll(document.body);
-    }
-
-    // 使用与鼠标坐标同属视口坐标系的实际圆形边界进行命中判断。
-    // 即使同一文档内的其他元素盖住按钮，也由捕获阶段接收圆内点击。
-    function insideControl(event){
-        const rect=control.getBoundingClientRect();
-        if(!rect.width||!rect.height)return false;
-        const style=getComputedStyle(control);
-        if(style.display==='none'||style.visibility==='hidden')return false;
-        const x=(event.clientX-rect.left-rect.width/2)/(rect.width/2);
-        const y=(event.clientY-rect.top-rect.height/2)/(rect.height/2);
-        return x*x+y*y<=1;
-    }
-    function consume(event){
-        if(event.cancelable)event.preventDefault();
-        event.stopImmediatePropagation();
-    }
-    let handledPointer=false;
-    window.addEventListener('pointerdown',event=>{
-        handledPointer=false;
-        if(event.button!==0||event.isPrimary===false||!insideControl(event))return;
-        handledPointer=true;
-        consume(event);
-        returnToTop();
-    },{capture:true,passive:false});
-    window.addEventListener('pointercancel',()=>{handledPointer=false},{capture:true});
-    window.addEventListener('click',event=>{
-        // Enter / 空格或辅助技术产生的点击仍通过按钮本身触发。
-        const keyboardClick=event.detail===0&&control.contains(event.target);
-        if(!keyboardClick&&(event.button!==0||!insideControl(event)))return;
-        consume(event);
-        if(keyboardClick||!handledPointer)returnToTop();
-        handledPointer=false;
-    },{capture:true,passive:false});
-})();
-</script>
 
 <script>
 (()=>{
