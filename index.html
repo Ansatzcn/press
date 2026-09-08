@@ -570,41 +570,43 @@ body.reordering{user-select:none}
 </style>
 
 
-<style id="return-top-rewrite-style">
-.return-top-control{
+
+<style id="return-top-triangle-style">
+.return-top-triangle{
     position:fixed;
     right:16px;
     top:70%;
     z-index:900;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:32px;
-    height:32px;
+    display:block;
+    width:40px;
+    height:35px;
     padding:0;
-    transform:translateY(-50%);
-    border:1px solid #1E40AF;
-    border-radius:50%;
+    border:0;
     background:#1E40AF;
-    color:#fff;
-    font-size:18px;
-    line-height:1;
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    box-shadow:0 4px 14px rgba(37,99,235,.22);
-    transition:opacity .2s,background .2s,border-color .2s;
-    touch-action:manipulation;
+    clip-path:polygon(50% 0,0 100%,100% 100%);
+    cursor:pointer;
+    opacity:.94;
+    filter:drop-shadow(0 4px 8px rgba(15,23,42,.22));
     -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
 }
-.return-top-control.is-visible{opacity:.95;visibility:visible;pointer-events:auto}
-.return-top-control:hover,.return-top-control:focus-visible{background:#1E3A8A;border-color:#1E3A8A;opacity:1;outline:none}
-.return-top-control-arrow{display:block;pointer-events:none;transform:translateY(-1px)}
-@media(max-width:700px){.return-top-control{right:8px}}
+.return-top-triangle:hover,
+.return-top-triangle:focus-visible{
+    background:#1E3A8A;
+    opacity:1;
+    outline:none;
+}
+@media(max-width:700px){
+    .return-top-triangle{
+        right:10px;
+        width:38px;
+        height:33px;
+    }
+}
 </style>
 
 </head>
-<body>
+<body id="pageTop">
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -793,62 +795,37 @@ body.reordering{user-select:none}
 </div>
 </section>
 
-<button class="return-top-control" id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"><span class="return-top-control-arrow" aria-hidden="true">↑</span></button>
+
+<a class="return-top-triangle"
+   id="returnTopTriangle"
+   href="#pageTop"
+   aria-label="回到顶部"
+   title="回到顶部"></a>
+
 <div class="toast hidden" id="toast"></div>
 
-<script id="return-top-rewrite-script">
+
+<script id="return-top-triangle-script">
 (()=>{
 'use strict';
 
-const button=document.getElementById('returnTopControl');
+const button=document.getElementById('returnTopTriangle');
 if(!button)return;
 
-const SHOW_AFTER_PX=260;
+let returnTopTimer=0;
 
-function readPageTop(){
-    const root=document.scrollingElement;
-    return Math.max(
-        0,
-        Number(window.pageYOffset)||0,
-        Number(window.scrollY)||0,
-        Number(root&&root.scrollTop)||0,
-        Number(document.documentElement&&document.documentElement.scrollTop)||0,
-        Number(document.body&&document.body.scrollTop)||0
-    );
-}
-
-function refreshReturnTopVisibility(){
-    button.classList.toggle('is-visible',readPageTop()>SHOW_AFTER_PX);
-}
-
-/*
- * Chromium 下实测可用的处理方式：
- * 在捕获阶段先截获“回到顶部”按钮的 click，
- * 阻止后续目标/冒泡阶段逻辑，再执行原生 scrollTo。
- *
- * 这与控制台中已验证能正常工作的代码保持一致。
- */
-function handleReturnTopCapture(event){
-    const target=event.target instanceof Element
-        ? event.target.closest('#returnTopControl')
-        : null;
-
-    if(!target)return;
-
+button.addEventListener('click',event=>{
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    window.scrollTo(0,0);
+    if(returnTopTimer)clearTimeout(returnTopTimer);
 
-    // scroll 事件会更新一次；下一帧再补一次，保证按钮立即隐藏。
-    requestAnimationFrame(refreshReturnTopVisibility);
-}
+    returnTopTimer=setTimeout(()=>{
+        returnTopTimer=0;
+        window.scrollTo(0,0);
+    },10);
+},true);
 
-document.addEventListener('click',handleReturnTopCapture,true);
-window.addEventListener('scroll',refreshReturnTopVisibility,{passive:true});
-window.addEventListener('resize',refreshReturnTopVisibility,{passive:true});
-window.addEventListener('pageshow',refreshReturnTopVisibility,{passive:true});
-refreshReturnTopVisibility();
 })();
 </script>
 
