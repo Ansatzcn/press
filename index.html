@@ -571,54 +571,44 @@ body.reordering{user-select:none}
 
 
 
-<style id="return-top-circle-style">
-/* 回到顶部：桌面 Chrome 最小可靠实现。
-   44×44 是实际鼠标命中区；视觉圆点仍为 25×25。 */
+<style id="return-top-anchor-style">
 #pageTopAnchor{
     position:absolute;
     top:0;
     left:0;
     width:1px;
     height:1px;
+    overflow:hidden;
     pointer-events:none;
 }
+</style>
+
+<style id="return-top-circle-style">
 #returnTopControl{
+    appearance:none;
+    -webkit-appearance:none;
     position:fixed;
-    right:6px;
-    top:calc(70% - 10px);
+    right:16px;
+    top:70%;
     z-index:2147483647;
     display:block;
-    width:44px;
-    height:44px;
+    width:25px;
+    height:25px;
     margin:0;
     padding:0;
     border:0;
-    background:transparent;
-    cursor:pointer!important;
-    pointer-events:auto!important;
+    border-radius:50%;
+    background:#1E40AF;
+    cursor:pointer;
+    pointer-events:auto;
     touch-action:manipulation;
     text-decoration:none;
     user-select:none;
     -webkit-user-select:none;
-    -webkit-user-drag:none;
 }
-#returnTopControl::before{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:25px;
-    height:25px;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background:#1E40AF;
-    pointer-events:none;
-}
-#returnTopControl:hover::before{background:#1E3A8A}
 #returnTopControl:focus-visible{
     outline:2px solid #93c5fd;
-    outline-offset:1px;
-    border-radius:50%;
+    outline-offset:3px;
 }
 </style>
 
@@ -814,57 +804,153 @@ body.reordering{user-select:none}
 </section>
 
 
-<a id="returnTopControl"
-   href="#pageTopAnchor"
-   draggable="false"
-   aria-label="回到顶部"
-   title="回到顶部"
-   onmousedown="if(event.button===0){window.__pressReturnTop();}"
-   onmouseup="if(event.button===0){window.__pressReturnTop();}"></a>
+<a id="returnTopControl" href="#pageTopAnchor" role="button" aria-label="回到顶部" title="回到顶部"></a>
 <script>
-// 只做回顶动作，不注册任何 pointer/click 事件。
-// 桌面鼠标：HTML 自身的 mousedown / mouseup；
-// 手机、键盘：<a href="#pageTopAnchor"> 原生锚点。
-window.__pressReturnTop=function(){
-    const visible=id=>{
+// 回到顶部最终稳健版（desktop-chrome-v3）
+// 核心原则：
+// 1) 主页面使用浏览器原生 fragment 锚点跳转，不阻止默认行为；
+// 2) JavaScript 只在原生跳转之后再次把根滚动节点校正为 0；
+// 3) 弹窗有自己的滚动容器，因此弹窗打开时才 preventDefault，并滚动弹窗；
+// 4) 不再使用 pointerup，不再用复杂的鼠标事件链，避免桌面 Chrome/触控板差异；
+// 5) 暴露 __returnTopDebug()，可看到 click 是否真正执行以及执行前后的滚动值。
+(function(){
+    'use strict';
+
+    const control=document.getElementById('returnTopControl');
+    const pageTopAnchor=document.getElementById('pageTopAnchor');
+    if(!control)return;
+
+    const debugState={
+        version:'desktop-chrome-v3',
+        clickCount:0,
+        lastClickAt:0,
+        lastBefore:null,
+        lastAfterImmediate:null,
+        lastAfterFrame:null,
+        lastMode:'none'
+    };
+
+    function isVisible(id){
         const el=document.getElementById(id);
         return Boolean(el&&!el.classList.contains('hidden'));
-    };
-
-    let scroller=null;
-    if(visible('editModal')) scroller=document.querySelector('#editModal .dialog-scroll');
-    else if(visible('configModal')) scroller=document.querySelector('#configForm .dialog-scroll');
-    else if(visible('manageModal')) scroller=document.querySelector('#manageModal .manage-table-scroll');
-
-    if(scroller){
-        scroller.scrollTop=0;
-        return;
     }
 
-    try{window.scrollTo({top:0,left:0,behavior:'instant'});}catch(_){window.scrollTo(0,0);}
-    if(document.scrollingElement) document.scrollingElement.scrollTop=0;
-    document.documentElement.scrollTop=0;
-    if(document.body) document.body.scrollTop=0;
-};
+    function visibleModalScroller(){
+        if(isVisible('editModal'))return document.querySelector('#editModal .dialog-scroll');
+        if(isVisible('configModal'))return document.querySelector('#configForm .dialog-scroll');
+        if(isVisible('manageModal'))return document.querySelector('#manageModal .manage-table-scroll');
+        return null;
+    }
 
-window.__returnTopDebug=function(){
-    const c=document.getElementById('returnTopControl');
-    const r=c.getBoundingClientRect();
-    const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
-    return {
-        version:'desktop-chrome-v8-anchor-direct-mouse',
-        controlTag:c.tagName,
-        href:c.getAttribute('href'),
-        cursor:getComputedStyle(c).cursor,
-        pointerEvents:getComputedStyle(c).pointerEvents,
-        hitWidth:r.width,
-        hitHeight:r.height,
-        controlHitId:hit?.id||'',
-        windowScrollY:window.scrollY,
-        htmlScrollTop:document.documentElement.scrollTop,
-        rootScrollTop:document.scrollingElement?.scrollTop||0
+    function rootScroller(){
+        return document.scrollingElement||document.documentElement||document.body;
+    }
+
+    function rootTop(){
+        return Math.max(
+            Number(window.scrollY)||0,
+            Number(window.pageYOffset)||0,
+            Number(document.documentElement?.scrollTop)||0,
+            Number(document.body?.scrollTop)||0,
+            Number(rootScroller()?.scrollTop)||0
+        );
+    }
+
+    function writeRootTopZero(){
+        const root=rootScroller();
+        try{window.scrollTo(0,0)}catch(_){}
+        if(root)root.scrollTop=0;
+        if(document.documentElement)document.documentElement.scrollTop=0;
+        if(document.body)document.body.scrollTop=0;
+    }
+
+    function scrollModalToTop(scroller){
+        if(!scroller)return;
+        try{scroller.scrollTo({top:0,left:0,behavior:'auto'})}catch(_){}
+        scroller.scrollTop=0;
+        scroller.scrollLeft=0;
+        requestAnimationFrame(()=>{
+            scroller.scrollTop=0;
+        });
+    }
+
+    control.addEventListener('click',function(event){
+        debugState.clickCount+=1;
+        debugState.lastClickAt=Date.now();
+        debugState.lastBefore=rootTop();
+
+        const modalScroller=visibleModalScroller();
+        if(modalScroller){
+            // 弹窗滚动与主页面不是同一个 scroll root，因此只在这里取消锚点默认行为。
+            event.preventDefault();
+            debugState.lastMode='modal';
+            scrollModalToTop(modalScroller);
+            debugState.lastAfterImmediate=modalScroller.scrollTop;
+            requestAnimationFrame(()=>{
+                debugState.lastAfterFrame=modalScroller.scrollTop;
+            });
+            return;
+        }
+
+        // 主页面：绝不 preventDefault。
+        // Chrome 会原生处理 href="#pageTopAnchor"，这是最可靠的桌面路径。
+        debugState.lastMode='native-anchor+root-fallback';
+
+        // 同步补强一次；即便这句没起作用，原生锚点仍会在 click 默认动作阶段执行。
+        writeRootTopZero();
+        debugState.lastAfterImmediate=rootTop();
+
+        // 默认锚点动作发生后，再在下一帧校正一次。
+        requestAnimationFrame(()=>{
+            writeRootTopZero();
+            debugState.lastAfterFrame=rootTop();
+
+            // 再延迟一帧，防止同帧布局/焦点/滚动锚定回写。
+            requestAnimationFrame(writeRootTopZero);
+        });
+    },false);
+
+    // 键盘可访问性：Enter 会自动触发 a 元素 click；Space 则显式触发一次。
+    control.addEventListener('keydown',function(event){
+        if(event.key===' '){
+            event.preventDefault();
+            control.click();
+        }
+    });
+
+    window.__returnTopDebug=function(){
+        const modal=visibleModalScroller();
+        const root=rootScroller();
+        const r=control.getBoundingClientRect();
+        const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
+        return {
+            version:debugState.version,
+            clickCount:debugState.clickCount,
+            lastClickAt:debugState.lastClickAt,
+            lastMode:debugState.lastMode,
+            lastBefore:debugState.lastBefore,
+            lastAfterImmediate:debugState.lastAfterImmediate,
+            lastAfterFrame:debugState.lastAfterFrame,
+            locationHash:location.hash,
+            windowScrollY:window.scrollY,
+            documentElementScrollTop:document.documentElement?.scrollTop||0,
+            bodyScrollTop:document.body?.scrollTop||0,
+            rootTag:root?.tagName||null,
+            rootScrollTop:root?.scrollTop||0,
+            rootClientHeight:root?.clientHeight||0,
+            rootScrollHeight:root?.scrollHeight||0,
+            modalScroller:modal?{
+                className:modal.className,
+                scrollTop:modal.scrollTop,
+                clientHeight:modal.clientHeight,
+                scrollHeight:modal.scrollHeight
+            }:null,
+            controlHitId:hit?.id||'',
+            controlHitTag:hit?.tagName||'',
+            anchorExists:Boolean(pageTopAnchor)
+        };
     };
-};
+})();
 </script>
 
 <div class="toast hidden" id="toast"></div>
