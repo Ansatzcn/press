@@ -572,53 +572,33 @@ body.reordering{user-select:none}
 
 
 <style id="return-top-circle-style">
-/* 原生页内链接：整个25px圆形可点击，不需要JavaScript。 */
 #returnTopControl{
     appearance:none;
     -webkit-appearance:none;
     position:fixed;
-    right:max(16px,env(safe-area-inset-right));
+    right:16px;
     top:70%;
     z-index:2147483647;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display:block;
     width:25px;
     height:25px;
-    min-width:25px;
-    min-height:25px;
     margin:0;
     padding:0;
     border:0;
     border-radius:50%;
     background:#1E40AF;
-    color:#fff;
-    box-shadow:0 3px 10px rgba(15,23,42,.22);
     cursor:pointer;
     pointer-events:auto;
     touch-action:manipulation;
-    user-select:none;
-    -webkit-tap-highlight-color:transparent;
-    text-decoration:none;
-    overflow:hidden;
-}
-
-#returnTopControl:hover,
-#returnTopControl:active{
-    background:#1E3A8A;
 }
 #returnTopControl:focus-visible{
-    outline:3px solid #93c5fd;
+    outline:2px solid #93c5fd;
     outline-offset:3px;
-}
-@media(max-width:700px){
-    #returnTopControl{right:max(10px,env(safe-area-inset-right))}
 }
 </style>
 
 </head>
 <body>
-<span id="press-page-top" aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;"></span>
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -808,12 +788,13 @@ body.reordering{user-select:none}
 </section>
 
 
-<a
-    id="returnTopControl"
-    href="#press-page-top"
-    aria-label="回到顶部"
-    title="回到顶部"
-></a>
+<button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
+<script>
+// 点击后立即跳到网页顶部，不设置延时、不使用滚动动画。
+document.getElementById('returnTopControl').addEventListener('click',function(){
+    window.scrollTo({top:0,left:0,behavior:'instant'});
+});
+</script>
 
 <div class="toast hidden" id="toast"></div>
 
