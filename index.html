@@ -571,12 +571,13 @@ body.reordering{user-select:none}
 
 
 
-<style id="return-top-final-style">
-#returnTopControl{
+<style id="return-top-triangle-style">
+.return-top-triangle{
     position:fixed;
     right:16px;
     top:70%;
     z-index:2147483646;
+    display:block;
     width:30px;
     height:20px;
     margin:0;
@@ -584,12 +585,11 @@ body.reordering{user-select:none}
     border:0;
     background:transparent;
     cursor:pointer;
-    touch-action:manipulation;
     -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
     pointer-events:auto;
 }
-#returnTopControl::before{
-    content:"";
+.return-top-triangle-shape{
     position:absolute;
     inset:0;
     display:block;
@@ -600,21 +600,21 @@ body.reordering{user-select:none}
     pointer-events:none;
     filter:drop-shadow(0 3px 6px rgba(15,23,42,.22));
 }
-#returnTopControl:hover::before,
-#returnTopControl:focus-visible::before{
+.return-top-triangle:hover .return-top-triangle-shape,
+.return-top-triangle:focus-visible .return-top-triangle-shape{
     background:#1E3A8A;
 }
-#returnTopControl:focus-visible{
+.return-top-triangle:focus-visible{
     outline:2px solid #93c5fd;
     outline-offset:3px;
 }
 @media(max-width:700px){
-    #returnTopControl{right:10px}
+    .return-top-triangle{right:10px}
 }
 </style>
 
 </head>
-<body>
+<body id="pageTop">
 <main class="container">
 <h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
 
@@ -804,12 +804,38 @@ body.reordering{user-select:none}
 </section>
 
 
-<button id="returnTopControl"
-        type="button"
-        aria-label="回到顶部"
-        title="回到顶部"></button>
+<a class="return-top-triangle"
+   id="returnTopTriangle"
+   href="#pageTop"
+   aria-label="回到顶部"
+   title="回到顶部"><span class="return-top-triangle-shape" aria-hidden="true"></span></a>
 
 <div class="toast hidden" id="toast"></div>
+
+
+<script id="return-top-triangle-script">
+(()=>{
+'use strict';
+
+const button=document.getElementById('returnTopTriangle');
+if(!button)return;
+
+let returnTopTimer=0;
+
+button.addEventListener('click',event=>{
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if(returnTopTimer)clearTimeout(returnTopTimer);
+
+    returnTopTimer=setTimeout(()=>{
+        returnTopTimer=0;
+        window.scrollTo(0,0);
+    },10);
+},true);
+
+})();
+</script>
 
 <script>
 (()=>{
@@ -2668,35 +2694,5 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&admin()&&
 window.addEventListener('pagehide',()=>{if(admin()&&meta.dirty)saveLocal(state)});
 })();
 </script>
-
-<script id="return-top-final-script">
-(()=>{
-'use strict';
-
-let returnTopTimer=0;
-
-document.addEventListener('click',function(event){
-    const target=event.target;
-    if(!(target instanceof Element))return;
-
-    const button=target.closest('#returnTopControl');
-    if(!button)return;
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    if(returnTopTimer){
-        clearTimeout(returnTopTimer);
-    }
-
-    returnTopTimer=setTimeout(function(){
-        returnTopTimer=0;
-        window.scrollTo(0,0);
-    },10);
-},true);
-
-})();
-</script>
-
 </body>
 </html>
