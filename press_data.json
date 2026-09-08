@@ -4844,6 +4844,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "2bf58185-6c77-452c-88a5-ded90184c2f0",
+      "bookName": "冷战时期的经济学家",
+      "bookNo": "7-5217-8325",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210441",
+      "codeEditCount": 0
+    },
+    {
       "id": "21573bda-cd74-4db5-95ee-c045996543d2",
       "bookName": "结构工程",
       "bookNo": "7-5217-8330",
@@ -8940,7 +8952,6 @@
     "182255",
     "283119",
     "108999",
-    "252936",
-    "210441"
+    "252936"
   ]
 }
