@@ -5479,6 +5479,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "ed5a1e23-c0fc-4799-b3b8-8423917ea11e",
+      "bookName": "乌克兰拖拉机简史",
+      "bookNo": "7-5086-7382",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210548",
+      "codeEditCount": 0
+    },
+    {
       "id": "7f0d34d1-9a8f-42a6-9adc-5ff4aac85b78",
       "bookName": "马克思与《资本论》",
       "bookNo": "7-5086-8633",
@@ -10548,7 +10560,6 @@
     "182255",
     "283119",
     "108999",
-    "252936",
-    "210548"
+    "252936"
   ]
 }
