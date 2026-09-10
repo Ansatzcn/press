@@ -86,18 +86,6 @@
       "codeEditCount": 1
     },
     {
-      "id": "af6a58e2-03eb-430c-a0df-e7d3250af8cd",
-      "bookName": "“三线”记忆：一个火热年代的烙印",
-      "bookNo": "7-01-015510",
-      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
-      "category": [],
-      "tag": [
-        "11图书"
-      ],
-      "code": "110041",
-      "codeEditCount": 0
-    },
-    {
       "id": "ec30a3e0-a5fd-4243-9813-14cce4c85be2",
       "bookName": "“三线”记忆：一个火热年代的烙印",
       "bookNo": "7-01-015510",
@@ -10874,6 +10862,7 @@
     "249002",
     "249003",
     "249004",
-    "110027"
+    "110027",
+    "110041"
   ]
 }
