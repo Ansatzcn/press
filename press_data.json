@@ -5286,6 +5286,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "3f87b22e-3c25-44df-9746-89b58f5d996f",
+      "bookName": "波兰史",
+      "bookNo": "7-5057-4740",
+      "institution": "[中国友谊出版公司](https://book.douban.com/press/2416/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210567",
+      "codeEditCount": 0
+    },
+    {
       "id": "fdb08e2d-490f-4f18-82d2-9c329db35c86",
       "bookName": "法国之魂",
       "bookNo": "7-5057-5018",
@@ -5367,6 +5379,18 @@
         "11图书"
       ],
       "code": "110081",
+      "codeEditCount": 0
+    },
+    {
+      "id": "78587754-e818-4fd5-afd9-4ede3a04c3a1",
+      "bookName": "去依附：中国化解第一次经济危机的真实经验",
+      "bookNo": "7-5207-1073",
+      "institution": "[东方出版社](https://book.douban.com/press/2731/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210568",
       "codeEditCount": 0
     },
     {
