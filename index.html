@@ -691,7 +691,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">修改标签时，一般仅新增标签不变更编码；删除原有标签或标签实际发生替换时会重新分配编码。例外：原有“24读书”条目新增“11图书”“13图书”或“23读书”时，将分别按 249001–249299、249301–249499、249501–249699 专用区间自动重编码。标签始终按开头两位数字升序显示。</p>
+<h3>编辑</h3><p class="dialog-desc">修改标签时，一般仅新增标签不变更编码；删除原有标签或标签实际发生替换时会重新分配编码。例外：原有“24读书”条目新增“11图书”“13图书”或“23读书”时，将分别按 249001–249299、249301–249499、249501–249699 专用区间自动重编码；已经具有上述标签组合的条目，如清空编码后提交，也继续按对应专用区间重新分配。标签始终按开头两位数字升序显示。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -1077,6 +1077,16 @@ function special24AdditionRule(oldTags,newTags){
     const newKeys=new Set(sortTags(newTags).map(key));
     const candidates=SPECIAL_24_ADDITION_RULES
         .filter(rule=>newKeys.has(key(rule.addedTag))&&!oldKeys.has(key(rule.addedTag)))
+        .sort((a,b)=>compareTagsByPrefix(a.addedTag,b.addedTag));
+    return candidates[0]||null
+}
+// 清空编码后重新自动分配时，不要求该专用标签是“本次刚新增”。
+// 只要当前标签组合同时包含“24读书”和 11/13/23 图书之一，就继续使用对应 249xxx 专用区间。
+function special24CombinationRule(tags){
+    const selectedKeys=new Set(sortTags(tags).map(key));
+    if(!selectedKeys.has(key('24读书')))return null;
+    const candidates=SPECIAL_24_ADDITION_RULES
+        .filter(rule=>selectedKeys.has(key(rule.addedTag)))
         .sort((a,b)=>compareTagsByPrefix(a.addedTag,b.addedTag));
     return candidates[0]||null
 }
@@ -1847,12 +1857,15 @@ function saveEdit(){
 
     // 点击编码右侧 ×（或把编码清空）表示放弃人工指定，交由系统自动重新分配。
     // 这属于系统自动改码，不占用、也不受“仅 1 次手动修改编码”限制。
-    // 删除/替换原有标签，以及“24读书”新增指定标签的例外，同样触发系统自动重新分配。
-    if((codeChanged&&!requestedCode)||originalTagRemoved||specialAdditionRule){
+    // 若当前标签已是“24读书 + 11/13/23图书”组合，即使这些标签并非本次新增，清空编码后也必须回到对应 249xxx 专用区间。
+    // 删除/替换原有标签，以及“24读书”本次新增指定标签的例外，同样触发系统自动重新分配。
+    const blankCodeReassign=codeChanged&&!requestedCode;
+    const specialCombinationRule=blankCodeReassign?special24CombinationRule(x.tag):null;
+    if(blankCodeReassign||originalTagRemoved||specialAdditionRule){
         const usedForReassign=new Set(usedCodes);
         // 暂时把旧编码视为占用，确保系统确实分配一个不同的新编码。
         if(oldCode)usedForReassign.add(oldCode);
-        const rule=specialAdditionRule||autoCodeRuleForTags(x.tag);
+        const rule=specialAdditionRule||specialCombinationRule||autoCodeRuleForTags(x.tag);
         let newCode;
         try{
             newCode=rule?nextCodeInRange(rule,usedForReassign):nextCode(usedForReassign);
