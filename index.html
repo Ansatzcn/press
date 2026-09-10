@@ -691,7 +691,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">修改标签时，一般仅新增标签不变更编码；删除原有标签或标签实际发生替换时会重新分配编码。例外：原有“24读书”条目新增“11图书”“13图书”或“23读书”时，将分别按 249001–249299、249301–249499、249501–249699 专用区间自动重编码；已经具有上述标签组合的条目，如清空编码后提交，也继续按对应专用区间重新分配。标签始终按开头两位数字升序显示。</p>
+<h3>编辑</h3><p class="dialog-desc">修改标签时，一般仅新增标签不变更编码；删除原有标签或标签实际发生替换时会重新分配编码。例外：原有“24读书”条目新增“11图书”“13图书”或“23读书”时，仍分别按 249001–249299、249301–249499、249501–249699 专用区间自动重编码；已经具有“11图书、24读书”“13图书、24读书”或“23读书、24读书”组合的条目，如清空编码后提交，则分别按 247001–247999、248001–248999、249001–249999 区间重新分配。标签始终按开头两位数字升序显示。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -1066,6 +1066,13 @@ const SPECIAL_24_ADDITION_RULES=[
     {addedTag:'13图书',tag:'24读书 + 13图书',ranges:[[249301,249499]]},
     {addedTag:'23读书',tag:'24读书 + 23读书',ranges:[[249501,249699]]}
 ];
+// 已经具有“24读书 + 指定图书标签”组合的条目，在清空编码后提交时使用以下独立区间。
+// 这组规则只影响“清空编码后自动重编”，不改变“本次新增标签”的专用区间。
+const SPECIAL_24_CLEAR_CODE_RULES=[
+    {addedTag:'11图书',tag:'24读书 + 11图书（清空编码）',ranges:[[247001,247999]]},
+    {addedTag:'13图书',tag:'24读书 + 13图书（清空编码）',ranges:[[248001,248999]]},
+    {addedTag:'23读书',tag:'24读书 + 23读书（清空编码）',ranges:[[249001,249999]]}
+];
 const SPECIAL_24_RESERVED_RANGES=SPECIAL_24_ADDITION_RULES.flatMap(rule=>rule.ranges);
 function isSpecial24ReservedCode(value){
     const n=Number(clean(value));
@@ -1081,11 +1088,11 @@ function special24AdditionRule(oldTags,newTags){
     return candidates[0]||null
 }
 // 清空编码后重新自动分配时，不要求该专用标签是“本次刚新增”。
-// 只要当前标签组合同时包含“24读书”和 11/13/23 图书之一，就继续使用对应 249xxx 专用区间。
+// 只要当前标签组合同时包含“24读书”和 11/13/23 图书之一，就使用对应的清空编码专用区间。
 function special24CombinationRule(tags){
     const selectedKeys=new Set(sortTags(tags).map(key));
     if(!selectedKeys.has(key('24读书')))return null;
-    const candidates=SPECIAL_24_ADDITION_RULES
+    const candidates=SPECIAL_24_CLEAR_CODE_RULES
         .filter(rule=>selectedKeys.has(key(rule.addedTag)))
         .sort((a,b)=>compareTagsByPrefix(a.addedTag,b.addedTag));
     return candidates[0]||null
@@ -1857,7 +1864,7 @@ function saveEdit(){
 
     // 点击编码右侧 ×（或把编码清空）表示放弃人工指定，交由系统自动重新分配。
     // 这属于系统自动改码，不占用、也不受“仅 1 次手动修改编码”限制。
-    // 若当前标签已是“24读书 + 11/13/23图书”组合，即使这些标签并非本次新增，清空编码后也必须回到对应 249xxx 专用区间。
+    // 若当前标签已是“24读书 + 11/13/23图书”组合，即使这些标签并非本次新增，清空编码后也必须进入对应的 247xxx / 248xxx / 249xxx 专用区间。
     // 删除/替换原有标签，以及“24读书”本次新增指定标签的例外，同样触发系统自动重新分配。
     const blankCodeReassign=codeChanged&&!requestedCode;
     const specialCombinationRule=blankCodeReassign?special24CombinationRule(x.tag):null;
