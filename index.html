@@ -997,6 +997,30 @@ function uid(){return crypto?.randomUUID?crypto.randomUUID():`press_${Date.now()
 function key(v){return clean(v).toLocaleLowerCase('zh-CN')}
 function uniq(values){const m=new Map();for(const raw of values||[]){const v=clean(raw);if(v&&!m.has(key(v)))m.set(key(v),v)}return [...m.values()]}
 function sortAuto(values){return uniq(values).sort((a,b)=>collator.compare(a,b))}
+function compareBookNo(a,b){
+    const aa=clean(a),bb=clean(b);
+    if(aa&&!bb)return-1;
+    if(!aa&&bb)return 1;
+    if(!aa&&!bb)return 0;
+
+    // 含“-”的书号排在最前，并保持原有自然排序规则。
+    // 其次是含“·”的书号：先比较“·”前数字，再比较“·”后数字。
+    // 其它书号仍按原有自然排序规则排列。
+    const group=s=>s.includes('-')?0:(s.includes('·')?1:2);
+    const ga=group(aa),gb=group(bb);
+    if(ga!==gb)return ga-gb;
+
+    if(ga===1){
+        const [aLeftRaw='',aRightRaw='']=aa.split('·',2);
+        const [bLeftRaw='',bRightRaw='']=bb.split('·',2);
+        const aLeft=Number(clean(aLeftRaw)),bLeft=Number(clean(bLeftRaw));
+        const aRight=Number(clean(aRightRaw)),bRight=Number(clean(bRightRaw));
+        if(Number.isFinite(aLeft)&&Number.isFinite(bLeft)&&aLeft!==bLeft)return aLeft-bLeft;
+        if(Number.isFinite(aRight)&&Number.isFinite(bRight)&&aRight!==bRight)return aRight-bRight;
+    }
+
+    return collator.compare(aa,bb)
+}
 function normalizeMulti(value){
     const values=Array.isArray(value)?value:[value];
     return uniq(values)
@@ -1128,9 +1152,7 @@ function norm(v){
             const byInstitution=collator.compare(a.institution,b.institution);
             if(byInstitution!==0)return byInstitution
         }
-        if(a.bookNo&&!b.bookNo)return-1;
-        if(!a.bookNo&&b.bookNo)return 1;
-        const byNo=collator.compare(a.bookNo,b.bookNo);
+        const byNo=compareBookNo(a.bookNo,b.bookNo);
         if(byNo!==0)return byNo;
         const byName=collator.compare(a.bookName,b.bookName);
         if(byName!==0)return byName;
