@@ -691,7 +691,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">修改标签时，如果没有删除原有标签，而只是添加新标签，则不变更代码；只有删除原有标签或标签实际发生替换时，才重新分配代码。</p>
+<h3>编辑</h3><p class="dialog-desc">修改标签时，一般仅新增标签不变更编码；删除原有标签或标签实际发生替换时会重新分配编码。例外：原有“24读书”条目新增“11图书”“13图书”或“23读书”时，将分别按 249001–249299、249301–249499、249501–249699 专用区间自动重编码。标签始终按开头两位数字升序显示。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -1021,6 +1021,20 @@ function normalizeMulti(value){
     const values=Array.isArray(value)?value:[value];
     return uniq(values)
 }
+function tagPrefixNumber(value){
+    const match=clean(value).match(/^(\d{2})/);
+    return match?Number(match[1]):Number.POSITIVE_INFINITY
+}
+function compareTagsByPrefix(a,b){
+    const aa=clean(a),bb=clean(b);
+    const ap=tagPrefixNumber(aa),bp=tagPrefixNumber(bb);
+    if(ap!==bp)return ap-bp;
+    return collator.compare(aa,bb)
+}
+function sortTags(values){
+    const list=Array.isArray(values)?values:[values];
+    return uniq(list).sort(compareTagsByPrefix)
+}
 function renderInstitution(raw){
     const s=clean(raw);
     const re=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
@@ -1046,6 +1060,26 @@ function renderBookName(raw){
     }
     return html+esc(s.slice(last))
 }
+// 原有“24读书”条目在编辑时新增指定标签，使用以下专用编码区间。
+const SPECIAL_24_ADDITION_RULES=[
+    {addedTag:'11图书',tag:'24读书 + 11图书',ranges:[[249001,249299]]},
+    {addedTag:'13图书',tag:'24读书 + 13图书',ranges:[[249301,249499]]},
+    {addedTag:'23读书',tag:'24读书 + 23读书',ranges:[[249501,249699]]}
+];
+const SPECIAL_24_RESERVED_RANGES=SPECIAL_24_ADDITION_RULES.flatMap(rule=>rule.ranges);
+function isSpecial24ReservedCode(value){
+    const n=Number(clean(value));
+    return Number.isInteger(n)&&SPECIAL_24_RESERVED_RANGES.some(([start,end])=>n>=start&&n<=end)
+}
+function special24AdditionRule(oldTags,newTags){
+    const oldKeys=new Set(sortTags(oldTags).map(key));
+    if(!oldKeys.has(key('24读书')))return null;
+    const newKeys=new Set(sortTags(newTags).map(key));
+    const candidates=SPECIAL_24_ADDITION_RULES
+        .filter(rule=>newKeys.has(key(rule.addedTag))&&!oldKeys.has(key(rule.addedTag)))
+        .sort((a,b)=>compareTagsByPrefix(a.addedTag,b.addedTag));
+    return candidates[0]||null
+}
 function validCode(v){return /^(1\d{5}|2\d{5})$/.test(clean(v))}
 function randomCode(usedSet){
     const used=usedSet||new Set(state.entries.map(x=>x.code));
@@ -1055,21 +1089,21 @@ function randomCode(usedSet){
         for(let i=0;i<2000;i++){
             crypto.getRandomValues(buf);
             const code=String(100000+(buf[0]%200000));
-            if(!used.has(code))return code
+            if(!used.has(code)&&!isSpecial24ReservedCode(code))return code
         }
     }
     const start=100000+Math.floor(Math.random()*200000);
     for(let i=0;i<200000;i++){
         const n=100000+((start-100000+i)%200000);
         const code=String(n);
-        if(!used.has(code))return code
+        if(!used.has(code)&&!isSpecial24ReservedCode(code))return code
     }
     throw new Error('无法生成唯一编码')
 }
 function nextCode(usedSet){
     const used=usedSet||new Set(state.entries.map(x=>x.code));
     // 删除条目释放的自动编码优先复用；只有释放池为空时才重新随机生成。
-    const released=(state.releasedCodes||[]).find(code=>validCode(code)&&!used.has(code));
+    const released=(state.releasedCodes||[]).find(code=>validCode(code)&&!isSpecial24ReservedCode(code)&&!used.has(code));
     return released||randomCode(used)
 }
 
@@ -1082,7 +1116,7 @@ const AUTO_CODE_RULES=[
     {tag:'14图书',ranges:[[140001,149999],[180001,189999]]},
     {tag:'21读书',ranges:[[210001,219999],[250001,269999],[290001,299999]]},
     {tag:'23读书',ranges:[[230001,239999],[270001,279999]]},
-    {tag:'24读书',ranges:[[240001,249999],[280001,289999]]}
+    {tag:'24读书',ranges:[[240001,249000],[249700,249999],[280001,289999]]}
 ];
 function autoCodeRuleForTags(tags){
     const selectedKeys=new Set(normalizeMulti(tags).map(key));
@@ -1105,7 +1139,7 @@ function normEntry(x,usedCodes){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),institution=clean(x.institution);
-    const category=normalizeMulti(x.category),tag=normalizeMulti(x.tag);
+    const category=normalizeMulti(x.category),tag=sortTags(x.tag);
     let code=clean(x.code);
 
     // 手工填写的编码允许原样保存，不受自动编码格式限制。
@@ -1132,8 +1166,8 @@ function norm(v){
         Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
     );
 
-    // 标签不能人工排序，始终按首字母/首数字的自然顺序排列。
-    const tags=sortAuto(
+    // 标签不能人工排序，严格按开头两位数字从小到大排列；同前缀再按自然顺序。
+    const tags=sortTags(
         Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
     );
 
@@ -1233,7 +1267,7 @@ function multiMeta(type,which){
     return meta
 }
 function sortHistory(type,values){
-    return type==='tag'?sortAuto(values):uniq(values)
+    return type==='tag'?sortTags(values):uniq(values)
 }
 function multiAllowsMultiple(type,which){
     // 只有“编辑条目 → 标签”允许多选；添加标签与书架继续严格单选。
@@ -1241,7 +1275,8 @@ function multiAllowsMultiple(type,which){
 }
 function renderMultiSelected(type,which){
     const meta=multiMeta(type,which);
-    meta.selectedBox.innerHTML=meta.selection.map(v=>`
+    const displaySelection=type==='tag'?sortTags(meta.selection):meta.selection;
+    meta.selectedBox.innerHTML=displaySelection.map(v=>`
         <span class="selected-pill">
             <span class="selected-pill-label">${esc(v)}</span>
             <button class="selected-pill-remove" type="button" data-remove-value="${attr(v)}" aria-label="移除${meta.label} ${attr(v)}">×</button>
@@ -1586,7 +1621,8 @@ function commitInstitution(which,notify=false){
 }
 function removeSelection(type,which,value,keepPanelOpen=false){
     const meta=multiMeta(type,which),targetKey=key(value);
-    const next=meta.selection.filter(v=>key(v)!==targetKey);
+    const nextRaw=meta.selection.filter(v=>key(v)!==targetKey);
+    const next=type==='tag'?sortTags(nextRaw):nextRaw;
     if(which==='edit')editSelections[type]=next;
     else addSelections[type]=next;
     meta.input.value='';
@@ -1612,7 +1648,8 @@ function toggleSelection(type,which,value){
     }
 
     const selectedValue=clean(value);
-    const next=allowMultiple?uniq([...meta.selection,selectedValue]):[selectedValue].filter(Boolean);
+    const nextRaw=allowMultiple?uniq([...meta.selection,selectedValue]):[selectedValue].filter(Boolean);
+    const next=type==='tag'?sortTags(nextRaw):nextRaw;
     if(which==='edit')editSelections[type]=next;
     else addSelections[type]=next;
 
@@ -1701,7 +1738,8 @@ function commitTypedValue(type,which,notify=false){
     if(which==='add')addHistoryOption(type,selectedValue,notify);
 
     if(which==='edit'){
-        editSelections[type]=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue]
+        const next=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue];
+        editSelections[type]=type==='tag'?sortTags(next):next
     }else{
         addSelections[type]=[selectedValue]
     }
@@ -1717,7 +1755,7 @@ function getEditSnapshot(){
         bookNo:editBookNo.value,
         institution:editInstitution.value,
         category:[...editSelections.category],
-        tag:[...editSelections.tag],
+        tag:sortTags(editSelections.tag),
         code:editCode.value,
         categoryDraft:editCategory.value,
         tagDraft:editTag.value
@@ -1734,7 +1772,7 @@ function addEntry(){
     commitTypedValue('category','add');
     commitTypedValue('tag','add');
     const category=[...addSelections.category];
-    const tag=[...addSelections.tag];
+    const tag=sortTags(addSelections.tag);
     const requestedCode=clean(codeInput.value);
     const usedCodes=new Set(state.entries.map(x=>clean(x.code)).filter(Boolean));
     let code;
@@ -1777,7 +1815,7 @@ function openEdit(id){
     editInstitution.value=x.institution;
     editCategory.value='';
     editTag.value='';
-    editSelections={category:[...x.category],tag:[...x.tag]};
+    editSelections={category:[...x.category],tag:sortTags(x.tag)};
     editCode.value=x.code;
     editCode.disabled=(Number(x.codeEditCount)||0)>=1;
     editInitialSnapshot=getEditSnapshot();
@@ -1795,24 +1833,26 @@ function saveEdit(){
     x.institution=clean(editInstitution.value);
     const oldTag=[...(x.tag||[])];
     x.category=[...editSelections.category];
-    x.tag=[...editSelections.tag];
+    x.tag=sortTags(editSelections.tag);
 
     const oldCode=clean(x.code);
     const requestedCode=clean(editCode.value);
     const codeChanged=requestedCode!==oldCode;
     const newTagKeys=new Set(x.tag.map(key));
-    // 只有原有标签被删除/替换时才需要系统重编；仅新增标签不改变编码。
+    // 一般只有原有标签被删除/替换时才系统重编；仅新增标签通常不改变编码。
+    // 例外：原先已有“24读书”，本次新增 11图书 / 13图书 / 23读书时，改用对应 249xxx 专用区间。
     const originalTagRemoved=oldTag.some(v=>!newTagKeys.has(key(v)));
+    const specialAdditionRule=special24AdditionRule(oldTag,x.tag);
     const usedCodes=new Set(state.entries.filter(e=>e.id!==x.id).map(e=>clean(e.code)).filter(Boolean));
 
     // 点击编码右侧 ×（或把编码清空）表示放弃人工指定，交由系统自动重新分配。
     // 这属于系统自动改码，不占用、也不受“仅 1 次手动修改编码”限制。
-    // 删除/替换原有标签同样触发系统自动重新分配。
-    if((codeChanged&&!requestedCode)||originalTagRemoved){
+    // 删除/替换原有标签，以及“24读书”新增指定标签的例外，同样触发系统自动重新分配。
+    if((codeChanged&&!requestedCode)||originalTagRemoved||specialAdditionRule){
         const usedForReassign=new Set(usedCodes);
         // 暂时把旧编码视为占用，确保系统确实分配一个不同的新编码。
         if(oldCode)usedForReassign.add(oldCode);
-        const rule=autoCodeRuleForTags(x.tag);
+        const rule=specialAdditionRule||autoCodeRuleForTags(x.tag);
         let newCode;
         try{
             newCode=rule?nextCodeInRange(rule,usedForReassign):nextCode(usedForReassign);
