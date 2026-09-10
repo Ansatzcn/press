@@ -804,24 +804,23 @@ body.reordering{user-select:none}
 </section>
 
 
-<a id="returnTopControl" href="#pageTopAnchor" role="button" aria-label="回到顶部" title="回到顶部"></a>
+<button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
 <script>
-// 回到顶部最终稳健版（desktop-chrome-v3）
+// 回到顶部无锚点版（desktop-chrome-v4-no-hash）
 // 核心原则：
-// 1) 主页面使用浏览器原生 fragment 锚点跳转，不阻止默认行为；
-// 2) JavaScript 只在原生跳转之后再次把根滚动节点校正为 0；
-// 3) 弹窗有自己的滚动容器，因此弹窗打开时才 preventDefault，并滚动弹窗；
-// 4) 不再使用 pointerup，不再用复杂的鼠标事件链，避免桌面 Chrome/触控板差异；
-// 5) 暴露 __returnTopDebug()，可看到 click 是否真正执行以及执行前后的滚动值。
+// 1) 控件使用 button，不再通过 href fragment 改变网址；
+// 2) 主页面直接把根滚动节点校正到 0，并在后续两帧补强；
+// 3) 弹窗打开时滚动弹窗自己的滚动容器，不影响主页面网址；
+// 4) 如旧网址已经带有 #pageTopAnchor，点击时使用 history.replaceState 静默移除；
+// 5) 暴露 __returnTopDebug()，可查看点击与滚动状态。
 (function(){
     'use strict';
 
     const control=document.getElementById('returnTopControl');
-    const pageTopAnchor=document.getElementById('pageTopAnchor');
     if(!control)return;
 
     const debugState={
-        version:'desktop-chrome-v3',
+        version:'desktop-chrome-v4-no-hash',
         clickCount:0,
         lastClickAt:0,
         lastBefore:null,
@@ -864,6 +863,13 @@ body.reordering{user-select:none}
         if(document.body)document.body.scrollTop=0;
     }
 
+    function clearReturnTopHash(){
+        if(location.hash!=='#pageTopAnchor')return;
+        try{
+            history.replaceState(history.state,'',`${location.pathname}${location.search}`);
+        }catch(_){}
+    }
+
     function scrollModalToTop(scroller){
         if(!scroller)return;
         try{scroller.scrollTo({top:0,left:0,behavior:'auto'})}catch(_){}
@@ -875,15 +881,15 @@ body.reordering{user-select:none}
     }
 
     control.addEventListener('click',function(event){
+        event.preventDefault();
         debugState.clickCount+=1;
         debugState.lastClickAt=Date.now();
         debugState.lastBefore=rootTop();
+        clearReturnTopHash();
 
         const modalScroller=visibleModalScroller();
         if(modalScroller){
-            // 弹窗滚动与主页面不是同一个 scroll root，因此只在这里取消锚点默认行为。
-            event.preventDefault();
-            debugState.lastMode='modal';
+            debugState.lastMode='modal-no-hash';
             scrollModalToTop(modalScroller);
             debugState.lastAfterImmediate=modalScroller.scrollTop;
             requestAnimationFrame(()=>{
@@ -892,31 +898,22 @@ body.reordering{user-select:none}
             return;
         }
 
-        // 主页面：绝不 preventDefault。
-        // Chrome 会原生处理 href="#pageTopAnchor"，这是最可靠的桌面路径。
-        debugState.lastMode='native-anchor+root-fallback';
-
-        // 同步补强一次；即便这句没起作用，原生锚点仍会在 click 默认动作阶段执行。
+        debugState.lastMode='js-scroll-no-hash';
         writeRootTopZero();
+        clearReturnTopHash();
         debugState.lastAfterImmediate=rootTop();
 
-        // 默认锚点动作发生后，再在下一帧校正一次。
         requestAnimationFrame(()=>{
             writeRootTopZero();
+            clearReturnTopHash();
             debugState.lastAfterFrame=rootTop();
 
-            // 再延迟一帧，防止同帧布局/焦点/滚动锚定回写。
-            requestAnimationFrame(writeRootTopZero);
+            requestAnimationFrame(()=>{
+                writeRootTopZero();
+                clearReturnTopHash();
+            });
         });
     },false);
-
-    // 键盘可访问性：Enter 会自动触发 a 元素 click；Space 则显式触发一次。
-    control.addEventListener('keydown',function(event){
-        if(event.key===' '){
-            event.preventDefault();
-            control.click();
-        }
-    });
 
     window.__returnTopDebug=function(){
         const modal=visibleModalScroller();
@@ -946,8 +943,7 @@ body.reordering{user-select:none}
                 scrollHeight:modal.scrollHeight
             }:null,
             controlHitId:hit?.id||'',
-            controlHitTag:hit?.tagName||'',
-            anchorExists:Boolean(pageTopAnchor)
+            controlHitTag:hit?.tagName||''
         };
     };
 })();
