@@ -1101,19 +1101,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "6cc58c77-bee7-48cf-9dcb-011be429f3bc",
-      "bookName": "程允亨的十九世纪",
-      "bookNo": "7-108-07854",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "11图书",
-        "24读书"
-      ],
-      "code": "249004",
-      "codeEditCount": 0
-    },
-    {
       "id": "97260290-f0d1-4f79-8df2-a8dd754efc52",
       "bookName": "上水船：王逊与现代中国的艺术理想",
       "bookNo": "7-108-07877",
@@ -10734,6 +10721,7 @@
     "110014",
     "110049",
     "110041",
-    "110085"
+    "110085",
+    "249004"
   ]
 }
