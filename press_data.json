@@ -8178,6 +8178,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "0294401b-d9ae-4e5e-a429-4cb754237134",
+      "bookName": "山西古建筑地图",
+      "bookNo": "7-5377-6081",
+      "institution": "[山西科学技术出版社](https://book.douban.com/press/2770/?order=time)",
+      "category": [],
+      "tag": [
+        "24读书"
+      ],
+      "code": "240028",
+      "codeEditCount": 0
+    },
+    {
       "id": "142cca2d-f4f2-4bc9-8978-ef7d6484aa05",
       "bookName": "太行风云",
       "bookNo": "7-5378-4174",
@@ -11166,7 +11178,6 @@
     "110085",
     "130007",
     "110053",
-    "240028",
     "249501",
     "249002",
     "249003",
