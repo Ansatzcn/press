@@ -2876,6 +2876,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "03a1a696-6b88-41b0-a87f-dbfe5df95301",
+      "bookName": "走向现代国家之路",
+      "bookNo": "17118·171",
+      "institution": "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110086",
+      "codeEditCount": 0
+    },
+    {
       "id": "8ec6a732-d043-48c5-b16b-070baf53d552",
       "bookName": "在印度看印度",
       "bookNo": "7-221-17254",
@@ -11551,7 +11563,6 @@
     "108999",
     "252936",
     "271259",
-    "110086",
     "130007",
     "249501",
     "249002",
