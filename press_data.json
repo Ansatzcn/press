@@ -10952,6 +10952,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "4f55bd1f-2884-449a-8a9e-2db799badabb",
+      "bookName": "走过兴都库什山：深入阿富汗内陆",
+      "bookNo": "957-8278-03",
+      "institution": "",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110085",
+      "codeEditCount": 0
+    },
+    {
       "id": "49f3e745-f053-469a-b4ac-e89487361b40",
       "bookName": "Structuralist and Behavioral Macroeconomics",
       "bookNo": "1-009-36732",
@@ -11540,7 +11552,6 @@
     "252936",
     "271259",
     "110086",
-    "110085",
     "130007",
     "249501",
     "249002",
