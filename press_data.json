@@ -11314,6 +11314,16 @@
       "codeEditCount": 0
     },
     {
+      "id": "12324ecf-36c4-46ce-aa48-7f80d6630cfa",
+      "bookName": "书太多了",
+      "bookNo": "7-5321-7763",
+      "institution": "",
+      "category": [],
+      "tag": [],
+      "code": "194590",
+      "codeEditCount": 0
+    },
+    {
       "id": "4f55bd1f-2884-449a-8a9e-2db799badabb",
       "bookName": "走过兴都库什山：深入阿富汗内陆",
       "bookNo": "957-8278-03",
@@ -11657,7 +11667,6 @@
     "24读书"
   ],
   "releasedCodes": [
-    "194590",
     "168585",
     "188771",
     "153048",
