@@ -3361,6 +3361,19 @@
       "codeEditCount": 0
     },
     {
+      "id": "a0d97fd2-71cd-4b50-ad6f-d888b51f94ff",
+      "bookName": "20世纪50年代苏联专家在中国人民大学",
+      "bookNo": "7-300-23990",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "13图书",
+        "24读书"
+      ],
+      "code": "248002",
+      "codeEditCount": 0
+    },
+    {
       "id": "24122501-7097-4071-8870-6157fbbe5229",
       "bookName": "滥觞与勃兴：马克思思想起源探究",
       "bookNo": "7-300-24449",
@@ -3580,18 +3593,6 @@
       ],
       "code": "210093",
       "codeEditCount": 1
-    },
-    {
-      "id": "a0d97fd2-71cd-4b50-ad6f-d888b51f94ff",
-      "bookName": "20世纪50年代苏联专家在中国人民大学",
-      "bookNo": "",
-      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
-      "category": [],
-      "tag": [
-        "13图书"
-      ],
-      "code": "7-300-23990",
-      "codeEditCount": 0
     },
     {
       "id": "9d5b6aaa-4f2f-437a-be0a-911cfbdaaab7",
