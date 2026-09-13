@@ -8119,6 +8119,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "12324ecf-36c4-46ce-aa48-7f80d6630cfa",
+      "bookName": "书太多了",
+      "bookNo": "7-5321-7763",
+      "institution": "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210633",
+      "codeEditCount": 0
+    },
+    {
       "id": "e5bd834e-31be-425c-bdb1-9c105a91fcb4",
       "bookName": "零号病人",
       "bookNo": "7-5321-7846",
@@ -11314,16 +11326,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "12324ecf-36c4-46ce-aa48-7f80d6630cfa",
-      "bookName": "书太多了",
-      "bookNo": "7-5321-7763",
-      "institution": "",
-      "category": [],
-      "tag": [],
-      "code": "194590",
-      "codeEditCount": 0
-    },
-    {
       "id": "4f55bd1f-2884-449a-8a9e-2db799badabb",
       "bookName": "走过兴都库什山：深入阿富汗内陆",
       "bookNo": "957-8278-03",
@@ -11930,6 +11932,7 @@
     "249301",
     "110017",
     "110055",
-    "110056"
+    "110056",
+    "194590"
   ]
 }
