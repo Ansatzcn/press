@@ -1322,6 +1322,18 @@
       "codeEditCount": 1
     },
     {
+      "id": "6c9f12fe-27b9-4c05-84ce-49cacaee3df0",
+      "bookName": "旁观者：管理大师德鲁克回忆录",
+      "bookNo": "7-111-60971",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210585",
+      "codeEditCount": 0
+    },
+    {
       "id": "b01fd34c-4115-4c34-b44a-e2ba708c0838",
       "bookName": "自驱型成长：如何科学有效地培养孩子的自律",
       "bookNo": "7-111-63688",
@@ -11933,7 +11945,6 @@
     "110017",
     "110055",
     "110056",
-    "194590",
-    "210585"
+    "194590"
   ]
 }
