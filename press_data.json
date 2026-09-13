@@ -5564,18 +5564,6 @@
       "codeEditCount": 0
     },
     {
-      "id": "96678e1d-9153-4e3a-94d1-46ca8fa3d473",
-      "bookName": "从零开始学写作",
-      "bookNo": "7-5057-4954",
-      "institution": "[中国友谊出版公司](https://book.douban.com/press/2416/?order=time)",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "code": "210606",
-      "codeEditCount": 0
-    },
-    {
       "id": "f36b5fe6-d985-4c79-b428-671b0664d9d7",
       "bookName": "从零开始学写作",
       "bookNo": "7-5057-4954",
@@ -11724,6 +11712,7 @@
     "249002",
     "249003",
     "249004",
-    "249301"
+    "249301",
+    "210606"
   ]
 }
