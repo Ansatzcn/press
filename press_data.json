@@ -956,6 +956,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "1a6ffda6-d4e6-4614-998b-e160d8f7e1ba",
+      "bookName": "杜诗三百首",
+      "bookNo": "7-101-17368",
+      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210677",
+      "codeEditCount": 0
+    },
+    {
       "id": "c07431ae-87af-4237-aadb-c17032cbd5a4",
       "bookName": "从“四夷”到“外国”：《宋史·外国传》研究",
       "bookNo": "7-101-17459",
@@ -4556,6 +4568,18 @@
         "21读书"
       ],
       "code": "210456",
+      "codeEditCount": 0
+    },
+    {
+      "id": "e923437f-2a6b-4efa-b44b-8d3f83e882de",
+      "bookName": "人机技术重塑媒介与文化研究",
+      "bookNo": "7-308-25867",
+      "institution": "[浙江大学出版社](https://book.douban.com/press/2574/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210676",
       "codeEditCount": 0
     },
     {
