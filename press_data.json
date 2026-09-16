@@ -620,6 +620,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "2aede445-8820-47f8-b5f6-d481931dc9dc",
+      "bookName": "肖斯塔科维奇传",
+      "bookNo": "7-100-12067",
+      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210685",
+      "codeEditCount": 0
+    },
+    {
       "id": "ec58d909-f049-4c44-9b83-01c25997c2e2",
       "bookName": "新疆考古论文集",
       "bookNo": "7-100-12638",
@@ -9476,6 +9488,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "a176ac21-1d5c-4a14-a637-dd5061c81ea1",
+      "bookName": "命脉：中国水利调查",
+      "bookNo": "7-5396-6542",
+      "institution": "[安徽文艺出版社](https://book.douban.com/press/2255/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210684",
+      "codeEditCount": 0
+    },
+    {
       "id": "f3de3ff9-be5d-4aa7-b2fb-237ee3674ba4",
       "bookName": "史料与视野：元代书法文化考论",
       "bookNo": "7-5745-1203",
@@ -12140,6 +12164,18 @@
         "14图书"
       ],
       "code": "140017",
+      "codeEditCount": 0
+    },
+    {
+      "id": "00b4b841-1230-4461-aef2-8566696f8641",
+      "bookName": "驶于当下：技术理性的个体化阐释",
+      "bookNo": "7-5458-2069",
+      "institution": "",
+      "category": [],
+      "tag": [
+        "21读书"
+      ],
+      "code": "210686",
       "codeEditCount": 0
     },
     {
