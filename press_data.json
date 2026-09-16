@@ -50,6 +50,18 @@
       "codeEditCount": 0
     },
     {
+      "id": "959143b3-ccf1-4aeb-b92a-01c65ab8137e",
+      "bookName": "马克思恩格斯全集（第二版第35卷）",
+      "bookNo": "7-01-007922",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "code": "110055",
+      "codeEditCount": 0
+    },
+    {
       "id": "247fac1c-1697-435f-b609-2276654cef76",
       "bookName": "马克思恩格斯文集（第5卷）",
       "bookNo": "7-01-008458",
@@ -12722,7 +12734,6 @@
     "249003",
     "249004",
     "249301",
-    "110055",
     "110056",
     "194590"
   ]
