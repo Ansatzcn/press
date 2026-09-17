@@ -612,6 +612,30 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="config-button-touch-final-fix">
+@media(max-width:700px){
+  .toolbar,
+  .toolbar-group,
+  #configBtn{
+    position:relative!important;
+    z-index:100!important;
+  }
+  #configBtn{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:64px!important;
+    min-height:40px!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #configModal{
+    z-index:10000!important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -1990,17 +2014,16 @@ async function saveConfigForm(e){
 }
 function openConfig(){
     updateVisualViewport();
-    cfgOwner.value=config.owner||'';
-    cfg.value=config.repo||'';
-    cfgFile.value=config.file||'press_data.json';
-    cfgToken.value=config.token||'';
-    rememberToken.checked=Boolean(persistedToken);
+    cfgOwner.value=config.owner;cfg.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(persistedToken);
     configModal.classList.remove('hidden');
-    const scroller=configForm&&configForm.querySelector('.dialog-scroll');
-    if(scroller)scroller.scrollTop=0;
-    requestAnimationFrame(()=>updateVisualViewport());
+    requestAnimationFrame(()=>{
+        updateVisualViewport();
+        const scroller=configForm.querySelector('.dialog-scroll');
+        if(scroller)scroller.scrollTop=0
+    });
+    // 桌面端保留快捷聚焦；手机端禁止自动 focus，避免打开配置时软键盘立即遮住操作区。
     if(window.matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches){
-        setTimeout(()=>cfgToken.focus({preventScroll:true}),30);
+        setTimeout(()=>cfgToken.focus(),30)
     }
 }
 function loadMeta(){
@@ -2933,6 +2956,34 @@ initializeApp().catch(error=>{console.error('Press 初始化失败:',error);stat
 window.addEventListener('online',()=>{if(admin()&&adminReady&&meta.dirty)armSync(250,false)});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){if(storageReady&&admin()&&meta.dirty)saveLocal(state)}else if(admin()&&adminReady&&meta.dirty)armSync(350,false)});
 window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)saveLocal(state)});
+})();
+</script>
+
+<script id="config-button-capture-final-fix">
+(function(){
+  function bindConfigTouch(){
+    const btn=document.getElementById('configBtn');
+    const modal=document.getElementById('configModal');
+    if(!btn||!modal)return;
+    const original=window.openConfig;
+    function open(){
+      if(typeof original==='function'){
+        original();
+      }else{
+        modal.classList.remove('hidden');
+      }
+    }
+    btn.addEventListener('touchend',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      open();
+    },{capture:true,passive:false});
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',bindConfigTouch,{once:true});
+  }else{
+    bindConfigTouch();
+  }
 })();
 </script>
 </body>
