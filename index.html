@@ -958,7 +958,9 @@ body.reordering{user-select:none}
 'use strict';
 
 const PUBLIC_FILE='press_data.json',NS='press_public_v1';
-const STATE_KEY=`${NS}:state`,CONFIG_KEY=`${NS}:config`,TOKEN_LOCAL=`${NS}:token_local`,TOKEN_SESSION=`${NS}:token_session`,META_KEY=`${NS}:meta`;
+const DB_NAME=`${NS}:idb_v1`,DB_STORE='kv';
+const CONFIG_KEY='config',TOKEN_PERSISTED_KEY='token_persisted',META_KEY='meta',WORKCOPY_KEY='workcopy',PUBLIC_CACHE_KEY='public_cache';
+const OPFS_WORKCOPY_FILE='press_workcopy_v1.json';
 const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
@@ -1209,20 +1211,58 @@ function base(){return location.pathname.replace(/[^/]*$/,'')}
 function publicUrl(){return `${location.origin}${base()}${PUBLIC_FILE}?v=${Date.now()}`}
 function target(){return `${config.owner}/${config.repo}/${config.file}`}
 function pathEncode(p){return String(p).split('/').filter(Boolean).map(encodeURIComponent).join('/')}
-function ls(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
-function lg(k){try{return localStorage.getItem(k)}catch(e){return null}}
-function ss(k,v){try{sessionStorage.setItem(k,v);return true}catch(e){return false}}
-function sg(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
-function remove(k,store='local'){try{(store==='local'?localStorage:sessionStorage).removeItem(k)}catch(e){}}
+let storageDbPromise=null,workCopyCache=null,publicCacheValue=null,persistedToken='',storageReady=false,workCopyWriteChain=Promise.resolve(),metaWriteChain=Promise.resolve();
+function openStorageDb(){
+    if(storageDbPromise)return storageDbPromise;
+    storageDbPromise=new Promise((resolve,reject)=>{
+        const req=indexedDB.open(DB_NAME,1);
+        req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE)};
+        req.onsuccess=()=>resolve(req.result);
+        req.onerror=()=>reject(req.error||new Error('IndexedDB 打开失败'));
+    });
+    return storageDbPromise
+}
+async function idbGet(key){try{const db=await openStorageDb();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readonly'),req=tx.objectStore(DB_STORE).get(key);req.onsuccess=()=>resolve(req.result??null);req.onerror=()=>reject(req.error)})}catch(e){console.error('IndexedDB 读取失败:',key,e);return null}}
+async function idbSet(key,value){const db=await openStorageDb();return new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(value,key);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('IndexedDB 写入中止'))})}
+async function idbDelete(key){try{const db=await openStorageDb();await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).delete(key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});return true}catch(e){console.error('IndexedDB 删除失败:',key,e);return false}}
+async function opfsWriteWorkCopy(record){if(!navigator.storage?.getDirectory)return false;try{const root=await navigator.storage.getDirectory(),handle=await root.getFileHandle(OPFS_WORKCOPY_FILE,{create:true}),writable=await handle.createWritable();await writable.write(JSON.stringify(record));await writable.close();return true}catch(e){console.warn('OPFS 写入失败:',e);return false}}
+async function opfsReadWorkCopy(){if(!navigator.storage?.getDirectory)return null;try{const root=await navigator.storage.getDirectory(),handle=await root.getFileHandle(OPFS_WORKCOPY_FILE),file=await handle.getFile(),raw=await file.text();const record=JSON.parse(raw);return record&&record.state?record:null}catch(e){return null}}
+function recordTime(record){const t=Date.parse(record?.savedAt||'');return Number.isFinite(t)?t:0}
+async function bootstrapStorage(){
+    try{if(navigator.storage?.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
+    const [cfg,tok,m,workIdb,pub,workOpfs]=await Promise.all([idbGet(CONFIG_KEY),idbGet(TOKEN_PERSISTED_KEY),idbGet(META_KEY),idbGet(WORKCOPY_KEY),idbGet(PUBLIC_CACHE_KEY),opfsReadWorkCopy()]);
+    storageMemory.config=cfg&&typeof cfg==='object'?cfg:{};
+    persistedToken=typeof tok==='string'?tok:'';
+    storageMemory.meta=m&&typeof m==='object'?m:{};
+    publicCacheValue=pub&&pub.state?norm(pub.state):null;
+    const candidates=[workIdb,workOpfs].filter(x=>x&&x.state);
+    const newest=candidates.sort((a,b)=>recordTime(b)-recordTime(a))[0]||null;
+    workCopyCache=newest?norm(newest.state):null;
+    if(newest){
+        const normalizedRecord={savedAt:newest.savedAt||new Date().toISOString(),state:workCopyCache};
+        idbSet(WORKCOPY_KEY,normalizedRecord).catch(()=>{});opfsWriteWorkCopy(normalizedRecord).catch(()=>{});
+    }
+    storageReady=true
+}
+const storageMemory={config:{},meta:{}};
 function show(msg,type='info'){toast.textContent=msg;toast.className=`toast ${type}`;clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.add('hidden'),3000)}
 function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.textContent=text}
 function emptyState(){return{entries:[],institutions:[],categories:[],tags:[],releasedCodes:[]}}
 function saveLocal(snapshot=state){
     const normalized=norm(snapshot);
     if(snapshot===state)state=normalized;
-    return ls(STATE_KEY,JSON.stringify(normalized))
+    workCopyCache=normalized;
+    if(!storageReady)return true;
+    const record={savedAt:new Date().toISOString(),state:normalized};
+    workCopyWriteChain=workCopyWriteChain.then(async()=>{
+        const results=await Promise.allSettled([idbSet(WORKCOPY_KEY,record),opfsWriteWorkCopy(record)]);
+        if(results.every(r=>r.status==='rejected'))throw new Error('本地工作副本保存失败')
+    }).catch(e=>console.error(e));
+    return true
 }
-function loadLocal(){const s=lg(STATE_KEY);if(!s)return null;try{return norm(JSON.parse(s))}catch(e){return null}}
+function loadLocal(){return workCopyCache?norm(workCopyCache):null}
+async function savePublicCache(snapshot){publicCacheValue=norm(snapshot);try{await idbSet(PUBLIC_CACHE_KEY,{savedAt:new Date().toISOString(),state:publicCacheValue});return true}catch(e){console.error('公开缓存保存失败:',e);return false}}
+function loadPublicCache(){return publicCacheValue?norm(publicCacheValue):null}
 function currentRevision(){return Math.max(0,Number(meta.revision)||0)}
 function hasLocalContent(snapshot){
     const s=snapshot?norm(snapshot):null;
@@ -1926,16 +1966,21 @@ function downloadJson(){
     a.href=url;a.download=`press_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url)
 }
 function loadConfig(){
-    let baseCfg={};try{baseCfg=JSON.parse(lg(CONFIG_KEY)||'{}')||{}}catch(e){}
+    const baseCfg=storageMemory.config||{};
     config.owner=clean(baseCfg.owner);config.repo=clean(baseCfg.repo);config.file=clean(baseCfg.file)||'press_data.json';
-    config.token=clean(lg(TOKEN_LOCAL)||sg(TOKEN_SESSION)||'')
+    config.token=clean(persistedToken||'')
 }
-function saveConfigForm(e){
+async function persistConfigAndToken(){
+    storageMemory.config={owner:config.owner,repo:config.repo,file:config.file};
+    await idbSet(CONFIG_KEY,storageMemory.config);
+    if(rememberToken.checked){persistedToken=config.token;await idbSet(TOKEN_PERSISTED_KEY,config.token)}else{persistedToken='';await idbDelete(TOKEN_PERSISTED_KEY)}
+}
+async function saveConfigForm(e){
     e.preventDefault();
     const owner=clean(cfgOwner.value),repo=clean(cfgRepo.value),file=clean(cfgFile.value)||'press_data.json',token=clean(cfgToken.value);
     if(!owner||!repo||!token){show('请完整填写仓库和 Token','error');return}
-    config={owner,repo,file,token};ls(CONFIG_KEY,JSON.stringify({owner,repo,file}));
-    if(rememberToken.checked){ls(TOKEN_LOCAL,token);remove(TOKEN_SESSION,'session')}else{ss(TOKEN_SESSION,token);remove(TOKEN_LOCAL)}
+    config={owner,repo,file,token};
+    try{await persistConfigAndToken()}catch(err){console.error(err);show('配置保存失败，请检查浏览器存储权限','error');return}
     configModal.classList.add('hidden');
     adminReady=false;
     updateAdmin();
@@ -1945,7 +1990,7 @@ function saveConfigForm(e){
 }
 function openConfig(){
     updateVisualViewport();
-    cfgOwner.value=config.owner;cfgRepo.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(lg(TOKEN_LOCAL));
+    cfgOwner.value=config.owner;cfgRepo.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(persistedToken);
     configModal.classList.remove('hidden');
     requestAnimationFrame(()=>{
         updateVisualViewport();
@@ -1959,7 +2004,7 @@ function openConfig(){
 }
 function loadMeta(){
     try{
-        const x=JSON.parse(lg(META_KEY)||'{}')||{};
+        const x=storageMemory.meta||{};
         meta={
             target:clean(x.target),
             fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,
@@ -1975,7 +2020,7 @@ function loadMeta(){
         meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0}
     }
 }
-function saveMeta(){ls(META_KEY,JSON.stringify(meta))}
+function saveMeta(){storageMemory.meta=structuredClone(meta);if(storageReady){const snapshot=structuredClone(storageMemory.meta);metaWriteChain=metaWriteChain.then(()=>idbSet(META_KEY,snapshot)).catch(e=>console.error('同步元数据保存失败:',e))}return true}
 function ensureTarget(){
     const t=target();
     if(meta.target!==t){
@@ -2000,7 +2045,7 @@ function record(snapshot,sha){saveBaseline(snapshot,sha,{clearDirty:true,markSyn
 function markDirty(){
     state=norm(state);
     const saved=saveLocal(state);
-    if(!saved){show('浏览器本地保存失败，请立即导出备份','error');return false}
+    if(!saved){show('本机工作副本保存失败，请立即导出备份','error');return false}
     if(admin()){
         ensureTarget();
         meta.dirty=true;
@@ -2305,7 +2350,7 @@ async function sync(showResult=true){
                 // 以本轮开始快照为基线，把“最新本地修改”和“刚确认的云端结果”再次三方合并。
                 state=mergeStates(localIntent,latestLocal,result.merged).state;
                 render();
-                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
                 const stillDirty=fingerprint(state)!==fingerprint(result.merged);
                 saveBaseline(result.merged,result.sha,{clearDirty:!stillDirty,markSyncTime:true});
                 meta.dirty=stillDirty;
@@ -2318,7 +2363,7 @@ async function sync(showResult=true){
                 // 只有本轮期间没有任何新本地修改，才允许同步结果直接成为当前页面状态。
                 state=result.merged;
                 render();
-                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
                 record(state,result.sha);
                 status('online','公开阅读 · 管理已连接')
             }
@@ -2388,11 +2433,11 @@ async function loadPublic(){
         const r=await fetch(publicUrl(),{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);
         state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`;
         // 如果浏览器里还有管理模式的未同步数据，公开读取绝不能覆盖那份安全缓存。
-        if(!hasUnsyncedLocal(loadLocal()))saveLocal(state)
+        savePublicCache(state).catch(()=>{})
     }catch(e){
         console.error(e);
-        const local=loadLocal();state=local||emptyState();render();status('offline','公开数据读取失败');
-        lastSyncTime.textContent=local?'暂时显示浏览器缓存':'请确认 press_data.json 与网页位于同一发布目录'
+        const local=loadPublicCache();state=local||emptyState();render();status('offline','公开数据读取失败');
+        lastSyncTime.textContent=local?'暂时显示本机公开缓存':'请确认 press_data.json 与网页位于同一发布目录'
     }
 }
 async function loadAdminState(){
@@ -2420,7 +2465,7 @@ async function loadAdminState(){
                 const baseState=resolveBaseState(cached,remote.state);
                 state=mergeStates(baseState,cached,remote.state).state;
                 render();
-                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
                 // 远端当前版本成为新的可靠基线，但本地合并结果仍标记为待同步。
                 saveBaseline(remote.state,remote.sha,{clearDirty:false,markSyncTime:false});
                 meta.dirty=fingerprint(state)!==fingerprint(remote.state);
@@ -2435,7 +2480,7 @@ async function loadAdminState(){
             }else{
                 state=remote.state;
                 render();
-                if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
                 record(state,remote.sha);
                 adminReady=true;
                 updateAdmin();
@@ -2445,7 +2490,7 @@ async function loadAdminState(){
         }else{
             state=cached||emptyState();
             render();
-            if(!saveLocal(state))throw new Error('浏览器本地保存失败，请立即导出备份');
+            if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
             adminReady=true;
             updateAdmin();
             render();
@@ -2874,18 +2919,19 @@ document.addEventListener('keydown',e=>{
     configModal.classList.add('hidden');
     manageModal.classList.add('hidden')
 });
-loadConfig();loadMeta();
-if(admin()){
-    const cached=loadLocal();
-    if(cached)state=cached
+async function initializeApp(){
+    await bootstrapStorage();
+    loadConfig();loadMeta();
+    if(admin()){const cached=loadLocal();if(cached)state=cached}
+    updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    if(admin())await loadAdminState();else await loadPublic();
 }
-updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
-if(admin())loadAdminState();else loadPublic();
+initializeApp().catch(error=>{console.error('Press 初始化失败:',error);status('offline','初始化失败');render()});
 
 // 网络恢复或重新回到页面时，如果仍有 dirty 数据，自动继续串行同步。
 window.addEventListener('online',()=>{if(admin()&&adminReady&&meta.dirty)armSync(250,false)});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&admin()&&adminReady&&meta.dirty)armSync(350,false)});
-window.addEventListener('pagehide',()=>{if(admin()&&meta.dirty)saveLocal(state)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){if(storageReady&&admin()&&meta.dirty)saveLocal(state)}else if(admin()&&adminReady&&meta.dirty)armSync(350,false)});
+window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)saveLocal(state)});
 })();
 </script>
 </body>
