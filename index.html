@@ -612,6 +612,19 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="press-config-mobile-final-fix">
+@media(max-width:700px){
+  .toolbar{position:relative;z-index:3000!important}
+  #configBtn{
+    position:relative;
+    z-index:3001!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+  }
+  #configModal{z-index:10000!important}
+}
+</style>
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -2935,37 +2948,36 @@ window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)sav
 })();
 </script>
 
-<script id="press-mobile-config-open-fallback">
-/* 手机端配置按钮保险入口：
-   独立于主业务初始化，避免任何后续初始化异常导致配置按钮失效。 */
+<script id="press-config-mobile-final-entry">
 (function(){
-    const btn=document.getElementById('configBtn');
-    const modal=document.getElementById('configModal');
-    if(!btn||!modal)return;
+  const btn=document.getElementById('configBtn');
+  const modal=document.getElementById('configModal');
+  const form=document.getElementById('configForm');
+  if(!btn||!modal)return;
 
-    btn.addEventListener('click',function(){
-        modal.classList.remove('hidden');
+  function openPressConfig(){
+    modal.classList.remove('hidden');
+    const vv=window.visualViewport;
+    document.documentElement.style.setProperty(
+      '--press-vv-height',
+      Math.max(240,Math.round(vv?vv.height:window.innerHeight))+'px'
+    );
+    const scroller=form&&form.querySelector('.dialog-scroll');
+    if(scroller)scroller.scrollTop=0;
+  }
 
-        const vv=window.visualViewport;
-        const height=Math.max(240,Math.round(vv?vv.height:window.innerHeight));
-        const top=Math.max(0,Math.round(vv?vv.offsetTop:0));
+  // 使用 capture 阶段，避免其它监听或初始化异常影响手机点击。
+  btn.addEventListener('pointerup',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    openPressConfig();
+  },true);
 
-        document.documentElement.style.setProperty('--press-vv-height',height+'px');
-        document.documentElement.style.setProperty('--press-vv-top',top+'px');
-
-        const scroll=modal.querySelector('.dialog-scroll');
-        if(scroll)scroll.scrollTop=0;
-    },true);
-
-    window.addEventListener('resize',function(){
-        const vv=window.visualViewport;
-        document.documentElement.style.setProperty(
-            '--press-vv-height',
-            Math.max(240,Math.round(vv?vv.height:window.innerHeight))+'px'
-        );
-    },{passive:true});
+  btn.addEventListener('touchend',function(e){
+    e.preventDefault();
+    openPressConfig();
+  },{passive:false,capture:true});
 })();
 </script>
-
 </body>
 </html>
