@@ -2934,5 +2934,38 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){if(storage
 window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)saveLocal(state)});
 })();
 </script>
+
+<script id="press-mobile-config-open-fallback">
+/* 手机端配置按钮保险入口：
+   独立于主业务初始化，避免任何后续初始化异常导致配置按钮失效。 */
+(function(){
+    const btn=document.getElementById('configBtn');
+    const modal=document.getElementById('configModal');
+    if(!btn||!modal)return;
+
+    btn.addEventListener('click',function(){
+        modal.classList.remove('hidden');
+
+        const vv=window.visualViewport;
+        const height=Math.max(240,Math.round(vv?vv.height:window.innerHeight));
+        const top=Math.max(0,Math.round(vv?vv.offsetTop:0));
+
+        document.documentElement.style.setProperty('--press-vv-height',height+'px');
+        document.documentElement.style.setProperty('--press-vv-top',top+'px');
+
+        const scroll=modal.querySelector('.dialog-scroll');
+        if(scroll)scroll.scrollTop=0;
+    },true);
+
+    window.addEventListener('resize',function(){
+        const vv=window.visualViewport;
+        document.documentElement.style.setProperty(
+            '--press-vv-height',
+            Math.max(240,Math.round(vv?vv.height:window.innerHeight))+'px'
+        );
+    },{passive:true});
+})();
+</script>
+
 </body>
 </html>
