@@ -612,19 +612,6 @@ body.reordering{user-select:none}
 }
 </style>
 
-
-<style id="press-config-mobile-final-fix">
-@media(max-width:700px){
-  .toolbar{position:relative;z-index:3000!important}
-  #configBtn{
-    position:relative;
-    z-index:3001!important;
-    pointer-events:auto!important;
-    touch-action:manipulation!important;
-  }
-  #configModal{z-index:10000!important}
-}
-</style>
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -2003,16 +1990,17 @@ async function saveConfigForm(e){
 }
 function openConfig(){
     updateVisualViewport();
-    cfgOwner.value=config.owner;cfg.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(persistedToken);
+    cfgOwner.value=config.owner||'';
+    cfg.value=config.repo||'';
+    cfgFile.value=config.file||'press_data.json';
+    cfgToken.value=config.token||'';
+    rememberToken.checked=Boolean(persistedToken);
     configModal.classList.remove('hidden');
-    requestAnimationFrame(()=>{
-        updateVisualViewport();
-        const scroller=configForm.querySelector('.dialog-scroll');
-        if(scroller)scroller.scrollTop=0
-    });
-    // 桌面端保留快捷聚焦；手机端禁止自动 focus，避免打开配置时软键盘立即遮住操作区。
+    const scroller=configForm&&configForm.querySelector('.dialog-scroll');
+    if(scroller)scroller.scrollTop=0;
+    requestAnimationFrame(()=>updateVisualViewport());
     if(window.matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches){
-        setTimeout(()=>cfgToken.focus(),30)
+        setTimeout(()=>cfgToken.focus({preventScroll:true}),30);
     }
 }
 function loadMeta(){
@@ -2945,38 +2933,6 @@ initializeApp().catch(error=>{console.error('Press 初始化失败:',error);stat
 window.addEventListener('online',()=>{if(admin()&&adminReady&&meta.dirty)armSync(250,false)});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){if(storageReady&&admin()&&meta.dirty)saveLocal(state)}else if(admin()&&adminReady&&meta.dirty)armSync(350,false)});
 window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)saveLocal(state)});
-})();
-</script>
-
-<script id="press-config-mobile-final-entry">
-(function(){
-  const btn=document.getElementById('configBtn');
-  const modal=document.getElementById('configModal');
-  const form=document.getElementById('configForm');
-  if(!btn||!modal)return;
-
-  function openPressConfig(){
-    modal.classList.remove('hidden');
-    const vv=window.visualViewport;
-    document.documentElement.style.setProperty(
-      '--press-vv-height',
-      Math.max(240,Math.round(vv?vv.height:window.innerHeight))+'px'
-    );
-    const scroller=form&&form.querySelector('.dialog-scroll');
-    if(scroller)scroller.scrollTop=0;
-  }
-
-  // 使用 capture 阶段，避免其它监听或初始化异常影响手机点击。
-  btn.addEventListener('pointerup',function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    openPressConfig();
-  },true);
-
-  btn.addEventListener('touchend',function(e){
-    e.preventDefault();
-    openPressConfig();
-  },{passive:false,capture:true});
 })();
 </script>
 </body>
