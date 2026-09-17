@@ -91,73 +91,7 @@ body.reordering{user-select:none}
 
 </style>
 
-<style id="mobile-config-hard-fix">
-/* 手机端配置弹窗：Pages 同级 visual viewport 方案，确保配置页可打开、滚动和提交。 */
-@media (max-width:700px){
-  #configModal{
-    top:var(--press-vv-top,0px)!important;
-    right:0!important;
-    bottom:auto!important;
-    left:0!important;
-    width:100%!important;
-    height:min(var(--press-vv-height,100dvh),100dvh)!important;
-    padding:0!important;
-    align-items:stretch!important;
-    justify-content:stretch!important;
-    overflow:hidden!important;
-  }
-  #configForm{
-    position:absolute!important;
-    inset:0!important;
-    width:100%!important;
-    height:100%!important;
-    max-width:none!important;
-    max-height:none!important;
-    min-width:0!important;
-    min-height:0!important;
-    margin:0!important;
-    border-radius:0!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr)!important;
-    grid-template-rows:minmax(0,1fr) auto!important;
-    overflow:hidden!important;
-  }
-  #configForm .dialog-scroll{
-    grid-row:1!important;
-    width:100%!important;
-    min-width:0!important;
-    min-height:0!important;
-    overflow-y:scroll!important;
-    overflow-x:hidden!important;
-    -webkit-overflow-scrolling:touch!important;
-    overscroll-behavior-y:contain!important;
-    touch-action:pan-y!important;
-    scrollbar-gutter:stable!important;
-    scrollbar-width:auto;
-    scrollbar-color:#94a3b8 #f1f5f9;
-    padding:max(1.2rem,env(safe-area-inset-top)) 1.2rem 1.2rem!important;
-  }
-  #configForm .dialog-scroll::-webkit-scrollbar{width:8px}
-  #configForm .dialog-scroll::-webkit-scrollbar-track{background:#f1f5f9}
-  #configForm .dialog-scroll::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:999px;border:2px solid #f1f5f9}
-  #configForm .dialog-actions{
-    grid-row:2!important;
-    position:static!important;
-    z-index:10!important;
-    width:100%!important;
-    min-width:0!important;
-    flex:0 0 auto!important;
-    padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))!important;
-    border-top:1px solid #dbe3ed!important;
-    background:#fff!important;
-    box-shadow:0 -8px 20px rgba(15,23,42,.10)!important;
-  }
-  #configForm .dialog-actions .btn{
-    min-width:0!important;
-    min-height:44px!important;
-  }
-}
-</style>
+
 
 <style id="edit-actions-layout-fix">
 /* 编辑弹窗底部按钮：
@@ -613,29 +547,7 @@ body.reordering{user-select:none}
 </style>
 
 
-<style id="config-button-touch-final-fix">
-@media(max-width:700px){
-  .toolbar,
-  .toolbar-group,
-  #configBtn{
-    position:relative!important;
-    z-index:100!important;
-  }
-  #configBtn{
-    display:inline-flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    min-width:64px!important;
-    min-height:40px!important;
-    pointer-events:auto!important;
-    touch-action:manipulation!important;
-    -webkit-tap-highlight-color:transparent;
-  }
-  #configModal{
-    z-index:10000!important;
-  }
-}
-</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -2959,32 +2871,6 @@ window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)sav
 })();
 </script>
 
-<script id="config-button-capture-final-fix">
-(function(){
-  function bindConfigTouch(){
-    const btn=document.getElementById('configBtn');
-    const modal=document.getElementById('configModal');
-    if(!btn||!modal)return;
-    const original=window.openConfig;
-    function open(){
-      if(typeof original==='function'){
-        original();
-      }else{
-        modal.classList.remove('hidden');
-      }
-    }
-    btn.addEventListener('touchend',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      open();
-    },{capture:true,passive:false});
-  }
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',bindConfigTouch,{once:true});
-  }else{
-    bindConfigTouch();
-  }
-})();
-</script>
+
 </body>
 </html>
