@@ -1552,9 +1552,20 @@ function editHistoryOption(type,value){
     // 书架保留人工排列位置；标签继续按原自动排序规则。
     state[historyKey]=type==='category'?uniq(history):sortHistory(type,history);
 
-    const renamePending=values=>uniq(values.map(v=>key(v)===oldKey?nextValue:v));
-    addSelections[type]=renamePending(addSelections[type]);
-    editSelections[type]=renamePending(editSelections[type]);
+    // 重命名下拉选项时，同步替换所有已经保存并使用旧选项的条目。
+    // 不能只修改历史选项，否则总表会继续保留旧标签/书架名称，造成数据脱节。
+    const renameValues=values=>{
+        const renamed=normalizeMulti(values).map(v=>key(v)===oldKey?nextValue:v);
+        return type==='tag'?sortTags(renamed):uniq(renamed)
+    };
+    for(const entry of state.entries){
+        if(normalizeMulti(entry[type]).some(v=>key(v)===oldKey)){
+            entry[type]=renameValues(entry[type])
+        }
+    }
+
+    addSelections[type]=renameValues(addSelections[type]);
+    editSelections[type]=renameValues(editSelections[type]);
 
     const addMeta=multiMeta(type,'add');
     const editMeta=multiMeta(type,'edit');
@@ -1563,8 +1574,7 @@ function editHistoryOption(type,value){
 
     saveLocal();
     if(admin())schedule();
-    renderMultiField(type,'add');
-    renderMultiField(type,'edit');
+    render();
     show(`已修改${label}选项为“${nextValue}”`,'success')
 }
 function deleteHistoryOption(type,value){
