@@ -2,2655 +2,1806 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,interactive-widget=resizes-content">
-<title>Press</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="app-build" content="2026-09-17-zero-web-storage-v1">
+<meta name="papers-data-file" content="papers_data.json">
+<title>Papers</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;padding:2rem 1rem 4rem;background:#f5f7fa;color:#0f172a;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif}
-button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-.container{width:min(100%,1080px);margin:auto;padding:2rem 1.8rem;background:#fff;border-radius:30px;box-shadow:0 20px 42px -14px rgba(15,23,42,.18)}
-.page-title{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:1.45rem;padding-bottom:.8rem;border-bottom:2px solid #e8edf4;font-size:2.2rem}
-.cloud-status{display:inline-flex;align-items:center;gap:8px;padding:.35rem .9rem;border-radius:999px;background:#f1f5f9;color:#475569;font-size:.82rem;font-weight:500}
-.status-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8}.status-dot.online{background:#22c55e}.status-dot.offline{background:#ef4444}.status-dot.syncing{background:#f59e0b}
-.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:1.7rem;padding-bottom:1rem;border-bottom:1px solid #e8edf4}
-.toolbar-group{display:flex;flex-wrap:wrap;gap:9px}.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn-primary:hover{background:#0f172a}.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.btn-danger:hover{background:#fecaca}.btn-sync{border-color:#1E40AF;background:#1E40AF;color:#fff}.last-sync{color:#94a3b8;font-size:.8rem}
-.add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}.add-section h2,.list-header h2{font-size:1.3rem}.add-section h2{margin-bottom:1rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.bookno-tag-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.full{grid-column:1/-1}.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}.required{color:#dc2626}
-.form-group input,.form-group select{width:100%;min-height:44px;padding:.72rem 1rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;color:#0f172a;outline:none}.clearable-field{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px;align-items:center}.edit-title-field{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px;align-items:center}.clear-field-btn{height:44px;width:36px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;font-weight:800}.clear-field-btn:hover{background:#f1f5f9;color:#0f172a}.form-group input:focus,.form-group select:focus{outline:2px solid #93b4ff;outline-offset:1px;border-color:transparent}.form-group input[readonly]{background:#f1f5f9;color:#64748b}
-.add-button{grid-column:1/-1;min-height:46px;border:0;border-radius:999px;background:#1e293b;color:#fff;font-weight:700}.add-button:hover{background:#0f172a}
-.combo{position:relative;border:1px solid #cbd5e1;border-radius:15px;background:#fff;padding:.45rem;min-height:44px}
-.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}
-.combo-row input{border:0!important;border-radius:10px!important;min-height:38px;padding:.55rem .7rem}
-.combo-row input:focus{outline:2px solid #93b4ff!important;outline-offset:0}
-.combo-toggle{min-height:38px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#475569;font-weight:700}
-.combo-toggle:hover{background:#f1f5f9}
-.combo-panel{position:absolute;left:0;right:0;top:calc(44px + 7px);z-index:650;max-height:250px;overflow-y:auto;padding:.6rem;border:1px solid #cbd5e1;border-radius:15px;background:#fff;box-shadow:0 15px 30px rgba(15,23,42,.14)}
-.combo-selected{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.combo-selected:empty{display:none}
-.combo-option-list{display:flex;flex-direction:column;gap:6px}
-.combo-pill,.selected-pill{display:inline-flex;align-items:center;max-width:100%;min-height:34px;border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;overflow:hidden}
-.combo-pill{display:flex;width:100%;border-radius:11px}
-.combo-pill.selected{border-color:#93b4ff;background:#eaf1ff}
-.combo-pill-select{flex:1;min-width:0;padding:.5rem .7rem;border:0;background:transparent;color:#0f172a;text-align:left;white-space:normal;overflow-wrap:anywhere}
-.combo-pill-select:hover{background:rgba(226,232,240,.7)}
-.combo-pill-select.keyboard-active{
-    background:#dbeafe;
-    color:#1E3A8A;
-    font-weight:800;
-    box-shadow:inset 0 0 0 2px #93c5fd;
+body{
+    min-height:100vh;
+    padding:2rem 1rem 4rem;
+    background:#f5f7fa;
+    color:#0f172a;
+    font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;
 }
-.combo-drag{flex:0 0 32px;width:32px;align-self:stretch;border:0;border-right:1px solid #e2e8f0;background:transparent;color:#64748b;font-size:1rem;font-weight:700;line-height:1;cursor:grab;touch-action:none}
-.combo-drag:hover{background:#e2e8f0;color:#0f172a}.combo-drag:active,.combo-pill.dragging .combo-drag{cursor:grabbing}
-.combo-pill.manual-order.dragging{opacity:.52}
-.combo-pill.drag-before{box-shadow:inset 0 3px 0 #1E40AF}.combo-pill.drag-after{box-shadow:inset 0 -3px 0 #1E40AF}
-body.reordering{user-select:none}
-.combo-pill-edit,.combo-pill-delete,.selected-pill-remove{flex:0 0 28px;width:28px;height:30px;border:0;border-radius:50%;background:transparent;font-size:.95rem;font-weight:800;line-height:1}
-.combo-pill-edit{color:#15803d}
-.combo-pill-edit:hover{background:#dcfce7;color:#166534}
-.combo-pill-delete,.selected-pill-remove{margin-right:2px;color:#991b1b}
-.combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
-.selected-pill-label{min-width:0;padding:.4rem .28rem .4rem .72rem;color:#334155;white-space:normal;overflow-wrap:anywhere}
-.combo-add{display:block;width:100%;margin-top:.55rem;padding:.55rem .65rem;border:0;border-top:1px solid #e2e8f0;background:#fff;color:#1E40AF;text-align:left;font-size:.82rem;font-weight:700}.combo-add:hover{background:#f8fafc}.combo-empty{width:100%;padding:.75rem;color:#94a3b8;text-align:center;font-size:.82rem}
-.list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
-.press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{position:relative;padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
-.press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere;color:#1E40AF;}.book-title a{color:#1E40AF;text-decoration:none}.book-title a:hover,.book-title a:focus-visible{color:#1E3A8A;text-decoration:underline;outline:none}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#1E40AF;text-decoration:none}.institution a:hover{color:#1E3A8A;text-decoration:underline}
-.press-content{flex:1;min-width:0;padding-bottom:0}.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.bookshelf-text{min-width:0;overflow-wrap:anywhere}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font-size:.9rem;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;font-weight:400;line-height:1.55;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
-.overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(15,23,42,.45);backdrop-filter:blur(5px)}
-.dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-start;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:0}
-.remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
-.toast{position:fixed;left:50%;bottom:28px;z-index:1500;max-width:min(90vw,640px);padding:.78rem 1.5rem;transform:translateX(-50%);border-radius:999px;background:#1E40AF;color:#fff;font-size:.88rem;font-weight:600;box-shadow:0 12px 34px rgba(15,23,42,.25)}.toast.success{background:#16a34a}.toast.error{background:#dc2626}
-
-.manage-dialog{height:min(760px,calc(100vh - 24px));height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))}.manage-fixed-top{flex:0 0 auto;padding:1.7rem 1.7rem .9rem;border-bottom:1px solid #e8edf4;background:#fff}.manage-fixed-top .dialog-desc{margin-bottom:1rem}.manage-fixed-top .form-group{margin-bottom:0}.manage-table-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:.55rem 1.7rem 1rem;background:#fff}.manage-add-row{display:grid;grid-template-columns:minmax(0,1fr) 92px auto;gap:8px;align-items:center}.manage-add-row input{min-width:0}.manage-add-row .btn{min-height:44px;padding-inline:1.2rem}.manage-line-head{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;margin:.25rem 0 .4rem;padding:0 .3rem;color:#94a3b8;font-size:.75rem;font-weight:700}.manage-list{margin-top:.35rem}.manage-option-row{display:grid;grid-template-columns:minmax(0,1fr) 86px 30px 30px;gap:7px;align-items:center;min-height:46px;padding:.35rem .4rem;border:1px solid #cbd5e1;border-radius:12px;background:#fff}.manage-option-row+.manage-option-row{margin-top:7px}.manage-option-label{min-width:0;padding:.35rem .25rem;color:#0f172a;white-space:normal;overflow-wrap:anywhere}.manage-line-input{width:100%;min-width:0;height:34px;padding:.3rem .4rem;border:1px solid #cbd5e1;border-radius:9px;background:#fff;text-align:center;font-weight:700;outline:none}.manage-line-input:focus{border-color:#93c5fd;box-shadow:0 0 0 2px #dbeafe}.manage-empty{padding:1.3rem .8rem;border:1px dashed #cbd5e1;border-radius:14px;color:#94a3b8;text-align:center;font-size:.86rem}.institution-choice{display:flex;align-items:center;width:100%}@media(max-width:700px){.manage-dialog{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none}.manage-fixed-top{padding:1.2rem 1.2rem .8rem}.manage-table-scroll{padding:.55rem 1.2rem .8rem}.manage-add-row{grid-template-columns:minmax(0,1fr) 78px}.manage-add-row .btn{grid-column:1/-1}.manage-line-head{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-row{grid-template-columns:minmax(0,1fr) 72px 30px 30px}.manage-option-label{font-size:.88rem}}
-@media(max-width:700px){body{padding:.8rem}.container{padding:1.25rem;border-radius:22px}.page-title{font-size:1.8rem}.toolbar{flex-direction:column}.toolbar-group{justify-content:center}.form-grid{grid-template-columns:1fr}.bookno-tag-row{grid-column:auto;grid-template-columns:1fr}.form-group.full,.add-button{grid-column:auto}.press-head{gap:.6rem}.meta{grid-template-columns:1fr}.overlay{padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}.dialog{width:100%;max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:20px}.dialog-scroll{flex:1 1 auto;min-height:0;padding:1.2rem 1.2rem .8rem}.dialog-actions{flex:0 0 auto;padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(15,23,42,.06)}.dialog-actions .btn{flex:1}#configModal{align-items:flex-start;overflow:hidden}#configForm{width:100%;height:calc(100vh - 16px);height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-height:none;min-height:0;display:flex;flex-direction:column;overflow:hidden}#configForm .dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-bottom:1rem}#configForm .dialog-actions{position:relative;flex:0 0 auto;z-index:3}}
-.edit-two-column-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;grid-column:1/-1}
-.edit-title-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;grid-column:1/-1}
-@media(max-width:700px){.edit-title-row{grid-template-columns:1fr}}
-
-/* 添加时标签 / 书架严格单选；编辑时书架仍严格单选。
-   编辑标签例外：允许保留原标签并继续增加或删除多个标签。 */
-#tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#editCategoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    display:none!important;
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.container{
+    width:min(100%,1100px);
+    margin:auto;
+    padding:2rem 1.8rem;
+    background:#fff;
+    border-radius:32px;
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.15);
 }
-
-#tagCombo:has(> .combo-selected:not(:empty)),
-#categoryCombo:has(> .combo-selected:not(:empty)),
-#editCategoryCombo:has(> .combo-selected:not(:empty)){
-    display:block!important;
+.page-title{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:12px;
+    margin-bottom:1.45rem;
+    padding-bottom:.8rem;
+    border-bottom:2px solid #e8edf4;
+    color:#1e293b;
+    font-size:2.2rem;
+    font-weight:600;
 }
-
-#tagCombo > .combo-selected:not(:empty),
-#categoryCombo > .combo-selected:not(:empty),
-#editCategoryCombo > .combo-selected:not(:empty){
-    display:flex!important;
-    width:100%!important;
-    max-width:100%!important;
-    margin:0!important;
-    overflow:visible!important;
+.cloud-status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:.35rem .9rem;
+    border-radius:999px;
+    background:#f1f5f9;
+    color:#475569;
+    font-size:.82rem;
+    font-weight:500;
 }
+.status-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8}
+.status-dot.online{background:#22c55e}
+.status-dot.offline{background:#ef4444}
+.status-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-</style>
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:1.7rem;
+    padding-bottom:1rem;
+    border-bottom:1px solid #e8edf4;
+}
+.toolbar-group{display:flex;flex-wrap:wrap;gap:9px}
+.btn{
+    min-height:36px;
+    padding:.45rem 1.1rem;
+    border:1px solid #cbd5e1;
+    border-radius:999px;
+    background:#fff;
+    color:#334155;
+    font-size:.86rem;
+    font-weight:650;
+}
+.btn:hover{background:#f1f5f9}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}
+.btn-primary:hover{background:#0f172a}
+.btn-sync{border-color:#1E40AF;background:#1E40AF;color:#fff}
+.btn-sync:hover{background:#1E3A8A}
+.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}
+.btn-danger:hover{background:#fecaca}
+.last-sync{color:#94a3b8;font-size:.8rem}
 
-
-
-<style id="edit-actions-layout-fix">
-/* 编辑弹窗底部按钮：
-   删除与左边线对齐；
-   保存与右边线对齐；
-   取消紧邻保存左侧。 */
-#editModal .dialog-actions{
+.visitor-note{
     display:flex;
     align-items:center;
-    justify-content:flex-start;
-    gap:9px;
-}
-
-#editModal .dialog-actions .btn{
-    flex:0 0 auto;
-    margin:0;
-}
-
-#editModal #editCancel{
-    margin-left:auto;
-}
-
-@media(max-width:700px){
-    #editModal .dialog-actions{
-        justify-content:flex-start;
-    }
-
-    #editModal .dialog-actions .btn{
-        flex:0 0 auto;
-        min-width:0;
-        width:auto;
-    }
-
-    #editModal #editCancel{
-        margin-left:auto;
-    }
-}
-</style>
-
-
-<style id="edit-selected-pill-size-fix">
-/* 编辑弹窗：标签可多选，书架仍单选；已选项保持单行紧凑显示。
-   编辑标签在左侧横向排列多个已选标签，右侧继续保留搜索输入框与倒三角。 */
-#editTagCombo,
-#editCategoryCombo{
-    height:54px;
-    min-height:54px;
-    min-width:0;
-}
-
-#editTagCombo:has(> .combo-selected:not(:empty)),
-#editCategoryCombo:has(> .combo-selected:not(:empty)){
-    display:grid;
-    grid-template-columns:minmax(0,42%) minmax(0,1fr);
-    align-items:center;
-    gap:5px;
-    width:100%;
-    min-width:0;
-}
-
-#editTagCombo > .combo-selected:not(:empty),
-#editCategoryCombo > .combo-selected:not(:empty){
-    grid-column:1;
-    grid-row:1;
-    display:flex;
-    flex-wrap:nowrap;
-    align-items:center;
-    gap:3px;
-    min-width:0;
-    max-width:100%;
-    height:24px;
-    margin:0;
-    overflow-x:auto;
-    overflow-y:hidden;
-    scrollbar-width:none;
-}
-
-#editTagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
-#editCategoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{display:none}
-
-#editTagCombo > .combo-selected:not(:empty) + .combo-row,
-#editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
-    grid-column:2;
-    grid-row:1;
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 44px;
-    gap:5px;
-    width:100%;
-    min-width:0;
-}
-
-#editTagCombo > .combo-selected:not(:empty) + .combo-row input,
-#editCategoryCombo > .combo-selected:not(:empty) + .combo-row input{
-    min-width:0;
-    width:100%;
-    min-height:38px;
-}
-
-#editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
-#editCategoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
-    width:44px;
-    min-width:44px;
-    min-height:38px;
-    grid-column:2;
-    grid-row:1;
-}
-
-#editModal #editTagSelected .selected-pill,
-#editModal #editCategorySelected .selected-pill{
-    flex:0 0 auto;
-    min-height:20px;
-    height:20px;
-    max-width:118px;
-    font-size:.66rem;
-    line-height:1;
-}
-
-#editModal #editTagSelected .selected-pill-label,
-#editModal #editCategorySelected .selected-pill-label{
-    min-width:0;
-    max-width:92px;
-    padding:.1rem .1rem .1rem .42rem;
-    font-size:.66rem;
-    line-height:1;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-#editModal #editTagSelected .selected-pill-remove,
-#editModal #editCategorySelected .selected-pill-remove{
-    flex:0 0 18px;
-    width:18px;
-    height:18px;
-    margin-right:1px;
-    font-size:.68rem;
-    line-height:18px;
-}
-</style>
-
-
-<style id="add-selected-pill-size-fix">
-/* 添加板块：标签 / 书架选中后保持与编辑框相同的紧凑布局。
-   倒三角固定在最右侧 44px，手机端选中后也不会被挤到下一行。 */
-#tagCombo,
-#categoryCombo{
-    height:54px;
-    min-height:54px;
-    min-width:0;
-}
-
-#tagCombo:has(> .combo-selected:not(:empty)),
-#categoryCombo:has(> .combo-selected:not(:empty)){
-    display:grid;
-    grid-template-columns:minmax(0,42%) minmax(0,1fr);
-    align-items:center;
-    gap:5px;
-    width:100%;
-    min-width:0;
-}
-
-#tagCombo > .combo-selected:not(:empty),
-#categoryCombo > .combo-selected:not(:empty){
-    grid-column:1;
-    grid-row:1;
-    display:flex;
-    flex-wrap:nowrap;
-    align-items:center;
-    gap:3px;
-    min-width:0;
-    max-width:100%;
-    height:24px;
-    margin:0;
-    overflow-x:auto;
-    overflow-y:hidden;
-    scrollbar-width:none;
-}
-
-#tagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
-#categoryCombo > .combo-selected:not(:empty)::-webkit-scrollbar{display:none}
-
-#tagCombo > .combo-selected:not(:empty) + .combo-row,
-#categoryCombo > .combo-selected:not(:empty) + .combo-row{
-    grid-column:2;
-    grid-row:1;
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 44px;
-    gap:5px;
-    width:100%;
-    min-width:0;
-}
-
-#tagCombo > .combo-selected:not(:empty) + .combo-row input,
-#categoryCombo > .combo-selected:not(:empty) + .combo-row input{
-    min-width:0;
-    width:100%;
-    min-height:38px;
-}
-
-#tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
-#categoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
-    width:44px;
-    min-width:44px;
-    min-height:38px;
-    grid-column:2;
-    grid-row:1;
-}
-
-#addSection #tagSelected .selected-pill,
-#addSection #categorySelected .selected-pill{
-    flex:0 0 auto;
-    min-height:20px;
-    height:20px;
-    max-width:118px;
-    font-size:.66rem;
-    line-height:1;
-}
-
-#addSection #tagSelected .selected-pill-label,
-#addSection #categorySelected .selected-pill-label{
-    min-width:0;
-    max-width:92px;
-    padding:.1rem .1rem .1rem .42rem;
-    font-size:.66rem;
-    line-height:1;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-#addSection #tagSelected .selected-pill-remove,
-#addSection #categorySelected .selected-pill-remove{
-    flex:0 0 18px;
-    width:18px;
-    height:18px;
-    margin-right:1px;
-    font-size:.68rem;
-    line-height:18px;
-}
-</style>
-
-
-<style id="institution-all-link-blue-fix">
-/* 所有出版字段中的 [文字](链接) 均强制显示为蓝色链接，保留 ★ 等原文本符号。 */
-.institution a,
-.institution-choice a,
-.combo-pill-select.institution-choice a,
-.manage-option-label a{
-    color:#1E40AF !important;
-    text-decoration:none;
-}
-.institution a:hover,
-.institution-choice a:hover,
-.combo-pill-select.institution-choice a:hover,
-.manage-option-label a:hover{
-    color:#1E3A8A !important;
-    text-decoration:underline;
-}
-</style>
-
-<style id="manage-actions-right-fix">
-/* 出版管理：完成按钮右下角对齐 */
-#manageModal .dialog-actions{
     justify-content:flex-end;
+    gap:8px;
+    margin:-.55rem 0 .9rem;
+    color:#94a3b8;
+    font-size:.76rem;
 }
-
-#manageModal .dialog-actions .btn{
-    margin-left:auto;
+.visitor-login-link{
+    padding:0;
+    border:0;
+    background:transparent;
+    color:#64748b;
+    font-size:.76rem;
+    text-decoration:underline;
+    text-underline-offset:2px;
 }
-</style>
+.visitor-login-link:hover{color:#334155}
 
-
-<style id="edit-dialog-scroll-fix">
-/* 编辑弹窗：内容区独立滚动，底部操作栏始终可见。 */
-#editModal > .dialog{
-    height:min(760px,calc(100vh - 24px));
-    height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+.add-section{
+    margin-bottom:2rem;
+    padding:1.5rem;
+    border:1px solid #e2e8f0;
+    border-radius:24px;
+    background:#f8fafc;
+}
+.add-section h2{margin-bottom:1rem;font-size:1.3rem}
+.form-grid{
     display:grid;
-    grid-template-columns:minmax(0,1fr);
-    grid-template-rows:minmax(0,1fr) auto;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:1rem;
 }
-#editModal .dialog-scroll{
-    grid-row:1;
-    min-width:0;
-    min-height:0;
-    overflow-y:scroll;
-    overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;
-    overscroll-behavior-y:contain;
-    touch-action:pan-y;
-    scrollbar-gutter:stable;
-    scrollbar-width:auto;
-    scrollbar-color:#94a3b8 #f1f5f9;
+.form-group{display:flex;flex-direction:column;gap:6px;min-width:0}
+.form-group.full{grid-column:1/-1}
+.form-group label{
+    color:#475569;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.04em;
 }
-#editModal .dialog-scroll::-webkit-scrollbar{width:8px}
-#editModal .dialog-scroll::-webkit-scrollbar-track{background:#f1f5f9}
-#editModal .dialog-scroll::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:999px;border:2px solid #f1f5f9}
-#editModal .dialog-actions{
-    grid-row:2;
-    position:relative;
-    z-index:5;
+.input{
+    width:100%;
+    min-height:44px;
+    padding:.72rem 1rem;
+    border:1px solid #cbd5e1;
+    border-radius:15px;
+    background:#fff;
+    color:#0f172a;
+    outline:none;
+}
+.input:focus{
+    outline:2px solid #93b4ff;
+    outline-offset:1px;
+    border-color:transparent;
+}
+.input[readonly]{
+    background:#f1f5f9;
+    color:#64748b;
+}
+.clearable-input{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:6px;align-items:center;width:100%}
+.input-clear{height:44px;width:36px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;font-weight:800;cursor:pointer}
+.input-clear:hover{background:#f1f5f9;color:#0f172a}
+.combo{position:relative;min-width:0}
+.combo-row{display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:6px}
+.combo-toggle{
+    border:1px solid #cbd5e1;
+    border-radius:13px;
+    background:#fff;
+    color:#64748b;
+}
+.combo-toggle:hover{background:#f1f5f9}
+.combo-panel{
+    position:absolute;
+    left:0;
+    right:0;
+    top:calc(44px + 7px);
+    z-index:700;
+    max-height:270px;
+    overflow-y:auto;
+    padding:.65rem;
+    border:1px solid #cbd5e1;
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 16px 34px rgba(15,23,42,.16);
+}
+.combo-option-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
     width:100%;
     min-width:0;
 }
-
-@media(max-width:700px){
-    #editModal{
-        top:var(--press-vv-top,0px)!important;
-        right:0!important;
-        bottom:auto!important;
-        left:0!important;
-        width:100%!important;
-        height:var(--press-vv-height,100dvh)!important;
-        padding:0!important;
-        align-items:stretch!important;
-        justify-content:stretch!important;
-        overflow:hidden!important;
-    }
-    #editModal > .dialog{
-        width:100%!important;
-        height:100%!important;
-        max-width:none!important;
-        max-height:none!important;
-        margin:0!important;
-        border-radius:0!important;
-        display:grid!important;
-        grid-template-rows:minmax(0,1fr) auto!important;
-        overflow:hidden!important;
-    }
-    #editModal .dialog-scroll{
-        min-height:0!important;
-        overflow-y:scroll!important;
-        padding:max(1.2rem,env(safe-area-inset-top)) 1.2rem 1.2rem!important;
-        scroll-padding-bottom:1rem;
-    }
-    #editModal .dialog-actions{
-        padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))!important;
-        background:#fff!important;
-        box-shadow:0 -8px 20px rgba(15,23,42,.10)!important;
-    }
-
-    /* 手机端再次锁死已选下拉的右侧按钮列，避免任何字体/内容宽度把倒三角挤换行。 */
-    #tagCombo:has(> .combo-selected:not(:empty)),
-    #categoryCombo:has(> .combo-selected:not(:empty)),
-    #editTagCombo:has(> .combo-selected:not(:empty)),
-    #editCategoryCombo:has(> .combo-selected:not(:empty)){
-        grid-template-columns:minmax(0,38%) minmax(0,1fr)!important;
-    }
-    #tagCombo > .combo-selected:not(:empty) + .combo-row,
-    #categoryCombo > .combo-selected:not(:empty) + .combo-row,
-    #editTagCombo > .combo-selected:not(:empty) + .combo-row,
-    #editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
-        grid-template-columns:minmax(0,1fr) 44px!important;
-        width:100%!important;
-        min-width:0!important;
-    }
-    #tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
-    #categoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
-    #editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
-    #editCategoryCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
-        width:44px!important;
-        min-width:44px!important;
-        max-width:44px!important;
-        grid-column:2!important;
-        grid-row:1!important;
-    }
-}
-</style>
-
-
-<style id="edit-dialog-natural-height-fix">
-/* 编辑弹窗：内容较少时按内容自然收缩；只有内容超过可视高度时才滚动。
-   这样“标签 / 书架”后不会出现大片空白，同时底部操作按钮始终保留。 */
-#editModal > .dialog{
-    height:auto!important;
-    max-height:min(760px,calc(100vh - 24px))!important;
-    max-height:min(760px,calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))!important;
-    display:flex!important;
-    flex-direction:column!important;
-}
-#editModal .dialog-scroll{
-    flex:1 1 auto!important;
-    min-height:0!important;
-    overflow-y:auto!important;
-}
-#editModal .dialog-actions{
-    flex:0 0 auto!important;
-}
-#editModal .dialog-scroll > .edit-two-column-row:last-child .form-group{
-    margin-bottom:0!important;
-}
-
-@media(max-width:700px){
-    #editModal{
-        align-items:center!important;
-        justify-content:center!important;
-        padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))!important;
-    }
-    #editModal > .dialog{
-        width:100%!important;
-        height:auto!important;
-        max-height:calc(var(--press-vv-height,100dvh) - 16px)!important;
-        border-radius:20px!important;
-    }
-    #editModal .dialog-scroll{
-        padding:1.2rem 1.2rem .8rem!important;
-        overflow-y:auto!important;
-    }
-}
-</style>
-
-
-
-<style id="return-top-anchor-style">
-#pageTopAnchor{
-    position:absolute;
-    top:0;
-    left:0;
-    width:1px;
-    height:1px;
+.combo-pill{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto auto;
+    align-items:stretch;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    min-height:38px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    background:#f8fafc;
     overflow:hidden;
-    pointer-events:none;
 }
-</style>
+.combo-pill-select{
+    display:block;
+    width:100%;
+    min-width:0;
+    padding:.52rem .75rem;
+    border:0;
+    background:transparent;
+    color:#0f172a;
+    text-align:left;
+    white-space:normal;
+    overflow-wrap:anywhere;
+}
+.combo-pill-select:hover{background:#eef2f7}
+.combo-pill-select.keyboard-active{
+    background:#F8E8EC;
+    color:#1E40AF;
+    font-weight:700;
+    outline:2px solid #D98A9B;
+    outline-offset:-2px;
+}
+.combo-pill-edit,
+.combo-pill-delete{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:48px;
+    padding:0 .65rem;
+    border:0;
+    border-left:1px solid #e2e8f0;
+    background:transparent;
+    font-size:.75rem;
+    font-weight:650;
+    white-space:nowrap;
+}
+.combo-pill-edit{color:#475569}
+.combo-pill-edit:hover{background:#e2e8f0;color:#334155}
+.combo-pill-delete{color:#991b1b}
+.combo-pill-delete:hover{background:#fee2e2}
+.combo-empty{
+    width:100%;
+    padding:.72rem;
+    color:#94a3b8;
+    text-align:center;
+    font-size:.82rem;
+}
+.combo-help{
+    margin-top:.35rem;
+    color:#94a3b8;
+    font-size:.73rem;
+    line-height:1.45;
+}
+.add-button{
+    grid-column:1/-1;
+    width:100%;
+    min-height:46px;
+    margin-top:.2rem;
+    border:0;
+    border-radius:999px;
+    background:#1e293b;
+    color:#fff;
+    font-weight:700;
+}
+.add-button:hover{background:#0f172a}
 
-<style id="return-top-circle-style">
-#returnTopControl{
-    appearance:none;
-    -webkit-appearance:none;
+.list-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:.8rem;
+}
+.list-header h2{font-size:1.4rem}
+.count-badge{
+    min-width:38px;
+    padding:.22rem .8rem;
+    border-radius:999px;
+    background:#e8edf4;
+    text-align:center;
+    font-size:.8rem;
+    font-weight:650;
+}
+.papers-list{display:grid;gap:1rem}
+.paper-item{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    padding:1.15rem 1.2rem .95rem;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
+    background:#fff;
+    overflow:hidden;
+    user-select:text;
+    -webkit-user-select:text;
+}
+.paper-item:hover{background:#fafcff}
+.paper-title{
+    margin-bottom:.6rem;
+    color:#1E40AF;
+    font-size:1.15rem;
+    font-weight:750;
+    line-height:1.45;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+.paper-meta{
+    display:grid;
+    gap:.26rem;
+    min-width:0;
+}
+.meta-row{
+    display:flex;
+    align-items:flex-start;
+    gap:.4rem;
+    min-width:0;
+    color:#475569;
+    font-size:.9rem;
+    line-height:1.55;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+.meta-label{flex:0 0 auto;color:#64748b;font-weight:700}
+.paper-actions{
+    display:flex;
+    justify-content:flex-end;
+    min-width:0;
+}
+.edit-btn{
+    flex:0 0 auto;
+    margin-left:auto;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:#94a3b8;
+    font-size:.86rem;
+    font-weight:400;
+    line-height:1.55;
+    text-decoration:underline;
+    text-underline-offset:2px;
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:manipulation;
+}
+.edit-btn:hover,
+.edit-btn:focus-visible{
+    background:transparent;
+    color:#64748b;
+    outline:none;
+}
+.empty-state{
+    padding:2.8rem 1rem;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
+    background:#fafcff;
+    color:#94a3b8;
+    text-align:center;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right))
+            max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+    background:rgba(15,23,42,.45);
+    backdrop-filter:blur(5px);
+}
+.dialog{
+    width:min(100%,700px);
+    max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    background:#fff;
+    border-radius:26px;
+    box-shadow:0 30px 70px rgba(15,23,42,.28);
+}
+.dialog-scroll{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    padding:1.7rem 1.7rem 1rem;
+    scrollbar-gutter:stable;
+}
+.dialog h3{margin-bottom:1rem;font-size:1.3rem}
+.dialog-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:9px;
+    padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));
+    border-top:1px solid #e8edf4;
+    background:#fff;
+}
+#editDelete{margin-right:auto}
+.dialog-actions .btn{flex:0 0 auto}
+.dialog-desc{
+    margin-bottom:1rem;
+    padding-bottom:.8rem;
+    border-bottom:1px solid #e2e8f0;
+    color:#64748b;
+    font-size:.86rem;
+    line-height:1.6;
+}
+.remember-row{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    color:#334155;
+    font-size:.82rem;
+    line-height:1.5;
+}
+.remember-row input{margin-top:.2rem;accent-color:#1E40AF}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:28px;
+    z-index:1500;
+    max-width:min(90vw,680px);
+    padding:.78rem 1.5rem;
+    transform:translateX(-50%);
+    border-radius:999px;
+    background:#1E40AF;
+    color:#fff;
+    font-size:.88rem;
+    font-weight:600;
+    text-align:center;
+    box-shadow:0 12px 34px rgba(15,23,42,.25);
+}
+.toast.success{background:#16a34a}
+.toast.error{background:#dc2626}
+.toast.info{background:#1E40AF}
+.back-to-top{
     position:fixed;
     right:16px;
     top:70%;
-    z-index:2147483647;
-    display:block;
-    width:25px;
-    height:25px;
-    margin:0;
+    transform:translateY(-50%);
+    z-index:900;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:30px;
+    height:30px;
     padding:0;
     border:0;
     border-radius:50%;
     background:#1E40AF;
-    cursor:pointer;
-    pointer-events:auto;
-    touch-action:manipulation;
-    text-decoration:none;
-    user-select:none;
-    -webkit-user-select:none;
+    color:#fff;
+    font-size:0;
+    line-height:1;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:.05s;
 }
-#returnTopControl:focus-visible{
-    outline:2px solid #93c5fd;
-    outline-offset:3px;
+.back-to-top.visible{opacity:.55;visibility:visible;pointer-events:auto}
+.back-to-top:hover{opacity:1}
+
+@media(max-width:700px){
+    html,body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+    body{padding:.8rem}
+    .container{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        padding:1.25rem;
+        border-radius:22px;
+    }
+    .papers-list{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+    }
+    .paper-item{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        padding:1rem;
+    }
+    .paper-title,
+    .paper-meta,
+    .meta-row{
+        max-width:100%;
+        min-width:0;
+        overflow-wrap:anywhere;
+        word-break:break-word;
+    }
+    .page-title{font-size:1.8rem}
+    .toolbar{flex-direction:column;align-items:stretch}
+    .toolbar-group{justify-content:center}
+    .last-sync{text-align:center}
+    .add-section{padding:1.2rem}
+    .form-grid{grid-template-columns:1fr}
+    .form-group.full,.add-button{grid-column:auto}
+    .dialog{
+        width:100%;
+        max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        border-radius:20px;
+    }
+    .dialog-scroll{padding:1.2rem 1.2rem .8rem}
+    .dialog-actions{padding:.85rem 1.2rem max(.85rem,env(safe-area-inset-bottom))}
+    .combo-panel{max-height:230px}
+    .combo-pill{grid-template-columns:minmax(0,1fr) 48px 48px}
+    .combo-pill-edit,.combo-pill-delete{min-width:0;padding:0 .45rem}
+    .back-to-top{right:3px;top:70%;width:24px;height:24px;font-size:.7rem}
 }
 </style>
-
-
-
 </head>
 <body>
-<div id="pageTopAnchor" aria-hidden="true"></div>
 <main class="container">
-<h1 class="page-title">Press <span class="cloud-status"><span class="status-dot" id="statusDot"></span><span id="statusText">正在读取公开数据…</span></span></h1>
+    <h1 class="page-title">
+        Papers
+        <span class="cloud-status">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">公开浏览</span>
+        </span>
+    </h1>
 
-<section class="toolbar">
-<div class="toolbar-group">
-<button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
-<button class="btn" id="configBtn" type="button">配置</button>
-<button class="btn" id="manageBtn" type="button">管理</button>
-<button class="btn" id="exportBtn" type="button">导出</button>
-</div>
-<span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
-</section>
+    <section class="toolbar">
+        <div class="toolbar-group">
+            <button class="btn btn-sync" id="syncBtn" type="button" disabled>同步</button>
+            <button class="btn" id="configBtn" type="button">编辑登录</button>
+            <button class="btn" id="exportBtn" type="button" disabled>导出</button>
+            <button class="btn" id="importBtn" type="button" disabled>导入</button>
+            <input type="file" id="fileInput" accept=".json,application/json" hidden>
+        </div>
+        <span class="last-sync" id="lastSyncTime">正在加载公开内容…</span>
+    </section>
 
-<section class="add-section hidden" id="addSection">
-<h2>添加</h2>
-<div class="form-grid">
-<div class="form-group full">
-<label for="bookNameInput">书名</label>
-<input type="text" id="bookNameInput" autocomplete="off" autofocus>
-</div>
-<div class="bookno-tag-row">
-<div class="form-group">
-<label for="bookNoInput">书号</label>
-<input type="text" id="bookNoInput" autocomplete="off">
-</div>
-<div class="form-group">
-<label for="tagInput">标签</label>
-<div class="combo" id="tagCombo">
-<div class="combo-selected" id="tagSelected"></div>
-<div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off">
-<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
-</div>
-</div>
-</div>
-<div class="form-group full">
-<label for="institutionInput">出版</label>
-<div class="combo" id="institutionCombo">
-<div class="combo-row">
-<input type="text" id="institutionInput" autocomplete="off">
-<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
-</div>
-</div>
-<div class="form-group full">
-<label for="categoryInput">书架</label>
-<div class="combo" id="categoryCombo">
-<div class="combo-selected" id="categorySelected"></div>
-<div class="combo-row">
-<input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
-</div>
-<div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
-</div>
-</div>
-<button class="add-button" id="addBtn" type="button">添加</button>
-</div>
-</section>
+    <section class="visitor-note" id="visitorNote">
+        <button class="visitor-login-link" id="visitorLoginBtn" type="button">编辑登录</button>
+    </section>
 
-<section>
-<div class="list-header"><h2>总表</h2><span class="count-badge" id="countDisplay">0</span></div>
-<div class="press-list" id="pressList"><div class="empty-state">加载中…</div></div>
-</section>
+    <section class="add-section hidden" id="editorSection">
+        <h2>添加</h2>
+        <div class="form-grid">
+            <div class="form-group full">
+                <label for="titleInput">标题</label>
+                <input class="input" id="titleInput" type="text" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="journalInput">刊名</label>
+                <div class="combo" id="journalCombo">
+                    <div class="combo-row">
+                        <input class="input" id="journalInput" type="text" autocomplete="off">
+                        <button class="combo-toggle" id="journalToggle" type="button" aria-label="展开刊名历史">▾</button>
+                    </div>
+                    <div class="combo-panel hidden" id="journalPanel">
+                        <div id="journalOptions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="yearInput">刊期</label>
+                <input class="input" id="yearInput" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="issueInput">刊号</label>
+                <div class="combo" id="issueCombo">
+                    <div class="combo-row">
+                        <input class="input" id="issueInput" type="text" autocomplete="off">
+                        <button class="combo-toggle" id="issueToggle" type="button" aria-label="展开刊号历史">▾</button>
+                    </div>
+                    <div class="combo-panel hidden" id="issuePanel">
+                        <div id="issueOptions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="journalNoteInput">刊注</label>
+                <div class="combo" id="journalNoteCombo">
+                    <div class="combo-row">
+                        <input class="input" id="journalNoteInput" type="text" autocomplete="off">
+                        <button class="combo-toggle" id="journalNoteToggle" type="button" aria-label="展开刊注历史">▾</button>
+                    </div>
+                    <div class="combo-panel hidden" id="journalNotePanel">
+                        <div id="journalNoteOptions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-button" id="addBtn" type="button">提交</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="list-header">
+            <h2>总表</h2>
+            <span class="count-badge" id="countDisplay">0</span>
+        </div>
+        <div class="papers-list" id="papersList">
+            <div class="empty-state"></div>
+        </div>
+    </section>
 </main>
 
-<section class="overlay hidden" id="editModal">
-<div class="dialog">
-<div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">标签始终按开头两位数字升序显示。</p>
+<section class="overlay hidden" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editHeading">
+    <div class="dialog">
+        <div class="dialog-scroll">
+            <h3 id="editHeading">编辑 Papers</h3>
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="editTitle">标题</label>
+                    <input class="input" id="editTitle" type="text" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="editIssue">刊号</label>
+                    <div class="combo" id="editIssueCombo">
+                        <div class="combo-row">
+                            <input class="input" id="editIssue" type="text" autocomplete="off">
+                            <button class="combo-toggle" id="editIssueToggle" type="button">▾</button>
+                        </div>
+                        <div class="combo-panel hidden" id="editIssuePanel">
+                            <div id="editIssueOptions"></div>
+                        </div>
+                    </div>
+                </div>
 
-<div class="form-group">
-<label for="editBookName">书名</label>
-<div class="edit-title-field">
-<input autocomplete="off" id="editBookName" type="text"/>
-<button class="clear-field-btn" id="clearEditBookName" type="button" aria-label="删除书名">×</button>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="editJournal">刊名</label>
+                    <div class="combo" id="editJournalCombo">
+                        <div class="combo-row">
+                            <input class="input" id="editJournal" type="text" autocomplete="off">
+                            <button class="combo-toggle" id="editJournalToggle" type="button">▾</button>
+                        </div>
+                        <div class="combo-panel hidden" id="editJournalPanel">
+                            <div id="editJournalOptions"></div>
+                        </div>
+                    </div>
+                </div>
 
-<div class="form-group">
-<label for="editInstitution">出版</label>
-<div class="combo" id="editInstitutionCombo">
-<div class="combo-row">
-<input autocomplete="off" id="editInstitution" type="text"/>
-<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button">▾</button>
-</div>
-<div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
-</div>
-</div>
+                <div class="form-group">
+                    <label for="editYear">刊期</label>
+                    <div class="clearable-input"><input class="input" id="editYear" type="text" inputmode="numeric" autocomplete="off"><button class="input-clear" id="clearEditYear" type="button">×</button></div>
+                </div>
 
-<div class="form-group">
-<label for="editBookNo">书号</label>
-<div class="clearable-field">
-<input autocomplete="off" id="editBookNo" type="text"/>
-<button class="clear-field-btn" id="clearEditBookNo" type="button" aria-label="删除书号">×</button>
-</div>
-</div>
-
-<div class="edit-two-column-row">
-<div class="form-group">
-<label for="editTag">标签</label>
-<div class="combo" id="editTagCombo">
-<div class="combo-selected" id="editTagSelected"></div>
-<div class="combo-row">
-<input autocomplete="off" id="editTag" type="text"/>
-<button aria-label="展开标签历史" class="combo-toggle" id="editTagToggle" type="button">▾</button>
-</div>
-<div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
-</div>
-</div>
-
-<div class="form-group">
-<label for="editCategory">书架</label>
-<div class="combo" id="editCategoryCombo">
-<div class="combo-selected" id="editCategorySelected"></div>
-<div class="combo-row">
-<input autocomplete="off" id="editCategory" type="text"/>
-<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button">▾</button>
-</div>
-<div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
-</div>
-</div>
-</div>
-
-</div>
-
-<div class="dialog-actions">
-<button class="btn btn-danger" id="editDelete" type="button">删除</button>
-<button class="btn" id="editCancel" type="button">取消</button>
-<button class="btn btn-primary" id="editSave" type="button">保存</button>
-</div>
-</div>
+                <div class="form-group full">
+                    <label for="editJournalNote">刊注</label>
+                    <div class="combo" id="editJournalNoteCombo">
+                        <div class="combo-row">
+                            <input class="input" id="editJournalNote" type="text" autocomplete="off">
+                            <button class="combo-toggle" id="editJournalNoteToggle" type="button">▾</button>
+                        </div>
+                        <div class="combo-panel hidden" id="editJournalNotePanel">
+                            <div id="editJournalNoteOptions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button class="btn btn-danger" id="editDelete" type="button">删除</button>
+            <button class="btn" id="editCancel" type="button">取消</button>
+            <button class="btn btn-primary" id="editSave" type="button">保存</button>
+        </div>
+    </div>
 </section>
 
-<section class="overlay hidden" id="configModal">
-<form class="dialog" id="configForm" autocomplete="on">
-<div class="dialog-scroll">
-<h3>GitHub 管理配置</h3>
-<p class="dialog-desc">任何人均可直接浏览 press_data.json 中的公开数据，无需 Token。只有配置 Token 后才可新增、编辑、删除、管理出版选项和同步。</p>
-<div class="form-group"><label for="cfgOwner">仓库所有者</label><input id="cfgOwner" name="github-owner" type="text" autocomplete="username"></div>
-<div class="form-group"><label for="cfg">仓库名称</label><input id="cfg" type="text" autocomplete="off"></div>
-<div class="form-group"><label for="cfgFile">数据文件路径</label><input id="cfgFile" type="text" value="press_data.json" autocomplete="off"></div>
-<div class="form-group"><label for="cfgToken">GitHub Personal Access Token</label><input id="cfgToken" name="github-token" type="password" autocomplete="current-password" spellcheck="false"></div>
-<label class="remember-row"><input type="checkbox" id="rememberToken" checked><span>在本设备保存 Token。取消勾选时，Token 仅保存到当前浏览器会话。</span></label>
-</div>
-<div class="dialog-actions"><button class="btn" id="configCancel" type="button">取消</button><button class="btn btn-primary" type="submit">保存并连接</button></div>
-</form>
+<section class="overlay hidden" id="configModal" role="dialog" aria-modal="true" aria-labelledby="configHeading">
+    <form class="dialog" id="configForm" autocomplete="on">
+        <div class="dialog-scroll">
+            <h3 id="configHeading">GitHub 登录配置</h3>
+            <p class="dialog-desc">
+                浏览 Papers 不需要 Token。Token 仅用于新增、编辑、删除、导入和同步。
+                公开数据文件默认为 papers_data.json。
+            </p>
+            <div class="form-group" style="margin-bottom:.9rem">
+                <label for="cfgOwner">仓库所有者</label>
+                <input class="input" id="cfgOwner" name="github-owner" type="text" autocomplete="username">
+            </div>
+            <div class="form-group" style="margin-bottom:.9rem">
+                <label for="cfgRepo">仓库名称</label>
+                <input class="input" id="cfgRepo" type="text" autocomplete="off">
+            </div>
+            <div class="form-group" style="margin-bottom:.9rem">
+                <label for="cfgFile">数据文件路径</label>
+                <input class="input" id="cfgFile" type="text" value="papers_data.json" autocomplete="off">
+            </div>
+            <div class="form-group" style="margin-bottom:.9rem">
+                <label for="cfgToken">GitHub Personal Access Token</label>
+                <input class="input" id="cfgToken" name="github-token" type="password" autocomplete="current-password" spellcheck="false">
+            </div>
+            <label class="remember-row">
+                <input type="checkbox" id="rememberToken" checked>
+                <span>在本设备保存 Token；取消勾选则仅保留在当前页面内存，刷新或关闭页面后失效。</span>
+            </label>
+        </div>
+        <div class="dialog-actions">
+            <button class="btn" id="configCancel" type="button">取消</button>
+            <button class="btn btn-primary" id="configSave" type="submit">保存并登录</button>
+        </div>
+    </form>
 </section>
 
-<section class="overlay hidden" id="manageModal">
-<div class="dialog manage-dialog">
-<div class="manage-fixed-top">
-<h3>出版管理</h3>
-<p class="dialog-desc">“出版”下拉菜单完全按这里的行号排序。新增时指定行号即可直接插入对应位置；“移至行”的初始数字就是当前行号，修改后会立即换位。无需拖拽。</p>
-<div class="form-group">
-<label for="manageInstitutionInput">新增出版选项</label>
-<div class="manage-add-row">
-<input type="text" id="manageInstitutionInput" autocomplete="off" placeholder="出版选项名称">
-<input type="number" id="manageInstitutionLineInput" min="1" step="1" inputmode="numeric" aria-label="新增选项插入行号" placeholder="行号">
-<button class="btn btn-primary" id="manageInstitutionAdd" type="button">添加</button>
-</div>
-</div>
-</div>
-<div class="manage-table-scroll">
-<div class="manage-line-head" aria-hidden="true"><span>出版选项</span><span>移至行</span><span></span><span></span></div>
-<div class="manage-list" id="manageInstitutionOptions"></div>
-</div>
-<div class="dialog-actions"><button class="btn btn-primary" id="manageClose" type="button">完成</button></div>
-</div>
-</section>
-
-
-<button id="returnTopControl" type="button" aria-label="回到顶部" title="回到顶部"></button>
-<script>
-// 回到顶部无锚点版（desktop-chrome-v4-no-hash）
-// 核心原则：
-// 1) 控件使用 button，不再通过 href fragment 改变网址；
-// 2) 主页面直接把根滚动节点校正到 0，并在后续两帧补强；
-// 3) 弹窗打开时滚动弹窗自己的滚动容器，不影响主页面网址；
-// 4) 如旧网址已经带有 #pageTopAnchor，点击时使用 history.replaceState 静默移除；
-// 5) 暴露 __returnTopDebug()，可查看点击与滚动状态。
-(function(){
-    'use strict';
-
-    const control=document.getElementById('returnTopControl');
-    if(!control)return;
-
-    const debugState={
-        version:'desktop-chrome-v4-no-hash',
-        clickCount:0,
-        lastClickAt:0,
-        lastBefore:null,
-        lastAfterImmediate:null,
-        lastAfterFrame:null,
-        lastMode:'none'
-    };
-
-    function isVisible(id){
-        const el=document.getElementById(id);
-        return Boolean(el&&!el.classList.contains('hidden'));
-    }
-
-    function visibleModalScroller(){
-        if(isVisible('editModal'))return document.querySelector('#editModal .dialog-scroll');
-        if(isVisible('configModal'))return document.querySelector('#configForm .dialog-scroll');
-        if(isVisible('manageModal'))return document.querySelector('#manageModal .manage-table-scroll');
-        return null;
-    }
-
-    function rootScroller(){
-        return document.scrollingElement||document.documentElement||document.body;
-    }
-
-    function rootTop(){
-        return Math.max(
-            Number(window.scrollY)||0,
-            Number(window.pageYOffset)||0,
-            Number(document.documentElement?.scrollTop)||0,
-            Number(document.body?.scrollTop)||0,
-            Number(rootScroller()?.scrollTop)||0
-        );
-    }
-
-    function writeRootTopZero(){
-        const root=rootScroller();
-        try{window.scrollTo(0,0)}catch(_){}
-        if(root)root.scrollTop=0;
-        if(document.documentElement)document.documentElement.scrollTop=0;
-        if(document.body)document.body.scrollTop=0;
-    }
-
-    function clearReturnTopHash(){
-        if(location.hash!=='#pageTopAnchor')return;
-        try{
-            history.replaceState(history.state,'',`${location.pathname}${location.search}`);
-        }catch(_){}
-    }
-
-    function scrollModalToTop(scroller){
-        if(!scroller)return;
-        try{scroller.scrollTo({top:0,left:0,behavior:'auto'})}catch(_){}
-        scroller.scrollTop=0;
-        scroller.scrollLeft=0;
-        requestAnimationFrame(()=>{
-            scroller.scrollTop=0;
-        });
-    }
-
-    control.addEventListener('click',function(event){
-        event.preventDefault();
-        debugState.clickCount+=1;
-        debugState.lastClickAt=Date.now();
-        debugState.lastBefore=rootTop();
-        clearReturnTopHash();
-
-        const modalScroller=visibleModalScroller();
-        if(modalScroller){
-            debugState.lastMode='modal-no-hash';
-            scrollModalToTop(modalScroller);
-            debugState.lastAfterImmediate=modalScroller.scrollTop;
-            requestAnimationFrame(()=>{
-                debugState.lastAfterFrame=modalScroller.scrollTop;
-            });
-            return;
-        }
-
-        debugState.lastMode='js-scroll-no-hash';
-        writeRootTopZero();
-        clearReturnTopHash();
-        debugState.lastAfterImmediate=rootTop();
-
-        requestAnimationFrame(()=>{
-            writeRootTopZero();
-            clearReturnTopHash();
-            debugState.lastAfterFrame=rootTop();
-
-            requestAnimationFrame(()=>{
-                writeRootTopZero();
-                clearReturnTopHash();
-            });
-        });
-    },false);
-
-    window.__returnTopDebug=function(){
-        const modal=visibleModalScroller();
-        const root=rootScroller();
-        const r=control.getBoundingClientRect();
-        const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
-        return {
-            version:debugState.version,
-            clickCount:debugState.clickCount,
-            lastClickAt:debugState.lastClickAt,
-            lastMode:debugState.lastMode,
-            lastBefore:debugState.lastBefore,
-            lastAfterImmediate:debugState.lastAfterImmediate,
-            lastAfterFrame:debugState.lastAfterFrame,
-            locationHash:location.hash,
-            windowScrollY:window.scrollY,
-            documentElementScrollTop:document.documentElement?.scrollTop||0,
-            bodyScrollTop:document.body?.scrollTop||0,
-            rootTag:root?.tagName||null,
-            rootScrollTop:root?.scrollTop||0,
-            rootClientHeight:root?.clientHeight||0,
-            rootScrollHeight:root?.scrollHeight||0,
-            modalScroller:modal?{
-                className:modal.className,
-                scrollTop:modal.scrollTop,
-                clientHeight:modal.clientHeight,
-                scrollHeight:modal.scrollHeight
-            }:null,
-            controlHitId:hit?.id||'',
-            controlHitTag:hit?.tagName||''
-        };
-    };
-})();
-</script>
-
-<div class="toast hidden" id="toast"></div>
-
-
+<button class="back-to-top" id="backToTopBtn" type="button" aria-label="回到顶部"></button>
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (()=>{
 'use strict';
 
-const PUBLIC_FILE='press_data.json',NS='press_public_v1';
-const DB_NAME=`${NS}:idb_v1`,DB_STORE='kv';
-const CONFIG_KEY='config',TOKEN_PERSISTED_KEY='token_persisted',META_KEY='meta',WORKCOPY_KEY='workcopy',PUBLIC_CACHE_KEY='public_cache';
-const OPFS_WORKCOPY_FILE='press_workcopy_v1.json';
-const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
 const $=id=>document.getElementById(id);
-const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
-addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),addBtn=$('addBtn'),
-pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),clearEditBookNo=$('clearEditBookNo'),clearEditBookNoTop=$('clearEditBookNoTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
-configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfg=$('cfg'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),toast=$('toast');
+const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),
+exportBtn=$('exportBtn'),importBtn=$('importBtn'),fileInput=$('fileInput'),lastSyncTime=$('lastSyncTime'),
+editorSection=$('editorSection'),visitorNote=$('visitorNote'),visitorLoginBtn=$('visitorLoginBtn'),titleInput=$('titleInput'),yearInput=$('yearInput'),
+journalInput=$('journalInput'),journalToggle=$('journalToggle'),journalPanel=$('journalPanel'),journalOptions=$('journalOptions'),journalCombo=$('journalCombo'),
+issueInput=$('issueInput'),issueToggle=$('issueToggle'),issuePanel=$('issuePanel'),issueOptions=$('issueOptions'),issueCombo=$('issueCombo'),
+journalNoteInput=$('journalNoteInput'),journalNoteToggle=$('journalNoteToggle'),journalNotePanel=$('journalNotePanel'),journalNoteOptions=$('journalNoteOptions'),journalNoteCombo=$('journalNoteCombo'),
+addBtn=$('addBtn'),countDisplay=$('countDisplay'),papersList=$('papersList'),
+editModal=$('editModal'),editTitle=$('editTitle'),editYear=$('editYear'),clearEditYear=$('clearEditYear'),
+editJournal=$('editJournal'),editJournalToggle=$('editJournalToggle'),editJournalPanel=$('editJournalPanel'),editJournalOptions=$('editJournalOptions'),editJournalCombo=$('editJournalCombo'),
+editIssue=$('editIssue'),editIssueToggle=$('editIssueToggle'),editIssuePanel=$('editIssuePanel'),editIssueOptions=$('editIssueOptions'),editIssueCombo=$('editIssueCombo'),
+editJournalNote=$('editJournalNote'),editJournalNoteToggle=$('editJournalNoteToggle'),editJournalNotePanel=$('editJournalNotePanel'),editJournalNoteOptions=$('editJournalNoteOptions'),editJournalNoteCombo=$('editJournalNoteCombo'),
+editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
+configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfgRepo=$('cfgRepo'),cfgFile=$('cfgFile'),
+cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),configSave=$('configSave'),
+backToTopBtn=$('backToTopBtn'),toast=$('toast');
 
-let state={entries:[],institutions:[],categories:[],tags:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
-let syncing=false,syncQueued=false,syncQueuedShowResult=false,autoTimer=null,retryTimer=null,toastTimer=null,editOverlayPointerDown=false,adminReady=false,lastWriteAt=0,syncFailureCount=0;
-const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
+const MAX_BYTES=900*1024;
+const AUTO_DELAY=700;
+const API_VERSION='2026-03-10';
+const PUBLIC_DATA_FILE=String(document.querySelector('meta[name="papers-data-file"]')?.content||'papers_data.json').trim()||'papers_data.json';
 
-// 使用 Visual Viewport 驱动手机配置弹窗高度。虚拟键盘/地址栏变化时，保存按钮仍保持在可视区域内。
-function updateVisualViewport(){
-    const vv=window.visualViewport;
-    const h=Math.max(240,Math.round(vv?vv.height:window.innerHeight));
-    const top=Math.max(0,Math.round(vv?vv.offsetTop:0));
-    document.documentElement.style.setProperty('--press-vv-height',`${h}px`);
-    document.documentElement.style.setProperty('--press-vv-top',`${top}px`)
+function pageIdentity(){
+    let p=(location.pathname||'/').replace(/\\/g,'/').replace(/\/+/g,'/').replace(/\/(?:index\.html?)$/i,'/');
+    if(p.length>1&&p.endsWith('/'))p=p.slice(0,-1);
+    return `${location.origin}${p}`;
 }
-updateVisualViewport();
-window.addEventListener('resize',updateVisualViewport,{passive:true});
-if(window.visualViewport){
-    window.visualViewport.addEventListener('resize',updateVisualViewport,{passive:true});
-    window.visualViewport.addEventListener('scroll',updateVisualViewport,{passive:true})
+function hashIdentity(value){
+    let hash=0x811c9dc5;
+    for(let i=0;i<value.length;i++){hash^=value.charCodeAt(i);hash=Math.imul(hash,0x01000193)}
+    return (hash>>>0).toString(16).padStart(8,'0');
 }
+const PAGE_INSTANCE_ID=hashIdentity(pageIdentity());
+const NS=`papers_private:${PAGE_INSTANCE_ID}`;
+const CONFIG_KEY=`${NS}:config`;
+const TOKEN_KEY=`${NS}:token`;
+const META_KEY=`${NS}:meta`;
+const PUBLIC_CACHE_KEY=`${NS}:public_cache`;
+const WORKING_COPY_KEY=`${NS}:working_copy`;
+const IDB_NAME=`${NS}:indexeddb_v1`;
+const IDB_STORE='kv';
+const OPFS_WORKING_FILE=`papers-working-${PAGE_INSTANCE_ID}.json`;
 
-function clean(v){return String(v??'').normalize('NFKC').trim()}
-function cleanTitle(v){return String(v??'').trim()}
+let data={entries:[],histories:{journals:[],issues:[],notes:[]},profiles:[]};
+let config={owner:'',repo:'',file:'papers_data.json',token:''};
+let meta={target:'',fingerprint:null,sha:null,lastSyncAt:null};
+let unlocked=false,publicLoaded=false,syncing=false,autoTimer=null,editingId='',editInitialSnapshot='',toastTimer=null,rememberTokenPreference=true;
+let idbPromise=null,workingSaveChain=Promise.resolve();
+
+function clean(v){return String(v??'').trim()}
+function key(v){return clean(v).normalize('NFKC').toLocaleLowerCase('zh-CN')}
 function esc(v){const d=document.createElement('div');d.textContent=String(v??'');return d.innerHTML}
 function attr(v){return esc(v).replace(/"/g,'&quot;')}
-function uid(){return crypto?.randomUUID?crypto.randomUUID():`press_${Date.now()}_${Math.random().toString(36).slice(2,9)}`}
-function key(v){return clean(v).toLocaleLowerCase('zh-CN')}
-function uniq(values){const m=new Map();for(const raw of values||[]){const v=clean(raw);if(v&&!m.has(key(v)))m.set(key(v),v)}return [...m.values()]}
-function sortAuto(values){return uniq(values).sort((a,b)=>collator.compare(a,b))}
-function compareBookNo(a,b){
-    const aa=clean(a),bb=clean(b);
-    if(aa&&!bb)return-1;
-    if(!aa&&bb)return 1;
-    if(!aa&&!bb)return 0;
+function uid(){
+    return crypto?.randomUUID?crypto.randomUUID():`papers_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
+}
+const collator=new Intl.Collator('zh-CN',{numeric:true,sensitivity:'base'});
+const pinyinCollator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
+const latinCollator=new Intl.Collator('en',{numeric:true,sensitivity:'base'});
 
-    // 含“-”的书号排在最前，并保持原有自然排序规则。
-    // 其次是含“·”的书号：先比较“·”前数字，再比较“·”后数字。
-    // 其它书号仍按原有自然排序规则排列。
-    const group=s=>s.includes('-')?0:(s.includes('·')?1:2);
-    const ga=group(aa),gb=group(bb);
-    if(ga!==gb)return ga-gb;
+function titleSortInfo(value){
+    const raw=clean(value).normalize('NFKC');
+    if(!raw)return{type:99,text:'',number:null};
 
-    if(ga===1){
-        const [aLeftRaw='',aRightRaw='']=aa.split('·',2);
-        const [bLeftRaw='',bRightRaw='']=bb.split('·',2);
-        const aLeft=Number(clean(aLeftRaw)),bLeft=Number(clean(bLeftRaw));
-        const aRight=Number(clean(aRightRaw)),bRight=Number(clean(bRightRaw));
-        if(Number.isFinite(aLeft)&&Number.isFinite(bLeft)&&aLeft!==bLeft)return aLeft-bLeft;
-        if(Number.isFinite(aRight)&&Number.isFinite(bRight)&&aRight!==bRight)return aRight-bRight;
+    // 忽略标题开头的标点、空格及其它符号，
+    // 直到遇到首个汉字 / 数字 / 拉丁字母，再按该字符类型排序。
+    const chars=Array.from(raw);
+    let startIndex=-1;
+    for(let i=0;i<chars.length;i++){
+        const ch=chars[i];
+        if(/^\p{Script=Han}$/u.test(ch)||/^\d$/.test(ch)||/^[A-Za-z]$/.test(ch)){
+            startIndex=i;
+            break;
+        }
     }
 
-    return collator.compare(aa,bb)
-}
-function normalizeMulti(value){
-    const values=Array.isArray(value)?value:[value];
-    return uniq(values)
-}
-function tagPrefixNumber(value){
-    const match=clean(value).match(/^(\d{2})/);
-    return match?Number(match[1]):Number.POSITIVE_INFINITY
-}
-function compareTagsByPrefix(a,b){
-    const aa=clean(a),bb=clean(b);
-    const ap=tagPrefixNumber(aa),bp=tagPrefixNumber(bb);
-    if(ap!==bp)return ap-bp;
-    return collator.compare(aa,bb)
-}
-function sortTags(values){
-    const list=Array.isArray(values)?values:[values];
-    return uniq(list).sort(compareTagsByPrefix)
-}
-function renderInstitution(raw){
-    const s=clean(raw);
-    const re=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
-    let html='',last=0,m;
-    while((m=re.exec(s))){
-        html+=esc(s.slice(last,m.index));
-        html+=`<a href="${attr(m[2])}" target="_blank" rel="noopener noreferrer">${esc(m[1])}</a>`;
-        last=m.index+m[0].length
+    if(startIndex<0){
+        return{type:3,text:raw,number:null};
     }
-    return html+esc(s.slice(last))
-}
-function renderInstitutionChoice(raw){
-    return renderInstitution(raw);
-}
-function renderBookName(raw){
-    const s=String(raw??'').trim();
-    const re=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
-    let html='',last=0,m;
-    while((m=re.exec(s))){
-        html+=esc(s.slice(last,m.index));
-        html+=`<a href="${attr(m[2])}" target="_blank" rel="noopener noreferrer">${esc(m[1])}</a>`;
-        last=m.index+m[0].length
+
+    const text=chars.slice(startIndex).join('');
+    const first=chars[startIndex];
+
+    if(/^\p{Script=Han}$/u.test(first)){
+        return{type:0,text,number:null};
     }
-    return html+esc(s.slice(last))
+
+    if(/^\d$/.test(first)){
+        const numberMatch=text.match(/^\d+(?:\.\d+)?/);
+        return{type:1,text,number:numberMatch?Number(numberMatch[0]):Number(first)};
+    }
+
+    return{type:2,text,number:null};
 }
-function normEntry(x){
+function comparePaperTitle(a,b){
+    const x=titleSortInfo(a),y=titleSortInfo(b);
+
+    if(x.type!==y.type)return x.type-y.type;
+
+    if(x.type===0){
+        const r=pinyinCollator.compare(x.text,y.text);
+        if(r!==0)return r;
+    }
+
+    if(x.type===1&&x.number!==y.number){
+        return x.number-y.number;
+    }
+
+    if(x.type===2){
+        const r=latinCollator.compare(x.text,y.text);
+        if(r!==0)return r;
+    }
+
+    const r=collator.compare(x.text,y.text);
+    if(r!==0)return r;
+
+    return x.text<y.text?-1:(x.text>y.text?1:0);
+}
+
+function paperTitleGroup(value){
+    const info=titleSortInfo(value);
+
+    // 总表语言大组：中文标题最前，英文标题其次，其它标题最后。
+    // 若标题以数字开头，不把它单独归入“其它”，而是继续向后查找
+    // 第一个汉字或拉丁字母，用它判断该标题属于中文组还是英文组。
+    if(info.type===0)return 0;
+    if(info.type===2)return 1;
+    if(info.type===1){
+        const chars=Array.from(info.text);
+        for(const ch of chars){
+            if(/^\p{Script=Han}$/u.test(ch))return 0;
+            if(/^[A-Za-z]$/.test(ch))return 1;
+        }
+    }
+    return 2;
+}
+function comparePaperField(a,b){
+    const x=clean(a).normalize('NFKC');
+    const y=clean(b).normalize('NFKC');
+
+    // 有值的条目优先；空白排在该层级的后面。
+    if(Boolean(x)!==Boolean(y))return x?-1:1;
+    if(!x&&!y)return 0;
+
+    const r=collator.compare(x,y);
+    if(r!==0)return r;
+    return x<y?-1:(x>y?1:0);
+}
+function comparePaperEntry(a,b){
+    const groupA=paperTitleGroup(a?.title);
+    const groupB=paperTitleGroup(b?.title);
+
+    // 第一层：中文标题 -> 英文标题 -> 其它标题。
+    if(groupA!==groupB)return groupA-groupB;
+
+    const issueA=clean(a?.issue);
+    const issueB=clean(b?.issue);
+    const yearA=clean(a?.year);
+    const yearB=clean(b?.year);
+    const bothBlankA=!issueA&&!yearA;
+    const bothBlankB=!issueB&&!yearB;
+
+    // 刊号、刊期都空白的记录放在本语言组的最后，
+    // 这些空白记录之间再使用原来的标题排序。
+    if(bothBlankA!==bothBlankB)return bothBlankA?1:-1;
+    if(bothBlankA&&bothBlankB){
+        const byTitle=comparePaperTitle(a?.title,b?.title);
+        if(byTitle!==0)return byTitle;
+        return String(a?.id||'').localeCompare(String(b?.id||''));
+    }
+
+    // 第二层：刊号从小到大；空白刊号排在有刊号之后。
+    const byIssue=comparePaperField(issueA,issueB);
+    if(byIssue!==0)return byIssue;
+
+    // 第三层：刊号相同后，刊期从小到大；空白刊期排在有刊期之后。
+    const byYear=comparePaperField(yearA,yearB);
+    if(byYear!==0)return byYear;
+
+    // 刊号、刊期完全相同时，用原有标题排序保证结果稳定且可预期。
+    const byTitle=comparePaperTitle(a?.title,b?.title);
+    if(byTitle!==0)return byTitle;
+
+    return String(a?.id||'').localeCompare(String(b?.id||''));
+}
+function uniq(values){
+    const out=[],seen=new Set();
+    for(const raw of values||[]){
+        const v=clean(raw),k=key(v);
+        if(!v||seen.has(k))continue;
+        seen.add(k);out.push(v);
+    }
+    return out;
+}
+function sortOptions(values){
+    return uniq(values).sort(comparePaperTitle)
+}
+
+function normalizeEntry(x){
     if(!x||typeof x!=='object')return null;
-    const bookName=cleanTitle(x.bookName);if(!bookName)return null;
-    const bookNo=clean(x.bookNo),institution=clean(x.institution);
-    const category=normalizeMulti(x.category),tag=sortTags(x.tag);
-    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,tag}
-}
-function norm(v){
-    const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
-    const entries=(Array.isArray(s.entries)?s.entries:[]).map(normEntry).filter(Boolean);
-
-    // 出版、书架使用历史数组自身的顺序，供人工调整。
-    // 旧数据没有对应历史字段时，仅首次按现有条目出现顺序建立历史。
-    const institutions=uniq(
-        Array.isArray(s.institutions)?s.institutions:entries.map(x=>x.institution).filter(Boolean)
-    );
-    const categories=uniq(
-        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
-    );
-
-    // 标签不能人工排序，严格按开头两位数字从小到大排列；同前缀再按自然顺序。
-    const tags=sortTags(
-        Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
-    );
-
-    // 总表：先按“出版”下拉菜单顺序；出版相同再按书号排序。
-    // 已从出版历史中删除、但仍被旧条目使用的出版放在已配置出版之后。
-    const institutionOrder=new Map(institutions.map((v,i)=>[key(v),i]));
-    entries.sort((a,b)=>{
-        const ai=institutionOrder.has(key(a.institution))?institutionOrder.get(key(a.institution)):Number.MAX_SAFE_INTEGER;
-        const bi=institutionOrder.has(key(b.institution))?institutionOrder.get(key(b.institution)):Number.MAX_SAFE_INTEGER;
-        if(ai!==bi)return ai-bi;
-        if(ai===Number.MAX_SAFE_INTEGER){
-            const byInstitution=collator.compare(a.institution,b.institution);
-            if(byInstitution!==0)return byInstitution
-        }
-        const byNo=compareBookNo(a.bookNo,b.bookNo);
-        if(byNo!==0)return byNo;
-        const byName=collator.compare(a.bookName,b.bookName);
-        if(byName!==0)return byName;
-        return 0
-    });
-    return{schemaVersion:4,entries,institutions,categories,tags}
-}
-function fingerprint(v=state){return JSON.stringify(norm(v))}
-function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
-function base(){return location.pathname.replace(/[^/]*$/,'')}
-function publicUrl(){return `${location.origin}${base()}${PUBLIC_FILE}?v=${Date.now()}`}
-function target(){return `${config.owner}/${config.repo}/${config.file}`}
-function pathEncode(p){return String(p).split('/').filter(Boolean).map(encodeURIComponent).join('/')}
-let storageDbPromise=null,workCopyCache=null,publicCacheValue=null,persistedToken='',storageReady=false,workCopyWriteChain=Promise.resolve(),metaWriteChain=Promise.resolve();
-function openStorageDb(){
-    if(storageDbPromise)return storageDbPromise;
-    storageDbPromise=new Promise((resolve,reject)=>{
-        const req=indexedDB.open(DB_NAME,1);
-        req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE)};
-        req.onsuccess=()=>resolve(req.result);
-        req.onerror=()=>reject(req.error||new Error('IndexedDB 打开失败'));
-    });
-    return storageDbPromise
-}
-async function idbGet(key){try{const db=await openStorageDb();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readonly'),req=tx.objectStore(DB_STORE).get(key);req.onsuccess=()=>resolve(req.result??null);req.onerror=()=>reject(req.error)})}catch(e){console.error('IndexedDB 读取失败:',key,e);return null}}
-async function idbSet(key,value){const db=await openStorageDb();return new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(value,key);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('IndexedDB 写入中止'))})}
-async function idbDelete(key){try{const db=await openStorageDb();await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).delete(key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});return true}catch(e){console.error('IndexedDB 删除失败:',key,e);return false}}
-async function opfsWriteWorkCopy(record){if(!navigator.storage?.getDirectory)return false;try{const root=await navigator.storage.getDirectory(),handle=await root.getFileHandle(OPFS_WORKCOPY_FILE,{create:true}),writable=await handle.createWritable();await writable.write(JSON.stringify(record));await writable.close();return true}catch(e){console.warn('OPFS 写入失败:',e);return false}}
-async function opfsReadWorkCopy(){if(!navigator.storage?.getDirectory)return null;try{const root=await navigator.storage.getDirectory(),handle=await root.getFileHandle(OPFS_WORKCOPY_FILE),file=await handle.getFile(),raw=await file.text();const record=JSON.parse(raw);return record&&record.state?record:null}catch(e){return null}}
-function recordTime(record){const t=Date.parse(record?.savedAt||'');return Number.isFinite(t)?t:0}
-async function bootstrapStorage(){
-    try{if(navigator.storage?.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
-    const [cfg,tok,m,workIdb,pub,workOpfs]=await Promise.all([idbGet(CONFIG_KEY),idbGet(TOKEN_PERSISTED_KEY),idbGet(META_KEY),idbGet(WORKCOPY_KEY),idbGet(PUBLIC_CACHE_KEY),opfsReadWorkCopy()]);
-    storageMemory.config=cfg&&typeof cfg==='object'?cfg:{};
-    persistedToken=typeof tok==='string'?tok:'';
-    storageMemory.meta=m&&typeof m==='object'?m:{};
-    publicCacheValue=pub&&pub.state?norm(pub.state):null;
-    const candidates=[workIdb,workOpfs].filter(x=>x&&x.state);
-    const newest=candidates.sort((a,b)=>recordTime(b)-recordTime(a))[0]||null;
-    workCopyCache=newest?norm(newest.state):null;
-    if(newest){
-        const normalizedRecord={savedAt:newest.savedAt||new Date().toISOString(),state:workCopyCache};
-        idbSet(WORKCOPY_KEY,normalizedRecord).catch(()=>{});opfsWriteWorkCopy(normalizedRecord).catch(()=>{});
-    }
-    storageReady=true
-}
-const storageMemory={config:{},meta:{}};
-function show(msg,type='info'){toast.textContent=msg;toast.className=`toast ${type}`;clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.add('hidden'),3000)}
-function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.textContent=text}
-function emptyState(){return{entries:[],institutions:[],categories:[],tags:[]}}
-function saveLocal(snapshot=state){
-    const normalized=norm(snapshot);
-    if(snapshot===state)state=normalized;
-    workCopyCache=normalized;
-    if(!storageReady)return true;
-    const record={savedAt:new Date().toISOString(),state:normalized};
-    workCopyWriteChain=workCopyWriteChain.then(async()=>{
-        const results=await Promise.allSettled([idbSet(WORKCOPY_KEY,record),opfsWriteWorkCopy(record)]);
-        if(results.every(r=>r.status==='rejected'))throw new Error('本地工作副本保存失败')
-    }).catch(e=>console.error(e));
-    return true
-}
-function loadLocal(){return workCopyCache?norm(workCopyCache):null}
-async function savePublicCache(snapshot){publicCacheValue=norm(snapshot);try{await idbSet(PUBLIC_CACHE_KEY,{savedAt:new Date().toISOString(),state:publicCacheValue});return true}catch(e){console.error('公开缓存保存失败:',e);return false}}
-function loadPublicCache(){return publicCacheValue?norm(publicCacheValue):null}
-function currentRevision(){return Math.max(0,Number(meta.revision)||0)}
-function hasLocalContent(snapshot){
-    const s=snapshot?norm(snapshot):null;
-    return Boolean(s&&(s.entries.length||s.institutions.length||s.categories.length||s.tags.length))
-}
-function hasUnsyncedLocal(snapshot=loadLocal()){
-    if(!snapshot)return false;
-    if(meta.dirty)return true;
-    try{
-        if(meta.baseState&&typeof meta.baseState==='object')return fingerprint(snapshot)!==fingerprint(meta.baseState);
-        if(typeof meta.fingerprint==='string')return fingerprint(snapshot)!==meta.fingerprint
-    }catch(e){}
-    return false
-}
-function updateAdmin(){
-    const on=admin(),editable=on&&adminReady,wasHidden=addSection.classList.contains('hidden');
-    addSection.classList.toggle('hidden',!editable);
-    syncBtn.classList.toggle('hidden',!on);
-    syncBtn.disabled=Boolean(syncing||!editable);
-    manageBtn.disabled=Boolean(on&&!editable);
-    if(!on)manageModal.classList.add('hidden');
-    if(editable&&wasHidden)setTimeout(()=>bookNameInput.focus(),40)
-}
-function institutionMeta(which){
-    const edit=which==='edit';
     return{
-        label:'出版',historyKey:'institutions',
-        input:edit?editInstitution:institutionInput,
-        panel:edit?editInstitutionPanel:institutionPanel,
-        options:edit?editInstitutionOptions:institutionOptions,
-        combo:edit?editInstitutionCombo:institutionCombo,
-        toggle:edit?editInstitutionToggle:institutionToggle
-    }
-}
-function multiMeta(type,which){
-    const edit=which==='edit';
-    const map={
-        category:{
-            label:'书架',historyKey:'categories',
-            input:edit?editCategory:categoryInput,
-            panel:edit?editCategoryPanel:categoryPanel,
-            options:edit?editCategoryOptions:categoryOptions,
-            selectedBox:edit?editCategorySelected:categorySelected
-        },
-        tag:{
-            label:'标签',historyKey:'tags',
-            input:edit?editTag:tagInput,
-            panel:edit?editTagPanel:tagPanel,
-            options:edit?editTagOptions:tagOptions,
-            selectedBox:edit?editTagSelected:tagSelected
-        }
+        id:clean(x.id)||uid(),
+        title:clean(x.title),
+        year:clean(x.year),
+        journal:clean(x.journal),
+        issue:clean(x.issue),
+        journalNote:clean(x.journalNote??x.note)
     };
-    const meta=map[type];
-    meta.selection=edit?editSelections[type]:addSelections[type];
-    return meta
 }
-function sortHistory(type,values){
-    return type==='tag'?sortTags(values):uniq(values)
-}
-function multiAllowsMultiple(type,which){
-    // 只有“编辑条目 → 标签”允许多选；添加标签与书架继续严格单选。
-    return type==='tag'&&which==='edit'
-}
-function renderMultiSelected(type,which){
-    const meta=multiMeta(type,which);
-    const displaySelection=type==='tag'?sortTags(meta.selection):meta.selection;
-    meta.selectedBox.innerHTML=displaySelection.map(v=>`
-        <span class="selected-pill">
-            <span class="selected-pill-label">${esc(v)}</span>
-            <button class="selected-pill-remove" type="button" data-remove-value="${attr(v)}" aria-label="移除${meta.label} ${attr(v)}">×</button>
-        </span>
-    `).join('')
-}
-function renderMultiOptions(type,which){
-    const meta=multiMeta(type,which);
-    const q=key(meta.input.value);
-    const history=sortHistory(type,state[meta.historyKey]);
-    // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
-    const values=history.filter(v=>!q||key(v).includes(q));
-    const selectedKeys=new Set(meta.selection.map(key));
-    // 标签、书架的下拉菜单维护功能只保留在“添加”板块。
-    // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
-    const canManage=which==='add';
-    const manualOrder=canManage&&type==='category';
-    const list=values.length
-        ? `<div class="combo-option-list">${values.map(v=>{
-            const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
-            const manageButtons=canManage?`
-                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑${meta.label} ${attr(v)}" title="编辑">✓</button>
-                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>`:'';
-            return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
-                ${dragHandle}
-                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>${manageButtons}
-            </span>`
-        }).join('')}</div>`
-        : `<div class="combo-empty">${q?`没有匹配的${meta.label}`:`暂无${meta.label}`}</div>`;
-    const current=clean(meta.input.value);
-    const canAdd=canManage&&current&&!history.some(v=>key(v)===key(current));
-    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到${meta.label}</button>`:'')
-}
-function renderMultiField(type,which){
-    renderMultiSelected(type,which);
-    const meta=multiMeta(type,which);
-    const locked=meta.selection.length>0&&!multiAllowsMultiple(type,which);
-    meta.input.readOnly=locked;
-    meta.input.setAttribute('aria-readonly',locked?'true':'false');
-    meta.input.title=locked?`请先删除当前${meta.label}，再选择或输入新的${meta.label}`:'';
-    renderMultiOptions(type,which)
-}
-function renderCategoryOptions(which){renderMultiField('category',which)}
-function renderTagOptions(which){renderMultiField('tag',which)}
-function renderInstitutionOptions(which){
-    const meta=institutionMeta(which);
-    const q=key(meta.input.value);
-    const history=uniq(state.institutions);
-    // “出版”下拉菜单在添加和编辑界面只负责选择已有出版。
-    // 出版选项的新增、改名、删除和排序全部只保留在“出版管理”页面。
-    const values=history.filter(v=>!q||key(v).includes(q));
-    const list=values.length
-        ? `<div class="combo-option-list">${values.map(v=>`
-            <span class="combo-pill${key(meta.input.value)===key(v)?' selected':''}">
-                <button class="combo-pill-select institution-choice" type="button" data-select-value="${attr(v)}">${renderInstitutionChoice(v)}</button>
-            </span>
-        `).join('')}</div>`
-        : `<div class="combo-empty">${q?'没有匹配的出版':'暂无出版'}</div>`;
-    meta.options.innerHTML=list
-}
-function renderManageInstitutionOptions(){
-    const history=uniq(state.institutions);
-    manageInstitutionOptions.innerHTML=history.length
-        ? history.map((v,index)=>`
-            <div class="manage-option-row" data-manage-value="${attr(v)}">
-                <span class="manage-option-label">${renderInstitutionChoice(v)}</span>
-                <input class="manage-line-input" type="number" min="1" max="${history.length}" step="1" inputmode="numeric" value="${index+1}" data-move-value="${attr(v)}" aria-label="将出版 ${attr(v)} 移至行号">
-                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑出版 ${attr(v)}" title="编辑">✓</button>
-                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除出版 ${attr(v)}">×</button>
-            </div>
-        `).join('')
-        : '<div class="manage-empty">暂无出版选项</div>';
-    if(manageInstitutionLineInput){
-        manageInstitutionLineInput.max=String(history.length+1);
-        if(!clean(manageInstitutionLineInput.value))manageInstitutionLineInput.value=String(history.length+1)
-    }
-}
-function openManage(){
-    if(!admin()){show('请先完成管理配置','error');return}
-    if(!adminReady){show('正在读取云端最新数据，请稍后再管理','info');return}
-    manageInstitutionInput.value='';
-    manageInstitutionLineInput.value=String(uniq(state.institutions).length+1);
-    renderManageInstitutionOptions();
-    manageModal.classList.remove('hidden');
-    setTimeout(()=>manageInstitutionInput.focus(),30)
-}
-function closeManage(){manageModal.classList.add('hidden')}
-function parseManagedLine(raw,max){
-    const n=Number(raw);
-    if(!Number.isInteger(n)||n<1||n>max)return null;
-    return n
-}
-function revealManagedInstitution(value){
-    requestAnimationFrame(()=>{
-        const targetKey=key(value);
-        const row=[...manageInstitutionOptions.querySelectorAll('.manage-option-row[data-manage-value]')]
-            .find(el=>key(el.dataset.manageValue)===targetKey);
-        if(row)row.scrollIntoView({block:'nearest',behavior:'auto'})
-    })
-}
-function addManagedInstitution(){
-    const value=clean(manageInstitutionInput.value);
-    const history=uniq(state.institutions);
-    if(!value){show('出版选项不能为空','error');manageInstitutionInput.focus();return}
-    if(history.some(v=>key(v)===key(value))){
-        show(`出版选项“${value}”已存在`,'error');
-        manageInstitutionInput.focus();
-        manageInstitutionInput.select();
-        return
-    }
-    const line=parseManagedLine(manageInstitutionLineInput.value,history.length+1);
-    if(line===null){
-        show(`请输入 1–${history.length+1} 的有效行号`,'error');
-        manageInstitutionLineInput.focus();
-        manageInstitutionLineInput.select();
-        return
-    }
-    history.splice(line-1,0,value);
-    state.institutions=history;
-    manageInstitutionInput.value='';
-    manageInstitutionLineInput.value=String(history.length+1);
-    render();
-    if(admin())schedule();
-    revealManagedInstitution(value);
-    show(`已插入第 ${line} 行`,'success');
-    manageInstitutionInput.focus()
-}
-function moveManagedInstitution(value,lineRaw){
-    const history=uniq(state.institutions);
-    const sourceIndex=history.findIndex(v=>key(v)===key(value));
-    if(sourceIndex<0)return;
-    const line=parseManagedLine(lineRaw,history.length);
-    if(line===null){
-        show(`请输入 1–${history.length} 的有效行号`,'error');
-        renderManageInstitutionOptions();
-        return
-    }
-    const currentLine=sourceIndex+1;
-    if(line===currentLine){renderManageInstitutionOptions();return}
-    const [item]=history.splice(sourceIndex,1);
-    history.splice(line-1,0,item);
-    state.institutions=history;
-    render();
-    if(admin())schedule();
-    revealManagedInstitution(value);
-    show(`已从第 ${currentLine} 行移至第 ${line} 行`,'success')
-}
-function reorderHistoryOption(type,sourceValue,targetValue,after){
-    // 仅“书架”保留拖拽排序；“出版”已改为管理页行号排序。
-    if(type!=='category')return;
-    const historyKey=multiMeta(type,'add').historyKey;
-    const history=uniq(state[historyKey]),sourceKey=key(sourceValue),targetKey=key(targetValue);
-    const sourceIndex=history.findIndex(v=>key(v)===sourceKey);
-    if(sourceIndex<0||sourceKey===targetKey)return;
-    const [item]=history.splice(sourceIndex,1);
-    let targetIndex=history.findIndex(v=>key(v)===targetKey);
-    if(targetIndex<0)return;
-    if(after)targetIndex+=1;
-    history.splice(targetIndex,0,item);
-    state[historyKey]=history;
-    render();
-    if(admin())schedule()
-}
-function setupManualDrag(optionsEl,type){
-    let drag=null,autoScrollFrame=0;
-    function clearMarks(){
-        optionsEl.querySelectorAll('.drag-before,.drag-after').forEach(el=>el.classList.remove('drag-before','drag-after'))
-    }
-    function scrollContainer(){
-        // 下拉菜单在自身面板内滚动；“出版管理”则滚动整个弹窗内容区。
-        return optionsEl.closest('.combo-panel')||optionsEl.closest('.dialog-scroll')
-    }
-    function updateDropTarget(clientX,clientY){
-        if(!drag)return;
-        clearMarks();
-        const hit=document.elementFromPoint(clientX,clientY);
-        const target=hit?.closest?.('.combo-pill[data-drag-value]');
-        if(!target||!optionsEl.contains(target)||target===drag.row){
-            drag.targetValue='';
-            return
-        }
-        const rect=target.getBoundingClientRect();
-        drag.after=clientY>=rect.top+rect.height/2;
-        drag.targetValue=target.dataset.dragValue;
-        target.classList.add(drag.after?'drag-after':'drag-before')
-    }
-    function autoScrollStep(){
-        autoScrollFrame=0;
-        if(!drag)return;
-        const scroller=scrollContainer();
-        if(scroller){
-            const rect=scroller.getBoundingClientRect();
-            const edge=Math.min(82,Math.max(46,rect.height*.18));
-            let speed=0;
-            if(drag.clientY<rect.top+edge){
-                const strength=Math.min(1,Math.max(0,(rect.top+edge-drag.clientY)/edge));
-                speed=-(4+24*strength)
-            }else if(drag.clientY>rect.bottom-edge){
-                const strength=Math.min(1,Math.max(0,(drag.clientY-(rect.bottom-edge))/edge));
-                speed=4+24*strength
-            }
-            if(speed){
-                const before=scroller.scrollTop;
-                scroller.scrollTop+=speed;
-                if(scroller.scrollTop!==before)updateDropTarget(drag.clientX,drag.clientY)
-            }
-        }
-        autoScrollFrame=requestAnimationFrame(autoScrollStep)
-    }
-    function cleanup(){
-        if(autoScrollFrame){cancelAnimationFrame(autoScrollFrame);autoScrollFrame=0}
-        clearMarks();
-        if(drag?.row)drag.row.classList.remove('dragging');
-        document.body.classList.remove('reordering');
-        drag=null
-    }
-    optionsEl.addEventListener('pointerdown',e=>{
-        const handle=e.target.closest('.combo-drag[data-drag-value]');
-        if(!handle||!optionsEl.contains(handle))return;
-        const row=handle.closest('.combo-pill[data-drag-value]');
-        if(!row)return;
-        e.preventDefault();
-        e.stopPropagation();
-        drag={pointerId:e.pointerId,sourceValue:handle.dataset.dragValue,row,targetValue:'',after:false,handle,clientX:e.clientX,clientY:e.clientY};
-        row.classList.add('dragging');
-        document.body.classList.add('reordering');
-        try{handle.setPointerCapture(e.pointerId)}catch(err){}
-        autoScrollFrame=requestAnimationFrame(autoScrollStep)
-    });
-    optionsEl.addEventListener('pointermove',e=>{
-        if(!drag||e.pointerId!==drag.pointerId)return;
-        e.preventDefault();
-        drag.clientX=e.clientX;
-        drag.clientY=e.clientY;
-        updateDropTarget(e.clientX,e.clientY)
-    });
-    function finish(e){
-        if(!drag||e.pointerId!==drag.pointerId)return;
-        e.preventDefault();
-        const sourceValue=drag.sourceValue,targetValue=drag.targetValue,after=drag.after;
-        try{drag.handle.releasePointerCapture(e.pointerId)}catch(err){}
-        cleanup();
-        if(targetValue)reorderHistoryOption(type,sourceValue,targetValue,after)
-    }
-    optionsEl.addEventListener('pointerup',finish);
-    optionsEl.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pointerId)cleanup()})
-}
-function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
-    pressList.innerHTML=state.entries.length?state.entries.map(x=>{
-        const editLink=(admin()&&adminReady)?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
-        const publication=x.institution;
-        const tagValue=x.tag;
-        const bookshelf=x.category;
-        const metaRows=[];
-        if(publication){
-            metaRows.push(`<div class="meta-row institution"><span class="meta-label">出版：</span>${renderInstitution(publication)}</div>`)
-        }
-        if(x.bookNo){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`)
-        }
-        if(tagValue.length){
-            metaRows.push(`<div class="meta-row"><span class="meta-label">标签：</span>${esc(tagValue.join('、'))}</div>`)
-        }
-        if(bookshelf.length){
-            metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
-        }
-        const metaHtml=metaRows.join('');
-        return `<article class="press-item"><div class="press-head"><div class="press-content"><div class="book-title">${renderBookName(x.bookName)}</div>${metaHtml?`<div class="meta">${metaHtml}</div>`:''}</div>${editLink}</div></article>`
-    }).join(''):'<div class="empty-state">暂无条目</div>'
-}
-function addHistoryOption(type,value,notify=false){
-    const meta=multiMeta(type,'add');
-    const historyKey=meta.historyKey,label=meta.label;
-    const v=clean(value);
-    if(!v)return false;
-    if(state[historyKey].some(x=>key(x)===key(v)))return false;
-    state[historyKey].push(v);
-    state[historyKey]=sortHistory(type,state[historyKey]);
-    saveLocal();
-    if(admin())schedule();
-    renderMultiField(type,'add');
-    renderMultiField(type,'edit');
-    if(notify)show(`已加入${label}下拉菜单`,'success');
-    return true
-}
-function editInstitutionHistory(value){
-    const oldValue=clean(value),oldKey=key(oldValue);
-    const index=state.institutions.findIndex(v=>key(v)===oldKey);
-    if(index<0)return;
 
-    const nextRaw=prompt('修改出版选项：',state.institutions[index]);
-    if(nextRaw===null)return;
-    const nextValue=clean(nextRaw);
-    if(!nextValue){show('出版选项不能为空','error');return}
-    if(key(nextValue)===oldKey)return;
+function normalizeProfile(x){
+    if(!x||typeof x!=='object')return null;
+    const journal=clean(x.journal);
+    if(!journal)return null;
+    return{journal,issue:clean(x.issue),journalNote:clean(x.journalNote??x.note)};
+}
 
-    if(state.institutions.some((v,i)=>i!==index&&key(v)===key(nextValue))){
-        show(`出版选项“${nextValue}”已存在，请换一个名称`,'error');
-        return
+function deriveProfiles(entries){
+    const map=new Map();
+    for(const x of entries){
+        if(!x.journal)continue;
+        map.set(key(x.journal),{journal:x.journal,issue:x.issue,journalNote:x.journalNote});
     }
-
-    // 保留“出版”人工排序的位置，只替换当前历史选项文字。
-    state.institutions[index]=nextValue;
-    state.institutions=uniq(state.institutions);
-
-    // 当前添加/编辑界面的临时输入若正好使用旧选项，则同步为新文字。
-    [institutionInput,editInstitution].forEach(input=>{
-        if(key(input.value)===oldKey)input.value=nextValue
-    });
-
-    saveLocal();
-    if(admin())schedule();
-    renderInstitutionOptions('add');
-    renderInstitutionOptions('edit');
-    renderManageInstitutionOptions();
-    show(`已修改出版选项为“${nextValue}”`,'success')
+    return [...map.values()];
 }
-function deleteInstitutionHistory(value){
-    const targetKey=key(value);
-    if(!confirm(`确定从出版下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
-    state.institutions=state.institutions.filter(v=>key(v)!==targetKey);
-    saveLocal();
-    if(admin())schedule();
-    renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();
-    render();
-    show('已从出版下拉菜单删除','success')
-}
-function commitInstitution(which,notify=false){
-    const meta=institutionMeta(which),value=clean(meta.input.value);
-    if(!value)return false;
-    // 添加/编辑界面不再维护出版下拉菜单；新建、改名、删除、排序统一到“出版管理”。
-    const exists=state.institutions.some(v=>key(v)===key(value));
-    meta.input.value=value;
-    renderInstitutionOptions(which);
-    return exists
-}
-function removeSelection(type,which,value,keepPanelOpen=false){
-    const meta=multiMeta(type,which),targetKey=key(value);
-    const nextRaw=meta.selection.filter(v=>key(v)!==targetKey);
-    const next=type==='tag'?sortTags(nextRaw):nextRaw;
-    if(which==='edit')editSelections[type]=next;
-    else addSelections[type]=next;
-    meta.input.value='';
-    renderMultiField(type,which);
-    meta.panel.classList.toggle('hidden',!keepPanelOpen)
-}
-function toggleSelection(type,which,value){
-    const meta=multiMeta(type,which),targetKey=key(value);
-    const allowMultiple=multiAllowsMultiple(type,which);
-    const exists=meta.selection.some(v=>key(v)===targetKey);
 
-    // 已选项再次点击 = 删除该选择。编辑标签多选时保持下拉菜单打开。
-    if(exists){
-        removeSelection(type,which,value,allowMultiple);
-        return true
-    }
+function normalizeData(value){
+    const source=Array.isArray(value)?{entries:value}:(value&&typeof value==='object'?value:{});
 
-    // 除“编辑标签”外，标签 / 书架都必须先删除原选择，才能选择新的选项。
-    if(meta.selection.length&&!allowMultiple){
-        meta.panel.classList.add('hidden');
-        show(`请先删除当前${meta.label}，再选择新的${meta.label}`,'error');
-        return false
-    }
+    const entries=(Array.isArray(source.entries)?source.entries:[])
+        .map(normalizeEntry)
+        .filter(Boolean)
+        .sort(comparePaperEntry);
 
-    const selectedValue=clean(value);
-    const nextRaw=allowMultiple?uniq([...meta.selection,selectedValue]):[selectedValue].filter(Boolean);
-    const next=type==='tag'?sortTags(nextRaw):nextRaw;
-    if(which==='edit')editSelections[type]=next;
-    else addSelections[type]=next;
-
-    meta.input.value='';
-    renderMultiField(type,which);
-
-    // 添加标签 / 书架及编辑书架仍单选并立即收起；编辑标签可连续多选。
-    meta.panel.classList.toggle('hidden',!allowMultiple);
-    return true
-}
-function editHistoryOption(type,value){
-    const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
-    const oldValue=clean(value),oldKey=key(oldValue);
-    const history=[...state[historyKey]];
-    const index=history.findIndex(v=>key(v)===oldKey);
-    if(index<0)return;
-
-    const nextRaw=prompt(`修改${label}选项：`,history[index]);
-    if(nextRaw===null)return;
-    const nextValue=clean(nextRaw);
-    if(!nextValue){show(`${label}选项不能为空`,'error');return}
-    if(key(nextValue)===oldKey)return;
-
-    if(history.some((v,i)=>i!==index&&key(v)===key(nextValue))){
-        show(`${label}选项“${nextValue}”已存在，请换一个名称`,'error');
-        return
-    }
-
-    history[index]=nextValue;
-    // 书架保留人工排列位置；标签继续按原自动排序规则。
-    state[historyKey]=type==='category'?uniq(history):sortHistory(type,history);
-
-    // 重命名下拉选项时，同步替换所有已经保存并使用旧选项的条目。
-    // 不能只修改历史选项，否则总表会继续保留旧标签/书架名称，造成数据脱节。
-    const renameValues=values=>{
-        const renamed=normalizeMulti(values).map(v=>key(v)===oldKey?nextValue:v);
-        return type==='tag'?sortTags(renamed):uniq(renamed)
+    const rawHist=source.histories&&typeof source.histories==='object'?source.histories:{};
+    const histories={
+        journals:Array.isArray(rawHist.journals)?sortOptions(rawHist.journals):sortOptions(entries.map(x=>x.journal)),
+        issues:Array.isArray(rawHist.issues)?sortOptions(rawHist.issues):sortOptions(entries.map(x=>x.issue)),
+        notes:Array.isArray(rawHist.notes)?sortOptions(rawHist.notes):sortOptions(entries.map(x=>x.journalNote))
     };
-    for(const entry of state.entries){
-        if(normalizeMulti(entry[type]).some(v=>key(v)===oldKey)){
-            entry[type]=renameValues(entry[type])
-        }
-    }
 
-    addSelections[type]=renameValues(addSelections[type]);
-    editSelections[type]=renameValues(editSelections[type]);
+    const profiles=Array.isArray(source.profiles)
+        ? source.profiles.map(normalizeProfile).filter(Boolean)
+        : deriveProfiles(entries);
 
-    const addMeta=multiMeta(type,'add');
-    const editMeta=multiMeta(type,'edit');
-    if(key(addMeta.input.value)===oldKey)addMeta.input.value=nextValue;
-    if(key(editMeta.input.value)===oldKey)editMeta.input.value=nextValue;
+    const profileMap=new Map();
+    for(const p of profiles)profileMap.set(key(p.journal),p);
 
-    saveLocal();
-    if(admin())schedule();
-    render();
-    show(`已修改${label}选项为“${nextValue}”`,'success')
+    return{entries,histories,profiles:[...profileMap.values()]};
 }
-function deleteHistoryOption(type,value){
-    const meta=multiMeta(type,'add'),targetKey=key(value);
-    if(!confirm(`确定从${meta.label}下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
-    state[meta.historyKey]=state[meta.historyKey].filter(v=>key(v)!==targetKey);
-    addSelections[type]=addSelections[type].filter(v=>key(v)!==targetKey);
-    editSelections[type]=editSelections[type].filter(v=>key(v)!==targetKey);
-    saveLocal();
-    if(admin())schedule();
-    renderMultiField(type,'add');
-    renderMultiField(type,'edit');
-    show(`已从${meta.label}下拉菜单删除`,'success')
+
+
+function fingerprint(value=data){return JSON.stringify(normalizeData(value))}
+function formatDate(iso){
+    const d=new Date(iso);
+    if(Number.isNaN(d.getTime()))return '';
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-function commitTypedValue(type,which,notify=false){
-    const meta=multiMeta(type,which),value=clean(meta.input.value);
-    if(!value)return false;
-
-    const current=which==='edit'?editSelections[type]:addSelections[type];
-
-    // 除“编辑标签”外，已有选择时都不允许再写入第二个选项。
-    if(current.length&&!multiAllowsMultiple(type,which)){
-        meta.input.value='';
-        meta.panel.classList.add('hidden');
-        renderMultiField(type,which);
-        show(`请先删除当前${meta.label}，再输入新的${meta.label}`,'error');
-        return false
+function target(){return config.owner&&config.repo&&config.file?`${config.owner}/${config.repo}/${config.file}`:''}
+function adminConfigured(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
+function pathEncode(path){return String(path).split('/').filter(Boolean).map(encodeURIComponent).join('/')}
+function openStorageDb(){
+    if(idbPromise)return idbPromise;
+    idbPromise=new Promise((resolve,reject)=>{
+        const request=indexedDB.open(IDB_NAME,1);
+        request.onupgradeneeded=()=>{
+            const db=request.result;
+            if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE);
+        };
+        request.onsuccess=()=>resolve(request.result);
+        request.onerror=()=>reject(request.error||new Error('IndexedDB 打开失败'));
+        request.onblocked=()=>console.warn('IndexedDB 打开被阻塞');
+    });
+    return idbPromise;
+}
+async function idbGet(k){
+    try{
+        const db=await openStorageDb();
+        return await new Promise((resolve,reject)=>{
+            const tx=db.transaction(IDB_STORE,'readonly');
+            const req=tx.objectStore(IDB_STORE).get(k);
+            req.onsuccess=()=>resolve(req.result);
+            req.onerror=()=>reject(req.error||new Error('IndexedDB 读取失败'));
+        });
+    }catch(error){console.error('IndexedDB 读取失败:',error);return undefined}
+}
+async function idbSet(k,v){
+    try{
+        const db=await openStorageDb();
+        await new Promise((resolve,reject)=>{
+            const tx=db.transaction(IDB_STORE,'readwrite');
+            tx.objectStore(IDB_STORE).put(v,k);
+            tx.oncomplete=()=>resolve();
+            tx.onerror=()=>reject(tx.error||new Error('IndexedDB 写入失败'));
+            tx.onabort=()=>reject(tx.error||new Error('IndexedDB 写入中止'));
+        });
+        return true;
+    }catch(error){console.error('IndexedDB 写入失败:',error);return false}
+}
+async function idbDelete(k){
+    try{
+        const db=await openStorageDb();
+        await new Promise((resolve,reject)=>{
+            const tx=db.transaction(IDB_STORE,'readwrite');
+            tx.objectStore(IDB_STORE).delete(k);
+            tx.oncomplete=()=>resolve();
+            tx.onerror=()=>reject(tx.error||new Error('IndexedDB 删除失败'));
+            tx.onabort=()=>reject(tx.error||new Error('IndexedDB 删除中止'));
+        });
+        return true;
+    }catch(error){console.error('IndexedDB 删除失败:',error);return false}
+}
+async function requestPersistentStorage(){
+    try{if(navigator.storage?.persist)await navigator.storage.persist()}catch(error){console.warn('无法申请持久存储:',error)}
+}
+async function opfsRoot(){
+    try{return navigator.storage?.getDirectory?await navigator.storage.getDirectory():null}
+    catch(error){console.warn('OPFS 不可用:',error);return null}
+}
+async function readOpfsWorkingCopy(){
+    try{
+        const root=await opfsRoot();if(!root)return null;
+        const handle=await root.getFileHandle(OPFS_WORKING_FILE);
+        const file=await handle.getFile();
+        const parsed=JSON.parse(await file.text());
+        return parsed&&typeof parsed==='object'?parsed:null;
+    }catch(error){
+        if(error?.name!=='NotFoundError')console.warn('读取 OPFS 工作副本失败:',error);
+        return null;
     }
-
-    const history=sortHistory(type,state[meta.historyKey]);
-    const matched=history.find(v=>key(v)===key(value));
-    if(which==='edit'&&!matched){
-        // 编辑弹窗只能选择添加板块已经维护好的下拉菜单选项，不能在这里新增选项。
-        meta.input.value='';
-        show(`编辑窗口只能选择已有${meta.label}；如需新增或修改选项，请在添加板块操作`,'error');
-        renderMultiField(type,which);
-        return false
+}
+async function writeOpfsWorkingCopy(payload){
+    try{
+        const root=await opfsRoot();if(!root)return false;
+        const handle=await root.getFileHandle(OPFS_WORKING_FILE,{create:true});
+        const writable=await handle.createWritable();
+        await writable.write(JSON.stringify(payload));
+        await writable.close();
+        return true;
+    }catch(error){console.warn('写入 OPFS 工作副本失败:',error);return false}
+}
+function validWorkingEnvelope(value,expectedTarget=''){
+    if(!value||typeof value!=='object'||!value.state)return null;
+    const payloadTarget=clean(value.target);
+    if(expectedTarget&&payloadTarget!==expectedTarget)return null;
+    const savedAt=Number(value.savedAt)||0;
+    return{version:Number(value.version)||1,target:payloadTarget,savedAt,state:normalizeData(value.state)};
+}
+async function persistWorkingEnvelope(payload){
+    const results=await Promise.allSettled([
+        idbSet(WORKING_COPY_KEY,payload),
+        writeOpfsWorkingCopy(payload)
+    ]);
+    const idbOk=results[0].status==='fulfilled'&&results[0].value===true;
+    const opfsOk=results[1].status==='fulfilled'&&results[1].value===true;
+    if(!idbOk&&!opfsOk)throw new Error('本机工作副本保存失败');
+    return{idbOk,opfsOk};
+}
+function saveWorkingCopy(snapshot=data){
+    const currentTarget=target();
+    if(!currentTarget)return Promise.resolve(false);
+    const normalized=normalizeData(snapshot);
+    const payload={version:1,target:currentTarget,savedAt:Date.now(),state:normalized};
+    workingSaveChain=workingSaveChain.catch(()=>{}).then(()=>persistWorkingEnvelope(payload));
+    return workingSaveChain;
+}
+async function loadWorkingCopy(expectedTarget=target()){
+    const [idbRaw,opfsRaw]=await Promise.all([idbGet(WORKING_COPY_KEY),readOpfsWorkingCopy()]);
+    const idbCopy=validWorkingEnvelope(idbRaw,expectedTarget);
+    const opfsCopy=validWorkingEnvelope(opfsRaw,expectedTarget);
+    const chosen=!idbCopy?opfsCopy:(!opfsCopy?idbCopy:(opfsCopy.savedAt>idbCopy.savedAt?opfsCopy:idbCopy));
+    if(!chosen)return null;
+    const needsIdb=!idbCopy||idbCopy.savedAt!==chosen.savedAt;
+    const needsOpfs=!opfsCopy||opfsCopy.savedAt!==chosen.savedAt;
+    if(needsIdb||needsOpfs){
+        const tasks=[];
+        if(needsIdb)tasks.push(idbSet(WORKING_COPY_KEY,chosen));
+        if(needsOpfs)tasks.push(writeOpfsWorkingCopy(chosen));
+        void Promise.allSettled(tasks);
     }
+    return chosen.state;
+}
+async function savePublicCache(snapshot=data){
+    return idbSet(PUBLIC_CACHE_KEY,{version:1,savedAt:Date.now(),state:normalizeData(snapshot)});
+}
+async function loadPublicCache(){
+    const value=await idbGet(PUBLIC_CACHE_KEY);
+    return value&&typeof value==='object'&&value.state?normalizeData(value.state):normalizeData({});
+}
+function show(msg,type='info'){
+    toast.textContent=msg;toast.className=`toast ${type}`;clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.classList.add('hidden'),3200);
+}
+function status(kind,text){statusDot.className=`status-dot ${kind}`;statusText.textContent=text}
+function formatError(error){
+    if(!error)return '未知错误';
+    if(error.status===401)return 'Token 无效或已过期';
+    if(error.status===403)return 'Token 权限不足或仓库访问被拒绝';
+    if(error.status===404)return '仓库或数据文件不存在，或 Token 无权访问';
+    if(error.status===409)return '云端文件已被其他设备修改';
+    return error.message||String(error);
+}
 
-    const selectedValue=matched||value;
-    if(which==='add')addHistoryOption(type,selectedValue,notify);
-
-    if(which==='edit'){
-        const next=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue];
-        editSelections[type]=type==='tag'?sortTags(next):next
+async function loadConfig(){
+    const saved=await idbGet(CONFIG_KEY)||{};
+    const storedToken=clean(await idbGet(TOKEN_KEY)||'');
+    config.owner=clean(saved.owner);config.repo=clean(saved.repo);
+    config.file=clean(saved.file)||'papers_data.json';
+    config.token=storedToken;
+    rememberTokenPreference=typeof saved.rememberToken==='boolean'?saved.rememberToken:true;
+}
+async function saveConfig(){
+    rememberTokenPreference=rememberToken.checked;
+    await idbSet(CONFIG_KEY,{owner:config.owner,repo:config.repo,file:config.file,rememberToken:rememberTokenPreference});
+    if(rememberTokenPreference&&config.token){
+        await idbSet(TOKEN_KEY,config.token);
     }else{
-        addSelections[type]=[selectedValue]
+        await idbDelete(TOKEN_KEY);
     }
+}
+async function loadMeta(){
+    const x=await idbGet(META_KEY)||{};
+    meta={target:clean(x.target),fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,sha:clean(x.sha)||null,lastSyncAt:clean(x.lastSyncAt)||null};
+}
+async function saveMeta(){return idbSet(META_KEY,meta)}
+async function record(snapshot,sha){
+    const normalized=normalizeData(snapshot);
+    const baselineFingerprint=fingerprint(normalized);
+    meta={target:target(),fingerprint:baselineFingerprint,sha:sha||null,lastSyncAt:new Date().toISOString()};
+    const currentSnapshot=normalizeData(data);
+    const changedDuringSync=fingerprint(currentSnapshot)!==baselineFingerprint;
+    const metaSaved=await saveMeta();
+    try{await saveWorkingCopy(changedDuringSync?currentSnapshot:normalized)}catch(error){console.error('保存本机工作副本失败:',error)}
+    if(!metaSaved)console.warn('同步元数据未能持久保存');
+    lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`;
+    if(changedDuringSync){
+        setTimeout(()=>{
+            if(!unlocked)return;
+            status('offline','待同步');lastSyncTime.textContent='有未同步修改';
+            clearTimeout(autoTimer);
+            autoTimer=setTimeout(()=>{autoTimer=null;sync(false,false)},AUTO_DELAY);
+        },0);
+    }
+}
+function setUnlocked(on){
+    unlocked=Boolean(on);
 
-    meta.input.value='';
-    renderMultiField(type,which);
-    meta.panel.classList.toggle('hidden',!multiAllowsMultiple(type,which));
-    return true
-}
-function getEditSnapshot(){
-    return JSON.stringify({
-        bookName:editBookName.value,
-        bookNo:editBookNo.value,
-        institution:editInstitution.value,
-        category:[...editSelections.category],
-        tag:sortTags(editSelections.tag),
-        categoryDraft:editCategory.value,
-        tagDraft:editTag.value
-    })
-}
-function editIsUnchanged(){
-    return Boolean(editingId)&&getEditSnapshot()===editInitialSnapshot
-}
-function addEntry(){
-    if(!admin()||!adminReady)return;
-    const bookName=cleanTitle(bookNameInput.value);
-    if(!bookName){show('书名不能为空','error');bookNameInput.focus();return}
-    commitInstitution('add');
-    commitTypedValue('category','add');
-    commitTypedValue('tag','add');
-    const category=[...addSelections.category];
-    const tag=sortTags(addSelections.tag);
+    // 公开浏览与编辑权限分离：
+    // 总表及论文内容始终对访客可见；只有 Token 验证成功后才开放写操作。
+    editorSection.classList.toggle('hidden',!unlocked);
+    visitorNote.classList.toggle('hidden',unlocked);
 
-    state.entries.push({
-        id:uid(),
-        bookName,
-        bookNo:clean(bookNoInput.value),
-        category,
-        institution:clean(institutionInput.value),
-        tag
-    });
-    bookNameInput.value='';bookNoInput.value='';institutionInput.value='';categoryInput.value='';tagInput.value='';addSelections={category:[],tag:[]};
-    render();const locallySaved=schedule();bookNameInput.focus();if(locallySaved)show('已保存到本机，等待同步','success')
+    syncBtn.disabled=!unlocked;
+    importBtn.disabled=!unlocked;
+
+    // 导出只是读取公开数据，不属于编辑行为；公开数据加载成功后访客也可导出。
+    exportBtn.disabled=!publicLoaded&&!unlocked;
+
+    configBtn.textContent=unlocked?'配置':'编辑登录';
 }
-function openEdit(id){
-    if(!admin()||!adminReady)return;
-    const x=state.entries.find(e=>e.id===id);if(!x)return;
-    editingId=id;
-    editBookName.value=x.bookName;
-    editBookNo.value=x.bookNo;
-    editInstitution.value=x.institution;
-    editCategory.value='';
-    editTag.value='';
-    editSelections={category:[...x.category],tag:sortTags(x.tag)};
-    editInitialSnapshot=getEditSnapshot();
-    renderInstitutionOptions('edit');renderCategoryOptions('edit');renderTagOptions('edit');editModal.classList.remove('hidden');setTimeout(()=>editBookName.focus(),30)
-}
-function saveEdit(){
-    const x=state.entries.find(e=>e.id===editingId);if(!x)return;
-    const bookName=cleanTitle(editBookName.value);
-    if(!bookName){show('书名不能为空','error');editBookName.focus();return}
-    commitInstitution('edit');
-    commitTypedValue('category','edit');
-    commitTypedValue('tag','edit');
-    x.bookName=bookName;
-    x.bookNo=clean(editBookNo.value);
-    x.institution=clean(editInstitution.value);
-    x.category=[...editSelections.category];
-    x.tag=sortTags(editSelections.tag);
-    editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
-    render();const locallySaved=schedule();if(locallySaved)show('已保存到本机，等待同步','success')
-}
-function deleteEntry(id){
-    const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
-    state.entries=state.entries.filter(e=>e.id!==id);
-    if(editingId===id){
-        editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
-        editModal.classList.add('hidden')
-    }
-    render();const locallySaved=schedule();if(locallySaved)show('已保存到本机，等待同步','success');return true
-}
-function downloadJson(){
-    const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=`press_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url)
-}
-function loadConfig(){
-    const baseCfg=storageMemory.config||{};
-    config.owner=clean(baseCfg.owner);config.repo=clean(baseCfg.repo);config.file=clean(baseCfg.file)||'press_data.json';
-    config.token=clean(persistedToken||'')
-}
-async function persistConfigAndToken(){
-    storageMemory.config={owner:config.owner,repo:config.repo,file:config.file};
-    await idbSet(CONFIG_KEY,storageMemory.config);
-    if(rememberToken.checked){persistedToken=config.token;await idbSet(TOKEN_PERSISTED_KEY,config.token)}else{persistedToken='';await idbDelete(TOKEN_PERSISTED_KEY)}
-}
-async function saveConfigForm(e){
-    e.preventDefault();
-    const owner=clean(cfgOwner.value),repo=clean(cfg.value),file=clean(cfgFile.value)||'press_data.json',token=clean(cfgToken.value);
-    if(!owner||!repo||!token){show('请完整填写仓库和 Token','error');return}
-    config={owner,repo,file,token};
-    try{await persistConfigAndToken()}catch(err){console.error(err);show('配置保存失败，请检查浏览器存储权限','error');return}
-    configModal.classList.add('hidden');
-    adminReady=false;
-    updateAdmin();
-    render();
-    show('配置已保存，正在读取云端最新数据','success');
-    loadAdminState()
-}
-function openConfig(){
-    updateVisualViewport();
-    cfgOwner.value=config.owner;cfg.value=config.repo;cfgFile.value=config.file||'press_data.json';cfgToken.value=config.token;rememberToken.checked=Boolean(persistedToken);
-    configModal.classList.remove('hidden');
-    requestAnimationFrame(()=>{
-        updateVisualViewport();
-        const scroller=configForm.querySelector('.dialog-scroll');
-        if(scroller)scroller.scrollTop=0
-    });
-    // 桌面端保留快捷聚焦；手机端禁止自动 focus，避免打开配置时软键盘立即遮住操作区。
-    if(window.matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches){
-        setTimeout(()=>cfgToken.focus(),30)
-    }
-}
-function loadMeta(){
+
+function publicDataUrl(){return new URL(PUBLIC_DATA_FILE,location.href).href}
+async function loadPublicView(){
+    status('syncing','加载公开内容…');lastSyncTime.textContent='公开浏览 · 编辑需 Token';
     try{
-        const x=storageMemory.meta||{};
-        meta={
-            target:clean(x.target),
-            fingerprint:typeof x.fingerprint==='string'?x.fingerprint:null,
-            sha:clean(x.sha)||null,
-            lastSyncAt:clean(x.lastSyncAt)||null,
-            // baseState 是上次确认存在于 GitHub 的完整快照，用作三方合并基线。
-            baseState:x.baseState&&typeof x.baseState==='object'?norm(x.baseState):null,
-            // dirty/revision 单独持久化：网络失败或刷新页面后仍知道哪些内容尚未确认进入 GitHub。
-            dirty:Boolean(x.dirty),
-            revision:Math.max(0,Number(x.revision)||0)
-        }
-    }catch(e){
-        meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0}
+        const response=await fetch(publicDataUrl(),{method:'GET',cache:'no-store',headers:{Accept:'application/json'}});
+        const raw=await response.text();
+        if(!response.ok){const e=new Error(`公开数据加载失败：HTTP ${response.status}`);e.status=response.status;throw e}
+        if(new TextEncoder().encode(raw).length>MAX_BYTES)throw new Error('公开数据超过 900 KB');
+        data=normalizeData(JSON.parse(raw));publicLoaded=true;render();exportBtn.disabled=false;
+        void savePublicCache(data);
+        status('online','公开浏览');lastSyncTime.textContent='公开浏览 · 编辑需 Token';return true;
+    }catch(error){
+        console.error(error);const cached=await loadPublicCache();data=cached;publicLoaded=cached.entries.length>0;render();
+        if(publicLoaded){exportBtn.disabled=false;status('offline','离线浏览');lastSyncTime.textContent='公开数据暂时不可用 · 当前显示本机缓存'}
+        else{exportBtn.disabled=true;status('offline','公开数据不可用');lastSyncTime.textContent='无法加载 papers_data.json · 编辑登录仍可使用'}
+        return false;
     }
 }
-function saveMeta(){storageMemory.meta=structuredClone(meta);if(storageReady){const snapshot=structuredClone(storageMemory.meta);metaWriteChain=metaWriteChain.then(()=>idbSet(META_KEY,snapshot)).catch(e=>console.error('同步元数据保存失败:',e))}return true}
-function ensureTarget(){
-    const t=target();
-    if(meta.target!==t){
-        meta={target:t,fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
-        saveMeta();
-        return true
-    }
-    return false
+
+async function githubApi(method,endpoint='',body=null){
+    const owner=encodeURIComponent(config.owner),repo=encodeURIComponent(config.repo),suffix=endpoint?`/${endpoint}`:'';
+    const url=`https://api.github.com/repos/${owner}/${repo}${suffix}`;
+    const headers={'Authorization':`Bearer ${config.token}`,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':API_VERSION};
+    const options={method,headers};
+    if(body!==null){headers['Content-Type']='application/json';options.body=JSON.stringify(body)}
+    const response=await fetch(url,options),raw=await response.text();
+    let result=null;if(raw){try{result=JSON.parse(raw)}catch(e){result={message:raw}}}
+    if(!response.ok){const e=new Error(result?.message||`HTTP ${response.status}`);e.status=response.status;throw e}
+    return result;
 }
-function saveBaseline(snapshot,sha,{clearDirty=false,markSyncTime=false}={}){
-    const baseState=norm(snapshot);
-    meta.target=target();
-    meta.fingerprint=fingerprint(baseState);
-    meta.sha=sha||null;
-    meta.baseState=baseState;
-    if(clearDirty)meta.dirty=false;
-    if(markSyncTime)meta.lastSyncAt=new Date().toISOString();
-    saveMeta();
-    if(markSyncTime&&meta.lastSyncAt)lastSyncTime.textContent=`已同步 ${new Date(meta.lastSyncAt).toLocaleString()}`
+function utf8ToBase64(text){
+    const bytes=new TextEncoder().encode(text);let binary='';
+    for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));
+    return btoa(binary);
 }
-function record(snapshot,sha){saveBaseline(snapshot,sha,{clearDirty:true,markSyncTime:true})}
-function markDirty(){
-    state=norm(state);
-    const saved=saveLocal(state);
-    if(!saved){show('本机工作副本保存失败，请立即导出备份','error');return false}
-    if(admin()){
-        ensureTarget();
-        meta.dirty=true;
-        meta.revision=currentRevision()+1;
-        saveMeta()
-    }
-    return true
+function base64ToUtf8(base64){
+    const binary=atob(String(base64||'').replace(/\s/g,'')),bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
 }
-function sleep(ms){return new Promise(resolve=>setTimeout(resolve,Math.max(0,ms||0)))}
-async function api(method,endpoint,body=null){
-    let r;
-    try{
-        r=await fetch(`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,{
-            method,
-            headers:{
-                Authorization:`Bearer ${config.token}`,
-                Accept:'application/vnd.github+json',
-                'X-GitHub-Api-Version':'2026-03-10',
-                ...(body!==null?{'Content-Type':'application/json'}:{})
-            },
-            cache:'no-store',
-            ...(body!==null?{body:JSON.stringify(body)}:{})
-        })
-    }catch(cause){
-        const er=new Error(cause?.message||'网络请求失败');
-        er.cause=cause;
-        er.network=true;
-        throw er
-    }
-    const raw=await r.text();let data=null;if(raw)try{data=JSON.parse(raw)}catch(e){data={message:raw}};
-    if(!r.ok){
-        const er=new Error(data?.message||`HTTP ${r.status}`);
-        er.status=r.status;
-        er.data=data;
-        er.retryAfter=Number(r.headers.get('retry-after'))||0;
-        er.rateLimitRemaining=Number(r.headers.get('x-ratelimit-remaining'));
-        er.rateLimitReset=Number(r.headers.get('x-ratelimit-reset'))||0;
-        throw er
-    }
-    return data
-}
-function toB64(s){const bytes=new TextEncoder().encode(s);let bin='';for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin)}
-function fromB64(s){const bin=atob(String(s||'').replace(/\s/g,'')),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new TextDecoder().decode(bytes)}
+async function verifyRepository(){return githubApi('GET')}
 async function readRemote(){
     try{
-        const d=await api('GET',`contents/${pathEncode(config.file)}`);
-        const parsed=JSON.parse(fromB64(d.content));
-        return{exists:true,sha:d.sha,state:norm(parsed),needsSchemaUpgrade:Number(parsed?.schemaVersion)!==4}
-    }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:emptyState(),needsSchemaUpgrade:false};
-        throw e
+        const result=await githubApi('GET',`contents/${pathEncode(config.file)}`);
+        if(!result||result.type!=='file'||typeof result.content!=='string'||!result.sha)throw new Error('云端数据文件格式异常');
+        if(Number.isFinite(result.size)&&result.size>MAX_BYTES)throw new Error('云端数据超过 900 KB');
+        return{exists:true,sha:result.sha,data:normalizeData(JSON.parse(base64ToUtf8(result.content)))};
+    }catch(error){
+        if(error.status===404)return{exists:false,sha:null,data:normalizeData({})};
+        throw error;
     }
 }
 async function writeRemote(snapshot,sha){
-    const raw=JSON.stringify(norm(snapshot),null,2);
-    if(new TextEncoder().encode(raw).length>MAX_BYTES)throw new Error('数据超过 750 KB');
-    const wait=MIN_WRITE_GAP-(Date.now()-lastWriteAt);
-    if(wait>0)await sleep(wait);
-    lastWriteAt=Date.now();
-    const body={message:`更新 Press 数据 - ${new Date().toLocaleString()}`,content:toB64(raw)};
+    const normalized=normalizeData(snapshot);
+    const raw=JSON.stringify({schemaVersion:2,...normalized},null,2);
+    if(new TextEncoder().encode(raw).length>MAX_BYTES)throw new Error('数据超过 900 KB');
+    const body={message:`更新 Papers 数据 - ${new Date().toLocaleString()}`,content:utf8ToBase64(raw)};
     if(sha)body.sha=sha;
-    const r=await api('PUT',`contents/${pathEncode(config.file)}`,body);
-    return r?.content?.sha||null
+    const result=await githubApi('PUT',`contents/${pathEncode(config.file)}`,body);
+    return result?.content?.sha||null;
 }
-function jsonEqual(a,b){return JSON.stringify(a)===JSON.stringify(b)}
-function entryShape(x){
-    if(!x)return null;
-    return{
-        id:clean(x.id),bookName:cleanTitle(x.bookName),bookNo:clean(x.bookNo),institution:clean(x.institution),
-        category:normalizeMulti(x.category),tag:normalizeMulti(x.tag)
-    }
-}
-function entryEqual(a,b){return jsonEqual(entryShape(a),entryShape(b))}
-function mergeScalar(baseValue,localValue,remoteValue){
-    if(jsonEqual(localValue,remoteValue))return{value:localValue,conflict:false};
-    if(jsonEqual(localValue,baseValue))return{value:remoteValue,conflict:false};
-    if(jsonEqual(remoteValue,baseValue))return{value:localValue,conflict:false};
-    // 同一字段被两端同时改成不同值时，以当前操作平台为准；其他字段仍继续三方合并。
-    return{value:localValue,conflict:true}
-}
-function mergeEntry(baseEntry,localEntry,remoteEntry){
-    if(!baseEntry){
-        if(localEntry&&!remoteEntry)return{entry:entryShape(localEntry),conflicts:0};
-        if(!localEntry&&remoteEntry)return{entry:entryShape(remoteEntry),conflicts:0};
-        if(!localEntry&&!remoteEntry)return{entry:null,conflicts:0};
-        if(entryEqual(localEntry,remoteEntry))return{entry:entryShape(localEntry),conflicts:0};
-        // UUID 撞车极罕见；若真的发生，仍以当前平台内容为准并记为冲突。
-        return{entry:entryShape(localEntry),conflicts:1}
-    }
-    if(!localEntry&&!remoteEntry)return{entry:null,conflicts:0};
-    if(!localEntry&&remoteEntry){
-        // 本地删除、远端未改：删除生效；远端已修改：保留远端修改，避免丢内容。
-        return entryEqual(remoteEntry,baseEntry)?{entry:null,conflicts:0}:{entry:entryShape(remoteEntry),conflicts:1}
-    }
-    if(localEntry&&!remoteEntry){
-        // 远端删除、本地未改：删除生效；本地已修改：保留本地修改，避免丢内容。
-        return entryEqual(localEntry,baseEntry)?{entry:null,conflicts:0}:{entry:entryShape(localEntry),conflicts:1}
-    }
-    if(entryEqual(localEntry,remoteEntry))return{entry:entryShape(localEntry),conflicts:0};
-    if(entryEqual(localEntry,baseEntry))return{entry:entryShape(remoteEntry),conflicts:0};
-    if(entryEqual(remoteEntry,baseEntry))return{entry:entryShape(localEntry),conflicts:0};
 
-    const b=entryShape(baseEntry),l=entryShape(localEntry),r=entryShape(remoteEntry);
-    const merged={id:l.id||r.id||b.id};
-    let conflicts=0;
-    for(const field of ['bookName','bookNo','institution','category','tag']){
-        const part=mergeScalar(b[field],l[field],r[field]);
-        merged[field]=part.value;
-        if(part.conflict)conflicts++
+async function login(showResult=true){
+    if(!adminConfigured()){
+        setUnlocked(false);if(publicLoaded||data.entries.length)render();
+        status(publicLoaded?'online':'offline',publicLoaded?'公开浏览':'公开数据不可用');
+        if(showResult)show('请填写仓库和 Token 以启用编辑','error');return false;
     }
-    return{entry:merged,conflicts}
-}
-function listKeys(values){return new Set((values||[]).map(key))}
-function mergeHistory(baseValues,localValues,remoteValues,autoSort=false){
-    const b=uniq(baseValues||[]),l=uniq(localValues||[]),r=uniq(remoteValues||[]);
-    if(jsonEqual(l,r))return autoSort?sortAuto(l):l;
-    if(jsonEqual(l,b))return autoSort?sortAuto(r):r;
-    if(jsonEqual(r,b))return autoSort?sortAuto(l):l;
-
-    const bs=listKeys(b),ls=listKeys(l),rs=listKeys(r);
-    const include=new Set();
-    // 共同基线中的旧项：任意一端明确删除，就视为删除；新增项：任意一端新增都保留。
-    for(const v of b){const k=key(v);if(ls.has(k)&&rs.has(k))include.add(k)}
-    for(const v of l){const k=key(v);if(!bs.has(k))include.add(k)}
-    for(const v of r){const k=key(v);if(!bs.has(k))include.add(k)}
-
-    const result=[];
-    const seen=new Set();
-    // 两边同时调整顺序时，以 GitHub 当前顺序为骨架，再补入仅本机新增的项，避免覆盖远端排序。
-    for(const source of [r,l]){
-        for(const v of source){
-            const k=key(v);
-            if(include.has(k)&&!seen.has(k)){seen.add(k);result.push(v)}
-        }
-    }
-    return autoSort?sortAuto(result):result
-}
-function resolveBaseState(localSnapshot,remoteSnapshot){
-    if(meta.baseState&&typeof meta.baseState==='object'){
-        try{
-            const b=norm(meta.baseState);
-            if(!meta.fingerprint||fingerprint(b)===meta.fingerprint)return b
-        }catch(e){}
-    }
-    // 兼容升级前旧版本只记录 fingerprint 的情况。
-    if(typeof meta.fingerprint==='string'){
-        if(fingerprint(localSnapshot)===meta.fingerprint)return norm(localSnapshot);
-        if(fingerprint(remoteSnapshot)===meta.fingerprint)return norm(remoteSnapshot)
-    }
-    return null
-}
-function mergeStates(baseState,localState,remoteState){
-    const local=norm(localState),remote=norm(remoteState),base=baseState?norm(baseState):null;
-    const bm=new Map((base?.entries||[]).map(x=>[clean(x.id),x]));
-    const lm=new Map(local.entries.map(x=>[clean(x.id),x]));
-    const rm=new Map(remote.entries.map(x=>[clean(x.id),x]));
-    const ids=[];const seen=new Set();
-    // 以远端当前顺序为主，随后补入本机独有条目。
-    for(const source of [remote.entries,local.entries,base?.entries||[]]){
-        for(const x of source){const id=clean(x.id);if(id&&!seen.has(id)){seen.add(id);ids.push(id)}}
-    }
-    const entries=[];let conflicts=0;
-    for(const id of ids){
-        const part=mergeEntry(bm.get(id)||null,lm.get(id)||null,rm.get(id)||null);
-        if(part.entry)entries.push(part.entry);
-        conflicts+=part.conflicts
-    }
-
-    const mergedRaw={
-        entries,
-        institutions:mergeHistory(base?.institutions||[],local.institutions,remote.institutions,false),
-        categories:mergeHistory(base?.categories||[],local.categories,remote.categories,false),
-        tags:mergeHistory(base?.tags||[],local.tags,remote.tags,true)
-    };
-    return{state:norm(mergedRaw),conflicts}
-}
-function errorText(e){
-    let detail='';
-    try{detail=JSON.stringify(e?.data||'')}catch(err){}
-    return `${e?.message||''} ${detail}`.toLowerCase()
-}
-function isShaConflictError(e){
-    if(e?.status===409)return true;
-    if(e?.status!==422)return false;
-    const text=errorText(e);
-    return /sha|conflict|does not match|expected.*sha|version/.test(text)
-}
-function retryDelayForError(e){
-    const statusCode=Number(e?.status)||0;
-    const text=errorText(e);
-    if(statusCode===401)return null;
-    if(statusCode===403||statusCode===429){
-        if(Number(e?.retryAfter)>0)return Math.min(MAX_RETRY_DELAY,Number(e.retryAfter)*1000);
-        if(Number(e?.rateLimitReset)>0){
-            const ms=Number(e.rateLimitReset)*1000-Date.now()+1200;
-            if(ms>0)return Math.min(MAX_RETRY_DELAY,ms)
-        }
-        return /secondary|rate limit|abuse/.test(text)?60000:15000
-    }
-    if(!statusCode||statusCode>=500){
-        return Math.min(MAX_RETRY_DELAY,2000*Math.pow(2,Math.min(syncFailureCount,5)))
-    }
-    if(statusCode===422&&/spam|abuse|too quickly|rate/.test(text))return 60000;
-    return null
-}
-function armRetry(e){
-    const delay=retryDelayForError(e);
-    if(delay===null||!admin()||!adminReady)return false;
-    clearTimeout(retryTimer);
-    retryTimer=setTimeout(()=>{
-        retryTimer=null;
-        if(admin()&&adminReady&&hasUnsyncedLocal(state))sync(false)
-    },delay);
-    lastSyncTime.textContent=`本地数据已保留 · ${Math.max(1,Math.ceil(delay/1000))} 秒后自动重试`;
-    return true
-}
-async function performSyncCycle(localIntent){
-    let lastError=null;
-    for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
-        // 每一次写入前都重新读取最新 SHA；409/明确的 SHA 冲突才在当前轮内部重试。
-        const remote=await readRemote();
-        const remoteState=remote.exists?remote.state:emptyState();
-        const baseState=resolveBaseState(localIntent,remoteState);
-        const mergedInfo=mergeStates(baseState,localIntent,remoteState);
-        const merged=mergedInfo.state;
-
-        if(remote.exists&&!remote.needsSchemaUpgrade&&fingerprint(merged)===fingerprint(remoteState)){
-            return{merged,sha:remote.sha,remoteState,conflicts:mergedInfo.conflicts,wrote:false}
-        }
-        try{
-            const sha=await writeRemote(merged,remote.exists?remote.sha:null);
-            return{merged,sha,remoteState,conflicts:mergedInfo.conflicts,wrote:true}
-        }catch(e){
-            lastError=e;
-            if(isShaConflictError(e)&&attempt<SYNC_RETRY_LIMIT-1){
-                await sleep(300*(attempt+1));
-                continue
-            }
-            throw e
-        }
-    }
-    throw lastError||new Error('多次刷新后仍无法写入 GitHub')
-}
-async function sync(showResult=true){
-    if(!admin()){show('请先配置 Token','error');return false}
-    if(!adminReady){
-        syncQueued=true;
-        syncQueuedShowResult=syncQueuedShowResult||showResult;
-        show('正在读取云端最新数据，完成后会自动同步','info');
-        return false
-    }
-    if(syncing){
-        // 绝不丢弃同步期间到来的新请求；当前轮结束后继续处理最新 state。
-        syncQueued=true;
-        syncQueuedShowResult=syncQueuedShowResult||showResult;
-        return true
-    }
-
-    clearTimeout(autoTimer);autoTimer=null;
-    clearTimeout(retryTimer);retryTimer=null;
-    syncing=true;
-    updateAdmin();
-    status('syncing','同步中…');
-    let wantsResult=showResult||syncQueuedShowResult;
-    syncQueued=false;
-    syncQueuedShowResult=false;
-
+    status('syncing','验证编辑权限…');syncBtn.disabled=true;exportBtn.disabled=true;importBtn.disabled=true;
     try{
-        ensureTarget();
-        while(true){
-            const startRevision=currentRevision();
-            const localIntent=norm(state);
-            const result=await performSyncCycle(localIntent);
-            syncFailureCount=0;
-
-            const latestLocal=norm(state);
-            const latestRevision=currentRevision();
-            const changedDuringSync=latestRevision!==startRevision||fingerprint(latestLocal)!==fingerprint(localIntent);
-
-            if(changedDuringSync){
-                // 本轮同步时用户又有新录入：禁止旧 merged 覆盖页面。
-                // 以本轮开始快照为基线，把“最新本地修改”和“刚确认的云端结果”再次三方合并。
-                state=mergeStates(localIntent,latestLocal,result.merged).state;
-                render();
-                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
-                const stillDirty=fingerprint(state)!==fingerprint(result.merged);
-                saveBaseline(result.merged,result.sha,{clearDirty:!stillDirty,markSyncTime:true});
-                meta.dirty=stillDirty;
-                saveMeta();
-                if(stillDirty){
-                    syncQueued=true;
-                    status('syncing','已合并云端更新 · 继续同步本地修改')
-                }
+        await verifyRepository();const remote=await readRemote();
+        const remoteFp=fingerprint(remote.data),cache=await loadWorkingCopy(target()),sameTarget=meta.target===target();
+        const cacheFp=cache?fingerprint(cache):null,cacheUnsynced=Boolean(cache)&&sameTarget&&meta.fingerprint!==null&&cacheFp!==meta.fingerprint&&cacheFp!==remoteFp;
+        if(cacheUnsynced){
+            data=cache;setUnlocked(true);render();
+            if(remote.exists&&remoteFp!==meta.fingerprint){
+                status('offline','存在同步冲突');lastSyncTime.textContent='编辑已登录 · 本地和云端均有修改';
+                if(showResult)show('编辑登录成功，但检测到同步冲突，请点击“同步”处理','error');
             }else{
-                // 只有本轮期间没有任何新本地修改，才允许同步结果直接成为当前页面状态。
-                state=result.merged;
-                render();
-                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
-                record(state,result.sha);
-                status('online','公开阅读 · 管理已连接')
-            }
-
-            if(syncQueued||meta.dirty){
-                wantsResult=wantsResult||syncQueuedShowResult;
-                syncQueued=false;
-                syncQueuedShowResult=false;
-                continue
-            }
-
-            if(wantsResult){
-                show(result.conflicts>0?'已合并同步；同字段冲突以本机修改为准':'已同步 GitHub 最新数据','success')
-            }
-            return true
-        }
-    }catch(e){
-        console.error(e);
-        syncFailureCount++;
-        // 失败只改变同步状态，不得用远端旧数据覆盖 state；当前页面内容再次写入本地保险。
-        saveLocal(state);
-        if(admin()){
-            ensureTarget();
-            if(meta.baseState&&fingerprint(state)!==fingerprint(meta.baseState))meta.dirty=true;
-            else if(!meta.baseState&&hasLocalContent(state))meta.dirty=true;
-            saveMeta()
-        }
-        const retrying=armRetry(e);
-        status('offline','同步暂时失败 · 本地数据已保留');
-        const suffix=retrying?'，将自动重试':'';
-        show(`同步暂时失败，但本地录入不会丢失${suffix}：${e.message}`,'error');
-        return false
-    }finally{
-        syncing=false;
-        updateAdmin()
-    }
-}
-function armSync(delay=AUTO_DELAY,showResult=false){
-    if(!admin()||!adminReady)return;
-    syncQueued=true;
-    syncQueuedShowResult=syncQueuedShowResult||showResult;
-    if(syncing)return;
-    clearTimeout(autoTimer);
-    autoTimer=setTimeout(()=>{
-        autoTimer=null;
-        const sr=syncQueuedShowResult;
-        syncQueuedShowResult=false;
-        syncQueued=false;
-        sync(sr)
-    },Math.max(0,delay))
-}
-function schedule(){
-    const saved=markDirty();
-    if(!saved)return false;
-    if(!admin())return true;
-    status('syncing','本地已保存 · 等待同步');
-    lastSyncTime.textContent='本地修改已安全保存，等待同步';
-    clearTimeout(retryTimer);retryTimer=null;
-    armSync(AUTO_DELAY,false);
-    return true
-}
-async function loadPublic(){
-    status('syncing','正在读取公开数据…');
-    try{
-        const r=await fetch(publicUrl(),{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        state=norm(await r.json());render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`;
-        // 如果浏览器里还有管理模式的未同步数据，公开读取绝不能覆盖那份安全缓存。
-        savePublicCache(state).catch(()=>{})
-    }catch(e){
-        console.error(e);
-        const local=loadPublicCache();state=local||emptyState();render();status('offline','公开数据读取失败');
-        lastSyncTime.textContent=local?'暂时显示本机公开缓存':'请确认 press_data.json 与网页位于同一发布目录'
-    }
-}
-async function loadAdminState(){
-    adminReady=false;
-    updateAdmin();
-    status('syncing','正在读取管理数据…');
-    const targetChanged=ensureTarget();
-    let cached=loadLocal();
-    if(cached){
-        state=cached;
-        render();
-        if(!targetChanged&&hasUnsyncedLocal(cached)){
-            status('syncing','正在恢复本地待同步数据…');
-            lastSyncTime.textContent='检测到上次未完成同步的本地数据'
-        }
-    }
-
-    try{
-        const remote=await readRemote();
-        cached=loadLocal()||cached;
-        const pending=Boolean(!targetChanged&&cached&&hasUnsyncedLocal(cached));
-
-        if(remote.exists){
-            if(pending){
-                const baseState=resolveBaseState(cached,remote.state);
-                state=mergeStates(baseState,cached,remote.state).state;
-                render();
-                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
-                // 远端当前版本成为新的可靠基线，但本地合并结果仍标记为待同步。
-                saveBaseline(remote.state,remote.sha,{clearDirty:false,markSyncTime:false});
-                meta.dirty=fingerprint(state)!==fingerprint(remote.state);
-                if(meta.dirty&&currentRevision()===0)meta.revision=1;
-                saveMeta();
-                adminReady=true;
-                updateAdmin();
-                render();
-                status(meta.dirty?'syncing':'online',meta.dirty?'本地数据已恢复 · 等待同步':'公开阅读 · 管理已连接');
-                lastSyncTime.textContent=meta.dirty?'已恢复未同步录入，正在安全合并':'云端与本地已一致';
-                if(meta.dirty)armSync(250,false)
-            }else{
-                state=remote.state;
-                render();
-                if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
-                record(state,remote.sha);
-                adminReady=true;
-                updateAdmin();
-                render();
-                status('online','公开阅读 · 管理已连接')
+                status('offline','有未同步修改');lastSyncTime.textContent='编辑已登录 · 正在恢复未同步修改';scheduleSync();
+                if(showResult)show('编辑登录成功，已恢复本地未同步修改','success');
             }
         }else{
-            state=cached||emptyState();
-            render();
-            if(!saveLocal(state))throw new Error('本机工作副本保存失败，请立即导出备份');
-            adminReady=true;
-            updateAdmin();
-            render();
-            if(hasLocalContent(state)){
-                meta.dirty=true;
-                if(currentRevision()===0)meta.revision=1;
-                saveMeta();
-                status('syncing','本地数据已保留 · 正在创建云端文件');
-                lastSyncTime.textContent='云端数据文件尚未创建';
-                armSync(250,false)
-            }else{
-                saveBaseline(emptyState(),null,{clearDirty:true,markSyncTime:false});
-                status('online','公开阅读 · 管理已连接');
-                lastSyncTime.textContent='云端数据文件尚未创建'
-            }
+            data=remote.data;setUnlocked(true);render();await record(data,remote.sha);status('online','编辑已登录');
+            if(!remote.exists)lastSyncTime.textContent='编辑已登录 · 数据文件尚未创建';
+            if(showResult)show('Token 验证成功，已启用编辑','success');
         }
-    }catch(e){
-        console.error(e);
-        state=loadLocal()||cached||emptyState();
-        render();
-        saveLocal(state);
-        adminReady=true;
-        updateAdmin();
-        render();
-        status('offline','管理云端读取失败 · 本地数据已保留');
-        lastSyncTime.textContent=hasLocalContent(state)?'可继续录入；恢复网络后自动重试':'没有可恢复的本地数据';
-        if(meta.dirty)armRetry(e)
+        return true;
+    }catch(error){
+        console.error(error);setUnlocked(false);if(publicLoaded||data.entries.length)render();
+        status(publicLoaded?'online':'offline',publicLoaded?'公开浏览':'公开数据不可用');
+        if(showResult)show(`编辑登录失败：${formatError(error)}`,'error');return false;
     }
 }
 
-function allMultiPanels(){
-    return [institutionPanel,editInstitutionPanel,categoryPanel,editCategoryPanel,tagPanel,editTagPanel]
+async function sync(showResult=true,interactive=showResult){
+    if(!unlocked||!adminConfigured()){show('请先使用 Token 登录','error');return false}
+    if(syncing)return false;
+    clearTimeout(autoTimer);autoTimer=null;syncing=true;syncBtn.disabled=true;status('syncing','同步中…');
+    try{
+        const localSnapshot=normalizeData(data),localFp=fingerprint(localSnapshot),baseline=meta.target===target()?meta.fingerprint:null;
+        const remote=await readRemote();
+        if(!remote.exists){
+            const sha=await writeRemote(localSnapshot,null);await record(localSnapshot,sha);status('online','编辑已登录');
+            if(showResult)show('同步完成','success');return true;
+        }
+        const remoteFp=fingerprint(remote.data);
+        if(localFp===remoteFp){await record(localSnapshot,remote.sha);status('online','编辑已登录');if(showResult)show('本地与云端已一致','success');return true}
+        const localChanged=baseline===null||localFp!==baseline,remoteChanged=baseline===null||remoteFp!==baseline;
+        if(baseline!==null&&localChanged&&!remoteChanged){
+            const sha=await writeRemote(localSnapshot,remote.sha);await record(localSnapshot,sha);status('online','编辑已登录');
+            if(showResult)show('同步完成','success');return true;
+        }
+        if(baseline!==null&&!localChanged&&remoteChanged){
+            data=remote.data;render();await record(data,remote.sha);status('online','编辑已登录');
+            if(showResult)show('已采用云端最新数据','success');return true;
+        }
+        if(!interactive){status('offline','存在同步冲突');show('本地和云端都发生了修改，请点击“同步”选择版本','error');return false}
+        const useLocal=confirm('检测到本地和云端数据不同。\n\n确定：用当前网页数据覆盖云端。\n取消：继续选择是否采用云端数据。');
+        if(useLocal){
+            const sha=await writeRemote(localSnapshot,remote.sha);await record(localSnapshot,sha);status('online','编辑已登录');show('已用当前网页数据覆盖云端','success');return true;
+        }
+        const useRemote=confirm('是否采用云端数据覆盖当前网页？\n\n确定：采用云端最新数据。\n取消：暂不处理。');
+        if(useRemote){data=remote.data;render();await record(data,remote.sha);status('online','编辑已登录');show('已采用云端数据','success');return true}
+        status('offline','同步已取消');return false;
+    }catch(error){
+        console.error(error);status('offline','同步失败');show(`同步失败：${formatError(error)}`,'error');return false;
+    }finally{syncing=false;syncBtn.disabled=!unlocked}
 }
-function setupInstitutionCombo(which){
-    const meta=institutionMeta(which);
+function scheduleSync(){
+    if(target())void saveWorkingCopy(data).catch(error=>console.error('保存本机工作副本失败:',error));
+    if(!unlocked)return;clearTimeout(autoTimer);
+    autoTimer=setTimeout(()=>{autoTimer=null;sync(false,false)},AUTO_DELAY);
+}
+function markLocalChange(){
+    render();status('offline','待同步');lastSyncTime.textContent='有未同步修改';scheduleSync();
+}
+
+function historyMeta(type){
+    return type==='journal'
+        ? {key:'journals',label:'刊名'}
+        : type==='issue'
+            ? {key:'issues',label:'刊号'}
+            : {key:'notes',label:'刊注'};
+}
+function getHistory(type){return data.histories[historyMeta(type).key]}
+function setHistory(type,values){data.histories[historyMeta(type).key]=sortOptions(values)}
+function rememberOption(type,value){
+    const v=clean(value);if(!v)return;
+    const list=getHistory(type);
+    if(!list.some(x=>key(x)===key(v)))setHistory(type,[...list,v]);
+}
+function findProfile(journal){
+    const k=key(journal);return data.profiles.find(x=>key(x.journal)===k)||null;
+}
+function upsertProfile(journal,issue,journalNote){
+    const j=clean(journal);if(!j)return;
+    const existing=findProfile(j);
+    if(existing){
+        existing.journal=j;existing.issue=clean(issue);existing.journalNote=clean(journalNote);
+    }else{
+        data.profiles.push({journal:j,issue:clean(issue),journalNote:clean(journalNote)});
+    }
+    const map=new Map();
+    for(const p of data.profiles)if(p.journal)map.set(key(p.journal),normalizeProfile(p));
+    data.profiles=[...map.values()];
+}
+function applyJournalProfile(journal,context){
+    const profile=findProfile(journal);if(!profile)return false;
+    const issue=context==='edit'?editIssue:issueInput;
+    const note=context==='edit'?editJournalNote:journalNoteInput;
+    issue.value=profile.issue||'';note.value=profile.journalNote||'';
+    renderCombo('issue',context);renderCombo('note',context);
+    return true;
+}
+function editHistoryOption(type,oldValue){
+    const meta=historyMeta(type);
+    const next=clean(prompt(`编辑${meta.label}：`,oldValue));
+    if(!next||key(next)===key(oldValue))return;
+    const exists=getHistory(type).some(v=>key(v)===key(next)&&key(v)!==key(oldValue));
+    if(exists){show(`“${next}”已存在于${meta.label}下拉菜单`,'error');return}
+    setHistory(type,getHistory(type).map(v=>key(v)===key(oldValue)?next:v));
+    if(type==='journal'){
+        for(const p of data.profiles)if(key(p.journal)===key(oldValue))p.journal=next;
+    }else if(type==='issue'){
+        for(const p of data.profiles)if(key(p.issue)===key(oldValue))p.issue=next;
+    }else{
+        for(const p of data.profiles)if(key(p.journalNote)===key(oldValue))p.journalNote=next;
+    }
+    scheduleSync();renderAllCombos();show(`已修改${meta.label}选项`,'success');
+}
+function deleteHistoryOption(type,value){
+    const meta=historyMeta(type);
+    if(!confirm(`确定从${meta.label}下拉菜单删除“${value}”吗？\n\n已经保存的论文条目不会改变。`))return;
+    setHistory(type,getHistory(type).filter(v=>key(v)!==key(value)));
+    if(type==='journal'){
+        data.profiles=data.profiles.filter(p=>key(p.journal)!==key(value));
+    }else if(type==='issue'){
+        for(const p of data.profiles)if(key(p.issue)===key(value))p.issue='';
+    }else{
+        for(const p of data.profiles)if(key(p.journalNote)===key(value))p.journalNote='';
+    }
+    scheduleSync();renderAllCombos();show(`已删除${meta.label}选项`,'success');
+}
+
+const comboRegistry={
+    add:{
+        journal:{input:journalInput,toggle:journalToggle,panel:journalPanel,options:journalOptions,combo:journalCombo},
+        issue:{input:issueInput,toggle:issueToggle,panel:issuePanel,options:issueOptions,combo:issueCombo},
+        note:{input:journalNoteInput,toggle:journalNoteToggle,panel:journalNotePanel,options:journalNoteOptions,combo:journalNoteCombo}
+    },
+    edit:{
+        journal:{input:editJournal,toggle:editJournalToggle,panel:editJournalPanel,options:editJournalOptions,combo:editJournalCombo},
+        issue:{input:editIssue,toggle:editIssueToggle,panel:editIssuePanel,options:editIssueOptions,combo:editIssueCombo},
+        note:{input:editJournalNote,toggle:editJournalNoteToggle,panel:editJournalNotePanel,options:editJournalNoteOptions,combo:editJournalNoteCombo}
+    }
+};
+function allPanels(){
+    return Object.values(comboRegistry).flatMap(group=>Object.values(group).map(x=>x.panel));
+}
+function closePanels(){allPanels().forEach(p=>p.classList.add('hidden'))}
+function renderCombo(type,context){
+    const cfg=comboRegistry[context][type],query=key(cfg.input.value),values=getHistory(type).filter(v=>!query||key(v).includes(query));
+    cfg.options.innerHTML=values.length
+        ? `<div class="combo-option-list">${values.map(v=>`
+            <span class="combo-pill">
+                <button class="combo-pill-select" type="button" data-select="${attr(v)}">${esc(v)}</button>
+                <button class="combo-pill-edit" type="button" data-edit="${attr(v)}" aria-label="编辑${attr(v)}">编辑</button>
+                <button class="combo-pill-delete" type="button" data-delete="${attr(v)}" aria-label="删除${attr(v)}">删除</button>
+            </span>`).join('')}</div>`
+        : `<div class="combo-empty">暂无${historyMeta(type).label}</div>`;
+}
+function renderAllCombos(){
+    for(const context of ['add','edit'])for(const type of ['journal','issue','note'])renderCombo(type,context);
+}
+function setupCombo(type,context){
+    const cfg=comboRegistry[context][type];
     let keyboardIndex=-1;
 
-    function keyboardOptions(){
-        return [...meta.options.querySelectorAll('.combo-pill-select[data-select-value]')]
+    function selectableOptions(){
+        return [...cfg.options.querySelectorAll('.combo-pill-select[data-select]')];
     }
+
     function clearKeyboardActive(){
         keyboardIndex=-1;
-        keyboardOptions().forEach(option=>{
+        selectableOptions().forEach(option=>{
             option.classList.remove('keyboard-active');
-            option.removeAttribute('aria-selected')
-        })
+            option.removeAttribute('aria-selected');
+        });
     }
+
     function setKeyboardActive(nextIndex){
-        const options=keyboardOptions();
+        const options=selectableOptions();
         if(!options.length){keyboardIndex=-1;return false}
         keyboardIndex=((nextIndex%options.length)+options.length)%options.length;
         options.forEach((option,index)=>{
             const active=index===keyboardIndex;
             option.classList.toggle('keyboard-active',active);
             if(active)option.setAttribute('aria-selected','true');
-            else option.removeAttribute('aria-selected')
+            else option.removeAttribute('aria-selected');
         });
         options[keyboardIndex].scrollIntoView({block:'nearest'});
-        return true
-    }
-    function openForKeyboard(){
-        if(meta.panel.classList.contains('hidden')){
-            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-            meta.panel.classList.remove('hidden');
-            renderInstitutionOptions(which);
-            keyboardIndex=-1
-        }
-    }
-    function selectKeyboardValue(value){
-        meta.input.value=value;
-        keyboardIndex=-1;
-        renderInstitutionOptions(which);
-        meta.panel.classList.add('hidden');
-        meta.input.focus()
+        return true;
     }
 
-    meta.toggle.addEventListener('click',e=>{
-        e.stopPropagation();
-        const willOpen=meta.panel.classList.contains('hidden');
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        keyboardIndex=-1;
-        if(willOpen){
-            meta.panel.classList.remove('hidden');
-            renderInstitutionOptions(which)
+    function selectValue(value){
+        cfg.input.value=value;
+        if(type==='journal')applyJournalProfile(cfg.input.value,context);
+        clearKeyboardActive();
+        cfg.panel.classList.add('hidden');
+        cfg.input.focus();
+    }
+
+    function openForKeyboard(){
+        if(cfg.panel.classList.contains('hidden')){
+            closePanels();
+            cfg.panel.classList.remove('hidden');
+            renderCombo(type,context);
+            keyboardIndex=-1;
         }
-    });
-    meta.input.addEventListener('click',e=>{
-        e.stopPropagation();
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        meta.panel.classList.remove('hidden');
+    }
+
+    cfg.toggle.addEventListener('click',event=>{
+        event.stopPropagation();const open=cfg.panel.classList.contains('hidden');closePanels();
         keyboardIndex=-1;
-        renderInstitutionOptions(which)
+        if(open){cfg.panel.classList.remove('hidden');renderCombo(type,context)}
     });
-    meta.input.addEventListener('input',()=>{
-        // 输入搜索词时自动展开，并立即刷新匹配结果。
-        meta.panel.classList.remove('hidden');
+    cfg.input.addEventListener('click',event=>{
+        event.stopPropagation();closePanels();cfg.panel.classList.remove('hidden');renderCombo(type,context);
         keyboardIndex=-1;
-        renderInstitutionOptions(which)
     });
-    meta.input.addEventListener('keydown',e=>{
-        // 出版菜单支持与标签/书架一致的键盘浏览：
-        // ↑ / ↓ 移动高亮，Enter 选中，Escape 收起。
-        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-            e.preventDefault();
-            e.stopPropagation();
+    cfg.input.addEventListener('input',()=>{
+        renderCombo(type,context);
+        keyboardIndex=-1;
+        if(type==='journal')applyJournalProfile(cfg.input.value,context);
+    });
+    cfg.input.addEventListener('keydown',event=>{
+        if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+            event.preventDefault();
+            event.stopPropagation();
             openForKeyboard();
-            const options=keyboardOptions();
+            const options=selectableOptions();
             if(!options.length)return;
             if(keyboardIndex<0){
-                setKeyboardActive(e.key==='ArrowDown'?0:options.length-1)
+                setKeyboardActive(event.key==='ArrowDown'?0:options.length-1);
             }else{
-                setKeyboardActive(keyboardIndex+(e.key==='ArrowDown'?1:-1))
+                setKeyboardActive(keyboardIndex+(event.key==='ArrowDown'?1:-1));
             }
-            return
+            return;
         }
-        if(e.key==='Enter'){
-            if(!meta.panel.classList.contains('hidden')&&keyboardIndex>=0){
-                const option=keyboardOptions()[keyboardIndex];
-                if(option){
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectKeyboardValue(option.dataset.selectValue);
-                    return
-                }
+        if(event.key==='Enter'&&!cfg.panel.classList.contains('hidden')&&keyboardIndex>=0){
+            const option=selectableOptions()[keyboardIndex];
+            if(option){
+                event.preventDefault();
+                event.stopPropagation();
+                selectValue(option.dataset.select);
             }
-
-            const currentValue=clean(meta.input.value);
-            const confirmedValue=currentValue&&state.institutions.some(v=>key(v)===key(currentValue));
-
-            // 添加界面：出版已经确认、下拉已收起时，再按 Enter 直接触发主“添加”。
-            if(which==='add'&&meta.panel.classList.contains('hidden')&&confirmedValue){
-                e.preventDefault();
-                e.stopPropagation();
-                keyboardIndex=-1;
-                addEntry();
-                return
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-            keyboardIndex=-1;
-            commitInstitution(which,true);
-            meta.panel.classList.add('hidden');
-            meta.input.focus()
+            return;
         }
-        if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
-            e.preventDefault();
-            e.stopPropagation();
+        if(event.key==='Escape'&&!cfg.panel.classList.contains('hidden')){
+            event.preventDefault();
+            event.stopPropagation();
             clearKeyboardActive();
-            meta.panel.classList.add('hidden')
+            cfg.panel.classList.add('hidden');
         }
     });
-    meta.options.addEventListener('click',e=>{
-        e.stopPropagation();
-        const select=e.target.closest('.combo-pill-select[data-select-value]');
-        if(select){
-            clearKeyboardActive();
-            meta.input.value=select.dataset.selectValue;
-            renderInstitutionOptions(which);
-            meta.panel.classList.add('hidden');
-            meta.input.focus()
-        }
+    cfg.options.addEventListener('click',event=>{
+        event.stopPropagation();
+        const del=event.target.closest('[data-delete]');
+        if(del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.delete)}
+        const edit=event.target.closest('[data-edit]');
+        if(edit){clearKeyboardActive();return editHistoryOption(type,edit.dataset.edit)}
+        const select=event.target.closest('[data-select]');
+        if(!select)return;
+        selectValue(select.dataset.select);
     });
-    meta.combo.addEventListener('click',e=>e.stopPropagation())
+    cfg.combo.addEventListener('click',event=>event.stopPropagation());
 }
-function setupMultiCombo(type,which){
-    const meta=multiMeta(type,which);
-    const toggle=type==='category'
-        ? (which==='edit'?editCategoryToggle:categoryToggle)
-        : (which==='edit'?editTagToggle:tagToggle);
-    const combo=type==='category'
-        ? (which==='edit'?editCategoryCombo:categoryCombo)
-        : (which==='edit'?editTagCombo:tagCombo);
-    let keyboardIndex=-1;
+for(const context of ['add','edit'])for(const type of ['journal','issue','note'])setupCombo(type,context);
+document.addEventListener('click',closePanels);
 
-    function keyboardOptions(){
-        return [...meta.options.querySelectorAll('.combo-pill-select[data-select-value]')]
+function render(){
+    data=normalizeData(data);countDisplay.textContent=String(data.entries.length);
+    if(!data.entries.length){
+        papersList.innerHTML='<div class="empty-state"></div>';renderAllCombos();return;
     }
-    function clearKeyboardActive(){
-        keyboardIndex=-1;
-        keyboardOptions().forEach(option=>{
-            option.classList.remove('keyboard-active');
-            option.removeAttribute('aria-selected')
-        })
-    }
-    function setKeyboardActive(nextIndex){
-        const options=keyboardOptions();
-        if(!options.length){keyboardIndex=-1;return false}
-        keyboardIndex=((nextIndex%options.length)+options.length)%options.length;
-        options.forEach((option,index)=>{
-            const active=index===keyboardIndex;
-            option.classList.toggle('keyboard-active',active);
-            if(active)option.setAttribute('aria-selected','true');
-            else option.removeAttribute('aria-selected')
-        });
-        options[keyboardIndex].scrollIntoView({block:'nearest'});
-        return true
-    }
-    function openForKeyboard(){
-        if(meta.panel.classList.contains('hidden')){
-            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-            meta.panel.classList.remove('hidden');
-            renderMultiField(type,which);
-            keyboardIndex=-1
-        }
-    }
-    function selectKeyboardValue(value){
-        keyboardIndex=-1;
-        toggleSelection(type,which,value);
-        if(!multiAllowsMultiple(type,which))meta.panel.classList.add('hidden')
-    }
-
-    toggle.addEventListener('click',e=>{
-        e.stopPropagation();
-
-        // 单选字段已有选择时不允许再次打开；编辑标签允许继续打开并增加标签。
-        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
-            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-            keyboardIndex=-1;
-            return
-        }
-
-        const willOpen=meta.panel.classList.contains('hidden');
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        keyboardIndex=-1;
-        if(willOpen){
-            meta.panel.classList.remove('hidden');
-            renderMultiField(type,which)
-        }
-    });
-    meta.input.addEventListener('click',e=>{
-        e.stopPropagation();
-
-        // 单选字段已有选择时输入栏锁定；编辑标签仍可继续搜索并增加标签。
-        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
-            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-            keyboardIndex=-1;
-            return
-        }
-
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        meta.panel.classList.remove('hidden');
-        keyboardIndex=-1;
-        renderMultiField(type,which)
-    });
-    meta.input.addEventListener('input',()=>{
-        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
-            meta.input.value='';
-            meta.panel.classList.add('hidden');
-            keyboardIndex=-1;
-            return
-        }
-        // 输入搜索词时自动展开，并立即刷新匹配结果。
-        meta.panel.classList.remove('hidden');
-        keyboardIndex=-1;
-        renderMultiOptions(type,which)
-    });
-    meta.input.addEventListener('keydown',e=>{
-        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-            e.preventDefault();
-            e.stopPropagation();
-            openForKeyboard();
-            const options=keyboardOptions();
-            if(!options.length)return;
-            if(keyboardIndex<0){
-                setKeyboardActive(e.key==='ArrowDown'?0:options.length-1)
-            }else{
-                setKeyboardActive(keyboardIndex+(e.key==='ArrowDown'?1:-1))
-            }
-            return
-        }
-        if(e.key==='Enter'){
-            if(!meta.panel.classList.contains('hidden')&&keyboardIndex>=0){
-                const option=keyboardOptions()[keyboardIndex];
-                if(option){
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectKeyboardValue(option.dataset.selectValue);
-                    return
-                }
-            }
-
-            // 添加界面：当前多选输入框已经清空，说明该字段已完成。
-            // 此时 Enter 直接等同于点击主“添加”按钮。
-            if(which==='add'&&!clean(meta.input.value)){
-                e.preventDefault();
-                e.stopPropagation();
-                keyboardIndex=-1;
-                meta.panel.classList.add('hidden');
-                addEntry();
-                return
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-            keyboardIndex=-1;
-            commitTypedValue(type,which,true);
-            meta.panel.classList.add('hidden');
-            meta.input.focus()
-        }
-        if(e.key==='Escape'&&!meta.panel.classList.contains('hidden')){
-            e.preventDefault();
-            e.stopPropagation();
-            clearKeyboardActive();
-            meta.panel.classList.add('hidden')
-        }
-    });
-    meta.options.addEventListener('click',e=>{
-        e.stopPropagation();
-        const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
-        if(which==='add'&&edit){clearKeyboardActive();return editHistoryOption(type,edit.dataset.editValue)}
-        const del=e.target.closest('.combo-pill-delete[data-delete-value]');
-        if(which==='add'&&del){clearKeyboardActive();return deleteHistoryOption(type,del.dataset.deleteValue)}
-        const add=e.target.closest('.combo-add[data-add-current]');
-        if(which==='add'&&add){
-            clearKeyboardActive();
-            commitTypedValue(type,which,true);
-            meta.panel.classList.add('hidden');
-            return
-        }
-        const select=e.target.closest('.combo-pill-select[data-select-value]');
-        if(select){
-            clearKeyboardActive();
-            return toggleSelection(type,which,select.dataset.selectValue)
-        }
-    });
-    meta.selectedBox.addEventListener('click',e=>{
-        e.stopPropagation();
-        const remove=e.target.closest('.selected-pill-remove[data-remove-value]');
-        if(remove){
-            clearKeyboardActive();
-            return removeSelection(type,which,remove.dataset.removeValue)
-        }
-    });
-    combo.addEventListener('click',e=>e.stopPropagation())
+    papersList.innerHTML=data.entries.map(item=>{
+        const rows=[
+            item.journal?`<div class="meta-row"><span class="meta-label">刊名：</span>${esc(item.journal)}</div>`:'',
+            item.year?`<div class="meta-row"><span class="meta-label">刊期：</span>${esc(item.year)}</div>`:'',
+            item.issue?`<div class="meta-row"><span class="meta-label">刊号：</span>${esc(item.issue)}</div>`:'',
+            item.journalNote?`<div class="meta-row"><span class="meta-label">刊注：</span>${esc(item.journalNote)}</div>`:''
+        ].filter(Boolean);
+        const editButton=unlocked?`<button class="edit-btn" data-id="${attr(item.id)}" type="button">编辑</button>`:'';
+        if(editButton&&rows.length)rows[rows.length-1]=rows[rows.length-1].replace('</div>',`${editButton}</div>`);
+        const actions=editButton&&!rows.length?`<div class="paper-actions">${editButton}</div>`:'';
+        return `<article class="paper-item">
+            <h3 class="paper-title">${esc(item.title||'')}</h3>
+            <div class="paper-meta">${rows.join('')}${actions}</div>
+        </article>`;
+    }).join('');
+    publicLoaded=true;exportBtn.disabled=false;renderAllCombos();
 }
-setupInstitutionCombo('add');
-setupInstitutionCombo('edit');
-setupMultiCombo('category','add');
-setupMultiCombo('category','edit');
-setupManualDrag(categoryOptions,'category');
-setupMultiCombo('tag','add');
-setupMultiCombo('tag','edit');
 
-document.addEventListener('click',()=>{
-    allMultiPanels().forEach(panel=>panel.classList.add('hidden'))
-});
+function requireEditAccess(){
+    if(unlocked&&adminConfigured())return true;
+    show('请先使用 Token 登录后再编辑','error');
+    return false;
+}
 
-addBtn.addEventListener('click',addEntry);
-[bookNameInput,bookNoInput].forEach(input=>{
-    input.addEventListener('keydown',e=>{
-        if(e.key!=='Enter')return;
-        e.preventDefault();
-        e.stopPropagation();
-        addEntry()
-    })
-});
-pressList.addEventListener('click',e=>{const edit=e.target.closest('.edit-btn');if(edit)return openEdit(edit.dataset.id)});
-editDelete.addEventListener('click',()=>{if(editingId)deleteEntry(editingId)});
-editCancel.addEventListener('click',()=>{editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};editModal.classList.add('hidden')});
-editSave.addEventListener('click',saveEdit);
-clearEditBookName?.addEventListener('click',()=>{editBookName.value='';editBookName.focus()});
-clearEditBookNo?.addEventListener('click',()=>{editBookNo.value='';editBookNo.focus()});
-clearEditBookNoTop?.addEventListener('click',()=>{editBookNo.value='';editBookNo.focus()});
+function addEntry(){
+    if(!requireEditAccess())return;
 
-// 只有“按下”和“松开”都发生在遮罩层本身时，才视为真正点击弹窗外。
-// 从输入框/下拉框内部开始拖选文字，即使鼠标松到遮罩层，也不会关闭弹窗。
-editModal.addEventListener('pointerdown',e=>{
-    editOverlayPointerDown=e.target===editModal
-});
-editModal.addEventListener('pointerup',e=>{
-    const genuineOutsideClick=editOverlayPointerDown&&e.target===editModal;
-    editOverlayPointerDown=false;
-    if(!genuineOutsideClick)return;
-    if(!editIsUnchanged())return;
+    const title=clean(titleInput.value);
+    if(!title){
+        show('标题不能为空','error');
+        titleInput.focus();
+        return;
+    }
+
+    const year=clean(yearInput.value);
+    const journal=clean(journalInput.value);
+    const issue=clean(issueInput.value);
+    const journalNote=clean(journalNoteInput.value);
+
+
+    rememberOption('journal',journal);
+    rememberOption('issue',issue);
+    rememberOption('note',journalNote);
+    upsertProfile(journal,issue,journalNote);
+
+    data.entries.push({
+        id:uid(),
+        title,
+        year,
+        journal,
+        issue,
+        journalNote
+    });
+
+    titleInput.value='';
+    yearInput.value='';
+    journalInput.value='';
+    issueInput.value='';
+    journalNoteInput.value='';
+
+    markLocalChange();
+    titleInput.focus();
+    show('已提交','success');
+}
+
+function editSnapshot(){
+    return JSON.stringify({
+        title:editTitle.value,
+        year:editYear.value,
+        journal:editJournal.value,
+        issue:editIssue.value,
+        journalNote:editJournalNote.value
+    });
+}
+
+function closeEdit(){
     editingId='';
     editInitialSnapshot='';
-    editSelections={category:[],tag:[]};
-    editModal.classList.add('hidden')
-});
-editModal.addEventListener('pointercancel',()=>{
-    editOverlayPointerDown=false
-});
-
-configBtn.addEventListener('click',openConfig);
-manageBtn.addEventListener('click',openManage);
-manageClose.addEventListener('click',closeManage);
-manageInstitutionAdd.addEventListener('click',addManagedInstitution);
-[manageInstitutionInput,manageInstitutionLineInput].forEach(input=>input.addEventListener('keydown',e=>{
-    if(e.key==='Enter'){e.preventDefault();addManagedInstitution()}
-}));
-manageInstitutionOptions.addEventListener('click',e=>{
-    e.stopPropagation();
-    const edit=e.target.closest('.combo-pill-edit[data-edit-value]');
-    if(edit)return editInstitutionHistory(edit.dataset.editValue);
-    const del=e.target.closest('.combo-pill-delete[data-delete-value]');
-    if(del)return deleteInstitutionHistory(del.dataset.deleteValue)
-});
-manageInstitutionOptions.addEventListener('change',e=>{
-    const lineInput=e.target.closest('.manage-line-input[data-move-value]');
-    if(lineInput)moveManagedInstitution(lineInput.dataset.moveValue,lineInput.value)
-});
-manageInstitutionOptions.addEventListener('keydown',e=>{
-    const lineInput=e.target.closest('.manage-line-input[data-move-value]');
-    if(!lineInput||e.key!=='Enter')return;
-    e.preventDefault();
-    moveManagedInstitution(lineInput.dataset.moveValue,lineInput.value)
-});
-manageModal.addEventListener('click',e=>{if(e.target===manageModal)closeManage()});
-configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
-configForm.addEventListener('submit',saveConfigForm);
-// 不新增“强制刷新”按钮：现有“同步”按钮与自动同步共用安全串行队列，写入前自动读取最新 SHA 并合并。
-syncBtn.addEventListener('click',()=>sync(true));
-exportBtn.addEventListener('click',downloadJson);
-document.addEventListener('keydown',e=>{
-    if(e.key!=='Escape')return;
-    institutionPanel.classList.add('hidden');
-    editInstitutionPanel.classList.add('hidden');
-    categoryPanel.classList.add('hidden');
-    editCategoryPanel.classList.add('hidden');
-    tagPanel.classList.add('hidden');
-    editTagPanel.classList.add('hidden');
     editModal.classList.add('hidden');
-    configModal.classList.add('hidden');
-    manageModal.classList.add('hidden')
-});
-async function initializeApp(){
-    await bootstrapStorage();
-    loadConfig();loadMeta();
-    if(admin()){const cached=loadLocal();if(cached)state=cached}
-    updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
-    if(admin())await loadAdminState();else await loadPublic();
+    closePanels();
 }
-initializeApp().catch(error=>{console.error('Press 初始化失败:',error);status('offline','初始化失败');render()});
 
-// 网络恢复或重新回到页面时，如果仍有 dirty 数据，自动继续串行同步。
-window.addEventListener('online',()=>{if(admin()&&adminReady&&meta.dirty)armSync(250,false)});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){if(storageReady&&admin()&&meta.dirty)saveLocal(state)}else if(admin()&&adminReady&&meta.dirty)armSync(350,false)});
-window.addEventListener('pagehide',()=>{if(storageReady&&admin()&&meta.dirty)saveLocal(state)});
+function openEdit(id){
+    if(!requireEditAccess())return;
+    const item=data.entries.find(x=>x.id===id);
+    if(!item)return;
+
+    editingId=id;
+    editTitle.value=item.title;
+    editYear.value=item.year;
+    editJournal.value=item.journal;
+    editIssue.value=item.issue;
+    editJournalNote.value=item.journalNote;
+    editInitialSnapshot=editSnapshot();
+    editModal.classList.remove('hidden');
+    renderAllCombos();
+    setTimeout(()=>editTitle.focus(),30);
+}
+
+function saveEditEntry(){
+    if(!requireEditAccess())return;
+
+    const item=data.entries.find(x=>x.id===editingId);
+    if(!item)return;
+
+    const next={
+        title:clean(editTitle.value),
+        year:clean(editYear.value),
+        journal:clean(editJournal.value),
+        issue:clean(editIssue.value),
+        journalNote:clean(editJournalNote.value)
+    };
+
+    if(!next.title){
+        show('标题不能为空','error');
+        editTitle.focus();
+        return;
+    }
+
+    // 所有校验通过后再一次性提交，避免校验失败造成“半保存”。
+    rememberOption('journal',next.journal);
+    rememberOption('issue',next.issue);
+    rememberOption('note',next.journalNote);
+    upsertProfile(next.journal,next.issue,next.journalNote);
+
+    Object.assign(item,next);
+
+    closeEdit();
+    markLocalChange();
+    show('已保存','success');
+}
+
+function deleteEntry(){
+    if(!requireEditAccess()||!editingId)return;
+
+    const item=data.entries.find(x=>x.id===editingId);
+    if(!item)return;
+    if(!confirm(`确定删除论文“${item.title}”吗？`))return;
+
+    data.entries=data.entries.filter(x=>x.id!==editingId);
+    data.entries.sort(comparePaperEntry);
+    closeEdit();
+    markLocalChange();
+    show('已删除','success');
+}
+
+function downloadJson(){
+    // 导出属于只读操作：访客在公开数据已经加载后也允许导出。
+    if(!publicLoaded&&!unlocked)return;
+    const payload={schemaVersion:2,...normalizeData(data)};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=`papers_backup_${formatDate(new Date().toISOString())}.json`;a.click();URL.revokeObjectURL(url);
+}
+function importFile(file){
+    if(!requireEditAccess()||!file)return;
+    if(file.size>MAX_BYTES){show('文件超过 900 KB','error');return}
+    const reader=new FileReader();
+    reader.onload=e=>{
+        try{
+            const next=normalizeData(JSON.parse(String(e.target.result||'')));
+            if(!confirm(`将导入 ${next.entries.length} 条 Papers，并替换当前数据。继续吗？`))return;
+            data=next;markLocalChange();show('导入完成','success');
+        }catch(error){console.error(error);show('导入失败：JSON 格式不正确','error')}
+    };
+    reader.readAsText(file,'utf-8');
+}
+
+function openConfig(){
+    cfgOwner.value=config.owner;cfgRepo.value=config.repo;cfgFile.value=config.file||'papers_data.json';cfgToken.value=config.token;
+    rememberToken.checked=rememberTokenPreference;configModal.classList.remove('hidden');
+}
+function closeConfig(){configModal.classList.add('hidden')}
+configForm.addEventListener('submit',async event=>{
+    event.preventDefault();
+    config.owner=clean(cfgOwner.value);config.repo=clean(cfgRepo.value);config.file=clean(cfgFile.value)||'papers_data.json';config.token=clean(cfgToken.value);
+    await saveConfig();closeConfig();await login(true);
+});
+
+// 总表文字必须可以自由拖选。
+// “编辑”只响应真正的短点击：按下和松开都必须在同一个编辑按钮上，
+// 指针移动不能超过阈值，而且当前不能存在非折叠文字选区。
+let paperEditPointer=null;
+const EDIT_CLICK_MOVE_LIMIT=6;
+
+function hasActiveTextSelection(){
+    const selection=window.getSelection?.();
+    return Boolean(selection&&selection.rangeCount>0&&!selection.isCollapsed&&String(selection).length);
+}
+
+papersList.addEventListener('pointerdown',event=>{
+    const btn=event.target.closest('.edit-btn[data-id]');
+    if(!btn){
+        paperEditPointer=null;
+        return;
+    }
+    paperEditPointer={
+        pointerId:event.pointerId,
+        button:btn,
+        x:event.clientX,
+        y:event.clientY,
+        moved:false
+    };
+});
+
+papersList.addEventListener('pointermove',event=>{
+    if(!paperEditPointer||event.pointerId!==paperEditPointer.pointerId)return;
+    if(
+        Math.abs(event.clientX-paperEditPointer.x)>EDIT_CLICK_MOVE_LIMIT||
+        Math.abs(event.clientY-paperEditPointer.y)>EDIT_CLICK_MOVE_LIMIT
+    ){
+        paperEditPointer.moved=true;
+    }
+});
+
+papersList.addEventListener('pointerup',event=>{
+    if(!paperEditPointer||event.pointerId!==paperEditPointer.pointerId)return;
+
+    const state=paperEditPointer;
+    paperEditPointer=null;
+
+    const releasedBtn=event.target.closest('.edit-btn[data-id]');
+    const genuineClick=
+        !state.moved&&
+        releasedBtn===state.button&&
+        !hasActiveTextSelection();
+
+    if(genuineClick){
+        event.preventDefault();
+        openEdit(state.button.dataset.id);
+    }
+});
+
+papersList.addEventListener('pointercancel',()=>{
+    paperEditPointer=null;
+});
+
+// 屏蔽拖选结束后浏览器合成的 click，避免它再次误触编辑。
+// 键盘仍可用 Enter / Space 打开编辑。
+papersList.addEventListener('click',event=>{
+    const btn=event.target.closest('.edit-btn[data-id]');
+    if(btn){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+});
+
+papersList.addEventListener('keydown',event=>{
+    const btn=event.target.closest('.edit-btn[data-id]');
+    if(!btn)return;
+    if(event.key==='Enter'||event.key===' '){
+        event.preventDefault();
+        if(!hasActiveTextSelection())openEdit(btn.dataset.id);
+    }
+});
+addBtn.addEventListener('click',addEntry);
+editDelete.addEventListener('click',deleteEntry);
+editCancel.addEventListener('click',closeEdit);
+editSave.addEventListener('click',saveEditEntry);
+clearEditYear.addEventListener('click',()=>{editYear.value=''});
+editModal.addEventListener('pointerdown',event=>{editModal.dataset.outside=event.target===editModal?'1':'0'});
+editModal.addEventListener('pointerup',event=>{
+    const genuine=editModal.dataset.outside==='1'&&event.target===editModal;editModal.dataset.outside='0';
+    if(genuine&&editingId&&editSnapshot()===editInitialSnapshot)closeEdit();
+});
+syncBtn.addEventListener('click',()=>sync(true,true));
+configBtn.addEventListener('click',openConfig);
+visitorLoginBtn.addEventListener('click',openConfig);
+configCancel.addEventListener('click',closeConfig);
+exportBtn.addEventListener('click',downloadJson);
+importBtn.addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',()=>{const file=fileInput.files?.[0];if(file)importFile(file);fileInput.value=''});
+document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){closePanels();if(!editModal.classList.contains('hidden')&&editSnapshot()===editInitialSnapshot)closeEdit();else closeConfig()}
+});
+backToTopBtn.addEventListener('click',()=>{const start=scrollY;const t=performance.now();function go(now){const p=Math.min((now-t)/10,1);scrollTo(0,start*(1-p));if(p<1)requestAnimationFrame(go)}requestAnimationFrame(go)});
+addEventListener('scroll',()=>backToTopBtn.classList.toggle('visible',scrollY>260),{passive:true});
+
+(async()=>{
+    await requestPersistentStorage();
+    await loadConfig();await loadMeta();setUnlocked(false);await loadPublicView();
+    if(adminConfigured())await login(false);
+    render();
+})();
+
+function persistCurrentWorkingCopyBestEffort(){
+    if(unlocked&&target())void saveWorkingCopy(data).catch(()=>{});
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persistCurrentWorkingCopyBestEffort()});
+window.addEventListener('pagehide',persistCurrentWorkingCopyBestEffort);
 })();
 </script>
-
-
 </body>
 </html>
