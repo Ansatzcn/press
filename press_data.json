@@ -329,7 +329,7 @@
       "bookNo": "7-04-058042",
       "institution": "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
       "category": [
-        "10架1排"
+        "正架1行"
       ],
       "tag": [
         "13图书"
@@ -1197,7 +1197,7 @@
       "bookNo": "7-111-49657",
       "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
       "category": [
-        "10架1排"
+        "正架1行"
       ],
       "tag": [
         "13图书"
@@ -1227,6 +1227,16 @@
       "id": "b01fd34c-4115-4c34-b44a-e2ba708c0838",
       "bookName": "自驱型成长：如何科学有效地培养孩子的自律",
       "bookNo": "7-111-63688",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ]
+    },
+    {
+      "id": "2c99e925-9101-4fa0-80da-8d5581de36e8",
+      "bookName": "游戏的力量：游戏如何塑造我们的世界",
+      "bookNo": "7-111-76851",
       "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
       "category": [],
       "tag": [
@@ -9729,6 +9739,16 @@
       ]
     },
     {
+      "id": "01de8199-74d0-4ead-bb5f-8f710d026b68",
+      "bookName": "我无惧声名狼藉：埃德娜•奥布莱恩回忆",
+      "bookNo": "7-5596-8463",
+      "institution": "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
+      ]
+    },
+    {
       "id": "084b816d-a071-4318-b58b-6b8899595a4a",
       "bookName": "狄仁杰与武则天：武周革命与平民官僚的崛起",
       "bookNo": "7-5596-8973",
@@ -10736,7 +10756,12 @@
     "9架2排",
     "10架1排",
     "正架2行",
-    "侧架1行"
+    "侧架1行",
+    "组架6列",
+    "高架2行",
+    "黑架2行",
+    "正架1行",
+    "21"
   ],
   "tags": [
     "11图书",
