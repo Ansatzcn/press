@@ -614,7 +614,7 @@ body.reordering{user-select:none}
 </section>
 
 <section>
-<div class="list-header"><h2>总表</h2><span class="count-badge" id="countDisplay">0</span></div>
+<div class="list-header"><h2>总表</h2><span class="count-badge" id="countDisplay">0/0</span></div>
 <div class="press-list" id="pressList"><div class="empty-state">加载中…</div></div>
 </section>
 </main>
@@ -1425,8 +1425,13 @@ function setupManualDrag(optionsEl,type){
     optionsEl.addEventListener('pointerup',finish);
     optionsEl.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pointerId)cleanup()})
 }
+function updateCountDisplay(){
+    const total=state.entries.length;
+    const checked=state.entries.reduce((sum,entry)=>sum+(entry.tagChecked?1:0),0);
+    countDisplay.textContent=`${checked}/${total}`
+}
 function render(){
-    state=norm(state);countDisplay.textContent=String(state.entries.length);updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    state=norm(state);updateCountDisplay();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const editLink=(admin()&&adminReady)?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
         const publication=x.institution;
@@ -2603,6 +2608,7 @@ pressList.addEventListener('change',e=>{
         return
     }
     x.tagChecked=Boolean(checkbox.checked);
+    updateCountDisplay();
     const locallySaved=schedule();
     if(locallySaved)show('勾选状态已保存到本机，等待同步','success')
 });
