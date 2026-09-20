@@ -922,12 +922,25 @@ function compareBookNo(a,b){
     if(!aa&&bb)return 1;
     if(!aa&&!bb)return 0;
 
-    // 含“-”的书号排在最前，并保持原有自然排序规则。
-    // 其次是含“·”的书号：先比较“·”前数字，再比较“·”后数字。
-    // 其它书号仍按原有自然排序规则排列。
-    const group=s=>s.includes('-')?0:(s.includes('·')?1:2);
-    const ga=group(aa),gb=group(bb);
+    // 书号排序只看格式，不区分中文书、英文书：
+    // 1) 凡合法的 XX-YY-ZZ 三段数字书号一律排在前面，并按 XX → YY → ZZ 逐段数字升序；
+    // 2) 三段连字符书号全部排完后，才排中文 XX·YY，并沿用现有两段数字升序规则；
+    // 3) 其它格式最后按自然顺序排列。
+    const tripleParts=s=>{
+        const m=s.match(/^(\d+)-(\d+)-(\d+)$/);
+        return m?[Number(m[1]),Number(m[2]),Number(m[3])]:null
+    };
+    const aTriple=tripleParts(aa),bTriple=tripleParts(bb);
+    const group=(s,triple)=>triple?0:(s.includes('·')?1:2);
+    const ga=group(aa,aTriple),gb=group(bb,bTriple);
     if(ga!==gb)return ga-gb;
+
+    if(ga===0){
+        for(let i=0;i<3;i++){
+            if(aTriple[i]!==bTriple[i])return aTriple[i]-bTriple[i];
+        }
+        return collator.compare(aa,bb)
+    }
 
     if(ga===1){
         const [aLeftRaw='',aRightRaw='']=aa.split('·',2);
@@ -1009,19 +1022,31 @@ function norm(v){
         Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
     );
 
-    // 总表：先按“出版”下拉菜单顺序；出版相同再按书号排序。
+    // 总表排序的最高优先级永远是“出版”下拉菜单的人工顺序。
+    // 规则 1：出版社不同，只比较出版社在下拉菜单中的位置，绝不比较书号。
+    // 规则 2：只有出版社完全相同，才进入书号排序：
+    //         不分中英文，所有合法 XX-YY-ZZ 先按 XX → YY → ZZ 数字升序；全部排完后才排中文 XX·YY。
+    // 规则 3：出版社和书号都相同，最后才按书名自然排序。
     // 已从出版历史中删除、但仍被旧条目使用的出版放在已配置出版之后。
     const institutionOrder=new Map(institutions.map((v,i)=>[key(v),i]));
     entries.sort((a,b)=>{
         const ai=institutionOrder.has(key(a.institution))?institutionOrder.get(key(a.institution)):Number.MAX_SAFE_INTEGER;
         const bi=institutionOrder.has(key(b.institution))?institutionOrder.get(key(b.institution)):Number.MAX_SAFE_INTEGER;
+
+        // 第一关键字：出版社下拉菜单顺序。出版社不同，到这里就结束比较。
         if(ai!==bi)return ai-bi;
+
+        // 两个都是不在下拉菜单中的旧出版社时，再按出版社名称稳定排序；仍然先于书号。
         if(ai===Number.MAX_SAFE_INTEGER){
             const byInstitution=collator.compare(a.institution,b.institution);
             if(byInstitution!==0)return byInstitution
         }
+
+        // 第二关键字：仅在同一出版社内部比较书号。
         const byNo=compareBookNo(a.bookNo,b.bookNo);
         if(byNo!==0)return byNo;
+
+        // 第三关键字：同出版社且同书号时按书名稳定排序。
         const byName=collator.compare(a.bookName,b.bookName);
         if(byName!==0)return byName;
         return 0
