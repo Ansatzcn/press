@@ -11444,6 +11444,17 @@
       "tagChecked": false
     },
     {
+      "id": "4f55bd1f-2884-449a-8a9e-2db799badabb",
+      "bookName": "走过兴都库什山：深入阿富汗内陆",
+      "bookNo": "957-8278-03",
+      "institution": "马可孛罗文化事业公司",
+      "category": [],
+      "tag": [
+        "11图书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "6f11de7f-aee7-43f0-8e47-eaf6ce90ddd0",
       "bookName": "中国现代国家的起源",
       "bookNo": "962-996-603",
@@ -11473,17 +11484,6 @@
       "category": [],
       "tag": [
         "14图书"
-      ],
-      "tagChecked": false
-    },
-    {
-      "id": "4f55bd1f-2884-449a-8a9e-2db799badabb",
-      "bookName": "走过兴都库什山：深入阿富汗内陆",
-      "bookNo": "957-8278-03",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "11图书"
       ],
       "tagChecked": false
     },
