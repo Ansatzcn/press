@@ -4501,17 +4501,6 @@
       "tagChecked": false
     },
     {
-      "id": "71a7a37b-e6a8-473c-a0c2-f6a4fb82b899",
-      "bookName": "全球数字贸易规则研究",
-      "bookNo": "7-309-13707.",
-      "institution": "[复旦大学出版社](https://book.douban.com/press/2736/?order=time)",
-      "category": [],
-      "tag": [
-        "21读书"
-      ],
-      "tagChecked": false
-    },
-    {
       "id": "93322e71-28a3-4641-abcb-b6ffd41c2f40",
       "bookName": "发展中国家比较政治学",
       "bookNo": "7-309-15803",
@@ -4530,6 +4519,17 @@
       "category": [],
       "tag": [
         "24读书"
+      ],
+      "tagChecked": false
+    },
+    {
+      "id": "71a7a37b-e6a8-473c-a0c2-f6a4fb82b899",
+      "bookName": "全球数字贸易规则研究",
+      "bookNo": "7-309-13707.",
+      "institution": "[复旦大学出版社](https://book.douban.com/press/2736/?order=time)",
+      "category": [],
+      "tag": [
+        "21读书"
       ],
       "tagChecked": false
     },
@@ -7410,7 +7410,7 @@
       "tag": [
         "21读书"
       ],
-      "tagChecked": false
+      "tagChecked": true
     },
     {
       "id": "5e30c944-34fc-4038-ad00-81db27813309",
