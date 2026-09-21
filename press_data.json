@@ -280,6 +280,19 @@
       "tagChecked": true
     },
     {
+      "id": "021e370c-bcae-4243-80e1-69ec7bba0091",
+      "bookName": "中国城市区域的多中心空间结构与发展战略",
+      "bookNo": "7-03-046998",
+      "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
+      "category": [
+        "二号"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "e79b62f1-7dc0-4743-a37d-f8500e6ff821",
       "bookName": "政府投资学",
       "bookNo": "7-03-055757",
@@ -11920,7 +11933,8 @@
     "六号",
     "七号",
     "九号",
-    "十号"
+    "十号",
+    "二号"
   ],
   "tags": [
     "11图书",
