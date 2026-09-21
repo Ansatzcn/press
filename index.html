@@ -559,7 +559,9 @@ body.reordering{user-select:none}
 <button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
 <button class="btn" id="configBtn" type="button">配置</button>
 <button class="btn" id="manageBtn" type="button">管理</button>
+<button class="btn" id="importBtn" type="button">导入</button>
 <button class="btn" id="exportBtn" type="button">导出</button>
+<input class="hidden" id="importInput" type="file" accept=".html,text/html">
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
@@ -878,13 +880,13 @@ body.reordering{user-select:none}
 (()=>{
 'use strict';
 
-const PUBLIC_FILE='press_data.json',NS='press_public_v1';
+const PUBLIC_FILE='press_data.json',NS='press_public_v1',SITE_NAME='press',HTML_BACKUP_FORMAT='press-html-backup-v1',HTML_BACKUP_ID='pressHtmlBackupData';
 const DB_NAME=`${NS}:idb_v1`,DB_STORE='kv';
 const CONFIG_KEY='config',TOKEN_PERSISTED_KEY='token_persisted',META_KEY='meta',WORKCOPY_KEY='workcopy',PUBLIC_CACHE_KEY='public_cache';
 const OPFS_WORKCOPY_FILE='press_workcopy_v1.json';
 const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
 const $=id=>document.getElementById(id);
-const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
+const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),importBtn=$('importBtn'),importInput=$('importInput'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),addBtn=$('addBtn'),
 pressList=$('pressList'),countDisplay=$('countDisplay'),editModal=$('editModal'),editBookName=$('editBookName'),clearEditBookName=$('clearEditBookName'),editBookNo=$('editBookNo'),editCategoryCombo=$('editCategoryCombo'),editCategorySelected=$('editCategorySelected'),editCategory=$('editCategory'),editCategoryToggle=$('editCategoryToggle'),editCategoryPanel=$('editCategoryPanel'),editCategoryOptions=$('editCategoryOptions'),editInstitutionCombo=$('editInstitutionCombo'),editInstitution=$('editInstitution'),editInstitutionToggle=$('editInstitutionToggle'),editInstitutionPanel=$('editInstitutionPanel'),editInstitutionOptions=$('editInstitutionOptions'),editTagCombo=$('editTagCombo'),editTagSelected=$('editTagSelected'),editTag=$('editTag'),editTagToggle=$('editTagToggle'),editTagPanel=$('editTagPanel'),editTagOptions=$('editTagOptions'),clearEditBookNo=$('clearEditBookNo'),clearEditBookNoTop=$('clearEditBookNoTop'),editDelete=$('editDelete'),editCancel=$('editCancel'),editSave=$('editSave'),
 configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),cfg=$('cfg'),cfgFile=$('cfgFile'),cfgToken=$('cfgToken'),rememberToken=$('rememberToken'),configCancel=$('configCancel'),manageModal=$('manageModal'),manageInstitutionInput=$('manageInstitutionInput'),manageInstitutionLineInput=$('manageInstitutionLineInput'),manageInstitutionAdd=$('manageInstitutionAdd'),manageInstitutionOptions=$('manageInstitutionOptions'),manageClose=$('manageClose'),toast=$('toast');
@@ -1731,9 +1733,122 @@ function deleteEntry(id){
     }
     render();const locallySaved=schedule();if(locallySaved)show('已保存到本机，等待同步','success');return true
 }
-function downloadJson(){
-    const blob=new Blob([JSON.stringify(norm(state),null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=`press_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url)
+function unix10(){
+    const value=String(Math.floor(Date.now()/1000));
+    return value.length>=10?value.slice(-10):value.padStart(10,'0')
+}
+function backupJsonForHtml(value){
+    // 防止数据中的脚本结束标签、<、>、& 或 Unicode 行分隔符提前结束备份数据节点。
+    return JSON.stringify(value).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029')
+}
+function buildHtmlBackup(){
+    const exportedAt=unix10();
+    const payload={
+        format:HTML_BACKUP_FORMAT,
+        site:SITE_NAME,
+        exportedAt:Number(exportedAt),
+        exportedAtIso:new Date().toISOString(),
+        state:norm(state)
+    };
+    const clone=document.documentElement.cloneNode(true);
+    clone.querySelector(`#${HTML_BACKUP_ID}`)?.remove();
+
+    // Token 永远不进入导出文件。HTML 快照用于数据恢复，不应复制任何身份凭据。
+    const tokenField=clone.querySelector('#cfgToken');
+    if(tokenField){tokenField.value='';tokenField.removeAttribute('value')}
+    const fileField=clone.querySelector('#importInput');
+    if(fileField)fileField.removeAttribute('value');
+
+    const backupNode=document.createElement('script');
+    backupNode.type='application/json';
+    backupNode.id=HTML_BACKUP_ID;
+    backupNode.setAttribute('data-format',HTML_BACKUP_FORMAT);
+    backupNode.textContent=backupJsonForHtml(payload);
+    const head=clone.querySelector('head');
+    if(!head)throw new Error('无法生成 HTML 备份：页面缺少 head');
+    head.appendChild(backupNode);
+    return{html:'<!DOCTYPE html>\n'+clone.outerHTML,exportedAt}
+}
+function downloadHtml(){
+    try{
+        const {html,exportedAt}=buildHtmlBackup();
+        const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+        a.href=url;
+        a.download=`${SITE_NAME}${exportedAt}.html`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),1000);
+        show('HTML 备份已导出','success')
+    }catch(e){
+        console.error(e);
+        show(`导出失败：${e.message}`,'error')
+    }
+}
+function embeddedBackupPayload(){
+    const node=document.getElementById(HTML_BACKUP_ID);
+    if(!node)return null;
+    try{
+        const payload=JSON.parse(node.textContent||'');
+        if(payload?.format!==HTML_BACKUP_FORMAT||payload?.site!==SITE_NAME||!payload?.state)return null;
+        return payload
+    }catch(e){
+        console.error('HTML 内嵌备份读取失败:',e);
+        return null
+    }
+}
+function parseHtmlBackupText(text){
+    // 只从文本中提取 application/json 数据，绝不把导入的 HTML 插入当前页面，也不执行其中脚本。
+    const source=String(text||'');
+    const re=new RegExp(`<script\\b(?=[^>]*\\bid=["']${HTML_BACKUP_ID}["'])[^>]*>([\\s\\S]*?)<\\/script\\s*>`,'i');
+    const match=source.match(re);
+    if(!match)throw new Error('不是有效的 Press HTML 备份：缺少内嵌备份数据');
+    let payload;
+    try{payload=JSON.parse(match[1])}catch(e){throw new Error('HTML 备份中的数据无法解析')}
+    if(payload?.format!==HTML_BACKUP_FORMAT)throw new Error('HTML 备份格式不受支持');
+    if(payload?.site!==SITE_NAME)throw new Error('该备份不属于 Press 网站');
+    if(!payload?.state||typeof payload.state!=='object')throw new Error('HTML 备份缺少网站数据');
+    return payload
+}
+async function importHtmlBackup(file){
+    if(!file)return;
+    try{
+        if(file.size>12*1024*1024)throw new Error('备份文件过大，已拒绝导入');
+        const payload=parseHtmlBackupText(await file.text());
+        const restored=norm(payload.state);
+        const when=Number(payload.exportedAt)>0?new Date(Number(payload.exportedAt)*1000).toLocaleString():'未知时间';
+        if(!confirm(`确定导入 ${when} 的 HTML 备份吗？\n\n当前页面数据将替换为备份内容；若已配置 GitHub Token，导入后请点击“同步”写回云端。`))return;
+
+        state=restored;
+        addSelections={category:[],tag:[]};
+        editSelections={category:[],tag:[]};
+        editingId='';editInitialSnapshot='';
+        editModal.classList.add('hidden');
+        render();
+        if(!saveLocal(state))throw new Error('本机工作副本保存失败');
+        savePublicCache(state).catch(()=>{});
+
+        if(admin()){
+            ensureTarget();
+            meta.dirty=true;
+            meta.revision=currentRevision()+1;
+            saveMeta();
+            adminReady=true;
+            updateAdmin();
+            status('syncing','HTML 备份已导入 · 等待同步');
+            lastSyncTime.textContent='备份已安全保存到本机；点击“同步”写回 GitHub'
+        }else{
+            updateAdmin();
+            status('online','HTML 备份已导入本机');
+            lastSyncTime.textContent='备份已保存为本机恢复副本；配置 Token 后可同步到 GitHub'
+        }
+        show(`已导入 HTML 备份 · ${state.entries.length} 条`,'success')
+    }catch(e){
+        console.error(e);
+        show(`导入失败：${e.message}`,'error')
+    }finally{
+        importInput.value=''
+    }
 }
 function loadConfig(){
     const baseCfg=storageMemory.config||{};
@@ -1862,10 +1977,13 @@ function fromB64(s){const bin=atob(String(s||'').replace(/\s/g,'')),bytes=new Ui
 async function readRemote(){
     try{
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
-        const parsed=JSON.parse(fromB64(d.content));
-        return{exists:true,sha:d.sha,state:norm(parsed),needsSchemaUpgrade:Number(parsed?.schemaVersion)!==5}
+        let parsed;
+        try{parsed=JSON.parse(fromB64(d.content))}catch(parseError){
+            return{exists:true,sha:d.sha,state:null,needsSchemaUpgrade:false,invalidJson:true,parseError}
+        }
+        return{exists:true,sha:d.sha,state:norm(parsed),needsSchemaUpgrade:Number(parsed?.schemaVersion)!==5,invalidJson:false}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:emptyState(),needsSchemaUpgrade:false};
+        if(e.status===404)return{exists:false,sha:null,state:emptyState(),needsSchemaUpgrade:false,invalidJson:false};
         throw e
     }
 }
@@ -2037,6 +2155,13 @@ async function performSyncCycle(localIntent){
     for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
         // 每一次写入前都重新读取最新 SHA；409/明确的 SHA 冲突才在当前轮内部重试。
         const remote=await readRemote();
+        if(remote.invalidJson){
+            if(!meta.dirty)throw new Error('云端 JSON 无法解析。请先导入 HTML 备份，再点击同步修复');
+            if(!hasLocalContent(localIntent))throw new Error('云端 JSON 无法解析，且本机没有可用于恢复的数据');
+            const repaired=norm(localIntent);
+            const sha=await writeRemote(repaired,remote.sha);
+            return{merged:repaired,sha,remoteState:emptyState(),conflicts:0,wrote:true,repairedInvalidJson:true}
+        }
         const remoteState=remote.exists?remote.state:emptyState();
         const baseState=resolveBaseState(localIntent,remoteState);
         const mergedInfo=mergeStates(baseState,localIntent,remoteState);
@@ -2207,6 +2332,17 @@ async function loadAdminState(){
         const remote=await readRemote();
         cached=loadLocal()||cached;
         const pending=Boolean(!targetChanged&&cached&&hasUnsyncedLocal(cached));
+
+        if(remote.invalidJson){
+            state=cached||state||emptyState();
+            render();
+            saveLocal(state);
+            adminReady=true;
+            updateAdmin();
+            status('offline','云端 JSON 无法解析 · 本机数据已保留');
+            lastSyncTime.textContent=hasLocalContent(state)?'可导入 HTML 备份后点击“同步”修复云端 JSON':'请导入 HTML 备份后点击“同步”修复云端 JSON';
+            return
+        }
 
         if(remote.exists){
             if(pending){
@@ -2667,7 +2803,9 @@ configCancel.addEventListener('click',()=>configModal.classList.add('hidden'));
 configForm.addEventListener('submit',saveConfigForm);
 // 不新增“强制刷新”按钮：现有“同步”按钮与自动同步共用安全串行队列，写入前自动读取最新 SHA 并合并。
 syncBtn.addEventListener('click',()=>sync(true));
-exportBtn.addEventListener('click',downloadJson);
+importBtn.addEventListener('click',()=>importInput.click());
+importInput.addEventListener('change',()=>importHtmlBackup(importInput.files?.[0]||null));
+exportBtn.addEventListener('click',downloadHtml);
 document.addEventListener('keydown',e=>{
     if(e.key!=='Escape')return;
     institutionPanel.classList.add('hidden');
@@ -2681,8 +2819,25 @@ document.addEventListener('keydown',e=>{
     manageModal.classList.add('hidden')
 });
 async function initializeApp(){
+    const embedded=embeddedBackupPayload();
     await bootstrapStorage();
     loadConfig();loadMeta();
+
+    // 导出的 HTML 本身就是可阅读的完整恢复快照：优先使用内嵌数据，不依赖 press_data.json。
+    if(embedded){
+        state=norm(embedded.state);
+        saveLocal(state);
+        savePublicCache(state).catch(()=>{});
+        adminReady=false;
+        updateAdmin();
+        renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+        render();
+        status('online','HTML 备份快照');
+        const when=Number(embedded.exportedAt)>0?new Date(Number(embedded.exportedAt)*1000).toLocaleString():embedded.exportedAtIso||'未知时间';
+        lastSyncTime.textContent=`备份导出于 ${when} · ${state.entries.length} 条`;
+        return
+    }
+
     if(admin()){const cached=loadLocal();if(cached)state=cached}
     updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
     if(admin())await loadAdminState();else await loadPublic();
