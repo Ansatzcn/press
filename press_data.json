@@ -1125,6 +1125,17 @@
       "tagChecked": false
     },
     {
+      "id": "0faae5fb-7103-42b6-8410-39d5326cede0",
+      "bookName": "文化记忆与身份认同",
+      "bookNo": "7-108-05396",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "22读书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "d7f01a55-8d79-4acc-b0f5-859dad9c0ed0",
       "bookName": "苏联的外宾商店：为了工业化所需的黄金",
       "bookNo": "7-108-06745",
@@ -11566,17 +11577,6 @@
       "category": [],
       "tag": [
         "12图书"
-      ],
-      "tagChecked": false
-    },
-    {
-      "id": "0faae5fb-7103-42b6-8410-39d5326cede0",
-      "bookName": "文化记忆与身份认同",
-      "bookNo": "7-108-05396",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "22读书"
       ],
       "tagChecked": false
     },
