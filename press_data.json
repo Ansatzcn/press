@@ -1158,6 +1158,17 @@
       "tagChecked": false
     },
     {
+      "id": "5cfaf19b-9d7f-49d4-8439-7dd80b7e2f9a",
+      "bookName": "怀人说史",
+      "bookNo": "7-108-05948",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "23读书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "13ff2600-fa50-46e5-951e-364c0563ac70",
       "bookName": "明清江南史丛稿",
       "bookNo": "7-108-06070",
@@ -11632,17 +11643,6 @@
       "category": [],
       "tag": [
         "12图书"
-      ],
-      "tagChecked": false
-    },
-    {
-      "id": "5cfaf19b-9d7f-49d4-8439-7dd80b7e2f9a",
-      "bookName": "怀人说史",
-      "bookNo": "7-108-05948",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "23读书"
       ],
       "tagChecked": false
     },
