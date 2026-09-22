@@ -1036,6 +1036,17 @@
       "tagChecked": false
     },
     {
+      "id": "229fcda4-9262-43a3-a536-a4b80dd77e20",
+      "bookName": "七七事变前夜的中国（1931-1937）",
+      "bookNo": "7-108-08065",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "23读书"
+      ],
+      "tagChecked": true
+    },
+    {
       "id": "2f313dc5-dc58-4097-b0ba-3550ea2923f5",
       "bookName": "增长率的背后：苏联发展速度探因",
       "bookNo": "7-108-08082",
@@ -11656,17 +11667,6 @@
         "22读书"
       ],
       "tagChecked": false
-    },
-    {
-      "id": "229fcda4-9262-43a3-a536-a4b80dd77e20",
-      "bookName": "七七事变前夜的中国（1931-1937）",
-      "bookNo": "7-108-08065",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "23读书"
-      ],
-      "tagChecked": true
     },
     {
       "id": "49f3e745-f053-469a-b4ac-e89487361b40",
