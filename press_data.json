@@ -1036,6 +1036,17 @@
       "tagChecked": false
     },
     {
+      "id": "731303ba-39b0-4bdf-a99c-98c3fde39406",
+      "bookName": "饥饿的眼睛",
+      "bookNo": "7-108-08000",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "22读书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "229fcda4-9262-43a3-a536-a4b80dd77e20",
       "bookName": "七七事变前夜的中国（1931-1937）",
       "bookNo": "7-108-08065",
@@ -11654,17 +11665,6 @@
       "category": [],
       "tag": [
         "23读书"
-      ],
-      "tagChecked": false
-    },
-    {
-      "id": "731303ba-39b0-4bdf-a99c-98c3fde39406",
-      "bookName": "饥饿的眼睛",
-      "bookNo": "7-108-08000",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "22读书"
       ],
       "tagChecked": false
     },
