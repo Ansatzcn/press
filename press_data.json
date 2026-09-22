@@ -1114,6 +1114,17 @@
       "tagChecked": false
     },
     {
+      "id": "40c45bc0-329a-43a0-9ea6-1492b3f61a68",
+      "bookName": "黄河青山：黄仁宇回忆录",
+      "bookNo": "7-108-05373",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "23读书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "d7f01a55-8d79-4acc-b0f5-859dad9c0ed0",
       "bookName": "苏联的外宾商店：为了工业化所需的黄金",
       "bookNo": "7-108-06745",
@@ -11555,17 +11566,6 @@
       "category": [],
       "tag": [
         "12图书"
-      ],
-      "tagChecked": false
-    },
-    {
-      "id": "40c45bc0-329a-43a0-9ea6-1492b3f61a68",
-      "bookName": "黄河青山：黄仁宇回忆录",
-      "bookNo": "7-108-05373",
-      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)",
-      "category": [],
-      "tag": [
-        "23读书"
       ],
       "tagChecked": false
     },
