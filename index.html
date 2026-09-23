@@ -1054,30 +1054,167 @@ body.reordering{user-select:none}
 </style>
 
 
-<style id="triangle-button-chrome-removal">
-/* 标签 / 书架：保留 38px 点击热区，只移除倒三角外围的小框。 */
-#tagCombo .combo-toggle,
-#categoryCombo .combo-toggle,
-#editTagCombo .combo-toggle,
-#editCategoryCombo .combo-toggle{
-    border:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    padding:0!important;
+
+
+<style id="add-tag-category-match-institution-final">
+/* 添加区：标签 / 书架严格复用“出版”输入框的几何与倒三角格式。
+   外框 54px；内部一行 38px；左侧内容区 + 7px 间距 + 44px 倒三角按钮。 */
+#addSection #tagCombo,
+#addSection #categoryCombo{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:54px!important;
+    min-height:54px!important;
+    max-height:54px!important;
+    padding:.45rem!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
 }
-#tagCombo .combo-toggle:hover,
-#categoryCombo .combo-toggle:hover,
-#editTagCombo .combo-toggle:hover,
-#editCategoryCombo .combo-toggle:hover,
-#tagCombo .combo-toggle:focus,
-#categoryCombo .combo-toggle:focus,
-#editTagCombo .combo-toggle:focus,
-#editCategoryCombo .combo-toggle:focus{
-    background:transparent!important;
+
+/* 无论是否已经选中，都保留与“出版”完全相同的两列 combo-row。 */
+#addSection #tagCombo > .combo-row,
+#addSection #categoryCombo > .combo-row,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 44px!important;
+    gap:7px!important;
+    width:100%!important;
+    height:38px!important;
+    min-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+}
+
+/* 输入框与“出版”一致。选中后仅隐藏文字输入本身，但仍保留左列占位，
+   从而保证倒三角永远处在与“出版”完全相同的位置。 */
+#addSection #tagCombo > .combo-row > input,
+#addSection #categoryCombo > .combo-row > input{
+    display:block!important;
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    min-width:0!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:.55rem .7rem!important;
+    box-sizing:border-box!important;
+}
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row > input,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row > input{
+    visibility:hidden!important;
+    pointer-events:none!important;
+}
+
+/* 倒三角：直接恢复“出版”使用的 44px 列、边框、圆角和背景；禁止绝对定位。 */
+#addSection #tagCombo .combo-toggle,
+#addSection #categoryCombo .combo-toggle{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    transform:none!important;
+    grid-column:2!important;
+    grid-row:1!important;
+    display:block!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #cbd5e1!important;
+    border-radius:12px!important;
+    background:#fff!important;
+    color:#475569!important;
     box-shadow:none!important;
+    font-weight:700!important;
+    box-sizing:border-box!important;
+}
+#addSection #tagCombo .combo-toggle:hover,
+#addSection #categoryCombo .combo-toggle:hover{
+    background:#f1f5f9!important;
+}
+
+/* 已选小方块只覆盖左侧输入列，不碰倒三角列，也不改变控件高度。 */
+#addSection #tagCombo > .combo-selected,
+#addSection #categoryCombo > .combo-selected,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
+    position:absolute!important;
+    left:.45rem!important;
+    right:calc(.45rem + 44px + 7px)!important;
+    top:.45rem!important;
+    width:auto!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    gap:6px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    z-index:3!important;
+    box-sizing:border-box!important;
+    scrollbar-width:none!important;
+}
+#addSection #tagCombo > .combo-selected:empty,
+#addSection #categoryCombo > .combo-selected:empty{
+    display:none!important;
+}
+#addSection #tagCombo > .combo-selected::-webkit-scrollbar,
+#addSection #categoryCombo > .combo-selected::-webkit-scrollbar{display:none}
+
+/* 菜单从整个输入框下沿之外展开，不遮住下边框。 */
+#addSection #tagCombo > .combo-panel,
+#addSection #categoryCombo > .combo-panel{
+    position:absolute!important;
+    top:calc(100% + 7px)!important;
+    left:0!important;
+    right:0!important;
+    width:auto!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+}
+
+@media(max-width:700px){
+    #addSection #tagCombo,
+    #addSection #categoryCombo{
+        height:54px!important;
+        min-height:54px!important;
+        max-height:54px!important;
+        padding:.45rem!important;
+    }
+    #addSection #tagCombo > .combo-row,
+    #addSection #categoryCombo > .combo-row,
+    #addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
+    #addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
+        grid-template-columns:minmax(0,1fr) 44px!important;
+        gap:7px!important;
+    }
+    #addSection #tagCombo .combo-toggle,
+    #addSection #categoryCombo .combo-toggle{
+        width:44px!important;
+        min-width:44px!important;
+        max-width:44px!important;
+        height:38px!important;
+    }
 }
 </style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
