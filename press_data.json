@@ -809,9 +809,11 @@
       "bookName": "城市危机的源起：第二次世界大战后底特律的种族与不平等",
       "bookNo": "7-100-24934",
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
-      "category": [],
+      "category": [
+        "八号"
+      ],
       "tag": [
-        "12图书"
+        "11图书"
       ],
       "tagChecked": false
     },
