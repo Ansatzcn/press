@@ -1575,6 +1575,19 @@
       "tagChecked": false
     },
     {
+      "id": "4df50a59-1365-43a5-a8ef-1c444eeacb7a",
+      "bookName": "无穷的开始：世界进步的本源",
+      "bookNo": "7-115-36538",
+      "institution": "[人民邮电出版社](https://book.douban.com/press/2609/?order=time)",
+      "category": [
+        "十号"
+      ],
+      "tag": [
+        "11图书"
+      ],
+      "tagChecked": false
+    },
+    {
       "id": "5a01af51-c17e-4b7b-b507-3d2cdd97f724",
       "bookName": "用Python动手学统计学",
       "bookNo": "7-115-56028",
