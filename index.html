@@ -1053,6 +1053,31 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="triangle-button-chrome-removal">
+/* 标签 / 书架：保留 38px 点击热区，只移除倒三角外围的小框。 */
+#tagCombo .combo-toggle,
+#categoryCombo .combo-toggle,
+#editTagCombo .combo-toggle,
+#editCategoryCombo .combo-toggle{
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    padding:0!important;
+}
+#tagCombo .combo-toggle:hover,
+#categoryCombo .combo-toggle:hover,
+#editTagCombo .combo-toggle:hover,
+#editCategoryCombo .combo-toggle:hover,
+#tagCombo .combo-toggle:focus,
+#categoryCombo .combo-toggle:focus,
+#editTagCombo .combo-toggle:focus,
+#editCategoryCombo .combo-toggle:focus{
+    background:transparent!important;
+    box-shadow:none!important;
+}
+</style>
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
