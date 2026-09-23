@@ -1312,6 +1312,126 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="three-fields-no-triangle-final">
+/* 最终规则：标签 / 出版 / 书架完全移除倒三角及其占位。
+   只有点击实际文本输入框才展开菜单；菜单与字段外框固定间隔 8px。 */
+#tagCombo .combo-toggle,
+#institutionCombo .combo-toggle,
+#categoryCombo .combo-toggle,
+#editTagCombo .combo-toggle,
+#editInstitutionCombo .combo-toggle,
+#editCategoryCombo .combo-toggle{
+    display:none!important;
+}
+
+/* 三类字段均恢复为单列完整宽度，不再预留 44px / 51px 的按钮空间。 */
+#tagCombo,
+#institutionCombo,
+#categoryCombo,
+#editTagCombo,
+#editInstitutionCombo,
+#editCategoryCombo{
+    position:relative!important;
+    padding:.45rem!important;
+    box-sizing:border-box!important;
+    overflow:visible!important;
+}
+
+#tagCombo > .combo-row,
+#institutionCombo > .combo-row,
+#categoryCombo > .combo-row,
+#editTagCombo > .combo-row,
+#editInstitutionCombo > .combo-row,
+#editCategoryCombo > .combo-row,
+#addSection #tagCombo > .combo-row,
+#addSection #categoryCombo > .combo-row,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+}
+
+#tagCombo > .combo-row > input,
+#institutionCombo > .combo-row > input,
+#categoryCombo > .combo-row > input,
+#editTagCombo > .combo-row > input,
+#editInstitutionCombo > .combo-row > input,
+#editCategoryCombo > .combo-row > input,
+#addSection #tagCombo > .combo-row > input,
+#addSection #categoryCombo > .combo-row > input{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:.55rem .7rem!important;
+    box-sizing:border-box!important;
+}
+
+/* 添加区标签 / 书架保持原来的 54px 总高度。 */
+#addSection #tagCombo,
+#addSection #categoryCombo,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)),
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)),
+#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
+#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
+    display:block!important;
+    width:100%!important;
+    height:54px!important;
+    min-height:54px!important;
+    max-height:54px!important;
+    padding:.45rem!important;
+}
+
+/* 单选已有值时，小方块占满原文本内容区，不再为已删除的倒三角留空。 */
+#addSection #tagCombo > .combo-selected,
+#addSection #categoryCombo > .combo-selected,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
+    position:absolute!important;
+    top:.45rem!important;
+    left:.45rem!important;
+    right:.45rem!important;
+    width:auto!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+}
+
+/* 所有六个下拉层统一从各自字段外框下沿向下 8px 出现。 */
+#tagCombo > .combo-panel,
+#institutionCombo > .combo-panel,
+#categoryCombo > .combo-panel,
+#editTagCombo > .combo-panel,
+#editInstitutionCombo > .combo-panel,
+#editCategoryCombo > .combo-panel,
+#addSection #tagCombo > .combo-panel,
+#addSection #categoryCombo > .combo-panel{
+    position:absolute!important;
+    top:calc(100% + 8px)!important;
+    left:0!important;
+    right:0!important;
+    width:auto!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -1348,7 +1468,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
 <input type="text" id="tagInput" autocomplete="off">
-<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开标签历史">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
@@ -1359,7 +1479,7 @@ body.reordering{user-select:none}
 <div class="combo" id="institutionCombo">
 <div class="combo-row">
 <input type="text" id="institutionInput" autocomplete="off">
-<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
 </div>
@@ -1370,7 +1490,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
@@ -1403,7 +1523,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editInstitutionCombo">
 <div class="combo-row">
 <input autocomplete="off" id="editInstitution" type="text"/>
-<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
 </div>
@@ -1424,7 +1544,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editTag" type="text"/>
-<button aria-label="展开标签历史" class="combo-toggle" id="editTagToggle" type="button">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
 </div>
@@ -1436,7 +1556,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editCategory" type="text"/>
-<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button">▾</button>
+
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
@@ -3222,16 +3342,6 @@ function setupInstitutionCombo(which){
         meta.input.focus()
     }
 
-    meta.toggle.addEventListener('click',e=>{
-        e.stopPropagation();
-        const willOpen=meta.panel.classList.contains('hidden');
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        keyboardIndex=-1;
-        if(willOpen){
-            meta.panel.classList.remove('hidden');
-            renderInstitutionOptions(which)
-        }
-    });
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
@@ -3240,18 +3350,18 @@ function setupInstitutionCombo(which){
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('input',()=>{
-        // 输入搜索词时自动展开，并立即刷新匹配结果。
-        meta.panel.classList.remove('hidden');
+        // 下拉菜单只能由点击文本框打开；输入本身不允许自动展开。
         keyboardIndex=-1;
-        renderInstitutionOptions(which)
+        if(!meta.panel.classList.contains('hidden'))renderInstitutionOptions(which)
     });
     meta.input.addEventListener('keydown',e=>{
         // 出版菜单支持与标签/书架一致的键盘浏览：
         // ↑ / ↓ 移动高亮，Enter 选中，Escape 收起。
         if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+            // 菜单关闭时，键盘不能使其出现；必须先点击文本框。
+            if(meta.panel.classList.contains('hidden'))return;
             e.preventDefault();
             e.stopPropagation();
-            openForKeyboard();
             const options=keyboardOptions();
             if(!options.length)return;
             if(keyboardIndex<0){
@@ -3358,21 +3468,6 @@ function setupMultiCombo(type,which){
         if(!multiAllowsMultiple(type,which))meta.panel.classList.add('hidden')
     }
 
-    toggle.addEventListener('click',e=>{
-        e.stopPropagation();
-        // 只接受真实指针点击；键盘激活按钮产生的 click(detail=0) 不展开菜单。
-        if(e.detail===0)return;
-
-        // 倒三角始终可用；即使单选字段已有选择，也允许展开查看现有选项。
-
-        const willOpen=meta.panel.classList.contains('hidden');
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        keyboardIndex=-1;
-        if(willOpen){
-            meta.panel.classList.remove('hidden');
-            renderMultiField(type,which)
-        }
-    });
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
         if(e.detail===0)return;
@@ -3484,18 +3579,9 @@ function setupMultiCombo(type,which){
             clearKeyboardActive();
             return removeSelection(type,which,remove.dataset.removeValue)
         }
-
-        // 添加板块：仅真实指针点击已选方块右侧/周围空白区域时展开。
-        if(which==='add'&&e.detail!==0)openPanelFromBlankArea()
     });
-    combo.addEventListener('click',e=>{
-        e.stopPropagation();
-        if(which!=='add'||e.detail===0)return;
-
-        // 输入框、倒三角和菜单项各自已有事件；这里专门补足外框内的空白点击区域。
-        if(e.target.closest('.combo-toggle,.combo-panel,input,button,.selected-pill'))return;
-        openPanelFromBlankArea()
-    })
+    // 只有实际文本输入框的 click 事件可以打开下拉菜单；外框空白处不再触发展开。
+    combo.addEventListener('click',e=>e.stopPropagation())
 }
 setupInstitutionCombo('add');
 setupInstitutionCombo('edit');
