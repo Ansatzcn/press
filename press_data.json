@@ -6067,7 +6067,9 @@
       "bookName": "人类的故事",
       "bookNo": "7-5057-3501",
       "institution": "[中国友谊出版公司](https://book.douban.com/press/2416/?order=time)",
-      "category": [],
+      "category": [
+        "十号"
+      ],
       "tag": [
         "11图书"
       ],
