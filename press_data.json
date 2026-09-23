@@ -1294,8 +1294,11 @@
       "bookName": "钢的城：美国锈带兴衰史",
       "bookNo": "7-108-07664",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
-      "category": [],
+      "category": [
+        "十号"
+      ],
       "tag": [
+        "11图书",
         "23读书"
       ],
       "tagChecked": false
