@@ -1215,6 +1215,103 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="add-tag-category-toggle-right-edge-fix">
+/* 最终定位修正：添加区标签 / 书架的倒三角始终固定在整个输入框的最右侧。
+   不再依赖左侧选中项或 grid 的宽度计算；54px 外框和 38px 内部高度保持不变。 */
+#addSection #tagCombo,
+#addSection #categoryCombo{
+    position:relative!important;
+    height:54px!important;
+    min-height:54px!important;
+    max-height:54px!important;
+    padding:.45rem!important;
+    overflow:visible!important;
+}
+
+/* 左侧输入区域铺满内部一行，并给最右侧倒三角预留空间。 */
+#addSection #tagCombo > .combo-row,
+#addSection #categoryCombo > .combo-row,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+}
+#addSection #tagCombo > .combo-row > input,
+#addSection #categoryCombo > .combo-row > input{
+    display:block!important;
+    width:calc(100% - 51px)!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:.55rem .7rem!important;
+    box-sizing:border-box!important;
+}
+
+/* 与“出版”字段同样的倒三角按钮外观，但位置强制锁在输入框最右端。 */
+#addSection #tagCombo .combo-toggle,
+#addSection #categoryCombo .combo-toggle{
+    position:absolute!important;
+    top:.45rem!important;
+    right:.45rem!important;
+    bottom:auto!important;
+    left:auto!important;
+    transform:none!important;
+    z-index:6!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #cbd5e1!important;
+    border-radius:12px!important;
+    background:#fff!important;
+    color:#475569!important;
+    box-shadow:none!important;
+    font-weight:700!important;
+    box-sizing:border-box!important;
+}
+
+/* 已选小方块只占倒三角左边的空间，绝不推动倒三角。 */
+#addSection #tagCombo > .combo-selected,
+#addSection #categoryCombo > .combo-selected,
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
+    position:absolute!important;
+    top:.45rem!important;
+    left:.45rem!important;
+    right:calc(.45rem + 51px)!important;
+    width:auto!important;
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    padding:0!important;
+    z-index:5!important;
+}
+
+@media(max-width:700px){
+    #addSection #tagCombo .combo-toggle,
+    #addSection #categoryCombo .combo-toggle{
+        top:.45rem!important;
+        right:.45rem!important;
+        width:44px!important;
+        min-width:44px!important;
+        max-width:44px!important;
+    }
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
