@@ -627,6 +627,87 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="add-tag-category-square-options">
+/* 添加板块：标签 / 书架选项改为横向自动换行的小方块，不再每项独占一行。 */
+#addSection #tagOptions .combo-option-list,
+#addSection #categoryOptions .combo-option-list{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    align-items:flex-start;
+    gap:7px;
+}
+#addSection #tagOptions .combo-pill,
+#addSection #categoryOptions .combo-pill{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    max-width:100%;
+    min-height:30px;
+    border-radius:7px!important;
+}
+#addSection #tagOptions .combo-pill-select,
+#addSection #categoryOptions .combo-pill-select{
+    flex:0 1 auto!important;
+    width:auto!important;
+    min-width:0;
+    padding:.38rem .62rem!important;
+    white-space:nowrap!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* 回车/点击选中后，立即显示为紧凑小方块；× 固定在方块右侧。 */
+#addSection #tagSelected,
+#addSection #categorySelected{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center;
+    gap:6px!important;
+    height:auto!important;
+    min-height:28px;
+    overflow:visible!important;
+}
+#addSection #tagSelected .selected-pill,
+#addSection #categorySelected .selected-pill{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    align-items:stretch!important;
+    width:auto!important;
+    max-width:100%!important;
+    min-height:28px!important;
+    height:28px!important;
+    border-radius:7px!important;
+    font-size:.76rem!important;
+    line-height:1!important;
+}
+#addSection #tagSelected .selected-pill-label,
+#addSection #categorySelected .selected-pill-label{
+    display:flex;
+    align-items:center;
+    width:auto!important;
+    max-width:none!important;
+    padding:.2rem .5rem!important;
+    white-space:nowrap!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:.76rem!important;
+    line-height:1!important;
+}
+#addSection #tagSelected .selected-pill-remove,
+#addSection #categorySelected .selected-pill-remove{
+    flex:0 0 25px!important;
+    width:25px!important;
+    height:26px!important;
+    margin:0!important;
+    border-left:1px solid #cbd5e1!important;
+    border-radius:0 6px 6px 0!important;
+    font-size:.82rem!important;
+    line-height:26px!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -973,6 +1054,7 @@ configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),c
 let state={entries:[],institutions:[],categories:[],tags:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
 let syncing=false,syncQueued=false,syncQueuedShowResult=false,autoTimer=null,retryTimer=null,toastTimer=null,editOverlayPointerDown=false,adminReady=false,lastWriteAt=0,syncFailureCount=0;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
+const FIXED_CATEGORIES=['一号','二号','三号','四号','五号','六号','七号','八号','九号','十号'];
 
 // 使用 Visual Viewport 驱动手机配置弹窗高度。虚拟键盘/地址栏变化时，保存按钮仍保持在可视区域内。
 function updateVisualViewport(){
@@ -1094,9 +1176,8 @@ function norm(v){
     const institutions=uniq(
         Array.isArray(s.institutions)?s.institutions:entries.map(x=>x.institution).filter(Boolean)
     );
-    const categories=uniq(
-        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
-    );
+    // 书架下拉菜单固定为十个选项，始终使用指定顺序；旧条目中的书架值仍保留在条目本身。
+    const categories=[...FIXED_CATEGORIES];
 
     // 标签不能人工排序，严格按开头两位数字从小到大排列；同前缀再按自然顺序。
     const tags=sortTags(
@@ -1249,6 +1330,7 @@ function multiMeta(type,which){
     return meta
 }
 function sortHistory(type,values){
+    if(type==='category')return [...FIXED_CATEGORIES];
     return type==='tag'?sortTags(values):uniq(values)
 }
 function multiAllowsMultiple(type,which){
@@ -1272,10 +1354,10 @@ function renderMultiOptions(type,which){
     // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
-    // 标签、书架的下拉菜单维护功能只保留在“添加”板块。
-    // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
-    const canManage=which==='add';
-    const manualOrder=canManage&&type==='category';
+    // 标签与书架现在都是只选菜单：不在下拉菜单内提供新增、改名、删除或拖拽排序。
+    // 标签保留现有选项及现有排序；书架固定为一号到十号。
+    const canManage=false;
+    const manualOrder=false;
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>{
             const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
@@ -1538,6 +1620,7 @@ function render(){
     }).join(''):'<div class="empty-state">暂无条目</div>'
 }
 function addHistoryOption(type,value,notify=false){
+    if(type==='tag'||type==='category')return false;
     const meta=multiMeta(type,'add');
     const historyKey=meta.historyKey,label=meta.label;
     const v=clean(value);
@@ -1645,6 +1728,7 @@ function toggleSelection(type,which,value){
     return true
 }
 function editHistoryOption(type,value){
+    if(type==='tag'||type==='category')return;
     const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
     const oldValue=clean(value),oldKey=key(oldValue);
     const history=[...state[historyKey]];
@@ -1692,6 +1776,7 @@ function editHistoryOption(type,value){
     show(`已修改${label}选项为“${nextValue}”`,'success')
 }
 function deleteHistoryOption(type,value){
+    if(type==='tag'||type==='category')return;
     const meta=multiMeta(type,'add'),targetKey=key(value);
     if(!confirm(`确定从${meta.label}下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
     state[meta.historyKey]=state[meta.historyKey].filter(v=>key(v)!==targetKey);
@@ -1720,16 +1805,15 @@ function commitTypedValue(type,which,notify=false){
 
     const history=sortHistory(type,state[meta.historyKey]);
     const matched=history.find(v=>key(v)===key(value));
-    if(which==='edit'&&!matched){
-        // 编辑弹窗只能选择添加板块已经维护好的下拉菜单选项，不能在这里新增选项。
+    if(!matched){
+        // 标签与书架都只能从既有下拉选项中选择；输入不存在的文字时不再自动新增。
         meta.input.value='';
-        show(`编辑窗口只能选择已有${meta.label}；如需新增或修改选项，请在添加板块操作`,'error');
+        show(`${meta.label}只能选择下拉菜单中的已有选项`,'error');
         renderMultiField(type,which);
         return false
     }
 
-    const selectedValue=matched||value;
-    if(which==='add')addHistoryOption(type,selectedValue,notify);
+    const selectedValue=matched;
 
     if(which==='edit'){
         const next=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue];
