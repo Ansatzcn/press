@@ -708,6 +708,139 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+
+<style id="tag-category-toggle-inside-fix">
+/* 标签 / 书架：倒三角永远固定在对应 combo 外框内部，不参与内容列宽计算。 */
+#tagCombo,
+#categoryCombo,
+#editTagCombo,
+#editCategoryCombo{
+    position:relative!important;
+    width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    padding-right:52px!important;
+}
+
+#tagCombo > .combo-row,
+#categoryCombo > .combo-row,
+#editTagCombo > .combo-row,
+#editCategoryCombo > .combo-row{
+    min-width:0!important;
+}
+
+#tagCombo .combo-toggle,
+#categoryCombo .combo-toggle,
+#editTagCombo .combo-toggle,
+#editCategoryCombo .combo-toggle{
+    position:absolute!important;
+    top:50%!important;
+    right:7px!important;
+    transform:translateY(-50%)!important;
+    z-index:6!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:38px!important;
+    min-width:38px!important;
+    max-width:38px!important;
+    height:38px!important;
+    min-height:38px!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+}
+
+/* 添加区单选：选中后保留小方块，输入框收起，但倒三角仍留在同一外框最右侧。 */
+#addSection #tagCombo:has(> .combo-selected:not(:empty)),
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)){
+    display:flex!important;
+    align-items:center!important;
+    min-height:54px!important;
+    height:auto!important;
+    padding:.45rem 52px .45rem .45rem!important;
+}
+
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
+    flex:1 1 auto!important;
+    width:auto!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    margin:0!important;
+    overflow:hidden!important;
+}
+
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
+    display:block!important;
+    flex:0 0 0!important;
+    width:0!important;
+    min-width:0!important;
+    height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+}
+
+#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row > input,
+#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row > input{
+    display:none!important;
+}
+
+/* 未选中时输入框占满倒三角左侧的可用宽度。 */
+#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
+#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
+    display:block!important;
+    min-height:54px!important;
+    height:auto!important;
+    padding:.45rem 52px .45rem .45rem!important;
+}
+
+#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row,
+#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row{
+    display:block!important;
+    width:100%!important;
+}
+
+#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row > input,
+#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row > input{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+}
+
+/* 下拉层从整个方框下缘展开，宽度与方框一致。 */
+#tagCombo > .combo-panel,
+#categoryCombo > .combo-panel,
+#editTagCombo > .combo-panel,
+#editCategoryCombo > .combo-panel{
+    top:calc(100% + 7px)!important;
+    left:0!important;
+    right:0!important;
+    width:auto!important;
+}
+
+@media(max-width:700px){
+    #tagCombo,
+    #categoryCombo,
+    #editTagCombo,
+    #editCategoryCombo{
+        padding-right:50px!important;
+    }
+    #tagCombo .combo-toggle,
+    #categoryCombo .combo-toggle,
+    #editTagCombo .combo-toggle,
+    #editCategoryCombo .combo-toggle{
+        right:6px!important;
+        width:38px!important;
+        min-width:38px!important;
+        max-width:38px!important;
+    }
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -2757,12 +2890,7 @@ function setupMultiCombo(type,which){
     toggle.addEventListener('click',e=>{
         e.stopPropagation();
 
-        // 单选字段已有选择时不允许再次打开；编辑标签允许继续打开并增加标签。
-        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
-            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-            keyboardIndex=-1;
-            return
-        }
+        // 倒三角始终可用；即使单选字段已有选择，也允许展开查看现有选项。
 
         const willOpen=meta.panel.classList.contains('hidden');
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
