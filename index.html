@@ -685,6 +685,76 @@ body.reordering{user-select:none}
 }
 </style>
 
+<style id="field-height-and-toggle-fix">
+/* 添加板块 + 编辑弹窗：去掉编组/出版/书架的倒三角，并把字段框统一为 44px 高。 */
+#tagToggle,#institutionToggle,#categoryToggle,
+#editTagToggle,#editInstitutionToggle,#editCategoryToggle{
+    display:none!important;
+}
+
+#addSection .form-group input,
+#editModal .form-group input,
+#addSection .combo,
+#editModal .combo{
+    height:44px!important;
+    min-height:44px!important;
+}
+
+#addSection .combo,
+#editModal .combo{
+    padding:0!important;
+}
+
+#addSection .combo-row,
+#editModal .combo-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:0!important;
+    width:100%!important;
+    height:42px!important;
+    min-height:42px!important;
+}
+
+#addSection .combo-row input,
+#editModal .combo-row input{
+    width:100%!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:.55rem .9rem!important;
+}
+
+/* 已选编组/书架直接占满 44px 字段，不为已隐藏的倒三角预留空白。 */
+#tagCombo:has(> .combo-selected:not(:empty)),
+#editTagCombo:has(> .combo-selected:not(:empty)),
+#categoryCombo:has(> .combo-selected:not(:empty)),
+#editCategoryCombo:has(> .combo-selected:not(:empty)){
+    display:block!important;
+    height:44px!important;
+    min-height:44px!important;
+}
+
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty),
+#categoryCombo > .combo-selected:not(:empty),
+#editCategoryCombo > .combo-selected:not(:empty){
+    display:flex!important;
+    align-items:center!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:42px!important;
+    min-height:42px!important;
+    margin:0!important;
+    padding:0 .45rem!important;
+}
+
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row,
+#categoryCombo > .combo-selected:not(:empty) + .combo-row,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
+    display:none!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -721,7 +791,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
 <input type="text" id="tagInput" autocomplete="off" readonly>
-<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项">▾</button>
+<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项"></button>
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
@@ -732,7 +802,7 @@ body.reordering{user-select:none}
 <div class="combo" id="institutionCombo">
 <div class="combo-row">
 <input type="text" id="institutionInput" autocomplete="off">
-<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史">▾</button>
+<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史"></button>
 </div>
 <div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
 </div>
@@ -743,7 +813,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
+<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史"></button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
@@ -761,7 +831,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">编组可多选；固定选项为 11、12、13、14、21、22、23。原有旧标签内容会保留，直到手动修改。</p>
+<h3>编辑</h3><p class="dialog-desc">编组可多选；固定选项显示为 11组、12组、13组、14组、21组、22组、23组。原有旧标签内容会保留，直到手动修改。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -776,7 +846,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editInstitutionCombo">
 <div class="combo-row">
 <input autocomplete="off" id="editInstitution" type="text"/>
-<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button">▾</button>
+<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
 </div>
@@ -797,7 +867,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editTag" type="text" readonly/>
-<button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button">▾</button>
+<button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
 </div>
@@ -809,7 +879,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editCategory" type="text"/>
-<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button">▾</button>
+<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
@@ -1022,8 +1092,9 @@ const DB_NAME=`${NS}:idb_v1`,DB_STORE='kv';
 const CONFIG_KEY='config',TOKEN_PERSISTED_KEY='token_persisted',META_KEY='meta',WORKCOPY_KEY='workcopy',PUBLIC_CACHE_KEY='public_cache';
 const OPFS_WORKCOPY_FILE='press_workcopy_v1.json';
 const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
-const GROUP_OPTIONS=Object.freeze(['11','12','13','14','21','22','23']);
-const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_OPTIONS,'24']);
+const GROUP_CODES=Object.freeze(['11','12','13','14','21','22','23']);
+const GROUP_OPTIONS=Object.freeze(GROUP_CODES.map(v=>`${v}组`));
+const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_CODES,'24']);
 const CODE_RULES=Object.freeze({
     zh:{
         groups:{
@@ -1136,6 +1207,17 @@ function normalizeMulti(value){
     const values=Array.isArray(value)?value:[value];
     return uniq(values)
 }
+// 七个固定编组的数据值统一使用“11组…23组”；其它历史/存量编组保持原样。
+function normalizeFixedGroupLabel(value){
+    const v=clean(value);
+    return GROUP_CODES.includes(v)?`${v}组`:v
+}
+// 编码规则仍只认原数字代码；计算编码时把固定编组末尾的“组”去掉。
+function codeGroupValue(value){
+    const v=clean(value);
+    const m=v.match(/^(11|12|13|14|21|22|23)组$/);
+    return m?m[1]:v
+}
 function tagPrefixNumber(value){
     const match=clean(value).match(/^(\d{2})/);
     return match?Number(match[1]):Number.POSITIVE_INFINITY
@@ -1158,9 +1240,10 @@ function titleIsChinese(raw){
 function codeGroupsFromEntry(entry){
     const raw=normalizeMulti(entry?.tag).map(clean).filter(Boolean);
     if(!raw.length)return null;
-    // 旧标签内容原样保留；只有全部都已经是明确的编组代码时才生成编码。
-    if(raw.some(v=>!CODE_GROUP_OPTIONS.includes(v)))return null;
-    return uniq(raw).sort((a,b)=>Number(a)-Number(b))
+    const codes=raw.map(codeGroupValue);
+    // 其它历史/存量编组继续原样保留；只有全部都能对应明确编码代码时才生成编码。
+    if(codes.some(v=>!CODE_GROUP_OPTIONS.includes(v)))return null;
+    return uniq(codes).sort((a,b)=>Number(a)-Number(b))
 }
 function mergeCodeRanges(ranges){
     const ordered=(ranges||[]).map(r=>[Number(r[0]),Number(r[1])]).filter(r=>Number.isFinite(r[0])&&Number.isFinite(r[1])&&r[0]<=r[1]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
@@ -1258,7 +1341,7 @@ function normEntry(x){
     if(!x||typeof x!=='object')return null;
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),institution=clean(x.institution);
-    const category=normalizeMulti(x.category),tag=sortTags(x.tag);
+    const category=normalizeMulti(x.category),tag=sortTags(normalizeMulti(x.tag).map(normalizeFixedGroupLabel));
     const tagChecked=Boolean(x.tagChecked),code=normalizeStoredCode(x.code);
     return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,tag,tagChecked,code}
 }
@@ -1428,6 +1511,10 @@ function multiMeta(type,which){
 function sortHistory(type,values){
     return type==='tag'?[...GROUP_OPTIONS]:uniq(values)
 }
+// 固定编组的数据值和界面文字保持一致；这里只兼容尚未规范化的旧数字值。
+function groupDisplay(value){
+    return normalizeFixedGroupLabel(value)
+}
 function multiAllowsMultiple(type,which){
     // 编组在新增和编辑时都允许多选；书架仍保持单选。
     return type==='tag'
@@ -1437,8 +1524,8 @@ function renderMultiSelected(type,which){
     const displaySelection=type==='tag'?sortTags(meta.selection):meta.selection;
     meta.selectedBox.innerHTML=displaySelection.map(v=>`
         <span class="selected-pill">
-            <span class="selected-pill-label">${esc(v)}</span>
-            <button class="selected-pill-remove" type="button" data-remove-value="${attr(v)}" aria-label="移除${meta.label} ${attr(v)}">×</button>
+            <span class="selected-pill-label">${esc(type==='tag'?groupDisplay(v):v)}</span>
+            <button class="selected-pill-remove" type="button" data-remove-value="${attr(v)}" aria-label="移除${meta.label} ${attr(type==='tag'?groupDisplay(v):v)}">×</button>
         </span>
     `).join('')
 }
@@ -1461,7 +1548,7 @@ function renderMultiOptions(type,which){
                 <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>`:'';
             return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
                 ${dragHandle}
-                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(v)}</button>${manageButtons}
+                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(type==='tag'?groupDisplay(v):v)}</button>${manageButtons}
             </span>`
         }).join('')}</div>`
         : `<div class="combo-empty">${q?`没有匹配的${meta.label}`:`暂无${meta.label}`}</div>`;
@@ -1710,7 +1797,7 @@ function render(){
         if(x.bookNo){
             metaRows.push(`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`)
         }
-        metaRows.push(`<div class="meta-row tag-row"><span class="meta-label">编组：</span><span class="tag-text">${esc(tagValue.join('/'))}</span></div>`)
+        metaRows.push(`<div class="meta-row tag-row"><span class="meta-label">编组：</span><span class="tag-text">${esc(tagValue.map(groupDisplay).join('/'))}</span></div>`)
         if(bookshelf.length){
             metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
         }
@@ -2256,11 +2343,13 @@ async function readRemote(){
         const d=await api('GET',`contents/${pathEncode(config.file)}`);
         let parsed;
         try{parsed=JSON.parse(fromB64(d.content))}catch(parseError){
-            return{exists:true,sha:d.sha,state:null,needsSchemaUpgrade:false,invalidJson:true,parseError}
+            return{exists:true,sha:d.sha,state:null,needsSchemaUpgrade:false,needsGroupLabelUpgrade:false,invalidJson:true,parseError}
         }
-        return{exists:true,sha:d.sha,state:norm(parsed),needsSchemaUpgrade:Number(parsed?.schemaVersion)!==5,invalidJson:false}
+        const rawEntries=Array.isArray(parsed?.entries)?parsed.entries:(Array.isArray(parsed)?parsed:[]);
+        const needsGroupLabelUpgrade=rawEntries.some(entry=>normalizeMulti(entry?.tag).some(v=>GROUP_CODES.includes(clean(v))));
+        return{exists:true,sha:d.sha,state:norm(parsed),needsSchemaUpgrade:Number(parsed?.schemaVersion)!==5,needsGroupLabelUpgrade,invalidJson:false}
     }catch(e){
-        if(e.status===404)return{exists:false,sha:null,state:emptyState(),needsSchemaUpgrade:false,invalidJson:false};
+        if(e.status===404)return{exists:false,sha:null,state:emptyState(),needsSchemaUpgrade:false,needsGroupLabelUpgrade:false,invalidJson:false};
         throw e
     }
 }
@@ -2444,7 +2533,7 @@ async function performSyncCycle(localIntent){
         const mergedInfo=mergeStates(baseState,localIntent,remoteState);
         const merged=mergedInfo.state;
 
-        if(remote.exists&&!remote.needsSchemaUpgrade&&fingerprint(merged)===fingerprint(remoteState)){
+        if(remote.exists&&!remote.needsSchemaUpgrade&&!remote.needsGroupLabelUpgrade&&fingerprint(merged)===fingerprint(remoteState)){
             return{merged,sha:remote.sha,remoteState,conflicts:mergedInfo.conflicts,wrote:false}
         }
         try{
@@ -2646,7 +2735,16 @@ async function loadAdminState(){
                 adminReady=true;
                 updateAdmin();
                 render();
-                status('online','公开阅读 · 管理已连接')
+                if(remote.needsGroupLabelUpgrade){
+                    meta.dirty=true;
+                    meta.revision=currentRevision()+1;
+                    saveMeta();
+                    status('syncing','固定编组已更新 · 等待同步');
+                    lastSyncTime.textContent='11/12/13/14/21/22/23 已同步改为带“组”的编组值';
+                    armSync(250,false)
+                }else{
+                    status('online','公开阅读 · 管理已连接')
+                }
             }
         }else{
             state=cached||emptyState();
