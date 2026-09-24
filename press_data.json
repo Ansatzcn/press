@@ -2244,12 +2244,15 @@
       "bookName": "破冰：上海土地批租试点亲历者说",
       "bookNo": "7-208-14929",
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
-      "category": [],
+      "category": [
+        "十号"
+      ],
       "tag": [
-        "11图书"
+        "11组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": ""
+      "code": "228003"
     },
     {
       "id": "a4385d08-d24e-4fd2-a3ae-b73a699321a2",
