@@ -797,6 +797,45 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="combo-crisp-border-fix">
+/* 仅修复组合字段边线：用独立 1px 覆盖层绘制，避免内部布局影响边框清晰度。 */
+#addSection .combo,
+#editModal .combo{
+    position:relative!important;
+    border:0!important;
+    border-radius:15px!important;
+    background:#fff!important;
+    box-shadow:none!important;
+}
+
+#addSection .combo::before,
+#editModal .combo::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:5;
+    pointer-events:none;
+    border:1px solid #cbd5e1;
+    border-radius:15px;
+    box-sizing:border-box;
+}
+
+/* 与书名/书号一致：聚焦时普通边线让位给 2px 聚焦轮廓。 */
+#addSection .combo:focus-within::before,
+#editModal .combo:focus-within::before{
+    border-color:transparent;
+}
+
+#addSection .combo > .combo-row,
+#addSection .combo > .combo-selected,
+#editModal .combo > .combo-row,
+#editModal .combo > .combo-selected{
+    position:relative;
+    z-index:1;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
