@@ -1076,11 +1076,9 @@
       "bookNo": "7-101-16602",
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
-      "tag": [
-        "23"
-      ],
+      "tag": [],
       "tagChecked": true,
-      "code": "230004"
+      "code": ""
     },
     {
       "id": "34909b72-b9f3-49cb-99c3-16e8c9f74d47",
@@ -3272,10 +3270,10 @@
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23"
       ],
       "tagChecked": false,
-      "code": ""
+      "code": "230009"
     },
     {
       "id": "fb1d44ba-cf3f-4abd-b40b-f2a52a6bae04",
