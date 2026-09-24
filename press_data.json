@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 5,
+  "schemaVersion": 6,
   "entries": [
     {
       "id": "5093b596-fb70-4ef1-98b7-d172dab0dae4",
@@ -231,7 +231,7 @@
       "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23"
       ],
       "tagChecked": true
     },
@@ -12445,11 +12445,12 @@
     "十号"
   ],
   "tags": [
-    "11图书",
-    "12图书",
-    "13图书",
-    "21读书",
-    "22读书",
-    "23读书"
+    "11",
+    "12",
+    "13",
+    "14",
+    "21",
+    "22",
+    "23"
   ]
 }
