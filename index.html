@@ -836,6 +836,54 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="fixed-group-bookshelf-option-layout">
+/* 编组 / 书架：固定选项只作为选择项展示，不提供维护按钮；矩形块自动换行，不再一项占满整行。 */
+#tagOptions .combo-option-list,
+#editTagOptions .combo-option-list,
+#categoryOptions .combo-option-list,
+#editCategoryOptions .combo-option-list{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+}
+#tagOptions .combo-pill,
+#editTagOptions .combo-pill,
+#categoryOptions .combo-pill,
+#editCategoryOptions .combo-pill{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-height:32px!important;
+    border:1px solid #cbd5e1!important;
+    border-radius:5px!important;
+    background:#fff!important;
+    overflow:hidden!important;
+}
+#tagOptions .combo-pill.selected,
+#editTagOptions .combo-pill.selected,
+#categoryOptions .combo-pill.selected,
+#editCategoryOptions .combo-pill.selected{
+    border-color:#93b4ff!important;
+    background:#eaf1ff!important;
+}
+#tagOptions .combo-pill-select,
+#editTagOptions .combo-pill-select,
+#categoryOptions .combo-pill-select,
+#editCategoryOptions .combo-pill-select{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    padding:.42rem .72rem!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    overflow-wrap:normal!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -893,7 +941,7 @@ body.reordering{user-select:none}
 <div class="combo" id="categoryCombo">
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
-<input type="text" id="categoryInput" autocomplete="off">
+<input type="text" id="categoryInput" autocomplete="off" readonly>
 <button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史"></button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
@@ -912,7 +960,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">编组可多选；固定选项显示为 11组、12组、13组、14组、21组、22组、23组。原有旧标签内容会保留，直到手动修改。</p>
+<h3>编辑</h3><p class="dialog-desc">编组可多选，书架单选；两者的下拉选项均固定，只用于选择，不提供新增、编辑、删除或排序。编组固定为 11组、12组、13组、14组、21组、22组、23组。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -959,7 +1007,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editCategoryCombo">
 <div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
-<input autocomplete="off" id="editCategory" type="text"/>
+<input autocomplete="off" id="editCategory" type="text" readonly/>
 <button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
@@ -1431,7 +1479,7 @@ function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
     const entries=(Array.isArray(s.entries)?s.entries:[]).map(normEntry).filter(Boolean);
 
-    // 出版、书架使用历史数组自身的顺序，供人工调整。
+    // 出版沿用人工顺序；书架选项列表从数据中读取，但在界面中固定不可维护。
     // 旧数据没有对应历史字段时，仅首次按现有条目出现顺序建立历史。
     const institutions=uniq(
         Array.isArray(s.institutions)?s.institutions:entries.map(x=>x.institution).filter(Boolean)
@@ -1615,36 +1663,22 @@ function renderMultiOptions(type,which){
     const meta=multiMeta(type,which);
     const q=key(meta.input.value);
     const history=sortHistory(type,state[meta.historyKey]);
-    // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
-    // 标签、书架的下拉菜单维护功能只保留在“添加”板块。
-    // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
-    const canManage=which==='add'&&type!=='tag';
-    const manualOrder=canManage&&type==='category';
     const list=values.length
-        ? `<div class="combo-option-list">${values.map(v=>{
-            const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
-            const manageButtons=canManage?`
-                <button class="combo-pill-edit" type="button" data-edit-value="${attr(v)}" aria-label="编辑${meta.label} ${attr(v)}" title="编辑">✓</button>
-                <button class="combo-pill-delete" type="button" data-delete-value="${attr(v)}" aria-label="删除${meta.label} ${attr(v)}">×</button>`:'';
-            return `<span class="combo-pill${selectedKeys.has(key(v))?' selected':''}${manualOrder?' manual-order':''}"${manualOrder?` data-drag-value="${attr(v)}"`:''}>
-                ${dragHandle}
-                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(type==='tag'?groupDisplay(v):v)}</button>${manageButtons}
-            </span>`
-        }).join('')}</div>`
-        : `<div class="combo-empty">${q?`没有匹配的${meta.label}`:`暂无${meta.label}`}</div>`;
-    const current=clean(meta.input.value);
-    const canAdd=canManage&&current&&!history.some(v=>key(v)===key(current));
-    meta.options.innerHTML=list+(canAdd?`<button class="combo-add" type="button" data-add-current="1">＋ 添加“${esc(current)}”到${meta.label}</button>`:'')
+        ? `<div class="combo-option-list">${values.map(v=>`
+            <span class="combo-pill${selectedKeys.has(key(v))?' selected':''}">
+                <button class="combo-pill-select" type="button" data-select-value="${attr(v)}" aria-pressed="${selectedKeys.has(key(v))?'true':'false'}">${esc(type==='tag'?groupDisplay(v):v)}</button>
+            </span>`).join('')}</div>`
+        : `<div class="combo-empty">暂无${meta.label}</div>`;
+    meta.options.innerHTML=list
 }
 function renderMultiField(type,which){
     renderMultiSelected(type,which);
     const meta=multiMeta(type,which);
-    const locked=type==='tag'||(meta.selection.length>0&&!multiAllowsMultiple(type,which));
-    meta.input.readOnly=locked;
-    meta.input.setAttribute('aria-readonly',locked?'true':'false');
-    meta.input.title=type==='tag'?'编组选项固定，请从下拉菜单选择':(locked?`请先删除当前${meta.label}，再选择或输入新的${meta.label}`:'');
+    meta.input.readOnly=true;
+    meta.input.setAttribute('aria-readonly','true');
+    meta.input.title=`${meta.label}选项固定，请从下拉菜单选择`;
     renderMultiOptions(type,which)
 }
 function renderCategoryOptions(which){renderMultiField('category',which)}
@@ -1757,8 +1791,8 @@ function moveManagedInstitution(value,lineRaw){
     show(`已从第 ${currentLine} 行移至第 ${line} 行`,'success')
 }
 function reorderHistoryOption(type,sourceValue,targetValue,after){
-    // 仅“书架”保留拖拽排序；“出版”已改为管理页行号排序。
-    if(type!=='category')return;
+    // 编组和书架选项固定，不再允许通过下拉菜单拖拽调整。
+    return;
     const historyKey=multiMeta(type,'add').historyKey;
     const history=uniq(state[historyKey]),sourceKey=key(sourceValue),targetKey=key(targetValue);
     const sourceIndex=history.findIndex(v=>key(v)===sourceKey);
@@ -1889,7 +1923,7 @@ function render(){
     }).join(''):'<div class="empty-state">暂无条目</div>'
 }
 function addHistoryOption(type,value,notify=false){
-    if(type==='tag')return false;
+    if(type==='tag'||type==='category')return false;
     const meta=multiMeta(type,'add');
     const historyKey=meta.historyKey,label=meta.label;
     const v=clean(value);
@@ -1997,7 +2031,7 @@ function toggleSelection(type,which,value){
     return true
 }
 function editHistoryOption(type,value){
-    if(type==='tag')return;
+    if(type==='tag'||type==='category')return;
     const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
     const oldValue=clean(value),oldKey=key(oldValue);
     const history=[...state[historyKey]];
@@ -2045,7 +2079,7 @@ function editHistoryOption(type,value){
     show(`已修改${label}选项为“${nextValue}”`,'success')
 }
 function deleteHistoryOption(type,value){
-    if(type==='tag')return;
+    if(type==='tag'||type==='category')return;
     const meta=multiMeta(type,'add'),targetKey=key(value);
     if(!confirm(`确定从${meta.label}下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
     state[meta.historyKey]=state[meta.historyKey].filter(v=>key(v)!==targetKey);
@@ -2059,7 +2093,7 @@ function deleteHistoryOption(type,value){
 }
 function commitTypedValue(type,which,notify=false){
     const meta=multiMeta(type,which),value=clean(meta.input.value);
-    if(type==='tag'){
+    if(type==='tag'||type==='category'){
         meta.input.value='';
         renderMultiField(type,which);
         return false
@@ -3173,7 +3207,6 @@ setupInstitutionCombo('add');
 setupInstitutionCombo('edit');
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
-setupManualDrag(categoryOptions,'category');
 setupMultiCombo('tag','add');
 setupMultiCombo('tag','edit');
 
