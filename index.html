@@ -755,6 +755,48 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="field-border-bookno-match-fix">
+/* 添加板块 + 编辑弹窗：所有字段边框严格按“书号”输入框的视觉标准统一。 */
+#addSection .form-group > input,
+#editModal .form-group input,
+#addSection .combo,
+#editModal .combo{
+    border:1px solid #cbd5e1!important;
+    border-radius:15px!important;
+    background:#fff!important;
+    background-clip:padding-box!important;
+    box-shadow:none!important;
+    box-sizing:border-box!important;
+}
+
+/* 组合字段由最外层画完整边框，内部输入框不再单独画边线，避免重叠/发虚。 */
+#addSection .combo-row input,
+#editModal .combo-row input{
+    border:0!important;
+    border-radius:14px!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    outline:none!important;
+    box-sizing:border-box!important;
+}
+
+/* 聚焦效果也按普通“书号”输入框处理到整块字段外框。 */
+#addSection .combo:focus-within,
+#editModal .combo:focus-within{
+    outline:2px solid #93b4ff!important;
+    outline-offset:1px!important;
+    border-color:transparent!important;
+}
+
+/* 普通输入框维持完整 1px 边框，避免其它规则覆盖成透明或阴影。 */
+#addSection .form-group > input:not(:focus),
+#editModal .form-group input:not(:focus){
+    border-color:#cbd5e1!important;
+    box-shadow:none!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
