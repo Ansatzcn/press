@@ -2468,7 +2468,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "110002"
+      "code": "238001"
     },
     {
       "id": "fc09d73a-1a31-485e-920a-9b79317c6f7d",
@@ -8530,9 +8530,7 @@
       "bookNo": "7-5201-4637",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
-      "tag": [
-        "23读书"
-      ],
+      "tag": [],
       "tagChecked": false,
       "code": ""
     },
