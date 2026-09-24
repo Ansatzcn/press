@@ -4165,7 +4165,9 @@
       "bookName": "20世纪50年代苏联专家在中国人民大学",
       "bookNo": "7-300-23990",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
-      "category": [],
+      "category": [
+        "九号"
+      ],
       "tag": [
         "11组",
         "22组"
