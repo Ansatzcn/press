@@ -251,7 +251,7 @@
       "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230001"
@@ -311,7 +311,7 @@
       "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230016"
@@ -595,7 +595,7 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "22"
+        "22组"
       ],
       "tagChecked": false,
       "code": "220001"
@@ -859,7 +859,7 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230011"
@@ -897,7 +897,7 @@
         "八号"
       ],
       "tag": [
-        "11"
+        "11组"
       ],
       "tagChecked": false,
       "code": "110001"
@@ -1029,7 +1029,7 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230012"
@@ -1077,7 +1077,7 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230006"
@@ -1089,7 +1089,7 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230014"
@@ -1354,7 +1354,7 @@
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230003"
@@ -2062,7 +2062,7 @@
       "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230004"
@@ -2086,7 +2086,7 @@
       "institution": "[辽宁人民出版社](https://book.douban.com/press/2669/?order=time)",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230010"
@@ -2292,7 +2292,7 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": true,
       "code": "230015"
@@ -2389,7 +2389,7 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230005"
@@ -2413,7 +2413,7 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230007"
@@ -2425,7 +2425,7 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230008"
@@ -3284,7 +3284,7 @@
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230009"
@@ -4250,7 +4250,7 @@
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
-        "22"
+        "22组"
       ],
       "tagChecked": false,
       "code": "220002"
@@ -6353,7 +6353,7 @@
       "institution": "[中国经济出版社](https://book.douban.com/press/2640/?order=time)",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230013"
@@ -11140,7 +11140,7 @@
       "institution": "[上海教育出版社](https://book.douban.com/press/2527/?order=time)",
       "category": [],
       "tag": [
-        "23"
+        "23组"
       ],
       "tagChecked": false,
       "code": "230002"
@@ -13575,12 +13575,12 @@
     "十号"
   ],
   "tags": [
-    "11",
-    "12",
-    "13",
-    "14",
-    "21",
-    "22",
-    "23"
+    "11组",
+    "12组",
+    "13组",
+    "14组",
+    "21组",
+    "22组",
+    "23组"
   ]
 }
