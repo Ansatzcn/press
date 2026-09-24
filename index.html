@@ -630,11 +630,11 @@ body.reordering{user-select:none}
 
 <style id="group-code-mobile-fix">
 /* 固定编组：新增/编辑均多选。手机端已选编组必须始终可见，不被白色输入框覆盖。 */
-#tagInput,#editTag{cursor:pointer}
+#tagInput,#editTag{cursor:pointer;background:#fff!important;color:#0f172a!important}
 #tagSelected .selected-pill,#editTagSelected .selected-pill{
-    background:#eef2ff!important;
-    border-color:#a5b4fc!important;
-    color:#1e293b!important;
+    background:#fff!important;
+    border-color:#cbd5e1!important;
+    color:#334155!important;
     opacity:1!important;
 }
 #tagSelected .selected-pill-label,#editTagSelected .selected-pill-label{
@@ -646,8 +646,6 @@ body.reordering{user-select:none}
     color:#991b1b!important;
     opacity:1!important;
 }
-.edit-btn.pending-code{color:#9a3412}
-
 #tagCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)){
     grid-template-columns:minmax(0,1fr) 44px!important;
@@ -722,7 +720,7 @@ body.reordering{user-select:none}
 <div class="combo" id="tagCombo">
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off" placeholder="选择编组" readonly>
+<input type="text" id="tagInput" autocomplete="off" readonly>
 <button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项">▾</button>
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
@@ -798,7 +796,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editTagCombo">
 <div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
-<input autocomplete="off" id="editTag" type="text" placeholder="选择编组" readonly/>
+<input autocomplete="off" id="editTag" type="text" readonly/>
 <button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button">▾</button>
 </div>
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
@@ -1669,7 +1667,7 @@ function render(){
         const entryCode=codeById.get(x.id)||'';
         const editText=entryCode||'编辑';
         const editTitle=entryCode?`编辑条目 · 编码 ${entryCode}`:'编辑条目 · 当前编组尚不能生成编码';
-        const editLink=(admin()&&adminReady)?`<button class="edit-btn${entryCode?'':' pending-code'}" data-id="${attr(x.id)}" type="button" title="${attr(editTitle)}" aria-label="${attr(editTitle)}">${esc(editText)}</button>`:'';
+        const editLink=(admin()&&adminReady)?`<button class="edit-btn" data-id="${attr(x.id)}" type="button" title="${attr(editTitle)}" aria-label="${attr(editTitle)}">${esc(editText)}</button>`:'';
         const publication=x.institution;
         const tagValue=x.tag;
         const bookshelf=x.category;
