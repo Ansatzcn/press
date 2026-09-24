@@ -628,807 +628,62 @@ body.reordering{user-select:none}
 </style>
 
 
-<style id="add-tag-category-square-options">
-/* 添加板块：标签 / 书架选项改为横向自动换行的小方块，不再每项独占一行。 */
-#addSection #tagOptions .combo-option-list,
-#addSection #categoryOptions .combo-option-list{
-    display:flex!important;
-    flex-direction:row!important;
-    flex-wrap:wrap!important;
-    align-items:flex-start;
-    gap:7px;
+<style id="group-code-mobile-fix">
+/* 固定编组：新增/编辑均多选。手机端已选编组必须始终可见，不被白色输入框覆盖。 */
+#tagInput,#editTag{cursor:pointer}
+#tagSelected .selected-pill,#editTagSelected .selected-pill{
+    background:#eef2ff!important;
+    border-color:#a5b4fc!important;
+    color:#1e293b!important;
+    opacity:1!important;
 }
-#addSection #tagOptions .combo-pill,
-#addSection #categoryOptions .combo-pill{
-    display:inline-flex!important;
-    flex:0 0 auto!important;
-    width:auto!important;
-    max-width:100%;
-    min-height:30px;
-    border-radius:7px!important;
+#tagSelected .selected-pill-label,#editTagSelected .selected-pill-label{
+    color:#1e293b!important;
+    opacity:1!important;
+    -webkit-text-fill-color:#1e293b!important;
 }
-#addSection #tagOptions .combo-pill-select,
-#addSection #categoryOptions .combo-pill-select{
-    flex:0 1 auto!important;
-    width:auto!important;
-    min-width:0;
-    padding:.38rem .62rem!important;
-    white-space:nowrap!important;
-    overflow:hidden;
-    text-overflow:ellipsis;
+#tagSelected .selected-pill-remove,#editTagSelected .selected-pill-remove{
+    color:#991b1b!important;
+    opacity:1!important;
 }
+.edit-btn.pending-code{color:#9a3412}
 
-/* 回车/点击选中后，立即显示为紧凑小方块；× 固定在方块右侧。 */
-#addSection #tagSelected,
-#addSection #categorySelected{
-    display:flex!important;
-    flex-wrap:wrap!important;
-    align-items:center;
-    gap:6px!important;
-    height:auto!important;
-    min-height:28px;
-    overflow:visible!important;
-}
-#addSection #tagSelected .selected-pill,
-#addSection #categorySelected .selected-pill{
-    display:inline-flex!important;
-    flex:0 0 auto!important;
-    align-items:stretch!important;
-    width:auto!important;
-    max-width:100%!important;
-    min-height:28px!important;
-    height:28px!important;
-    border-radius:7px!important;
-    font-size:.76rem!important;
-    line-height:1!important;
-}
-#addSection #tagSelected .selected-pill-label,
-#addSection #categorySelected .selected-pill-label{
-    display:flex;
-    align-items:center;
-    width:auto!important;
-    max-width:none!important;
-    padding:.2rem .5rem!important;
-    white-space:nowrap!important;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    font-size:.76rem!important;
-    line-height:1!important;
-}
-#addSection #tagSelected .selected-pill-remove,
-#addSection #categorySelected .selected-pill-remove{
-    flex:0 0 25px!important;
-    width:25px!important;
-    height:26px!important;
-    margin:0!important;
-    border-left:1px solid #cbd5e1!important;
-    border-radius:0 6px 6px 0!important;
-    font-size:.82rem!important;
-    line-height:26px!important;
-}
-</style>
-
-
-
-<style id="tag-category-toggle-inside-fix">
-/* 标签 / 书架：倒三角永远固定在对应 combo 外框内部，不参与内容列宽计算。 */
-#tagCombo,
-#categoryCombo,
-#editTagCombo,
-#editCategoryCombo{
-    position:relative!important;
-    width:100%!important;
-    min-width:0!important;
-    box-sizing:border-box!important;
-    padding-right:52px!important;
-}
-
-#tagCombo > .combo-row,
-#categoryCombo > .combo-row,
-#editTagCombo > .combo-row,
-#editCategoryCombo > .combo-row{
-    min-width:0!important;
-}
-
-#tagCombo .combo-toggle,
-#categoryCombo .combo-toggle,
-#editTagCombo .combo-toggle,
-#editCategoryCombo .combo-toggle{
-    position:absolute!important;
-    top:50%!important;
-    right:7px!important;
-    transform:translateY(-50%)!important;
-    z-index:6!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    width:38px!important;
-    min-width:38px!important;
-    max-width:38px!important;
-    height:38px!important;
-    min-height:38px!important;
-    margin:0!important;
-    box-sizing:border-box!important;
-}
-
-/* 添加区单选：选中后保留小方块，输入框收起，但倒三角仍留在同一外框最右侧。 */
-#addSection #tagCombo:has(> .combo-selected:not(:empty)),
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)){
-    display:flex!important;
-    align-items:center!important;
-    min-height:54px!important;
-    height:auto!important;
-    padding:.45rem 52px .45rem .45rem!important;
-}
-
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    flex:1 1 auto!important;
-    width:auto!important;
-    max-width:100%!important;
-    min-width:0!important;
-    height:auto!important;
-    margin:0!important;
-    overflow:hidden!important;
-}
-
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    display:block!important;
-    flex:0 0 0!important;
-    width:0!important;
-    min-width:0!important;
-    height:0!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
-}
-
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row > input,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row > input{
-    display:none!important;
-}
-
-/* 未选中时输入框占满倒三角左侧的可用宽度。 */
-#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
-#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
-    display:block!important;
-    min-height:54px!important;
-    height:auto!important;
-    padding:.45rem 52px .45rem .45rem!important;
-}
-
-#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row,
-#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row{
-    display:block!important;
-    width:100%!important;
-}
-
-#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row > input,
-#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))) > .combo-row > input{
-    display:block!important;
-    width:100%!important;
-    min-width:0!important;
-}
-
-/* 下拉层从整个方框下缘展开，宽度与方框一致。 */
-#tagCombo > .combo-panel,
-#categoryCombo > .combo-panel,
-#editTagCombo > .combo-panel,
-#editCategoryCombo > .combo-panel{
-    top:calc(100% + 7px)!important;
-    left:0!important;
-    right:0!important;
-    width:auto!important;
-}
-
-@media(max-width:700px){
-    #tagCombo,
-    #categoryCombo,
-    #editTagCombo,
-    #editCategoryCombo{
-        padding-right:50px!important;
-    }
-    #tagCombo .combo-toggle,
-    #categoryCombo .combo-toggle,
-    #editTagCombo .combo-toggle,
-    #editCategoryCombo .combo-toggle{
-        right:6px!important;
-        width:38px!important;
-        min-width:38px!important;
-        max-width:38px!important;
-    }
-}
-</style>
-
-
-
-<style id="add-tag-category-fixed-height-and-hitarea-fix">
-/* 最终修正：添加板块的标签 / 书架恢复原先固定高度，不允许内容把控件撑高。 */
-#addSection #tagCombo,
-#addSection #categoryCombo,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)),
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)),
-#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
-#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
-    position:relative!important;
-    box-sizing:border-box!important;
-    width:100%!important;
-    min-width:0!important;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    padding:.45rem 52px .45rem .45rem!important;
-    overflow:visible!important;
-}
-
-/* 已选小方块只占原控件内部空间，不换行、不抬高外框。 */
-#addSection #tagCombo > .combo-selected,
-#addSection #categoryCombo > .combo-selected,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    min-width:0!important;
-    width:100%!important;
-    max-width:100%!important;
-    height:28px!important;
-    min-height:28px!important;
-    max-height:28px!important;
-    margin:0!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
-    scrollbar-width:none;
-}
-#addSection #tagCombo > .combo-selected::-webkit-scrollbar,
-#addSection #categoryCombo > .combo-selected::-webkit-scrollbar{display:none}
-
-/* 倒三角严格放在固定高度外框内。 */
-#addSection #tagCombo .combo-toggle,
-#addSection #categoryCombo .combo-toggle{
-    position:absolute!important;
-    top:50%!important;
-    right:7px!important;
-    transform:translateY(-50%)!important;
-    width:38px!important;
-    min-width:38px!important;
-    max-width:38px!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-}
-
-/* 菜单绝对展开，不参与表单高度计算。 */
-#addSection #tagCombo > .combo-panel,
-#addSection #categoryCombo > .combo-panel{
-    position:absolute!important;
-    top:calc(100% + 7px)!important;
-    left:0!important;
-    right:0!important;
-    width:auto!important;
-    margin:0!important;
-}
-
-@media(max-width:700px){
-    #addSection #tagCombo,
-    #addSection #categoryCombo,
-    #addSection #tagCombo:has(> .combo-selected:not(:empty)),
-    #addSection #categoryCombo:has(> .combo-selected:not(:empty)),
-    #addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
-    #addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
-        height:54px!important;
-        min-height:54px!important;
-        max-height:54px!important;
-        padding-right:50px!important;
-    }
-    #addSection #tagCombo .combo-toggle,
-    #addSection #categoryCombo .combo-toggle{
-        right:6px!important;
-    }
-}
-</style>
-
-
-<style id="add-tag-category-final-geometry-fix">
-/* 最终几何约束：保持原 54px 高度，所有内部元素均与上下边框留出明确间距。 */
-#addSection #tagCombo,
-#addSection #categoryCombo{
-    position:relative!important;
-    display:block!important;
-    width:100%!important;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    padding:0!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-}
-
-/* 未选时的输入区域固定在边框内 7px～45px，不接触上下边线。 */
-#addSection #tagCombo > .combo-row,
-#addSection #categoryCombo > .combo-row{
-    position:absolute!important;
-    left:7px!important;
-    right:52px!important;
-    top:7px!important;
-    width:auto!important;
-    height:38px!important;
-    min-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    display:block!important;
-    overflow:hidden!important;
-}
-#addSection #tagCombo > .combo-row > input,
-#addSection #categoryCombo > .combo-row > input{
-    display:block!important;
-    width:100%!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:.55rem .7rem!important;
-    box-sizing:border-box!important;
-}
-
-/* 有选择时隐藏输入，但保留外框尺寸；已选方块严格限制在 38px 内部区域。 */
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    display:none!important;
-}
-#addSection #tagCombo > .combo-selected,
-#addSection #categoryCombo > .combo-selected,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    position:absolute!important;
-    left:7px!important;
-    right:52px!important;
-    top:7px!important;
-    width:auto!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    gap:6px!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
-    box-sizing:border-box!important;
-    scrollbar-width:none;
-}
-#addSection #tagCombo > .combo-selected:empty,
-#addSection #categoryCombo > .combo-selected:empty{
-    display:none!important;
-}
-#addSection #tagCombo > .combo-selected::-webkit-scrollbar,
-#addSection #categoryCombo > .combo-selected::-webkit-scrollbar{display:none}
-#addSection #tagSelected .selected-pill,
-#addSection #categorySelected .selected-pill{
-    flex:0 0 auto!important;
-    height:28px!important;
-    min-height:28px!important;
-    max-height:28px!important;
-    margin:0!important;
-    box-sizing:border-box!important;
-}
-#addSection #tagSelected .selected-pill-remove,
-#addSection #categorySelected .selected-pill-remove{
-    height:26px!important;
-    min-height:26px!important;
-    max-height:26px!important;
-    align-self:center!important;
-}
-
-/* 倒三角与输入/已选区同高，并始终完全位于外框内。 */
-#addSection #tagCombo .combo-toggle,
-#addSection #categoryCombo .combo-toggle{
-    position:absolute!important;
-    top:7px!important;
-    right:7px!important;
-    transform:none!important;
-    width:38px!important;
-    min-width:38px!important;
-    max-width:38px!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    box-sizing:border-box!important;
-}
-
-/* 下拉面板从外框下沿再向下 8px 开始，绝不覆盖 54px 外框的下边线。 */
-#addSection #tagCombo > .combo-panel,
-#addSection #categoryCombo > .combo-panel{
-    position:absolute!important;
-    top:62px!important;
-    left:0!important;
-    right:0!important;
-    width:auto!important;
-    margin:0!important;
-    box-sizing:border-box!important;
-}
-</style>
-
-
-
-
-<style id="add-tag-category-match-institution-final">
-/* 添加区：标签 / 书架严格复用“出版”输入框的几何与倒三角格式。
-   外框 54px；内部一行 38px；左侧内容区 + 7px 间距 + 44px 倒三角按钮。 */
-#addSection #tagCombo,
-#addSection #categoryCombo{
-    position:relative!important;
-    display:block!important;
-    width:100%!important;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    padding:.45rem!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-}
-
-/* 无论是否已经选中，都保留与“出版”完全相同的两列 combo-row。 */
-#addSection #tagCombo > .combo-row,
-#addSection #categoryCombo > .combo-row,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    position:relative!important;
-    inset:auto!important;
-    display:grid!important;
+#tagCombo:has(> .combo-selected:not(:empty)),
+#editTagCombo:has(> .combo-selected:not(:empty)){
     grid-template-columns:minmax(0,1fr) 44px!important;
-    gap:7px!important;
-    width:100%!important;
-    height:38px!important;
-    min-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
 }
-
-/* 输入框与“出版”一致。选中后仅隐藏文字输入本身，但仍保留左列占位，
-   从而保证倒三角永远处在与“出版”完全相同的位置。 */
-#addSection #tagCombo > .combo-row > input,
-#addSection #categoryCombo > .combo-row > input{
-    display:block!important;
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty){
     grid-column:1!important;
     grid-row:1!important;
-    width:100%!important;
-    min-width:0!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:.55rem .7rem!important;
-    box-sizing:border-box!important;
-}
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row > input,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row > input{
-    visibility:hidden!important;
-    pointer-events:none!important;
-}
-
-/* 倒三角：直接恢复“出版”使用的 44px 列、边框、圆角和背景；禁止绝对定位。 */
-#addSection #tagCombo .combo-toggle,
-#addSection #categoryCombo .combo-toggle{
     position:relative!important;
-    inset:auto!important;
-    top:auto!important;
-    right:auto!important;
-    bottom:auto!important;
-    left:auto!important;
-    transform:none!important;
+    z-index:2!important;
+    max-width:100%!important;
+    min-width:0!important;
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row{
     grid-column:2!important;
     grid-row:1!important;
     display:block!important;
     width:44px!important;
     min-width:44px!important;
-    max-width:44px!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    border:1px solid #cbd5e1!important;
-    border-radius:12px!important;
-    background:#fff!important;
-    color:#475569!important;
-    box-shadow:none!important;
-    font-weight:700!important;
-    box-sizing:border-box!important;
 }
-#addSection #tagCombo .combo-toggle:hover,
-#addSection #categoryCombo .combo-toggle:hover{
-    background:#f1f5f9!important;
-}
-
-/* 已选小方块只覆盖左侧输入列，不碰倒三角列，也不改变控件高度。 */
-#addSection #tagCombo > .combo-selected,
-#addSection #categoryCombo > .combo-selected,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    position:absolute!important;
-    left:.45rem!important;
-    right:calc(.45rem + 44px + 7px)!important;
-    top:.45rem!important;
-    width:auto!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    gap:6px!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
-    z-index:3!important;
-    box-sizing:border-box!important;
-    scrollbar-width:none!important;
-}
-#addSection #tagCombo > .combo-selected:empty,
-#addSection #categoryCombo > .combo-selected:empty{
-    display:none!important;
-}
-#addSection #tagCombo > .combo-selected::-webkit-scrollbar,
-#addSection #categoryCombo > .combo-selected::-webkit-scrollbar{display:none}
-
-/* 菜单从整个输入框下沿之外展开，不遮住下边框。 */
-#addSection #tagCombo > .combo-panel,
-#addSection #categoryCombo > .combo-panel{
-    position:absolute!important;
-    top:calc(100% + 7px)!important;
-    left:0!important;
-    right:0!important;
-    width:auto!important;
-    margin:0!important;
-    box-sizing:border-box!important;
-}
-
-@media(max-width:700px){
-    #addSection #tagCombo,
-    #addSection #categoryCombo{
-        height:54px!important;
-        min-height:54px!important;
-        max-height:54px!important;
-        padding:.45rem!important;
-    }
-    #addSection #tagCombo > .combo-row,
-    #addSection #categoryCombo > .combo-row,
-    #addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-    #addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-        grid-template-columns:minmax(0,1fr) 44px!important;
-        gap:7px!important;
-    }
-    #addSection #tagCombo .combo-toggle,
-    #addSection #categoryCombo .combo-toggle{
-        width:44px!important;
-        min-width:44px!important;
-        max-width:44px!important;
-        height:38px!important;
-    }
-}
-</style>
-
-
-<style id="add-tag-category-toggle-right-edge-fix">
-/* 最终定位修正：添加区标签 / 书架的倒三角始终固定在整个输入框的最右侧。
-   不再依赖左侧选中项或 grid 的宽度计算；54px 外框和 38px 内部高度保持不变。 */
-#addSection #tagCombo,
-#addSection #categoryCombo{
-    position:relative!important;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    padding:.45rem!important;
-    overflow:visible!important;
-}
-
-/* 左侧输入区域铺满内部一行，并给最右侧倒三角预留空间。 */
-#addSection #tagCombo > .combo-row,
-#addSection #categoryCombo > .combo-row,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    position:relative!important;
+#tagCombo > .combo-selected:not(:empty) + .combo-row input,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row input{display:none!important}
+#tagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row .combo-toggle{
     display:block!important;
-    width:100%!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-}
-#addSection #tagCombo > .combo-row > input,
-#addSection #categoryCombo > .combo-row > input{
-    display:block!important;
-    width:calc(100% - 51px)!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:.55rem .7rem!important;
-    box-sizing:border-box!important;
-}
-
-/* 与“出版”字段同样的倒三角按钮外观，但位置按“出版”字段的内部网格右边缘锁定。 */
-#addSection #tagCombo .combo-toggle,
-#addSection #categoryCombo .combo-toggle{
-    position:absolute!important;
-    top:.45rem!important;
-    right:0!important;
-    bottom:auto!important;
-    left:auto!important;
-    transform:none!important;
-    z-index:6!important;
     width:44px!important;
     min-width:44px!important;
     max-width:44px!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    border:1px solid #cbd5e1!important;
-    border-radius:12px!important;
-    background:#fff!important;
-    color:#475569!important;
-    box-shadow:none!important;
-    font-weight:700!important;
-    box-sizing:border-box!important;
 }
-
-/* 已选小方块只占倒三角左边的空间，绝不推动倒三角。 */
-#addSection #tagCombo > .combo-selected,
-#addSection #categoryCombo > .combo-selected,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    position:absolute!important;
-    top:.45rem!important;
-    left:.45rem!important;
-    right:calc(.45rem + 51px)!important;
-    width:auto!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    z-index:5!important;
-}
-
 @media(max-width:700px){
-    #addSection #tagCombo .combo-toggle,
-    #addSection #categoryCombo .combo-toggle{
-        top:.45rem!important;
-        right:0!important;
-        width:44px!important;
-        min-width:44px!important;
-        max-width:44px!important;
-    }
-}
-</style>
-
-
-<style id="three-fields-no-triangle-final">
-/* 最终规则：标签 / 出版 / 书架完全移除倒三角及其占位。
-   只有点击实际文本输入框才展开菜单；菜单与字段外框固定间隔 8px。 */
-#tagCombo .combo-toggle,
-#institutionCombo .combo-toggle,
-#categoryCombo .combo-toggle,
-#editTagCombo .combo-toggle,
-#editInstitutionCombo .combo-toggle,
-#editCategoryCombo .combo-toggle{
-    display:none!important;
-}
-
-/* 三类字段均恢复为单列完整宽度，不再预留 44px / 51px 的按钮空间。 */
-#tagCombo,
-#institutionCombo,
-#categoryCombo,
-#editTagCombo,
-#editInstitutionCombo,
-#editCategoryCombo{
-    position:relative!important;
-    padding:.45rem!important;
-    box-sizing:border-box!important;
-    overflow:visible!important;
-}
-
-#tagCombo > .combo-row,
-#institutionCombo > .combo-row,
-#categoryCombo > .combo-row,
-#editTagCombo > .combo-row,
-#editInstitutionCombo > .combo-row,
-#editCategoryCombo > .combo-row,
-#addSection #tagCombo > .combo-row,
-#addSection #categoryCombo > .combo-row,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-row,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-row{
-    position:relative!important;
-    inset:auto!important;
-    display:block!important;
-    grid-template-columns:1fr!important;
-    width:100%!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
-}
-
-#tagCombo > .combo-row > input,
-#institutionCombo > .combo-row > input,
-#categoryCombo > .combo-row > input,
-#editTagCombo > .combo-row > input,
-#editInstitutionCombo > .combo-row > input,
-#editCategoryCombo > .combo-row > input,
-#addSection #tagCombo > .combo-row > input,
-#addSection #categoryCombo > .combo-row > input{
-    display:block!important;
-    width:100%!important;
-    min-width:0!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:.55rem .7rem!important;
-    box-sizing:border-box!important;
-}
-
-/* 添加区标签 / 书架保持原来的 54px 总高度。 */
-#addSection #tagCombo,
-#addSection #categoryCombo,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)),
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)),
-#addSection #tagCombo:not(:has(> .combo-selected:not(:empty))),
-#addSection #categoryCombo:not(:has(> .combo-selected:not(:empty))){
-    display:block!important;
-    width:100%!important;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    padding:.45rem!important;
-}
-
-/* 单选已有值时，小方块占满原文本内容区，不再为已删除的倒三角留空。 */
-#addSection #tagCombo > .combo-selected,
-#addSection #categoryCombo > .combo-selected,
-#addSection #tagCombo:has(> .combo-selected:not(:empty)) > .combo-selected,
-#addSection #categoryCombo:has(> .combo-selected:not(:empty)) > .combo-selected{
-    position:absolute!important;
-    top:.45rem!important;
-    left:.45rem!important;
-    right:.45rem!important;
-    width:auto!important;
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
-    padding:0!important;
-    box-sizing:border-box!important;
-}
-
-/* 所有六个下拉层统一从各自字段外框下沿向下 8px 出现。 */
-#tagCombo > .combo-panel,
-#institutionCombo > .combo-panel,
-#categoryCombo > .combo-panel,
-#editTagCombo > .combo-panel,
-#editInstitutionCombo > .combo-panel,
-#editCategoryCombo > .combo-panel,
-#addSection #tagCombo > .combo-panel,
-#addSection #categoryCombo > .combo-panel{
-    position:absolute!important;
-    top:calc(100% + 8px)!important;
-    left:0!important;
-    right:0!important;
-    width:auto!important;
-    margin:0!important;
-    box-sizing:border-box!important;
+    #tagSelected,#editTagSelected{overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    #tagSelected::-webkit-scrollbar,#editTagSelected::-webkit-scrollbar{display:none}
+    #editModal #editTagSelected .selected-pill,#addSection #tagSelected .selected-pill{min-width:42px;max-width:none!important;height:24px!important;min-height:24px!important;font-size:.76rem!important}
+    #editModal #editTagSelected .selected-pill-label,#addSection #tagSelected .selected-pill-label{max-width:none!important;padding:.12rem .18rem .12rem .48rem!important;font-size:.76rem!important;overflow:visible!important;text-overflow:clip!important}
+    #editModal #editTagSelected .selected-pill-remove,#addSection #tagSelected .selected-pill-remove{height:20px!important;width:20px!important;flex-basis:20px!important;line-height:20px!important}
 }
 </style>
 
@@ -1463,12 +718,12 @@ body.reordering{user-select:none}
 <input type="text" id="bookNoInput" autocomplete="off">
 </div>
 <div class="form-group">
-<label for="tagInput">标签</label>
+<label for="tagInput">编组</label>
 <div class="combo" id="tagCombo">
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off">
-
+<input type="text" id="tagInput" autocomplete="off" placeholder="选择编组" readonly>
+<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项">▾</button>
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
@@ -1479,7 +734,7 @@ body.reordering{user-select:none}
 <div class="combo" id="institutionCombo">
 <div class="combo-row">
 <input type="text" id="institutionInput" autocomplete="off">
-
+<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
 </div>
@@ -1490,7 +745,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
 <input type="text" id="categoryInput" autocomplete="off">
-
+<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史">▾</button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
@@ -1508,7 +763,7 @@ body.reordering{user-select:none}
 <section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
-<h3>编辑</h3><p class="dialog-desc">标签始终按开头两位数字升序显示。</p>
+<h3>编辑</h3><p class="dialog-desc">编组可多选；固定选项为 11、12、13、14、21、22、23。原有旧标签内容会保留，直到手动修改。</p>
 
 <div class="form-group">
 <label for="editBookName">书名</label>
@@ -1523,7 +778,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editInstitutionCombo">
 <div class="combo-row">
 <input autocomplete="off" id="editInstitution" type="text"/>
-
+<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button">▾</button>
 </div>
 <div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
 </div>
@@ -1539,12 +794,12 @@ body.reordering{user-select:none}
 
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editTag">标签</label>
+<label for="editTag">编组</label>
 <div class="combo" id="editTagCombo">
 <div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
-<input autocomplete="off" id="editTag" type="text"/>
-
+<input autocomplete="off" id="editTag" type="text" placeholder="选择编组" readonly/>
+<button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button">▾</button>
 </div>
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
 </div>
@@ -1556,7 +811,7 @@ body.reordering{user-select:none}
 <div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
 <input autocomplete="off" id="editCategory" type="text"/>
-
+<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button">▾</button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
@@ -1769,6 +1024,46 @@ const DB_NAME=`${NS}:idb_v1`,DB_STORE='kv';
 const CONFIG_KEY='config',TOKEN_PERSISTED_KEY='token_persisted',META_KEY='meta',WORKCOPY_KEY='workcopy',PUBLIC_CACHE_KEY='public_cache';
 const OPFS_WORKCOPY_FILE='press_workcopy_v1.json';
 const MAX_BYTES=750*1024,AUTO_DELAY=1800,SYNC_RETRY_LIMIT=4,MIN_WRITE_GAP=1100,MAX_RETRY_DELAY=60000;
+const GROUP_OPTIONS=Object.freeze(['11','12','13','14','21','22','23']);
+const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_OPTIONS,'24']);
+const CODE_RULES=Object.freeze({
+    zh:{
+        groups:{
+            '11':[[110001,117999],[160001,167999]],
+            '12':[[120001,127999]],
+            '13':[[130001,139999],[180001,187999]],
+            '14':[[140001,147999]],
+            '21':[[210001,217999],[260001,267999]],
+            '22':[[220001,227999]],
+            '23':[[230001,237999],[270001,289999]],
+            '24':[[240001,247999]]
+        },
+        exceptions:{
+            '11/13':[[118001,119999]],
+            '11/22':[[228001,229999]],
+            '13/21':[[218001,219999]],
+            '13/22':[[188001,189999]],
+            '21/23':[[238001,239999]]
+        }
+    },
+    en:{
+        groups:{
+            '11':[[150001,157999]],
+            '12':[[128001,129999],[168001,169999]],
+            '13':[[170001,179999]],
+            '14':[[148001,149999]],
+            '21':[[250001,259999]],
+            // 22、23 不区分中英文：英文标题沿用与中文标题相同的编码区间。
+            '22':[[220001,227999]],
+            '23':[[230001,237999],[270001,289999]],
+            '24':[[248001,249999]]
+        },
+        exceptions:{
+            '11/13':[[158001,159999]],
+            '13/21':[[268001,269999]]
+        }
+    }
+});
 const $=id=>document.getElementById(id);
 const statusDot=$('statusDot'),statusText=$('statusText'),syncBtn=$('syncBtn'),configBtn=$('configBtn'),manageBtn=$('manageBtn'),importBtn=$('importBtn'),importInput=$('importInput'),exportBtn=$('exportBtn'),lastSyncTime=$('lastSyncTime'),
 addSection=$('addSection'),bookNameInput=$('bookNameInput'),bookNoInput=$('bookNoInput'),categoryCombo=$('categoryCombo'),categorySelected=$('categorySelected'),categoryInput=$('categoryInput'),categoryToggle=$('categoryToggle'),categoryPanel=$('categoryPanel'),categoryOptions=$('categoryOptions'),institutionCombo=$('institutionCombo'),institutionInput=$('institutionInput'),institutionToggle=$('institutionToggle'),institutionPanel=$('institutionPanel'),institutionOptions=$('institutionOptions'),tagCombo=$('tagCombo'),tagSelected=$('tagSelected'),tagInput=$('tagInput'),tagToggle=$('tagToggle'),tagPanel=$('tagPanel'),tagOptions=$('tagOptions'),addBtn=$('addBtn'),
@@ -1778,7 +1073,6 @@ configModal=$('configModal'),configForm=$('configForm'),cfgOwner=$('cfgOwner'),c
 let state={entries:[],institutions:[],categories:[],tags:[]},addSelections={category:[],tag:[]},editSelections={category:[],tag:[]},editingId='',editInitialSnapshot='',config={owner:'',repo:'',file:'press_data.json',token:''},meta={target:'',fingerprint:null,sha:null,lastSyncAt:null,baseState:null,dirty:false,revision:0};
 let syncing=false,syncQueued=false,syncQueuedShowResult=false,autoTimer=null,retryTimer=null,toastTimer=null,editOverlayPointerDown=false,adminReady=false,lastWriteAt=0,syncFailureCount=0;
 const collator=new Intl.Collator('zh-CN-u-co-pinyin',{numeric:true,sensitivity:'base'});
-const FIXED_CATEGORIES=['一号','二号','三号','四号','五号','六号','七号','八号','九号','十号'];
 
 // 使用 Visual Viewport 驱动手机配置弹窗高度。虚拟键盘/地址栏变化时，保存按钮仍保持在可视区域内。
 function updateVisualViewport(){
@@ -1858,6 +1152,55 @@ function sortTags(values){
     const list=Array.isArray(values)?values:[values];
     return uniq(list).sort(compareTagsByPrefix)
 }
+function titleIsChinese(raw){
+    // 只按标题可见文字判断：含汉字视为中文标题，否则按英文标题规则处理。
+    const visible=String(raw??'').replace(/\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,'$1');
+    return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(visible)
+}
+function codeGroupsFromEntry(entry){
+    const raw=normalizeMulti(entry?.tag).map(clean).filter(Boolean);
+    if(!raw.length)return null;
+    // 旧标签内容原样保留；只有全部都已经是明确的编组代码时才生成编码。
+    if(raw.some(v=>!CODE_GROUP_OPTIONS.includes(v)))return null;
+    return uniq(raw).sort((a,b)=>Number(a)-Number(b))
+}
+function mergeCodeRanges(ranges){
+    const ordered=(ranges||[]).map(r=>[Number(r[0]),Number(r[1])]).filter(r=>Number.isFinite(r[0])&&Number.isFinite(r[1])&&r[0]<=r[1]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+    const merged=[];
+    for(const range of ordered){
+        const last=merged[merged.length-1];
+        if(last&&range[0]<=last[1]+1)last[1]=Math.max(last[1],range[1]);
+        else merged.push([...range])
+    }
+    return merged
+}
+function codeRangesForEntry(entry){
+    const groups=codeGroupsFromEntry(entry);
+    if(!groups?.length)return [];
+    const rules=titleIsChinese(entry.bookName)?CODE_RULES.zh:CODE_RULES.en;
+    const combination=groups.join('/');
+    if(rules.exceptions[combination])return mergeCodeRanges(rules.exceptions[combination]);
+    // 非例外组合：严格取所有已选编组区间的并集，再从并集中找最小可用编码。
+    return mergeCodeRanges(groups.flatMap(group=>rules.groups[group]||[]))
+}
+function allocateEntryCodes(entries){
+    const used=new Set(),result=new Map();
+    for(const entry of entries||[]){
+        const ranges=codeRangesForEntry(entry);
+        let assigned='';
+        outer:for(const [start,end] of ranges){
+            let n=start;
+            while(n<=end&&used.has(n))n+=1;
+            if(n<=end){
+                used.add(n);
+                assigned=String(n).padStart(6,'0');
+                break outer
+            }
+        }
+        result.set(entry.id,assigned)
+    }
+    return result
+}
 function renderInstitution(raw){
     const s=clean(raw);
     const re=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
@@ -1900,13 +1243,12 @@ function norm(v){
     const institutions=uniq(
         Array.isArray(s.institutions)?s.institutions:entries.map(x=>x.institution).filter(Boolean)
     );
-    // 书架下拉菜单固定为十个选项，始终使用指定顺序；旧条目中的书架值仍保留在条目本身。
-    const categories=[...FIXED_CATEGORIES];
-
-    // 标签不能人工排序，严格按开头两位数字从小到大排列；同前缀再按自然顺序。
-    const tags=sortTags(
-        Array.isArray(s.tags)?s.tags:entries.flatMap(x=>x.tag)
+    const categories=uniq(
+        Array.isArray(s.categories)?s.categories:entries.flatMap(x=>x.category)
     );
+
+    // “编组”下拉菜单固定为七个选项；旧条目中的原标签内容只保存在条目本身，不清空、不自动改写。
+    const tags=[...GROUP_OPTIONS];
 
     // 总表排序的最高优先级永远是“出版”下拉菜单的人工顺序。
     // 规则 1：出版社不同，只比较出版社在下拉菜单中的位置，绝不比较书号。
@@ -1937,7 +1279,7 @@ function norm(v){
         if(byName!==0)return byName;
         return 0
     });
-    return{schemaVersion:5,entries,institutions,categories,tags}
+    return{schemaVersion:6,entries,institutions,categories,tags}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -2000,7 +1342,7 @@ function loadPublicCache(){return publicCacheValue?norm(publicCacheValue):null}
 function currentRevision(){return Math.max(0,Number(meta.revision)||0)}
 function hasLocalContent(snapshot){
     const s=snapshot?norm(snapshot):null;
-    return Boolean(s&&(s.entries.length||s.institutions.length||s.categories.length||s.tags.length))
+    return Boolean(s&&(s.entries.length||s.institutions.length||s.categories.length))
 }
 function hasUnsyncedLocal(snapshot=loadLocal()){
     if(!snapshot)return false;
@@ -2042,7 +1384,7 @@ function multiMeta(type,which){
             selectedBox:edit?editCategorySelected:categorySelected
         },
         tag:{
-            label:'标签',historyKey:'tags',
+            label:'编组',historyKey:'tags',
             input:edit?editTag:tagInput,
             panel:edit?editTagPanel:tagPanel,
             options:edit?editTagOptions:tagOptions,
@@ -2054,12 +1396,11 @@ function multiMeta(type,which){
     return meta
 }
 function sortHistory(type,values){
-    if(type==='category')return [...FIXED_CATEGORIES];
-    return type==='tag'?sortTags(values):uniq(values)
+    return type==='tag'?[...GROUP_OPTIONS]:uniq(values)
 }
 function multiAllowsMultiple(type,which){
-    // 只有“编辑条目 → 标签”允许多选；添加标签与书架继续严格单选。
-    return type==='tag'&&which==='edit'
+    // 编组在新增和编辑时都允许多选；书架仍保持单选。
+    return type==='tag'
 }
 function renderMultiSelected(type,which){
     const meta=multiMeta(type,which);
@@ -2078,10 +1419,10 @@ function renderMultiOptions(type,which){
     // 部分搜索：输入任意连续文字，只显示包含该文字的历史选项。
     const values=history.filter(v=>!q||key(v).includes(q));
     const selectedKeys=new Set(meta.selection.map(key));
-    // 标签与书架现在都是只选菜单：不在下拉菜单内提供新增、改名、删除或拖拽排序。
-    // 标签保留现有选项及现有排序；书架固定为一号到十号。
-    const canManage=false;
-    const manualOrder=false;
+    // 标签、书架的下拉菜单维护功能只保留在“添加”板块。
+    // 编辑弹窗只允许选择已有选项，不提供新增、改名、删除或拖拽排序。
+    const canManage=which==='add'&&type!=='tag';
+    const manualOrder=canManage&&type==='category';
     const list=values.length
         ? `<div class="combo-option-list">${values.map(v=>{
             const dragHandle=manualOrder?`<button class="combo-drag" type="button" data-drag-value="${attr(v)}" aria-label="拖动${meta.label} ${attr(v)} 调整顺序" title="按住拖动排序">≡</button>`:'';
@@ -2101,10 +1442,10 @@ function renderMultiOptions(type,which){
 function renderMultiField(type,which){
     renderMultiSelected(type,which);
     const meta=multiMeta(type,which);
-    const locked=meta.selection.length>0&&!multiAllowsMultiple(type,which);
+    const locked=type==='tag'||(meta.selection.length>0&&!multiAllowsMultiple(type,which));
     meta.input.readOnly=locked;
     meta.input.setAttribute('aria-readonly',locked?'true':'false');
-    meta.input.title=locked?`请先删除当前${meta.label}，再选择或输入新的${meta.label}`:'';
+    meta.input.title=type==='tag'?'编组选项固定，请从下拉菜单选择':(locked?`请先删除当前${meta.label}，再选择或输入新的${meta.label}`:'');
     renderMultiOptions(type,which)
 }
 function renderCategoryOptions(which){renderMultiField('category',which)}
@@ -2323,8 +1664,12 @@ function updateCountDisplay(){
 }
 function render(){
     state=norm(state);updateCountDisplay();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
+    const codeById=allocateEntryCodes(state.entries);
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
-        const editLink=(admin()&&adminReady)?`<button class="edit-btn" data-id="${attr(x.id)}" type="button">编辑</button>`:'';
+        const entryCode=codeById.get(x.id)||'';
+        const editText=entryCode||'编辑';
+        const editTitle=entryCode?`编辑条目 · 编码 ${entryCode}`:'编辑条目 · 当前编组尚不能生成编码';
+        const editLink=(admin()&&adminReady)?`<button class="edit-btn${entryCode?'':' pending-code'}" data-id="${attr(x.id)}" type="button" title="${attr(editTitle)}" aria-label="${attr(editTitle)}">${esc(editText)}</button>`:'';
         const publication=x.institution;
         const tagValue=x.tag;
         const bookshelf=x.category;
@@ -2335,7 +1680,7 @@ function render(){
         if(x.bookNo){
             metaRows.push(`<div class="meta-row"><span class="meta-label">书号：</span>${esc(x.bookNo)}</div>`)
         }
-        metaRows.push(`<div class="meta-row tag-row"><span class="meta-label">标签：</span><span class="tag-text">${esc(tagValue.join('/'))}</span><input class="tag-checkbox" data-entry-id="${attr(x.id)}" type="checkbox" aria-label="${attr(`勾选：${x.bookName}`)}"${x.tagChecked?' checked':''}></div>`)
+        metaRows.push(`<div class="meta-row tag-row"><span class="meta-label">编组：</span><span class="tag-text">${esc(tagValue.join('/'))}</span><input class="tag-checkbox" data-entry-id="${attr(x.id)}" type="checkbox" aria-label="${attr(`勾选：${x.bookName}`)}"${x.tagChecked?' checked':''}></div>`)
         if(bookshelf.length){
             metaRows.push(`<div class="meta-row bookshelf-row"><span class="bookshelf-text"><span class="meta-label">书架：</span>${esc(bookshelf.join('、'))}</span></div>`)
         }
@@ -2344,7 +1689,7 @@ function render(){
     }).join(''):'<div class="empty-state">暂无条目</div>'
 }
 function addHistoryOption(type,value,notify=false){
-    if(type==='tag'||type==='category')return false;
+    if(type==='tag')return false;
     const meta=multiMeta(type,'add');
     const historyKey=meta.historyKey,label=meta.label;
     const v=clean(value);
@@ -2425,13 +1770,13 @@ function toggleSelection(type,which,value){
     const allowMultiple=multiAllowsMultiple(type,which);
     const exists=meta.selection.some(v=>key(v)===targetKey);
 
-    // 已选项再次点击 = 删除该选择。编辑标签多选时保持下拉菜单打开。
+    // 已选项再次点击 = 删除该选择。编组多选时保持下拉菜单打开。
     if(exists){
         removeSelection(type,which,value,allowMultiple);
         return true
     }
 
-    // 除“编辑标签”外，标签 / 书架都必须先删除原选择，才能选择新的选项。
+    // 书架已有选择时必须先删除原选择；编组允许继续增加。
     if(meta.selection.length&&!allowMultiple){
         meta.panel.classList.add('hidden');
         show(`请先删除当前${meta.label}，再选择新的${meta.label}`,'error');
@@ -2447,12 +1792,12 @@ function toggleSelection(type,which,value){
     meta.input.value='';
     renderMultiField(type,which);
 
-    // 添加标签 / 书架及编辑书架仍单选并立即收起；编辑标签可连续多选。
+    // 书架仍单选并立即收起；编组在添加和编辑时都可连续多选。
     meta.panel.classList.toggle('hidden',!allowMultiple);
     return true
 }
 function editHistoryOption(type,value){
-    if(type==='tag'||type==='category')return;
+    if(type==='tag')return;
     const meta=multiMeta(type,'add'),historyKey=meta.historyKey,label=meta.label;
     const oldValue=clean(value),oldKey=key(oldValue);
     const history=[...state[historyKey]];
@@ -2500,7 +1845,7 @@ function editHistoryOption(type,value){
     show(`已修改${label}选项为“${nextValue}”`,'success')
 }
 function deleteHistoryOption(type,value){
-    if(type==='tag'||type==='category')return;
+    if(type==='tag')return;
     const meta=multiMeta(type,'add'),targetKey=key(value);
     if(!confirm(`确定从${meta.label}下拉菜单中删除“${value}”吗？\n\n已经保存的条目不会改变。`))return;
     state[meta.historyKey]=state[meta.historyKey].filter(v=>key(v)!==targetKey);
@@ -2514,11 +1859,16 @@ function deleteHistoryOption(type,value){
 }
 function commitTypedValue(type,which,notify=false){
     const meta=multiMeta(type,which),value=clean(meta.input.value);
+    if(type==='tag'){
+        meta.input.value='';
+        renderMultiField(type,which);
+        return false
+    }
     if(!value)return false;
 
     const current=which==='edit'?editSelections[type]:addSelections[type];
 
-    // 除“编辑标签”外，已有选择时都不允许再写入第二个选项。
+    // 书架已有选择时不允许再写入第二个选项。
     if(current.length&&!multiAllowsMultiple(type,which)){
         meta.input.value='';
         meta.panel.classList.add('hidden');
@@ -2529,15 +1879,16 @@ function commitTypedValue(type,which,notify=false){
 
     const history=sortHistory(type,state[meta.historyKey]);
     const matched=history.find(v=>key(v)===key(value));
-    if(!matched){
-        // 标签与书架都只能从既有下拉选项中选择；输入不存在的文字时不再自动新增。
+    if(which==='edit'&&!matched){
+        // 编辑弹窗只能选择添加板块已经维护好的下拉菜单选项，不能在这里新增选项。
         meta.input.value='';
-        show(`${meta.label}只能选择下拉菜单中的已有选项`,'error');
+        show(`编辑窗口只能选择已有${meta.label}；如需新增或修改选项，请在添加板块操作`,'error');
         renderMultiField(type,which);
         return false
     }
 
-    const selectedValue=matched;
+    const selectedValue=matched||value;
+    if(which==='add')addHistoryOption(type,selectedValue,notify);
 
     if(which==='edit'){
         const next=multiAllowsMultiple(type,which)?uniq([...current,selectedValue]):[selectedValue];
@@ -3342,6 +2693,16 @@ function setupInstitutionCombo(which){
         meta.input.focus()
     }
 
+    meta.toggle.addEventListener('click',e=>{
+        e.stopPropagation();
+        const willOpen=meta.panel.classList.contains('hidden');
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        keyboardIndex=-1;
+        if(willOpen){
+            meta.panel.classList.remove('hidden');
+            renderInstitutionOptions(which)
+        }
+    });
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
         allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
@@ -3350,18 +2711,18 @@ function setupInstitutionCombo(which){
         renderInstitutionOptions(which)
     });
     meta.input.addEventListener('input',()=>{
-        // 下拉菜单只能由点击文本框打开；输入本身不允许自动展开。
+        // 输入搜索词时自动展开，并立即刷新匹配结果。
+        meta.panel.classList.remove('hidden');
         keyboardIndex=-1;
-        if(!meta.panel.classList.contains('hidden'))renderInstitutionOptions(which)
+        renderInstitutionOptions(which)
     });
     meta.input.addEventListener('keydown',e=>{
         // 出版菜单支持与标签/书架一致的键盘浏览：
         // ↑ / ↓ 移动高亮，Enter 选中，Escape 收起。
         if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-            // 菜单关闭时，键盘不能使其出现；必须先点击文本框。
-            if(meta.panel.classList.contains('hidden'))return;
             e.preventDefault();
             e.stopPropagation();
+            openForKeyboard();
             const options=keyboardOptions();
             if(!options.length)return;
             if(keyboardIndex<0){
@@ -3468,11 +2829,28 @@ function setupMultiCombo(type,which){
         if(!multiAllowsMultiple(type,which))meta.panel.classList.add('hidden')
     }
 
+    toggle.addEventListener('click',e=>{
+        e.stopPropagation();
+
+        // 单选书架已有选择时不允许再次打开；编组允许继续打开并增加。
+        if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
+            allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+            keyboardIndex=-1;
+            return
+        }
+
+        const willOpen=meta.panel.classList.contains('hidden');
+        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
+        keyboardIndex=-1;
+        if(willOpen){
+            meta.panel.classList.remove('hidden');
+            renderMultiField(type,which)
+        }
+    });
     meta.input.addEventListener('click',e=>{
         e.stopPropagation();
-        if(e.detail===0)return;
 
-        // 单选字段已有选择时输入栏锁定；编辑标签仍可继续搜索并增加标签。
+        // 单选书架已有选择时输入栏锁定；编组从固定下拉选项中继续增加。
         if(multiMeta(type,which).selection.length&&!multiAllowsMultiple(type,which)){
             allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
             keyboardIndex=-1;
@@ -3491,16 +2869,16 @@ function setupMultiCombo(type,which){
             keyboardIndex=-1;
             return
         }
-        // 下拉菜单只能由鼠标点击打开。输入本身不得自动展开菜单。
+        // 输入搜索词时自动展开，并立即刷新匹配结果。
+        meta.panel.classList.remove('hidden');
         keyboardIndex=-1;
-        if(!meta.panel.classList.contains('hidden'))renderMultiOptions(type,which)
+        renderMultiOptions(type,which)
     });
     meta.input.addEventListener('keydown',e=>{
         if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-            // 菜单关闭时，键盘不得将其打开；只有鼠标点击后才允许键盘浏览。
-            if(meta.panel.classList.contains('hidden'))return;
             e.preventDefault();
             e.stopPropagation();
+            openForKeyboard();
             const options=keyboardOptions();
             if(!options.length)return;
             if(keyboardIndex<0){
@@ -3565,13 +2943,6 @@ function setupMultiCombo(type,which){
             return toggleSelection(type,which,select.dataset.selectValue)
         }
     });
-    function openPanelFromBlankArea(){
-        allMultiPanels().forEach(panel=>panel.classList.add('hidden'));
-        keyboardIndex=-1;
-        meta.panel.classList.remove('hidden');
-        renderMultiField(type,which)
-    }
-
     meta.selectedBox.addEventListener('click',e=>{
         e.stopPropagation();
         const remove=e.target.closest('.selected-pill-remove[data-remove-value]');
@@ -3580,7 +2951,6 @@ function setupMultiCombo(type,which){
             return removeSelection(type,which,remove.dataset.removeValue)
         }
     });
-    // 只有实际文本输入框的 click 事件可以打开下拉菜单；外框空白处不再触发展开。
     combo.addEventListener('click',e=>e.stopPropagation())
 }
 setupInstitutionCombo('add');
