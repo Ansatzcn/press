@@ -8530,9 +8530,11 @@
       "bookNo": "7-5201-4637",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": ""
+      "code": "230018"
     },
     {
       "id": "7b1588ae-baa1-4345-9c9a-787281ed3822",
