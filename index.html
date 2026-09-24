@@ -53,7 +53,7 @@ body.reordering{user-select:none}
 .list-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:.8rem}.count-badge{min-width:38px;padding:.22rem .8rem;border-radius:999px;background:#e8edf4;text-align:center;font-size:.8rem;font-weight:650}
 .press-list{border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;background:#fff}.press-item{position:relative;padding:1rem 1.15rem;background:#fff}.press-item+.press-item{border-top:2px solid #dbe3ed}.press-item:hover{background:#fafcff}
 .press-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.book-title{font-size:1.05rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere;color:#1E40AF;}.book-title a{color:#1E40AF;text-decoration:none}.book-title a:hover,.book-title a:focus-visible{color:#1E3A8A;text-decoration:underline;outline:none}.meta{display:grid;grid-template-columns:1fr;gap:.28rem;margin-top:.45rem;color:#475569;font-size:.9rem;line-height:1.55}.meta-row{overflow-wrap:anywhere}.meta-label{color:#94a3b8}.institution a{color:#1E40AF;text-decoration:none}.institution a:hover{color:#1E3A8A;text-decoration:underline}
-.press-content{flex:1;min-width:0;padding-bottom:0}.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.bookshelf-text{min-width:0;overflow-wrap:anywhere}.tag-row{display:flex;align-items:center;flex-wrap:wrap;gap:0}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font-size:.9rem;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;font-weight:400;line-height:1.55;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:underline;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
+.press-content{flex:1;min-width:0;padding-bottom:0}.bookshelf-row{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}.bookshelf-text{min-width:0;overflow-wrap:anywhere}.tag-row{display:flex;align-items:center;flex-wrap:wrap;gap:0}.edit-btn{flex:0 0 auto;position:absolute;right:1.15rem;bottom:1rem;padding:0;border:0;background:transparent;color:#64748b;font-size:.9rem;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;font-weight:400;line-height:1.55;text-decoration:none;cursor:pointer}.edit-btn:hover,.edit-btn:focus-visible{background:transparent;color:#475569;text-decoration:none;outline:none}.empty-state{padding:2.6rem 1rem;background:#fafcff;color:#94a3b8;text-align:center}
 .overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:rgba(15,23,42,.45);backdrop-filter:blur(5px)}
 .dialog{width:min(100%,620px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 30px 70px rgba(15,23,42,.28)}.dialog-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:1.7rem 1.7rem 1rem}.dialog h3{margin-bottom:.9rem;font-size:1.3rem}.dialog-desc{margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:.86rem;line-height:1.55}.dialog .form-group{margin-bottom:.95rem}.dialog-actions{position:relative;z-index:2;flex:0 0 auto;display:flex;justify-content:flex-start;gap:9px;padding:.95rem 1.7rem max(.95rem,env(safe-area-inset-bottom));border-top:1px solid #e8edf4;background:#fff}#editModal .dialog-actions .btn-danger{margin-right:0}
 .remember-row{display:flex;align-items:flex-start;gap:8px;color:#334155;font-size:.82rem;line-height:1.5}.remember-row input{width:auto;min-height:auto;margin-top:.2rem}
@@ -1181,23 +1181,53 @@ function codeRangesForEntry(entry){
     // 非例外组合：严格取所有已选编组区间的并集，再从并集中找最小可用编码。
     return mergeCodeRanges(groups.flatMap(group=>rules.groups[group]||[]))
 }
-function allocateEntryCodes(entries){
-    const used=new Set(),result=new Map();
-    for(const entry of entries||[]){
-        const ranges=codeRangesForEntry(entry);
-        let assigned='';
-        outer:for(const [start,end] of ranges){
-            let n=start;
-            while(n<=end&&used.has(n))n+=1;
-            if(n<=end){
-                used.add(n);
-                assigned=String(n).padStart(6,'0');
-                break outer
+function normalizeStoredCode(raw){
+    const s=clean(raw);
+    return /^\d{6}$/.test(s)?s:''
+}
+function codeAllowedForEntry(entry,rawCode){
+    const code=Number(normalizeStoredCode(rawCode));
+    if(!Number.isInteger(code))return false;
+    return codeRangesForEntry(entry).some(([start,end])=>code>=start&&code<=end)
+}
+function smallestAvailableCode(entry,used){
+    for(const [start,end] of codeRangesForEntry(entry)){
+        let n=start;
+        while(n<=end&&used.has(n))n+=1;
+        if(n<=end)return String(n).padStart(6,'0')
+    }
+    return ''
+}
+function ensureEntryCodes(entries,{repack=false}={}){
+    const list=entries||[],used=new Set();
+    if(repack){
+        for(const entry of list)entry.code=''
+    }else{
+        // 平时保留其它条目已经取得的合法编码，避免编辑一个条目时连带重排其它条目。
+        for(const entry of list){
+            const code=normalizeStoredCode(entry.code);
+            if(code&&codeAllowedForEntry(entry,code)&&!used.has(Number(code))){
+                entry.code=code;
+                used.add(Number(code))
+            }else{
+                entry.code=''
             }
         }
-        result.set(entry.id,assigned)
     }
-    return result
+    for(const entry of list){
+        if(entry.code)continue;
+        const code=smallestAvailableCode(entry,used);
+        entry.code=code;
+        if(code)used.add(Number(code))
+    }
+    return list
+}
+function repackEntryCodes(entries){
+    // 仅删除条目时调用：释放号码，并按当前总表顺序从小到大重新补位。
+    return ensureEntryCodes(entries,{repack:true})
+}
+function entryCodeMap(entries){
+    return new Map((entries||[]).map(entry=>[entry.id,normalizeStoredCode(entry.code)]))
 }
 function renderInstitution(raw){
     const s=clean(raw);
@@ -1229,8 +1259,8 @@ function normEntry(x){
     const bookName=cleanTitle(x.bookName);if(!bookName)return null;
     const bookNo=clean(x.bookNo),institution=clean(x.institution);
     const category=normalizeMulti(x.category),tag=sortTags(x.tag);
-    const tagChecked=Boolean(x.tagChecked);
-    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,tag,tagChecked}
+    const tagChecked=Boolean(x.tagChecked),code=normalizeStoredCode(x.code);
+    return{id:clean(x.id)||uid(),bookName,bookNo,institution,category,tag,tagChecked,code}
 }
 function norm(v){
     const s=Array.isArray(v)?{entries:v}:(v&&typeof v==='object'?v:{});
@@ -1277,7 +1307,9 @@ function norm(v){
         if(byName!==0)return byName;
         return 0
     });
-    return{schemaVersion:6,entries,institutions,categories,tags}
+    // 编码持久保存。旧数据没有编码时在这里首次补齐；之后普通编辑不重排其它条目。
+    ensureEntryCodes(entries);
+    return{schemaVersion:7,entries,institutions,categories,tags}
 }
 function fingerprint(v=state){return JSON.stringify(norm(v))}
 function admin(){return Boolean(config.owner&&config.repo&&config.file&&config.token)}
@@ -1657,13 +1689,12 @@ function setupManualDrag(optionsEl,type){
 }
 function updateCountDisplay(){
     const total=state.entries.length;
-    const codeById=allocateEntryCodes(state.entries);
-    const coded=state.entries.reduce((sum,entry)=>sum+(codeById.get(entry.id)?1:0),0);
+    const coded=state.entries.reduce((sum,entry)=>sum+(normalizeStoredCode(entry.code)?1:0),0);
     countDisplay.textContent=`${coded}/${total}`
 }
 function render(){
     state=norm(state);updateCountDisplay();updateAdmin();renderInstitutionOptions('add');renderInstitutionOptions('edit');renderManageInstitutionOptions();renderCategoryOptions('add');renderCategoryOptions('edit');renderTagOptions('add');renderTagOptions('edit');
-    const codeById=allocateEntryCodes(state.entries);
+    const codeById=entryCodeMap(state.entries);
     pressList.innerHTML=state.entries.length?state.entries.map(x=>{
         const entryCode=codeById.get(x.id)||'';
         const editText=entryCode||'编辑';
@@ -1954,6 +1985,8 @@ function saveEdit(){
     const x=state.entries.find(e=>e.id===editingId);if(!x)return;
     const bookName=cleanTitle(editBookName.value);
     if(!bookName){show('书名不能为空','error');editBookName.focus();return}
+    const previousGroups=JSON.stringify(sortTags(x.tag));
+    const previousLanguage=titleIsChinese(x.bookName);
     commitInstitution('edit');
     commitTypedValue('category','edit');
     commitTypedValue('tag','edit');
@@ -1962,12 +1995,15 @@ function saveEdit(){
     x.institution=clean(editInstitution.value);
     x.category=[...editSelections.category];
     x.tag=sortTags(editSelections.tag);
+    // 编组增减或中英文规则发生变化时，只让当前条目重新取当前可用的最小编码；其它条目不动。
+    if(previousGroups!==JSON.stringify(x.tag)||previousLanguage!==titleIsChinese(x.bookName))x.code='';
     editModal.classList.add('hidden');editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
     render();const locallySaved=schedule();if(locallySaved)show('已保存到本机，等待同步','success')
 }
 function deleteEntry(id){
     const x=state.entries.find(e=>e.id===id);if(!x||!confirm(`确定删除“${x.bookName}”吗？`))return false;
     state.entries=state.entries.filter(e=>e.id!==id);
+    repackEntryCodes(state.entries);
     if(editingId===id){
         editingId='';editInitialSnapshot='';editSelections={category:[],tag:[]};
         editModal.classList.add('hidden')
@@ -2244,7 +2280,7 @@ function entryShape(x){
     if(!x)return null;
     return{
         id:clean(x.id),bookName:cleanTitle(x.bookName),bookNo:clean(x.bookNo),institution:clean(x.institution),
-        category:normalizeMulti(x.category),tag:normalizeMulti(x.tag),tagChecked:Boolean(x.tagChecked)
+        category:normalizeMulti(x.category),tag:normalizeMulti(x.tag),tagChecked:Boolean(x.tagChecked),code:normalizeStoredCode(x.code)
     }
 }
 function entryEqual(a,b){return jsonEqual(entryShape(a),entryShape(b))}
@@ -2280,7 +2316,7 @@ function mergeEntry(baseEntry,localEntry,remoteEntry){
     const b=entryShape(baseEntry),l=entryShape(localEntry),r=entryShape(remoteEntry);
     const merged={id:l.id||r.id||b.id};
     let conflicts=0;
-    for(const field of ['bookName','bookNo','institution','category','tag','tagChecked']){
+    for(const field of ['bookName','bookNo','institution','category','tag','tagChecked','code']){
         const part=mergeScalar(b[field],l[field],r[field]);
         merged[field]=part.value;
         if(part.conflict)conflicts++
