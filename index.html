@@ -885,6 +885,49 @@ body.reordering{user-select:none}
 }
 </style>
 
+
+<style id="searchable-group-category-combo-fix">
+/* 编组 / 书架：支持输入部分数字或文字进行包含筛选。 */
+#tagInput,#editTag,#categoryInput,#editCategory{cursor:text!important}
+
+/* 编组允许多选：已有选择后仍保留一个紧凑搜索输入区，
+   这样下拉收起后仍可继续输入下一段数字/文字来筛选并追加编组。 */
+#tagCombo:has(> .combo-selected:not(:empty)),
+#editTagCombo:has(> .combo-selected:not(:empty)){
+    display:grid!important;
+    grid-template-columns:minmax(0,42%) minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:5px!important;
+    width:100%!important;
+}
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty){
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+    padding:0 .35rem!important;
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row{
+    grid-column:2!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row input,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row input{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    height:42px!important;
+}
+</style>
+
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
@@ -920,7 +963,7 @@ body.reordering{user-select:none}
 <div class="combo" id="tagCombo">
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off" readonly>
+<input type="text" id="tagInput" autocomplete="off" placeholder="输入部分数字或文字筛选">
 <button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项"></button>
 </div>
 <div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
@@ -942,7 +985,7 @@ body.reordering{user-select:none}
 <div class="combo" id="categoryCombo">
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
-<input type="text" id="categoryInput" autocomplete="off" readonly>
+<input type="text" id="categoryInput" autocomplete="off" placeholder="输入部分数字或文字筛选">
 <button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史"></button>
 </div>
 <div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
@@ -996,7 +1039,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editTagCombo">
 <div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
-<input autocomplete="off" id="editTag" type="text" readonly/>
+<input autocomplete="off" id="editTag" type="text" placeholder="输入部分数字或文字筛选"/>
 <button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
@@ -1008,7 +1051,7 @@ body.reordering{user-select:none}
 <div class="combo" id="editCategoryCombo">
 <div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
-<input autocomplete="off" id="editCategory" type="text" readonly/>
+<input autocomplete="off" id="editCategory" type="text" placeholder="输入部分数字或文字筛选"/>
 <button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button"></button>
 </div>
 <div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
@@ -1677,9 +1720,10 @@ function renderMultiOptions(type,which){
 function renderMultiField(type,which){
     renderMultiSelected(type,which);
     const meta=multiMeta(type,which);
-    meta.input.readOnly=true;
-    meta.input.setAttribute('aria-readonly','true');
-    meta.input.title=`${meta.label}选项固定，请从下拉菜单选择`;
+    // 编组 / 书架允许输入部分数字或文字做“包含”筛选，但仍只能选择既有选项。
+    meta.input.readOnly=false;
+    meta.input.removeAttribute('aria-readonly');
+    meta.input.title=`输入部分数字或文字筛选${meta.label}，再从结果中选择`;
     renderMultiOptions(type,which)
 }
 function renderCategoryOptions(which){renderMultiField('category',which)}
@@ -2005,9 +2049,10 @@ function toggleSelection(type,which,value){
     const allowMultiple=multiAllowsMultiple(type,which);
     const exists=meta.selection.some(v=>key(v)===targetKey);
 
-    // 已选项再次点击 = 删除该选择。编组多选时保持下拉菜单打开。
+    // 已选项再次点击 = 删除该选择；操作完成后同样收起下拉。
     if(exists){
-        removeSelection(type,which,value,allowMultiple);
+        removeSelection(type,which,value,false);
+        meta.panel.classList.add('hidden');
         return true
     }
 
@@ -2027,8 +2072,8 @@ function toggleSelection(type,which,value){
     meta.input.value='';
     renderMultiField(type,which);
 
-    // 书架仍单选并立即收起；编组在添加和编辑时都可连续多选。
-    meta.panel.classList.toggle('hidden',!allowMultiple);
+    // 编组与书架都在选中后立即收起；编组仍保留多选数据能力，可再次输入继续筛选添加。
+    meta.panel.classList.add('hidden');
     return true
 }
 function editHistoryOption(type,value){
@@ -3077,7 +3122,8 @@ function setupMultiCombo(type,which){
     function selectKeyboardValue(value){
         keyboardIndex=-1;
         toggleSelection(type,which,value);
-        if(!multiAllowsMultiple(type,which))meta.panel.classList.add('hidden')
+        // 无论编组还是书架，选中后都立即收起，避免下拉面板持续占用空间。
+        meta.panel.classList.add('hidden')
     }
 
     toggle.addEventListener('click',e=>{
