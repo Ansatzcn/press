@@ -76,6 +76,18 @@
       "code": ""
     },
     {
+      "id": "b465ed2e-21b1-470c-b156-22fcfc4c04fc",
+      "bookName": "马克思恩格斯文集（第8卷）",
+      "bookNo": "7-01-008453",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "130008"
+    },
+    {
       "id": "7df83002-7239-4171-a2c4-6921f28014ac",
       "bookName": "马克思恩格斯文集（第6卷）",
       "bookNo": "7-01-008454",
@@ -112,6 +124,18 @@
       "code": "130002"
     },
     {
+      "id": "6edf0769-f050-4735-b454-dc5d51700521",
+      "bookName": "马克思恩格斯文集（第9卷）",
+      "bookNo": "7-01-008457",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "130009"
+    },
+    {
       "id": "247fac1c-1697-435f-b609-2276654cef76",
       "bookName": "马克思恩格斯文集（第5卷）",
       "bookNo": "7-01-008458",
@@ -142,10 +166,10 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": ""
+      "code": "130007"
     },
     {
       "id": "d44eb55c-9ce5-4669-8124-065e12bd4030",
