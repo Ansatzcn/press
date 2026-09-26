@@ -5384,6 +5384,21 @@
       "codeManualPinned": false
     },
     {
+      "id": "99dfc1f8-98fc-4979-9e09-0e8f5ec64fba",
+      "bookName": "不平等的童年：阶级、种族与家庭生活",
+      "bookNo": "7-301-16529",
+      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组",
+        "21组"
+      ],
+      "tagChecked": false,
+      "code": "218001",
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "2dbf327a-2488-47c4-ae15-b872b65a4d7f",
       "bookName": "贝希摩斯：英国内战缘由史",
       "bookNo": "7-301-16705",
@@ -5440,20 +5455,6 @@
       ],
       "tagChecked": false,
       "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "99dfc1f8-98fc-4979-9e09-0e8f5ec64fba",
-      "bookName": "不平等的童年：阶级、种族与家庭生活",
-      "bookNo": "7-301-27093",
-      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
-      "category": [],
-      "tag": [
-        "22组"
-      ],
-      "tagChecked": false,
-      "code": "220017",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
