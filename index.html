@@ -534,6 +534,11 @@ font-size:1.3rem
 .dialog .form-group{
 margin-bottom:.95rem
 }
+.edit-two-column-row{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:1rem
+}
 .dialog-actions{
 flex:0 0 auto;
 display:flex;
@@ -743,6 +748,9 @@ flex-direction:column
 grid-template-columns:1fr
 }
 .bookno-tag-row{
+grid-template-columns:1fr
+}
+.edit-two-column-row{
 grid-template-columns:1fr
 }
 .dialog{
@@ -1563,6 +1571,8 @@ let adminReady=false;
 let toastTimer=null;
 let autoTimer=null;
 let storageDbPromise=null;
+let storageDbDisabled=false;
+const storageMemory=new Map();
 let workCopyCache=null;
 let publicCacheValue=null;
 let persistedToken='';
@@ -2273,7 +2283,63 @@ statusDot.className=
 statusText.textContent=
 text;
 }
+function fallbackStorageKey(storageKey){
+return `${NS}:fallback:${storageKey}`;
+}
+function fallbackGet(storageKey){
+if(storageMemory.has(storageKey)){
+return storageMemory.get(storageKey);
+}
+try{
+const raw=
+localStorage.getItem(
+fallbackStorageKey(storageKey)
+);
+if(raw!==null){
+const value=
+JSON.parse(raw);
+storageMemory.set(
+storageKey,
+value
+);
+return value;
+}
+}catch{}
+return null;
+}
+function fallbackSet(
+storageKey,
+value
+){
+storageMemory.set(
+storageKey,
+value
+);
+try{
+localStorage.setItem(
+fallbackStorageKey(storageKey),
+JSON.stringify(value)
+);
+}catch{}
+return true;
+}
+function fallbackDelete(storageKey){
+storageMemory.delete(storageKey);
+try{
+localStorage.removeItem(
+fallbackStorageKey(storageKey)
+);
+}catch{}
+}
 function openStorageDb(){
+if(
+storageDbDisabled ||
+typeof indexedDB==='undefined'
+){
+return Promise.reject(
+new Error('IndexedDB unavailable')
+);
+}
 if(storageDbPromise){
 return storageDbPromise;
 }
@@ -2283,11 +2349,17 @@ new Promise(
 resolve,
 reject
 )=>{
-const request=
+let request;
+try{
+request=
 indexedDB.open(
 DB_NAME,
 1
 );
+}catch(error){
+reject(error);
+return;
+}
 request.onupgradeneeded=
 ()=>{
 const db=
@@ -2314,9 +2386,22 @@ request.result
 request.onerror=
 ()=>{
 reject(
-request.error
+request.error ||
+new Error('IndexedDB open failed')
 );
 };
+request.onblocked=
+()=>{
+reject(
+new Error('IndexedDB blocked')
+);
+};
+}
+);
+storageDbPromise.catch(
+()=>{
+storageDbDisabled=true;
+storageDbPromise=null;
 }
 );
 return storageDbPromise;
@@ -2324,6 +2409,9 @@ return storageDbPromise;
 async function idbGet(
 storageKey
 ){
+if(storageDbDisabled){
+return fallbackGet(storageKey);
+}
 try{
 const db=
 await openStorageDb();
@@ -2349,7 +2437,7 @@ request.onsuccess=
 ()=>{
 resolve(
 request.result ??
-null
+fallbackGet(storageKey)
 );
 };
 request.onerror=
@@ -2360,20 +2448,26 @@ request.error
 };
 }
 );
-}catch(error){
-console.error(
-error
-);
-return null;
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+return fallbackGet(storageKey);
 }
 }
 async function idbSet(
 storageKey,
 value
 ){
+if(storageDbDisabled){
+return fallbackSet(
+storageKey,
+value
+);
+}
+try{
 const db=
 await openStorageDb();
-return new Promise(
+await new Promise(
 (
 resolve,
 reject
@@ -2393,9 +2487,7 @@ storageKey
 );
 tx.oncomplete=
 ()=>{
-resolve(
-true
-);
+resolve(true);
 };
 tx.onerror=
 ()=>{
@@ -2403,12 +2495,36 @@ reject(
 tx.error
 );
 };
+tx.onabort=
+()=>{
+reject(
+tx.error ||
+new Error('IndexedDB transaction aborted')
+);
+};
 }
 );
+storageMemory.set(
+storageKey,
+value
+);
+return true;
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+return fallbackSet(
+storageKey,
+value
+);
+}
 }
 async function idbDelete(
 storageKey
 ){
+if(storageDbDisabled){
+fallbackDelete(storageKey);
+return;
+}
 try{
 const db=
 await openStorageDb();
@@ -2437,12 +2553,20 @@ reject(
 tx.error
 );
 };
+tx.onabort=
+()=>{
+reject(
+tx.error ||
+new Error('IndexedDB transaction aborted')
+);
+};
 }
 );
-}catch(error){
-console.error(
-error
-);
+storageMemory.delete(storageKey);
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+fallbackDelete(storageKey);
 }
 }
 function saveLocal(
@@ -4063,12 +4187,20 @@ return location.pathname
 );
 }
 function publicUrl(){
-return (
-location.origin+
-basePath()+
-PUBLIC_FILE+
-`?v=${Date.now()}`
+try{
+const url=
+new URL(
+PUBLIC_FILE,
+location.href
 );
+url.searchParams.set(
+'v',
+String(Date.now())
+);
+return url.href;
+}catch{
+return '';
+}
 }
 function pathEncode(path){
 return String(path)
@@ -4355,10 +4487,33 @@ status(
 'syncing',
 '正在读取公开数据…'
 );
+const url=
+publicUrl();
+const canFetchPublic=
+Boolean(url) &&
+/^https?:/i.test(url);
+if(!canFetchPublic){
+state=
+publicCacheValue
+? norm(publicCacheValue)
+: norm({});
+render();
+status(
+'online',
+publicCacheValue
+? '本地预览 · 使用缓存'
+: '本地预览 · 未读取公开数据文件'
+);
+lastSyncTime.textContent=
+publicCacheValue
+? `缓存数据 · ${state.entries.length} 条`
+: '本地预览模式';
+return;
+}
 try{
 const response=
 await fetch(
-publicUrl(),
+url,
 {
 cache:
 'no-store'
@@ -4406,8 +4561,14 @@ publicCacheValue
 render();
 status(
 'offline',
-'公开数据读取失败'
+publicCacheValue
+? '公开数据读取失败 · 使用缓存'
+: '公开数据读取失败'
 );
+lastSyncTime.textContent=
+publicCacheValue
+? `缓存数据 · ${state.entries.length} 条`
+: '请确认 press_data.json 与本页同目录';
 }
 }
 async function loadAdminState(){
