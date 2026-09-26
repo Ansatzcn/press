@@ -1972,34 +1972,19 @@ return String(number)
 }
 return '';
 }
-function ensureEntryCodes(
+function usedCodesExcept(
 entries,
-{repack=false}={}
+excludeId=''
 ){
-const list=
-entries||[];
 const used=
 new Set();
 for(
 const entry
-of list
-){
-entry.codeManualEdited=
-Boolean(
-entry.codeManualEdited
-);
-entry.codeManualPinned=
-Boolean(
-entry.codeManualEdited &&
-entry.codeManualPinned
-);
-}
-for(
-const entry
-of list
+of entries||[]
 ){
 if(
-!entry.codeManualPinned
+excludeId &&
+entry.id===excludeId
 ){
 continue;
 }
@@ -2007,93 +1992,27 @@ const code=
 normalizeStoredCode(
 entry.code
 );
-if(
-code &&
-codeAllowedForEntry(
-entry,
-code
-) &&
-!used.has(
-Number(code)
-)
-){
-entry.code=
-code;
-used.add(
-Number(code)
-);
-}else{
-entry.code='';
-entry.codeManualPinned=
-false;
-}
-}
-for(
-const entry
-of list
-){
-if(
-entry.codeManualPinned
-){
-continue;
-}
-if(repack){
-entry.code='';
-continue;
-}
-const code=
-normalizeStoredCode(
-entry.code
-);
-if(
-code &&
-codeAllowedForEntry(
-entry,
-code
-) &&
-!used.has(
-Number(code)
-)
-){
-entry.code=
-code;
-used.add(
-Number(code)
-);
-}else{
-entry.code='';
-}
-}
-for(
-const entry
-of list
-){
-if(entry.code){
-continue;
-}
-const code=
-smallestAvailableCode(
-entry,
-used
-);
-entry.code=
-code;
 if(code){
 used.add(
 Number(code)
 );
 }
 }
-return list;
+return used;
 }
-function repackEntryCodes(
-entries
-){
-return ensureEntryCodes(
+function assignCodeForEntry(
+entry,
 entries,
-{
-repack:true
-}
+excludeId=''
+){
+const used=
+usedCodesExcept(
+entries,
+excludeId
+);
+return smallestAvailableCode(
+entry,
+used
 );
 }
 function renderLinkedText(raw){
@@ -2302,9 +2221,6 @@ a.bookName,
 b.bookName
 );
 }
-);
-ensureEntryCodes(
-entries
 );
 return {
 schemaVersion:7,
@@ -3277,6 +3193,11 @@ false,
 codeManualPinned:
 false
 };
+entry.code=
+assignCodeForEntry(
+entry,
+state.entries
+);
 state.entries.push(
 entry
 );
@@ -3554,13 +3475,18 @@ else if(
 groupsChanged ||
 languageChanged
 ){
-entry.code='';
 entry.codeManualPinned=
 false;
 if(groupsChanged){
 entry.codeManualEdited=
 false;
 }
+entry.code=
+assignCodeForEntry(
+entry,
+state.entries,
+entry.id
+);
 }
 editModal.classList.add(
 'hidden'
@@ -3596,9 +3522,6 @@ state.entries=
 state.entries.filter(
 item=>
 item.id!==id
-);
-repackEntryCodes(
-state.entries
 );
 editModal.classList.add(
 'hidden'
