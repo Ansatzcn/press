@@ -467,6 +467,24 @@ button{cursor:pointer}
     text-decoration:underline
 }
 
+/* 出版相关下拉与管理列表中的链接统一保持蓝色，包含已访问状态 */
+#institutionOptions a,
+#institutionOptions a:visited,
+#editInstitutionOptions a,
+#editInstitutionOptions a:visited,
+#manageInstitutionOptions a,
+#manageInstitutionOptions a:visited{
+    color:#1E40AF!important;
+    text-decoration:none
+}
+
+#institutionOptions a:hover,
+#editInstitutionOptions a:hover,
+#manageInstitutionOptions a:hover{
+    color:#1E3A8A!important;
+    text-decoration:underline
+}
+
 .meta{
     display:grid;
     grid-template-columns:1fr;
@@ -2493,8 +2511,9 @@ function ensureEntryCodes(
 
     /*
      * codeManualEdited：
-     * 是否已经使用过唯一一次
+     * 当前编组设置下是否已经使用过一次
      * “直接手动修改编码”的机会。
+     * 编组变更并触发自动重算后会重置为 false。
      *
      * codeManualPinned：
      * 当前编码是否仍然是手工指定编码。
@@ -4195,8 +4214,8 @@ function openEdit(id){
 
     editCode.title=
         editCode.readOnly
-            ? '编码已手动修改过一次；编组或标题变化仍可触发自动重算'
-            : '编码可手动修改一次；保存成功后将转为只读';
+            ? '当前编组设置下已手动修改过一次；编组变化并自动重算后可再次手动修改一次'
+            : '当前编组设置下可手动修改一次；保存成功后将转为只读';
 
     renderInstitutionOptions(
         'edit'
@@ -4433,9 +4452,14 @@ function saveEdit(){
 
     /*
      * 编组或标题语言变化：
-     * 自动重算编码，
-     * 不属于手动修改，
-     * 次数不限。
+     * 自动重算编码，不计入手动修改。
+     *
+     * 手动修改次数按“当前编组设置”计算：
+     * - 同一编组设置下只能手动修改一次；
+     * - 编组发生变化并触发自动重算后，
+     *   重新获得一次手动修改机会；
+     * - 仅标题语言变化导致自动重算时，
+     *   不重置同一编组下已经使用过的手动机会。
      */
     else if(
         groupsChanged ||
@@ -4445,6 +4469,11 @@ function saveEdit(){
 
         entry.codeManualPinned=
             false;
+
+        if(groupsChanged){
+            entry.codeManualEdited=
+                false;
+        }
     }
 
     editModal.classList.add(
