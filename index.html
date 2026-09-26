@@ -686,34 +686,65 @@ cursor:text!important;
 background:#fff!important;
 color:#0f172a!important
 }
+/* 编组多选框：已选标签按内容宽度排列，输入区自动占据剩余空间。
+   不再把整框硬切成左右两半，避免两个标签被挤压、换行或堆叠。 */
 #tagCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)){
-display:grid!important;
-grid-template-columns:minmax(0,46%) minmax(0,1fr)!important;
+display:flex!important;
+flex-wrap:nowrap!important;
 align-items:center!important;
-gap:5px!important
+gap:4px!important;
+width:100%;
+min-width:0
 }
 #tagCombo > .combo-selected:not(:empty),
 #editTagCombo > .combo-selected:not(:empty){
-grid-column:1;
-grid-row:1;
-display:flex;
-flex-wrap:nowrap;
+display:flex!important;
+flex:0 1 auto;
+flex-wrap:nowrap!important;
 align-items:center;
+gap:4px;
+min-width:0;
+max-width:calc(100% - 64px);
 height:42px;
-padding:0 .35rem;
+margin:0!important;
+padding:0 0 0 .35rem;
 overflow-x:auto;
-overflow-y:hidden
+overflow-y:hidden;
+scrollbar-width:none
+}
+#tagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#editTagCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
+display:none
+}
+#tagCombo > .combo-selected:not(:empty) .selected-pill,
+#editTagCombo > .combo-selected:not(:empty) .selected-pill{
+flex:0 0 auto!important;
+width:auto!important;
+max-width:none!important;
+min-width:max-content;
+white-space:nowrap!important
+}
+#tagCombo > .combo-selected:not(:empty) .selected-pill-label,
+#editTagCombo > .combo-selected:not(:empty) .selected-pill-label{
+flex:0 0 auto;
+min-width:max-content;
+white-space:nowrap!important;
+overflow-wrap:normal!important;
+word-break:keep-all
 }
 #tagCombo > .combo-selected:not(:empty) + .combo-row,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row{
-grid-column:2;
-grid-row:1;
-display:grid!important
+display:grid!important;
+flex:1 1 80px;
+min-width:60px;
+height:42px
 }
 #tagCombo > .combo-selected:not(:empty) + .combo-row input,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row input{
-display:block!important
+display:block!important;
+min-width:0!important;
+width:100%!important
 }
 #categoryCombo:has(> .combo-selected:not(:empty)),
 #editCategoryCombo:has(> .combo-selected:not(:empty)){
@@ -761,9 +792,14 @@ border-radius:20px
 .dialog-scroll{
 padding:1.2rem
 }
-#tagCombo:has(> .combo-selected:not(:empty)),
-#editTagCombo:has(> .combo-selected:not(:empty)){
-grid-template-columns:minmax(0,50%) minmax(0,1fr)!important
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty){
+max-width:calc(100% - 54px)
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row{
+flex-basis:54px;
+min-width:50px
 }
 }
 </style>
@@ -1329,9 +1365,7 @@ exceptions:{
 [218001,219999]
 ],
 '13/22':[
-[138001,139999]
-],
-'13/23':[
+[138001,139999],
 [188001,189999]
 ],
 '21/22':[
