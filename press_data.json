@@ -1125,12 +1125,9 @@
       "bookNo": "7-100-22552",
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
-      "tag": [
-        "21组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "210007",
+      "code": "",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
