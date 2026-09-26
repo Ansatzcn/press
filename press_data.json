@@ -8,12 +8,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130230",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "5af56d9c-6e3b-46c1-b83e-2437e8f5a195",
@@ -22,13 +22,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "11图书",
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130231",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "172eb53e-032a-4fe8-9a22-ced0a9224090",
@@ -37,12 +36,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130203",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "41d3bc8c-3e85-4764-95cc-e03e214d9683",
@@ -69,9 +68,23 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138007",
+      "code": "138001",
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "107b7c21-a847-43e7-8cfa-33bbd795a519",
+      "bookName": "马克思恩格斯文集（第10卷）",
+      "bookNo": "7-01-007696",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "130010",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "959143b3-ccf1-4aeb-b92a-01c65ab8137e",
@@ -80,12 +93,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130235",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "b465ed2e-21b1-470c-b156-22fcfc4c04fc",
@@ -98,8 +111,8 @@
       ],
       "tagChecked": false,
       "code": "130008",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "7df83002-7239-4171-a2c4-6921f28014ac",
@@ -112,8 +125,8 @@
       ],
       "tagChecked": false,
       "code": "130006",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "5245590d-b27e-49cf-8f88-f10767c53d34",
@@ -140,8 +153,8 @@
       ],
       "tagChecked": false,
       "code": "130002",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "6edf0769-f050-4735-b454-dc5d51700521",
@@ -154,8 +167,8 @@
       ],
       "tagChecked": false,
       "code": "130009",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "247fac1c-1697-435f-b609-2276654cef76",
@@ -166,10 +179,10 @@
       "tag": [
         "13组"
       ],
-      "tagChecked": false,
+      "tagChecked": true,
       "code": "130005",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "fc0b260e-5f9a-46e1-b8f9-ac40d0b2fc85",
@@ -182,8 +195,8 @@
       ],
       "tagChecked": false,
       "code": "130003",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "f6fec2c6-6733-48da-9c8f-29a07c824fd9",
@@ -194,10 +207,10 @@
       "tag": [
         "13组"
       ],
-      "tagChecked": false,
+      "tagChecked": true,
       "code": "130007",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "d44eb55c-9ce5-4669-8124-065e12bd4030",
@@ -210,18 +223,20 @@
       ],
       "tagChecked": false,
       "code": "130001",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
-      "id": "475993ef-6601-4118-9c92-040319e6de5c",
-      "bookName": "批判与建构：《德意志意识形态》文本学研究",
-      "bookNo": "7-01-010655",
+      "id": "777e3ef1-0f6f-4534-9a85-87b02f558624",
+      "bookName": "马克思恩格斯文集资料汇编",
+      "bookNo": "7-01-009749",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
+      "code": "130011",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -236,7 +251,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138001",
+      "code": "138002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -247,10 +262,10 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220014",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -307,7 +322,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138006",
+      "code": "138003",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -321,7 +336,7 @@
         "21组"
       ],
       "tagChecked": false,
-      "code": "210004",
+      "code": "210001",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -332,10 +347,10 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "21读书"
+        "21组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "210006",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -346,12 +361,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130104",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "0aaa9643-e2b9-4ede-81a6-fd5494682bd8",
@@ -360,12 +375,12 @@
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130103",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "54f54986-4bc5-4fda-a009-5911cbe7d7ab",
@@ -388,10 +403,10 @@
       "institution": "[人民文学出版社](https://book.douban.com/press/2287/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230045",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -433,7 +448,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230026",
+      "code": "230002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -447,7 +462,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230016",
+      "code": "230003",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -485,9 +500,11 @@
       "bookNo": "7-03-035761",
       "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
+      "code": "130014",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -500,10 +517,10 @@
         "二号"
       ],
       "tag": [
-        "11图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "110006",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -584,10 +601,10 @@
       "institution": "[高等教育出版社](https://book.douban.com/press/2549/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "130018",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -644,10 +661,10 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220011",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -677,7 +694,7 @@
         "11组"
       ],
       "tagChecked": false,
-      "code": "110002",
+      "code": "110001",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -734,7 +751,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "228002",
+      "code": "228001",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1053,10 +1070,10 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230039",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1098,7 +1115,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230011",
+      "code": "230004",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1109,10 +1126,11 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "21组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "260002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1142,7 +1160,7 @@
         "11组"
       ],
       "tagChecked": false,
-      "code": "110001",
+      "code": "110002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1265,10 +1283,10 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
-      "tagChecked": false,
-      "code": "",
+      "tagChecked": true,
+      "code": "130017",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1296,7 +1314,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230012",
+      "code": "230005",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1366,7 +1384,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230014",
+      "code": "230007",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1380,7 +1398,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220007",
+      "code": "220002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1436,7 +1454,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230034",
+      "code": "230036",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1591,7 +1609,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230020",
+      "code": "230008",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1675,7 +1693,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230003",
+      "code": "230009",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1686,10 +1704,10 @@
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "130015",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1848,7 +1866,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "238002",
+      "code": "238001",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1865,7 +1883,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "228001",
+      "code": "228002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -1949,7 +1967,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220005",
+      "code": "220003",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2019,7 +2037,7 @@
         "23组"
       ],
       "tagChecked": true,
-      "code": "230024",
+      "code": "230010",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2049,7 +2067,7 @@
         "23组"
       ],
       "tagChecked": true,
-      "code": "230021",
+      "code": "230011",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2105,7 +2123,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230022",
+      "code": "230012",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2116,10 +2134,10 @@
       "institution": "[中国建筑工业出版社](https://book.douban.com/press/2281/?order=time)",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "130016",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2398,10 +2416,10 @@
       "institution": "[北京出版社](https://book.douban.com/press/2134/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220012",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2499,7 +2517,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230004",
+      "code": "230013",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2527,7 +2545,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230010",
+      "code": "230014",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2714,7 +2732,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220003",
+      "code": "220004",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2769,7 +2787,7 @@
       "tag": [
         "23组"
       ],
-      "tagChecked": false,
+      "tagChecked": true,
       "code": "230015",
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -2809,11 +2827,11 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "21读书",
-        "22读书"
+        "21组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "260004",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2838,10 +2856,10 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230040",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2883,7 +2901,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230005",
+      "code": "230016",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2911,7 +2929,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230007",
+      "code": "230017",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2925,7 +2943,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230008",
+      "code": "230018",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2950,10 +2968,10 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230041",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -2970,7 +2988,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "238001",
+      "code": "238002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -3041,6 +3059,20 @@
       ],
       "tagChecked": false,
       "code": "",
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "cc3fa8ca-ccba-4327-8f02-8f8a4c88adfe",
+      "bookName": "数字疾驰：外卖骑手与平台经济的劳动秩序",
+      "bookNo": "7-208-19131",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230038",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -3529,10 +3561,10 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230042",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -3543,10 +3575,10 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "120004",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -3823,10 +3855,10 @@
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230043",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -3926,7 +3958,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230009",
+      "code": "230019",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -4015,16 +4047,16 @@
       "codeManualPinned": false
     },
     {
-      "id": "ea7c1c24-1095-4a5f-8b71-d6719101ba89",
+      "id": "475993ef-6601-4118-9c92-040319e6de5c",
       "bookName": "烟雨莽苍苍：中共五大全景录",
       "bookNo": "7-216-06844",
       "institution": "[湖北人民出版社](https://book.douban.com/press/2735/?order=time)",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "130012",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -4762,7 +4794,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230028",
+      "code": "230020",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5092,7 +5124,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220002",
+      "code": "220005",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5178,7 +5210,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230025",
+      "code": "230021",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5205,10 +5237,10 @@
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220016",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5219,10 +5251,10 @@
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230046",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5353,6 +5385,21 @@
       "codeManualPinned": false
     },
     {
+      "id": "99dfc1f8-98fc-4979-9e09-0e8f5ec64fba",
+      "bookName": "不平等的童年：阶级、种族与家庭生活",
+      "bookNo": "7-301-16529",
+      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组",
+        "21组"
+      ],
+      "tagChecked": false,
+      "code": "218001",
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "2dbf327a-2488-47c4-ae15-b872b65a4d7f",
       "bookName": "贝希摩斯：英国内战缘由史",
       "bookNo": "7-301-16705",
@@ -5389,10 +5436,10 @@
         "六号"
       ],
       "tag": [
-        "11图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "110007",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5406,20 +5453,6 @@
       ],
       "tag": [
         "11图书"
-      ],
-      "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "99dfc1f8-98fc-4979-9e09-0e8f5ec64fba",
-      "bookName": "不平等的童年：阶级、种族与家庭生活",
-      "bookNo": "7-301-27093",
-      "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
-      "category": [],
-      "tag": [
-        "22读书"
       ],
       "tagChecked": false,
       "code": "",
@@ -5531,10 +5564,10 @@
       "institution": "[清华大学出版社](https://book.douban.com/press/2562/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220013",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -5545,10 +5578,10 @@
       "institution": "[清华大学出版社](https://book.douban.com/press/2562/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230035",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -6669,7 +6702,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138002",
+      "code": "138005",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -6837,7 +6870,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230029",
+      "code": "230022",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -6968,6 +7001,20 @@
       "codeManualPinned": false
     },
     {
+      "id": "ef00909b-6cda-4b88-817c-6c60e5d91351",
+      "bookName": "二里头考古六十年",
+      "bookNo": "7-5203-5256",
+      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230051",
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "47487178-0ce4-487c-86cd-c7ce5d79f87a",
       "bookName": "美国20世纪非殖民化政策研究：以东南亚为个案",
       "bookNo": "7-5203-5629",
@@ -6991,7 +7038,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230031",
+      "code": "230023",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7002,10 +7049,10 @@
       "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230052",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7173,7 +7220,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220009",
+      "code": "220006",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7286,10 +7333,10 @@
       "institution": "[中国财政经济出版社](https://book.douban.com/press/2777/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230053",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7428,10 +7475,10 @@
       "institution": "[新华出版社](https://book.douban.com/press/2355/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230054",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7498,10 +7545,10 @@
       "institution": "[新华出版社](https://book.douban.com/press/2355/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230055",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7571,7 +7618,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230013",
+      "code": "230024",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7895,7 +7942,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230027",
+      "code": "230025",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -7965,7 +8012,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220008",
+      "code": "220007",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -8007,7 +8054,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230030",
+      "code": "230026",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -8673,7 +8720,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230023",
+      "code": "230027",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -8729,7 +8776,7 @@
         "21组"
       ],
       "tagChecked": false,
-      "code": "210003",
+      "code": "210002",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -9475,7 +9522,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138003",
+      "code": "138006",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -9572,10 +9619,10 @@
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "130013",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -9604,7 +9651,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "138005",
+      "code": "138007",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -10164,7 +10211,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230018",
+      "code": "230028",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -10404,7 +10451,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230032",
+      "code": "230029",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -10418,7 +10465,7 @@
         "23组"
       ],
       "tagChecked": true,
-      "code": "230017",
+      "code": "230030",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -10838,7 +10885,7 @@
         "21组"
       ],
       "tagChecked": false,
-      "code": "210001",
+      "code": "210003",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -11775,10 +11822,11 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "21组"
+        "21组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "210002",
+      "code": "260001",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -11789,10 +11837,10 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230047",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -11817,10 +11865,11 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "21组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "260003",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -11831,10 +11880,10 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230048",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12027,10 +12076,10 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230049",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12253,10 +12302,10 @@
       "institution": "[花城出版社](https://book.douban.com/press/2536/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "120005",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12267,10 +12316,10 @@
       "institution": "[四川科学技术出版社](https://book.douban.com/press/2346/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "230050",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12438,7 +12487,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220004",
+      "code": "220008",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12645,10 +12694,10 @@
       "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "120006",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12743,10 +12792,10 @@
       "institution": "[甘肃科学技术出版社](https://book.douban.com/press/2454/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220018",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -12841,10 +12890,10 @@
       "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
-      "tagChecked": false,
-      "code": "",
+      "tagChecked": true,
+      "code": "230044",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -13250,7 +13299,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230002",
+      "code": "230031",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -14373,7 +14422,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230019",
+      "code": "230032",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -14764,10 +14813,10 @@
         "十号"
       ],
       "tag": [
-        "11图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "110005",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -14840,6 +14889,20 @@
       ],
       "tagChecked": false,
       "code": "",
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "f82796bc-f75e-4024-8497-490a9230fb83",
+      "bookName": "中国进行曲：流行音乐四十年回眸",
+      "bookNo": "7-5523-1578",
+      "institution": "[上海音乐出版社](https://book.douban.com/press/2186/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230034",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -15046,10 +15109,10 @@
       "institution": "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
+      "code": "220015",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -15276,7 +15339,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220010",
+      "code": "220009",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -15360,7 +15423,7 @@
         "23组"
       ],
       "tagChecked": false,
-      "code": "230035",
+      "code": "230037",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -15472,7 +15535,7 @@
         "22组"
       ],
       "tagChecked": false,
-      "code": "220006",
+      "code": "220010",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
@@ -15709,7 +15772,7 @@
       "tag": [
         "13图书"
       ],
-      "tagChecked": false,
+      "tagChecked": true,
       "code": "",
       "codeManualEdited": false,
       "codeManualPinned": false
