@@ -4,39 +4,171 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Press</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;padding:2rem 1rem 4rem;background:#f5f7fa;color:#0f172a;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif}
-button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-.container{width:min(100%,1080px);margin:auto;padding:2rem 1.8rem;background:#fff;border-radius:30px;box-shadow:0 20px 42px -14px rgba(15,23,42,.18)}
-.page-title{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:1.45rem;padding-bottom:.8rem;border-bottom:2px solid #e8edf4;font-size:2.2rem}
-.cloud-status{display:inline-flex;align-items:center;gap:8px;padding:.35rem .9rem;border-radius:999px;background:#f1f5f9;color:#475569;font-size:.82rem;font-weight:500}
-.status-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8}
+
+body{
+    min-height:100vh;
+    padding:2rem 1rem 4rem;
+    background:#f5f7fa;
+    color:#0f172a;
+    font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+.container{
+    width:min(100%,1080px);
+    margin:auto;
+    padding:2rem 1.8rem;
+    background:#fff;
+    border-radius:30px;
+    box-shadow:0 20px 42px -14px rgba(15,23,42,.18)
+}
+
+.page-title{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:12px;
+    margin-bottom:1.45rem;
+    padding-bottom:.8rem;
+    border-bottom:2px solid #e8edf4;
+    font-size:2.2rem
+}
+
+.cloud-status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:.35rem .9rem;
+    border-radius:999px;
+    background:#f1f5f9;
+    color:#475569;
+    font-size:.82rem;
+    font-weight:500
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#94a3b8
+}
+
 .status-dot.online{background:#22c55e}
 .status-dot.offline{background:#ef4444}
 .status-dot.syncing{background:#f59e0b}
-.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:1.7rem;padding-bottom:1rem;border-bottom:1px solid #e8edf4}
-.toolbar-group{display:flex;flex-wrap:wrap;gap:9px}
-.btn{min-height:36px;padding:.45rem 1.1rem;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;font-size:.86rem;font-weight:650}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:1.7rem;
+    padding-bottom:1rem;
+    border-bottom:1px solid #e8edf4
+}
+
+.toolbar-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px
+}
+
+.btn{
+    min-height:36px;
+    padding:.45rem 1.1rem;
+    border:1px solid #cbd5e1;
+    border-radius:999px;
+    background:#fff;
+    color:#334155;
+    font-size:.86rem;
+    font-weight:650
+}
+
 .btn:hover{background:#f1f5f9}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-primary{border-color:#1e293b;background:#1e293b;color:#fff}
+
+.btn-primary{
+    border-color:#1e293b;
+    background:#1e293b;
+    color:#fff
+}
+
 .btn-primary:hover{background:#0f172a}
-.btn-danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}
+
+.btn-danger{
+    border-color:#fecaca;
+    background:#fee2e2;
+    color:#991b1b
+}
+
 .btn-danger:hover{background:#fecaca}
-.btn-sync{border-color:#1E40AF;background:#1E40AF;color:#fff}
-.last-sync{color:#94a3b8;font-size:.8rem}
 
-.add-section{margin-bottom:2rem;padding:1.5rem;border:1px solid #e2e8f0;border-radius:23px;background:#f8fafc}
-.add-section h2,.list-header h2{font-size:1.3rem}
-.add-section h2{margin-bottom:1rem}
+.btn-sync{
+    border-color:#1E40AF;
+    background:#1E40AF;
+    color:#fff
+}
 
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.bookno-tag-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-.form-group{display:flex;flex-direction:column;gap:5px}
-.form-group.full{grid-column:1/-1}
-.form-group label{color:#475569;font-size:.78rem;font-weight:700;letter-spacing:.04em}
-.form-group input,.form-group select{
+.last-sync{
+    color:#94a3b8;
+    font-size:.8rem
+}
+
+.add-section{
+    margin-bottom:2rem;
+    padding:1.5rem;
+    border:1px solid #e2e8f0;
+    border-radius:23px;
+    background:#f8fafc
+}
+
+.add-section h2,
+.list-header h2{
+    font-size:1.3rem
+}
+
+.add-section h2{
+    margin-bottom:1rem
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem
+}
+
+.bookno-tag-row{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:1rem
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:5px
+}
+
+.form-group.full{
+    grid-column:1/-1
+}
+
+.form-group label{
+    color:#475569;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.04em
+}
+
+.form-group input,
+.form-group select{
     width:100%;
     min-height:44px;
     padding:.72rem 1rem;
@@ -46,11 +178,14 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     color:#0f172a;
     outline:none
 }
-.form-group input:focus,.form-group select:focus{
+
+.form-group input:focus,
+.form-group select:focus{
     outline:2px solid #93b4ff;
     outline-offset:1px;
     border-color:transparent
 }
+
 .form-group input[readonly]{
     background:#f1f5f9;
     color:#64748b
@@ -63,6 +198,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     gap:6px;
     align-items:center
 }
+
 .clear-field-btn{
     height:44px;
     width:36px;
@@ -72,7 +208,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     color:#64748b;
     font-weight:800
 }
-.clear-field-btn:hover{background:#f1f5f9;color:#0f172a}
+
+.clear-field-btn:hover{
+    background:#f1f5f9;
+    color:#0f172a
+}
 
 .add-button{
     grid-column:1/-1;
@@ -83,7 +223,10 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     color:#fff;
     font-weight:700
 }
-.add-button:hover{background:#0f172a}
+
+.add-button:hover{
+    background:#0f172a
+}
 
 .combo{
     position:relative;
@@ -93,21 +236,25 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     padding:.45rem;
     min-height:44px
 }
+
 .combo-row{
     display:grid;
     grid-template-columns:minmax(0,1fr) 44px;
     gap:7px
 }
+
 .combo-row input{
     border:0!important;
     border-radius:10px!important;
     min-height:38px;
     padding:.55rem .7rem
 }
+
 .combo-row input:focus{
     outline:2px solid #93b4ff!important;
     outline-offset:0
 }
+
 .combo-toggle{
     min-height:38px;
     border:1px solid #cbd5e1;
@@ -116,7 +263,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     color:#475569;
     font-weight:700
 }
-.combo-toggle:hover{background:#f1f5f9}
+
+.combo-toggle:hover{
+    background:#f1f5f9
+}
+
 .combo-panel{
     position:absolute;
     left:0;
@@ -131,19 +282,26 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     background:#fff;
     box-shadow:0 15px 30px rgba(15,23,42,.14)
 }
+
 .combo-selected{
     display:flex;
     flex-wrap:wrap;
     gap:6px;
     margin-bottom:6px
 }
-.combo-selected:empty{display:none}
+
+.combo-selected:empty{
+    display:none
+}
+
 .combo-option-list{
     display:flex;
     flex-direction:column;
     gap:6px
 }
-.combo-pill,.selected-pill{
+
+.combo-pill,
+.selected-pill{
     display:inline-flex;
     align-items:center;
     max-width:100%;
@@ -153,15 +311,18 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     background:#f8fafc;
     overflow:hidden
 }
+
 .combo-pill{
     display:flex;
     width:100%;
     border-radius:11px
 }
+
 .combo-pill.selected{
     border-color:#93b4ff;
     background:#eaf1ff
 }
+
 .combo-pill-select{
     flex:1;
     min-width:0;
@@ -173,13 +334,18 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     white-space:normal;
     overflow-wrap:anywhere
 }
-.combo-pill-select:hover{background:rgba(226,232,240,.7)}
+
+.combo-pill-select:hover{
+    background:rgba(226,232,240,.7)
+}
+
 .combo-pill-select.keyboard-active{
     background:#dbeafe;
     color:#1E3A8A;
     font-weight:800;
     box-shadow:inset 0 0 0 2px #93c5fd
 }
+
 .combo-pill-edit,
 .combo-pill-delete,
 .selected-pill-remove{
@@ -193,10 +359,27 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     font-weight:800;
     line-height:1
 }
-.combo-pill-edit{color:#15803d}
-.combo-pill-edit:hover{background:#dcfce7;color:#166534}
-.combo-pill-delete,.selected-pill-remove{margin-right:2px;color:#991b1b}
-.combo-pill-delete:hover,.selected-pill-remove:hover{background:#fee2e2}
+
+.combo-pill-edit{
+    color:#15803d
+}
+
+.combo-pill-edit:hover{
+    background:#dcfce7;
+    color:#166534
+}
+
+.combo-pill-delete,
+.selected-pill-remove{
+    margin-right:2px;
+    color:#991b1b
+}
+
+.combo-pill-delete:hover,
+.selected-pill-remove:hover{
+    background:#fee2e2
+}
+
 .selected-pill-label{
     min-width:0;
     padding:.4rem .28rem .4rem .72rem;
@@ -204,6 +387,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     white-space:normal;
     overflow-wrap:anywhere
 }
+
 .combo-empty{
     width:100%;
     padding:.75rem;
@@ -219,6 +403,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     gap:12px;
     margin-bottom:.8rem
 }
+
 .count-badge{
     min-width:38px;
     padding:.22rem .8rem;
@@ -228,26 +413,40 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     font-size:.8rem;
     font-weight:650
 }
+
 .press-list{
     border:1px solid #e2e8f0;
     border-radius:20px;
     overflow:hidden;
     background:#fff
 }
+
 .press-item{
     position:relative;
     padding:1rem 1.15rem;
     background:#fff
 }
-.press-item+.press-item{border-top:2px solid #dbe3ed}
-.press-item:hover{background:#fafcff}
+
+.press-item+.press-item{
+    border-top:2px solid #dbe3ed
+}
+
+.press-item:hover{
+    background:#fafcff
+}
+
 .press-head{
     display:flex;
     align-items:flex-start;
     justify-content:space-between;
     gap:1rem
 }
-.press-content{flex:1;min-width:0}
+
+.press-content{
+    flex:1;
+    min-width:0
+}
+
 .book-title{
     font-size:1.05rem;
     font-weight:700;
@@ -255,14 +454,19 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     overflow-wrap:anywhere;
     color:#1E40AF
 }
-.book-title a,.institution a{
+
+.book-title a,
+.institution a{
     color:#1E40AF;
     text-decoration:none
 }
-.book-title a:hover,.institution a:hover{
+
+.book-title a:hover,
+.institution a:hover{
     color:#1E3A8A;
     text-decoration:underline
 }
+
 .meta{
     display:grid;
     grid-template-columns:1fr;
@@ -272,22 +476,53 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     font-size:.9rem;
     line-height:1.55
 }
-.meta-row{overflow-wrap:anywhere}
-.meta-label{color:#94a3b8}
-.bookshelf-row{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:1rem
+
+.meta-row{
+    display:block;
+    overflow-wrap:anywhere;
+    text-align:left
 }
-.bookshelf-text{min-width:0;overflow-wrap:anywhere}
-.tag-row{display:flex;align-items:center;flex-wrap:wrap;gap:0}
+
+.meta-label{
+    color:#94a3b8
+}
+
+/*
+ * 书架行与出版、书号、编组使用完全相同的普通块级文本布局。
+ * 不再使用 justify-content:space-between，
+ * 避免“书架：”与内容被拉开、产生视觉错位。
+ */
+.bookshelf-row{
+    display:block;
+    text-align:left
+}
+
+.bookshelf-text{
+    display:inline;
+    min-width:0;
+    margin:0;
+    padding:0;
+    overflow-wrap:anywhere;
+    vertical-align:baseline
+}
+
+.tag-row{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0
+}
+
 .entry-tag-checkbox{
     flex:0 0 auto;
     margin-left:1px;
     cursor:pointer
 }
-.entry-tag-checkbox:disabled{cursor:not-allowed}
+
+.entry-tag-checkbox:disabled{
+    cursor:not-allowed
+}
+
 .edit-btn{
     flex:0 0 auto;
     position:absolute;
@@ -301,7 +536,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;
     line-height:1.55
 }
-.edit-btn:hover{color:#475569}
+
+.edit-btn:hover{
+    color:#475569
+}
+
 .empty-state{
     padding:2.6rem 1rem;
     background:#fafcff;
@@ -320,6 +559,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     background:rgba(15,23,42,.45);
     backdrop-filter:blur(5px)
 }
+
 .dialog{
     width:min(100%,620px);
     max-height:calc(100dvh - 24px);
@@ -330,14 +570,23 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border-radius:26px;
     box-shadow:0 30px 70px rgba(15,23,42,.28)
 }
+
 .dialog-scroll{
     flex:1 1 auto;
     min-height:0;
     overflow-y:auto;
     padding:1.7rem 1.7rem 1rem
 }
-.dialog h3{margin-bottom:.9rem;font-size:1.3rem}
-.dialog .form-group{margin-bottom:.95rem}
+
+.dialog h3{
+    margin-bottom:.9rem;
+    font-size:1.3rem
+}
+
+.dialog .form-group{
+    margin-bottom:.95rem
+}
+
 .dialog-actions{
     flex:0 0 auto;
     display:flex;
@@ -346,25 +595,34 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border-top:1px solid #e8edf4;
     background:#fff
 }
-#editModal #editCancel{margin-left:auto}
 
-.manage-dialog{height:min(760px,calc(100dvh - 24px))}
+#editModal #editCancel{
+    margin-left:auto
+}
+
+.manage-dialog{
+    height:min(760px,calc(100dvh - 24px))
+}
+
 .manage-fixed-top{
     flex:0 0 auto;
     padding:1.7rem 1.7rem .9rem;
     border-bottom:1px solid #e8edf4
 }
+
 .manage-table-scroll{
     flex:1 1 auto;
     min-height:0;
     overflow-y:auto;
     padding:.55rem 1.7rem 1rem
 }
+
 .manage-add-row{
     display:grid;
     grid-template-columns:minmax(0,1fr) 92px auto;
     gap:8px
 }
+
 .manage-option-row{
     display:grid;
     grid-template-columns:minmax(0,1fr) 86px 30px 30px;
@@ -376,6 +634,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border:1px solid #cbd5e1;
     border-radius:12px
 }
+
 .manage-line-input{
     width:100%;
     height:34px;
@@ -383,7 +642,10 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border-radius:9px;
     text-align:center
 }
-#manageModal .dialog-actions{justify-content:flex-end}
+
+#manageModal .dialog-actions{
+    justify-content:flex-end
+}
 
 .toast{
     position:fixed;
@@ -399,6 +661,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     font-size:.88rem;
     font-weight:600
 }
+
 .toast.success{background:#16a34a}
 .toast.error{background:#dc2626}
 
@@ -415,10 +678,15 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 }
 
 /* 所有组合输入框统一高度 */
-#tagToggle,#institutionToggle,#categoryToggle,
-#editTagToggle,#editInstitutionToggle,#editCategoryToggle{
+#tagToggle,
+#institutionToggle,
+#categoryToggle,
+#editTagToggle,
+#editInstitutionToggle,
+#editCategoryToggle{
     display:none!important
 }
+
 #addSection .combo,
 #editModal .combo{
     height:44px;
@@ -427,12 +695,14 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border:1px solid #cbd5e1;
     border-radius:15px
 }
+
 #addSection .combo-row,
 #editModal .combo-row{
     display:grid;
     grid-template-columns:minmax(0,1fr);
     height:42px
 }
+
 #addSection .combo-row input,
 #editModal .combo-row input{
     width:100%;
@@ -453,6 +723,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     flex-wrap:wrap;
     gap:8px
 }
+
 #tagOptions .combo-pill,
 #editTagOptions .combo-pill,
 #categoryOptions .combo-pill,
@@ -464,6 +735,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     border-radius:5px;
     background:#fff
 }
+
 #tagOptions .combo-pill-select,
 #editTagOptions .combo-pill-select,
 #categoryOptions .combo-pill-select,
@@ -476,11 +748,15 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 }
 
 /* 编组支持多选后继续搜索 */
-#tagInput,#categoryInput,#editTag,#editCategory{
+#tagInput,
+#categoryInput,
+#editTag,
+#editCategory{
     cursor:text!important;
     background:#fff!important;
     color:#0f172a!important
 }
+
 #tagCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)){
     display:grid!important;
@@ -488,6 +764,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     align-items:center!important;
     gap:5px!important
 }
+
 #tagCombo > .combo-selected:not(:empty),
 #editTagCombo > .combo-selected:not(:empty){
     grid-column:1;
@@ -500,12 +777,14 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     overflow-x:auto;
     overflow-y:hidden
 }
+
 #tagCombo > .combo-selected:not(:empty) + .combo-row,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row{
     grid-column:2;
     grid-row:1;
     display:grid!important
 }
+
 #tagCombo > .combo-selected:not(:empty) + .combo-row input,
 #editTagCombo > .combo-selected:not(:empty) + .combo-row input{
     display:block!important
@@ -516,6 +795,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 #editCategoryCombo:has(> .combo-selected:not(:empty)){
     display:block!important
 }
+
 #categoryCombo > .combo-selected:not(:empty),
 #editCategoryCombo > .combo-selected:not(:empty){
     display:flex!important;
@@ -525,6 +805,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
     padding:0 .45rem;
     margin:0
 }
+
 #categoryCombo > .combo-selected:not(:empty) + .combo-row,
 #editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
     display:none!important
@@ -532,13 +813,38 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 
 @media(max-width:700px){
     body{padding:.8rem}
-    .container{padding:1.25rem;border-radius:22px}
-    .page-title{font-size:1.8rem}
-    .toolbar{flex-direction:column}
-    .form-grid{grid-template-columns:1fr}
-    .bookno-tag-row{grid-template-columns:1fr}
-    .dialog{width:100%;max-height:calc(100dvh - 16px);border-radius:20px}
-    .dialog-scroll{padding:1.2rem}
+
+    .container{
+        padding:1.25rem;
+        border-radius:22px
+    }
+
+    .page-title{
+        font-size:1.8rem
+    }
+
+    .toolbar{
+        flex-direction:column
+    }
+
+    .form-grid{
+        grid-template-columns:1fr
+    }
+
+    .bookno-tag-row{
+        grid-template-columns:1fr
+    }
+
+    .dialog{
+        width:100%;
+        max-height:calc(100dvh - 16px);
+        border-radius:20px
+    }
+
+    .dialog-scroll{
+        padding:1.2rem
+    }
+
     #tagCombo:has(> .combo-selected:not(:empty)),
     #editTagCombo:has(> .combo-selected:not(:empty)){
         grid-template-columns:minmax(0,50%) minmax(0,1fr)!important
@@ -548,9 +854,11 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 </head>
 
 <body>
+
 <div id="pageTopAnchor" aria-hidden="true"></div>
 
 <main class="container">
+
 <h1 class="page-title">
     Press
     <span class="cloud-status">
@@ -568,161 +876,394 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
         <button class="btn" id="exportBtn" type="button">导出</button>
         <input class="hidden" id="importInput" type="file" accept=".html,text/html">
     </div>
+
     <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
 
 <section class="add-section hidden" id="addSection">
+
 <h2>添加</h2>
 
 <div class="form-grid">
+
     <div class="form-group full">
         <label for="bookNameInput">书名</label>
-        <input type="text" id="bookNameInput" autocomplete="off" autofocus>
+        <input
+            type="text"
+            id="bookNameInput"
+            autocomplete="off"
+            autofocus
+        >
     </div>
 
     <div class="bookno-tag-row">
+
         <div class="form-group">
             <label for="bookNoInput">书号</label>
-            <input type="text" id="bookNoInput" autocomplete="off">
+            <input
+                type="text"
+                id="bookNoInput"
+                autocomplete="off"
+            >
         </div>
 
         <div class="form-group">
             <label for="tagInput">编组</label>
+
             <div class="combo" id="tagCombo">
-                <div class="combo-selected" id="tagSelected"></div>
+
+                <div
+                    class="combo-selected"
+                    id="tagSelected"
+                ></div>
 
                 <div class="combo-row">
-                    <input type="text" id="tagInput" autocomplete="off">
-                    <button class="combo-toggle" id="tagToggle" type="button"></button>
+                    <input
+                        type="text"
+                        id="tagInput"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        class="combo-toggle"
+                        id="tagToggle"
+                        type="button"
+                        aria-label="展开编组选项"
+                    ></button>
                 </div>
 
-                <div class="combo-panel hidden" id="tagPanel">
+                <div
+                    class="combo-panel hidden"
+                    id="tagPanel"
+                >
                     <div id="tagOptions"></div>
                 </div>
+
             </div>
         </div>
+
     </div>
 
     <div class="form-group full">
-        <label for="institutionInput">出版</label>
-        <div class="combo" id="institutionCombo">
+
+        <label for="institutionInput">
+            出版
+        </label>
+
+        <div
+            class="combo"
+            id="institutionCombo"
+        >
+
             <div class="combo-row">
-                <input type="text" id="institutionInput" autocomplete="off">
-                <button class="combo-toggle" id="institutionToggle" type="button"></button>
+
+                <input
+                    type="text"
+                    id="institutionInput"
+                    autocomplete="off"
+                >
+
+                <button
+                    class="combo-toggle"
+                    id="institutionToggle"
+                    type="button"
+                    aria-label="展开出版历史"
+                ></button>
+
             </div>
 
-            <div class="combo-panel hidden" id="institutionPanel">
+            <div
+                class="combo-panel hidden"
+                id="institutionPanel"
+            >
                 <div id="institutionOptions"></div>
             </div>
+
         </div>
     </div>
 
     <div class="form-group full">
-        <label for="categoryInput">书架</label>
-        <div class="combo" id="categoryCombo">
-            <div class="combo-selected" id="categorySelected"></div>
+
+        <label for="categoryInput">
+            书架
+        </label>
+
+        <div
+            class="combo"
+            id="categoryCombo"
+        >
+
+            <div
+                class="combo-selected"
+                id="categorySelected"
+            ></div>
 
             <div class="combo-row">
-                <input type="text" id="categoryInput" autocomplete="off">
-                <button class="combo-toggle" id="categoryToggle" type="button"></button>
+
+                <input
+                    type="text"
+                    id="categoryInput"
+                    autocomplete="off"
+                >
+
+                <button
+                    class="combo-toggle"
+                    id="categoryToggle"
+                    type="button"
+                    aria-label="展开书架历史"
+                ></button>
+
             </div>
 
-            <div class="combo-panel hidden" id="categoryPanel">
+            <div
+                class="combo-panel hidden"
+                id="categoryPanel"
+            >
                 <div id="categoryOptions"></div>
             </div>
+
         </div>
     </div>
 
-    <button class="add-button" id="addBtn" type="button">添加</button>
+    <button
+        class="add-button"
+        id="addBtn"
+        type="button"
+    >
+        添加
+    </button>
+
 </div>
+
 </section>
 
 <section>
-    <div class="list-header">
-        <h2>总表</h2>
-        <span class="count-badge" id="countDisplay">0/0/0</span>
-    </div>
 
-    <div class="press-list" id="pressList">
-        <div class="empty-state">加载中…</div>
+<div class="list-header">
+    <h2>总表</h2>
+    <span
+        class="count-badge"
+        id="countDisplay"
+    >
+        0/0/0
+    </span>
+</div>
+
+<div
+    class="press-list"
+    id="pressList"
+>
+    <div class="empty-state">
+        加载中…
     </div>
+</div>
+
 </section>
+
 </main>
 
-<section class="overlay hidden" id="editModal">
+<section
+    class="overlay hidden"
+    id="editModal"
+>
+
 <div class="dialog">
+
 <div class="dialog-scroll">
 
 <h3>编辑</h3>
 
 <div class="form-group">
-    <label for="editBookName">书名</label>
+
+    <label for="editBookName">
+        书名
+    </label>
+
     <div class="edit-title-field">
-        <input autocomplete="off" id="editBookName" type="text">
-        <button class="clear-field-btn" id="clearEditBookName" type="button">×</button>
+
+        <input
+            autocomplete="off"
+            id="editBookName"
+            type="text"
+        >
+
+        <button
+            class="clear-field-btn"
+            id="clearEditBookName"
+            type="button"
+            aria-label="清空书名"
+        >
+            ×
+        </button>
+
     </div>
+
 </div>
 
 <div class="form-group">
-    <label for="editInstitution">出版</label>
-    <div class="combo" id="editInstitutionCombo">
+
+    <label for="editInstitution">
+        出版
+    </label>
+
+    <div
+        class="combo"
+        id="editInstitutionCombo"
+    >
+
         <div class="combo-row">
-            <input autocomplete="off" id="editInstitution" type="text">
-            <button class="combo-toggle" id="editInstitutionToggle" type="button"></button>
+
+            <input
+                autocomplete="off"
+                id="editInstitution"
+                type="text"
+            >
+
+            <button
+                aria-label="展开出版历史"
+                class="combo-toggle"
+                id="editInstitutionToggle"
+                type="button"
+            ></button>
+
         </div>
 
-        <div class="combo-panel hidden" id="editInstitutionPanel">
+        <div
+            class="combo-panel hidden"
+            id="editInstitutionPanel"
+        >
             <div id="editInstitutionOptions"></div>
         </div>
+
     </div>
+
 </div>
 
 <div class="form-group">
-    <label for="editBookNo">书号</label>
+
+    <label for="editBookNo">
+        书号
+    </label>
+
     <div class="clearable-field">
-        <input autocomplete="off" id="editBookNo" type="text">
-        <button class="clear-field-btn" id="clearEditBookNo" type="button">×</button>
+
+        <input
+            autocomplete="off"
+            id="editBookNo"
+            type="text"
+        >
+
+        <button
+            class="clear-field-btn"
+            id="clearEditBookNo"
+            type="button"
+            aria-label="清空书号"
+        >
+            ×
+        </button>
+
     </div>
+
 </div>
 
 <div class="edit-two-column-row">
-    <div class="form-group">
-        <label for="editTag">编组</label>
 
-        <div class="combo" id="editTagCombo">
-            <div class="combo-selected" id="editTagSelected"></div>
+    <div class="form-group">
+
+        <label for="editTag">
+            编组
+        </label>
+
+        <div
+            class="combo"
+            id="editTagCombo"
+        >
+
+            <div
+                class="combo-selected"
+                id="editTagSelected"
+            ></div>
 
             <div class="combo-row">
-                <input autocomplete="off" id="editTag" type="text">
-                <button class="combo-toggle" id="editTagToggle" type="button"></button>
+
+                <input
+                    autocomplete="off"
+                    id="editTag"
+                    type="text"
+                >
+
+                <button
+                    aria-label="展开编组选项"
+                    class="combo-toggle"
+                    id="editTagToggle"
+                    type="button"
+                ></button>
+
             </div>
 
-            <div class="combo-panel hidden" id="editTagPanel">
+            <div
+                class="combo-panel hidden"
+                id="editTagPanel"
+            >
                 <div id="editTagOptions"></div>
             </div>
+
         </div>
+
     </div>
 
     <div class="form-group">
-        <label for="editCategory">书架</label>
 
-        <div class="combo" id="editCategoryCombo">
-            <div class="combo-selected" id="editCategorySelected"></div>
+        <label for="editCategory">
+            书架
+        </label>
+
+        <div
+            class="combo"
+            id="editCategoryCombo"
+        >
+
+            <div
+                class="combo-selected"
+                id="editCategorySelected"
+            ></div>
 
             <div class="combo-row">
-                <input autocomplete="off" id="editCategory" type="text">
-                <button class="combo-toggle" id="editCategoryToggle" type="button"></button>
+
+                <input
+                    autocomplete="off"
+                    id="editCategory"
+                    type="text"
+                >
+
+                <button
+                    aria-label="展开书架历史"
+                    class="combo-toggle"
+                    id="editCategoryToggle"
+                    type="button"
+                ></button>
+
             </div>
 
-            <div class="combo-panel hidden" id="editCategoryPanel">
+            <div
+                class="combo-panel hidden"
+                id="editCategoryPanel"
+            >
                 <div id="editCategoryOptions"></div>
             </div>
+
         </div>
+
     </div>
+
 </div>
 
 <div class="form-group">
-    <label for="editCode">编码</label>
+
+    <label for="editCode">
+        编码
+    </label>
+
     <input
         autocomplete="off"
         id="editCode"
@@ -731,102 +1272,235 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
         maxlength="6"
         aria-label="编码"
     >
+
 </div>
 
 </div>
 
 <div class="dialog-actions">
-    <button class="btn btn-danger" id="editDelete" type="button">删除</button>
-    <button class="btn" id="editCancel" type="button">取消</button>
-    <button class="btn btn-primary" id="editSave" type="button">保存</button>
+
+    <button
+        class="btn btn-danger"
+        id="editDelete"
+        type="button"
+    >
+        删除
+    </button>
+
+    <button
+        class="btn"
+        id="editCancel"
+        type="button"
+    >
+        取消
+    </button>
+
+    <button
+        class="btn btn-primary"
+        id="editSave"
+        type="button"
+    >
+        保存
+    </button>
+
 </div>
+
 </div>
+
 </section>
 
-<section class="overlay hidden" id="configModal">
-<form class="dialog" id="configForm" autocomplete="on">
+<section
+    class="overlay hidden"
+    id="configModal"
+>
+
+<form
+    class="dialog"
+    id="configForm"
+    autocomplete="on"
+>
+
 <div class="dialog-scroll">
-    <h3>GitHub 管理配置</h3>
 
-    <div class="form-group">
-        <label for="cfgOwner">仓库所有者</label>
-        <input id="cfgOwner" type="text">
-    </div>
+<h3>GitHub 管理配置</h3>
 
-    <div class="form-group">
-        <label for="cfg">仓库名称</label>
-        <input id="cfg" type="text">
-    </div>
+<div class="form-group">
 
-    <div class="form-group">
-        <label for="cfgFile">数据文件路径</label>
-        <input id="cfgFile" type="text" value="press_data.json">
-    </div>
-
-    <div class="form-group">
-        <label for="cfgToken">GitHub Personal Access Token</label>
-        <input id="cfgToken" type="password">
-    </div>
-
-    <label>
-        <input type="checkbox" id="rememberToken" checked>
-        在本设备保存 Token
+    <label for="cfgOwner">
+        仓库所有者
     </label>
+
+    <input
+        id="cfgOwner"
+        type="text"
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label for="cfg">
+        仓库名称
+    </label>
+
+    <input
+        id="cfg"
+        type="text"
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label for="cfgFile">
+        数据文件路径
+    </label>
+
+    <input
+        id="cfgFile"
+        type="text"
+        value="press_data.json"
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label for="cfgToken">
+        GitHub Personal Access Token
+    </label>
+
+    <input
+        id="cfgToken"
+        type="password"
+    >
+
+</div>
+
+<label>
+    <input
+        type="checkbox"
+        id="rememberToken"
+        checked
+    >
+    在本设备保存 Token
+</label>
+
 </div>
 
 <div class="dialog-actions">
-    <button class="btn" id="configCancel" type="button">取消</button>
-    <button class="btn btn-primary" type="submit">保存并连接</button>
+
+    <button
+        class="btn"
+        id="configCancel"
+        type="button"
+    >
+        取消
+    </button>
+
+    <button
+        class="btn btn-primary"
+        type="submit"
+    >
+        保存并连接
+    </button>
+
 </div>
+
 </form>
+
 </section>
 
-<section class="overlay hidden" id="manageModal">
+<section
+    class="overlay hidden"
+    id="manageModal"
+>
+
 <div class="dialog manage-dialog">
 
 <div class="manage-fixed-top">
-    <h3>出版管理</h3>
 
-    <div class="form-group">
-        <label for="manageInstitutionInput">新增出版选项</label>
+<h3>出版管理</h3>
 
-        <div class="manage-add-row">
-            <input type="text" id="manageInstitutionInput">
-            <input
-                type="number"
-                id="manageInstitutionLineInput"
-                min="1"
-                step="1"
-                inputmode="numeric"
-            >
-            <button class="btn btn-primary" id="manageInstitutionAdd" type="button">
-                添加
-            </button>
-        </div>
-    </div>
+<div class="form-group">
+
+<label for="manageInstitutionInput">
+    新增出版选项
+</label>
+
+<div class="manage-add-row">
+
+    <input
+        type="text"
+        id="manageInstitutionInput"
+    >
+
+    <input
+        type="number"
+        id="manageInstitutionLineInput"
+        min="1"
+        step="1"
+        inputmode="numeric"
+    >
+
+    <button
+        class="btn btn-primary"
+        id="manageInstitutionAdd"
+        type="button"
+    >
+        添加
+    </button>
+
+</div>
+
+</div>
+
 </div>
 
 <div class="manage-table-scroll">
+
     <div id="manageInstitutionOptions"></div>
+
 </div>
 
 <div class="dialog-actions">
-    <button class="btn btn-primary" id="manageClose" type="button">完成</button>
+
+    <button
+        class="btn btn-primary"
+        id="manageClose"
+        type="button"
+    >
+        完成
+    </button>
+
 </div>
 
 </div>
+
 </section>
 
-<button id="returnTopControl" type="button" title="回到顶部"></button>
-<div class="toast hidden" id="toast"></div>
+<button
+    id="returnTopControl"
+    type="button"
+    title="回到顶部"
+></button>
+
+<div
+    class="toast hidden"
+    id="toast"
+></div>
 
 <script>
 (()=>{
 'use strict';
 
 const PUBLIC_FILE='press_data.json';
+
 const NS='press_public_v1';
-const DB_NAME=`${NS}:idb_v1`;
+
+const DB_NAME=
+    `${NS}:idb_v1`;
+
 const DB_STORE='kv';
 
 const CONFIG_KEY='config';
@@ -835,165 +1509,401 @@ const META_KEY='meta';
 const WORKCOPY_KEY='workcopy';
 const PUBLIC_CACHE_KEY='public_cache';
 
-const MAX_BYTES=750*1024;
-const AUTO_DELAY=1800;
+const MAX_BYTES=
+    750*1024;
 
-const GROUP_CODES=Object.freeze([
-    '11','12','13','14','21','22','23'
-]);
+const AUTO_DELAY=
+    1800;
 
-const GROUP_OPTIONS=Object.freeze(
-    GROUP_CODES.map(v=>`${v}组`)
-);
+const GROUP_CODES=
+    Object.freeze([
+        '11',
+        '12',
+        '13',
+        '14',
+        '21',
+        '22',
+        '23'
+    ]);
 
-const CODE_GROUP_OPTIONS=Object.freeze([
-    ...GROUP_CODES,
-    '24'
-]);
+const GROUP_OPTIONS=
+    Object.freeze(
+        GROUP_CODES.map(
+            value=>
+                `${value}组`
+        )
+    );
 
-const CODE_RULES=Object.freeze({
-    zh:{
-        groups:{
-            '11':[[110001,117999],[160001,167999]],
-            '12':[[120001,127999]],
-            '13':[[130001,137999],[180001,187999]],
-            '14':[[140001,147999]],
-            '21':[[210001,217999],[260001,267999]],
-            '22':[[220001,227999]],
-            '23':[[230001,237999],[270001,277999],[280001,289999]],
-            '24':[[240001,247999]]
+const CODE_GROUP_OPTIONS=
+    Object.freeze([
+        ...GROUP_CODES,
+        '24'
+    ]);
+
+const CODE_RULES=
+    Object.freeze({
+
+        zh:{
+            groups:{
+                '11':[
+                    [110001,117999],
+                    [160001,167999]
+                ],
+
+                '12':[
+                    [120001,127999]
+                ],
+
+                '13':[
+                    [130001,137999],
+                    [180001,187999]
+                ],
+
+                '14':[
+                    [140001,147999]
+                ],
+
+                '21':[
+                    [210001,217999],
+                    [260001,267999]
+                ],
+
+                '22':[
+                    [220001,227999]
+                ],
+
+                '23':[
+                    [230001,237999],
+                    [270001,277999],
+                    [280001,289999]
+                ],
+
+                '24':[
+                    [240001,247999]
+                ]
+            },
+
+            exceptions:{
+                '11/13':[
+                    [118001,119999]
+                ],
+
+                '11/22':[
+                    [228001,229999]
+                ],
+
+                '11/23':[
+                    [238001,239999]
+                ],
+
+                '13/21':[
+                    [218001,219999]
+                ],
+
+                '13/22':[
+                    [138001,139999],
+                    [188001,189999]
+                ],
+
+                '21/23':[
+                    [278001,279999]
+                ]
+            }
         },
-        exceptions:{
-            '11/13':[[118001,119999]],
-            '11/22':[[228001,229999]],
-            '11/23':[[238001,239999]],
-            '13/21':[[218001,219999]],
-            '13/22':[[138001,139999],[188001,189999]],
-            '21/23':[[278001,279999]]
+
+        en:{
+            groups:{
+                '11':[
+                    [150001,157999]
+                ],
+
+                '12':[
+                    [128001,129999],
+                    [168001,169999]
+                ],
+
+                '13':[
+                    [170001,179999]
+                ],
+
+                '14':[
+                    [148001,149999]
+                ],
+
+                '21':[
+                    [250001,259999]
+                ],
+
+                '22':[
+                    [220001,227999]
+                ],
+
+                '23':[
+                    [230001,237999],
+                    [270001,277999],
+                    [280001,289999]
+                ],
+
+                '24':[
+                    [248001,249999]
+                ]
+            },
+
+            exceptions:{
+                '11/13':[
+                    [158001,159999]
+                ],
+
+                '13/21':[
+                    [268001,269999]
+                ]
+            }
         }
-    },
 
-    en:{
-        groups:{
-            '11':[[150001,157999]],
-            '12':[[128001,129999],[168001,169999]],
-            '13':[[170001,179999]],
-            '14':[[148001,149999]],
-            '21':[[250001,259999]],
-            '22':[[220001,227999]],
-            '23':[[230001,237999],[270001,277999],[280001,289999]],
-            '24':[[248001,249999]]
-        },
-        exceptions:{
-            '11/13':[[158001,159999]],
-            '13/21':[[268001,269999]]
+    });
+
+const $=
+    id=>
+        document.getElementById(id);
+
+const statusDot=
+    $('statusDot');
+
+const statusText=
+    $('statusText');
+
+const syncBtn=
+    $('syncBtn');
+
+const configBtn=
+    $('configBtn');
+
+const manageBtn=
+    $('manageBtn');
+
+const importBtn=
+    $('importBtn');
+
+const importInput=
+    $('importInput');
+
+const exportBtn=
+    $('exportBtn');
+
+const lastSyncTime=
+    $('lastSyncTime');
+
+const addSection=
+    $('addSection');
+
+const bookNameInput=
+    $('bookNameInput');
+
+const bookNoInput=
+    $('bookNoInput');
+
+const institutionCombo=
+    $('institutionCombo');
+
+const institutionInput=
+    $('institutionInput');
+
+const institutionToggle=
+    $('institutionToggle');
+
+const institutionPanel=
+    $('institutionPanel');
+
+const institutionOptions=
+    $('institutionOptions');
+
+const tagCombo=
+    $('tagCombo');
+
+const tagSelected=
+    $('tagSelected');
+
+const tagInput=
+    $('tagInput');
+
+const tagToggle=
+    $('tagToggle');
+
+const tagPanel=
+    $('tagPanel');
+
+const tagOptions=
+    $('tagOptions');
+
+const categoryCombo=
+    $('categoryCombo');
+
+const categorySelected=
+    $('categorySelected');
+
+const categoryInput=
+    $('categoryInput');
+
+const categoryToggle=
+    $('categoryToggle');
+
+const categoryPanel=
+    $('categoryPanel');
+
+const categoryOptions=
+    $('categoryOptions');
+
+const addBtn=
+    $('addBtn');
+
+const pressList=
+    $('pressList');
+
+const countDisplay=
+    $('countDisplay');
+
+const editModal=
+    $('editModal');
+
+const editBookName=
+    $('editBookName');
+
+const clearEditBookName=
+    $('clearEditBookName');
+
+const editBookNo=
+    $('editBookNo');
+
+const clearEditBookNo=
+    $('clearEditBookNo');
+
+const editInstitutionCombo=
+    $('editInstitutionCombo');
+
+const editInstitution=
+    $('editInstitution');
+
+const editInstitutionToggle=
+    $('editInstitutionToggle');
+
+const editInstitutionPanel=
+    $('editInstitutionPanel');
+
+const editInstitutionOptions=
+    $('editInstitutionOptions');
+
+const editTagCombo=
+    $('editTagCombo');
+
+const editTagSelected=
+    $('editTagSelected');
+
+const editTag=
+    $('editTag');
+
+const editTagToggle=
+    $('editTagToggle');
+
+const editTagPanel=
+    $('editTagPanel');
+
+const editTagOptions=
+    $('editTagOptions');
+
+const editCategoryCombo=
+    $('editCategoryCombo');
+
+const editCategorySelected=
+    $('editCategorySelected');
+
+const editCategory=
+    $('editCategory');
+
+const editCategoryToggle=
+    $('editCategoryToggle');
+
+const editCategoryPanel=
+    $('editCategoryPanel');
+
+const editCategoryOptions=
+    $('editCategoryOptions');
+
+const editCode=
+    $('editCode');
+
+const editDelete=
+    $('editDelete');
+
+const editCancel=
+    $('editCancel');
+
+const editSave=
+    $('editSave');
+
+const configModal=
+    $('configModal');
+
+const configForm=
+    $('configForm');
+
+const cfgOwner=
+    $('cfgOwner');
+
+const cfg=
+    $('cfg');
+
+const cfgFile=
+    $('cfgFile');
+
+const cfgToken=
+    $('cfgToken');
+
+const rememberToken=
+    $('rememberToken');
+
+const configCancel=
+    $('configCancel');
+
+const manageModal=
+    $('manageModal');
+
+const manageInstitutionInput=
+    $('manageInstitutionInput');
+
+const manageInstitutionLineInput=
+    $('manageInstitutionLineInput');
+
+const manageInstitutionAdd=
+    $('manageInstitutionAdd');
+
+const manageInstitutionOptions=
+    $('manageInstitutionOptions');
+
+const manageClose=
+    $('manageClose');
+
+const returnTopControl=
+    $('returnTopControl');
+
+const toast=
+    $('toast');
+
+const collator=
+    new Intl.Collator(
+        'zh-CN-u-co-pinyin',
+        {
+            numeric:true,
+            sensitivity:'base'
         }
-    }
-});
-
-const $=id=>document.getElementById(id);
-
-const statusDot=$('statusDot');
-const statusText=$('statusText');
-const syncBtn=$('syncBtn');
-const configBtn=$('configBtn');
-const manageBtn=$('manageBtn');
-const importBtn=$('importBtn');
-const importInput=$('importInput');
-const exportBtn=$('exportBtn');
-const lastSyncTime=$('lastSyncTime');
-
-const addSection=$('addSection');
-const bookNameInput=$('bookNameInput');
-const bookNoInput=$('bookNoInput');
-
-const institutionCombo=$('institutionCombo');
-const institutionInput=$('institutionInput');
-const institutionToggle=$('institutionToggle');
-const institutionPanel=$('institutionPanel');
-const institutionOptions=$('institutionOptions');
-
-const tagCombo=$('tagCombo');
-const tagSelected=$('tagSelected');
-const tagInput=$('tagInput');
-const tagToggle=$('tagToggle');
-const tagPanel=$('tagPanel');
-const tagOptions=$('tagOptions');
-
-const categoryCombo=$('categoryCombo');
-const categorySelected=$('categorySelected');
-const categoryInput=$('categoryInput');
-const categoryToggle=$('categoryToggle');
-const categoryPanel=$('categoryPanel');
-const categoryOptions=$('categoryOptions');
-
-const addBtn=$('addBtn');
-const pressList=$('pressList');
-const countDisplay=$('countDisplay');
-
-const editModal=$('editModal');
-const editBookName=$('editBookName');
-const clearEditBookName=$('clearEditBookName');
-const editBookNo=$('editBookNo');
-const clearEditBookNo=$('clearEditBookNo');
-
-const editInstitutionCombo=$('editInstitutionCombo');
-const editInstitution=$('editInstitution');
-const editInstitutionToggle=$('editInstitutionToggle');
-const editInstitutionPanel=$('editInstitutionPanel');
-const editInstitutionOptions=$('editInstitutionOptions');
-
-const editTagCombo=$('editTagCombo');
-const editTagSelected=$('editTagSelected');
-const editTag=$('editTag');
-const editTagToggle=$('editTagToggle');
-const editTagPanel=$('editTagPanel');
-const editTagOptions=$('editTagOptions');
-
-const editCategoryCombo=$('editCategoryCombo');
-const editCategorySelected=$('editCategorySelected');
-const editCategory=$('editCategory');
-const editCategoryToggle=$('editCategoryToggle');
-const editCategoryPanel=$('editCategoryPanel');
-const editCategoryOptions=$('editCategoryOptions');
-
-const editCode=$('editCode');
-const editDelete=$('editDelete');
-const editCancel=$('editCancel');
-const editSave=$('editSave');
-
-const configModal=$('configModal');
-const configForm=$('configForm');
-const cfgOwner=$('cfgOwner');
-const cfg=$('cfg');
-const cfgFile=$('cfgFile');
-const cfgToken=$('cfgToken');
-const rememberToken=$('rememberToken');
-const configCancel=$('configCancel');
-
-const manageModal=$('manageModal');
-const manageInstitutionInput=$('manageInstitutionInput');
-const manageInstitutionLineInput=$('manageInstitutionLineInput');
-const manageInstitutionAdd=$('manageInstitutionAdd');
-const manageInstitutionOptions=$('manageInstitutionOptions');
-const manageClose=$('manageClose');
-
-const returnTopControl=$('returnTopControl');
-const toast=$('toast');
-
-const collator=new Intl.Collator(
-    'zh-CN-u-co-pinyin',
-    {
-        numeric:true,
-        sensitivity:'base'
-    }
-);
+    );
 
 let state={
     entries:[],
     institutions:[],
     categories:[],
-    tags:[...GROUP_OPTIONS]
+    tags:[
+        ...GROUP_OPTIONS
+    ]
 };
 
 let addSelections={
@@ -1007,6 +1917,7 @@ let editSelections={
 };
 
 let editingId='';
+
 let editInitialSnapshot='';
 
 let config={
@@ -1022,36 +1933,100 @@ let meta={
 };
 
 let adminReady=false;
+
 let toastTimer=null;
+
 let autoTimer=null;
 
 let storageDbPromise=null;
+
 let workCopyCache=null;
+
 let publicCacheValue=null;
+
 let persistedToken='';
 
-function clean(v){
-    return String(v??'')
-        .normalize('NFKC')
+let editOverlayPointerDown=false;
+
+
+/*
+ * =========================================================
+ * 文本清理与匹配
+ * =========================================================
+ *
+ * 重要：
+ *
+ * 以前这里使用 NFKC：
+ *
+ *     normalize('NFKC')
+ *
+ * NFKC 会把中文全角标点折叠成半角标点，例如：
+ *
+ *     ， -> ,
+ *     （ -> (
+ *     ） -> )
+ *     ： -> :
+ *
+ * 这会直接修改用户原始文字。
+ *
+ * 现在实际保存、展示全部改成 NFC。
+ * NFC 不会把中文全角标点改成半角。
+ *
+ * 只有“搜索、比较、数字识别”时使用 folded() 临时做
+ * NFKC 兼容折叠，不会写回数据。
+ */
+
+function clean(value){
+    return String(value??'')
+        .normalize('NFC')
         .trim();
 }
 
-function cleanTitle(v){
-    return String(v??'').trim();
+function cleanTitle(value){
+    return String(value??'')
+        .normalize('NFC')
+        .trim();
 }
 
-function key(v){
-    return clean(v).toLocaleLowerCase('zh-CN');
+/*
+ * 只用于：
+ * - 搜索
+ * - 去重比较
+ * - 编号识别
+ * - 全角数字兼容
+ *
+ * 禁止把 folded() 的结果直接保存到文本字段。
+ */
+function folded(value){
+    return clean(value)
+        .normalize('NFKC');
 }
 
-function esc(v){
-    const div=document.createElement('div');
-    div.textContent=String(v??'');
+function key(value){
+    return folded(value)
+        .toLocaleLowerCase(
+            'zh-CN'
+        );
+}
+
+function esc(value){
+    const div=
+        document.createElement(
+            'div'
+        );
+
+    div.textContent=
+        String(value??'');
+
     return div.innerHTML;
 }
 
-function attr(v){
-    return esc(v).replace(/"/g,'&quot;');
+function attr(value){
+    return esc(value)
+        .replace(
+            /"/g,
+            '&quot;'
+        );
 }
 
 function uid(){
@@ -1061,14 +2036,25 @@ function uid(){
 }
 
 function uniq(values){
-    const map=new Map();
+    const map=
+        new Map();
 
-    for(const raw of values||[]){
-        const value=clean(raw);
+    for(
+        const raw
+        of values||[]
+    ){
+        /*
+         * 实际保存使用 clean()，
+         * 因此中文全角标点保持原样。
+         */
+        const value=
+            clean(raw);
 
         if(
             value &&
-            !map.has(key(value))
+            !map.has(
+                key(value)
+            )
         ){
             map.set(
                 key(value),
@@ -1077,7 +2063,9 @@ function uniq(values){
         }
     }
 
-    return [...map.values()];
+    return [
+        ...map.values()
+    ];
 }
 
 function normalizeMulti(value){
@@ -1088,28 +2076,50 @@ function normalizeMulti(value){
     );
 }
 
-function normalizeFixedGroupLabel(value){
-    const v=clean(value);
+function normalizeFixedGroupLabel(
+    value
+){
+    /*
+     * fixed 只用于识别类似全角数字“１１”。
+     * 如果不是固定编组，则返回 original，
+     * 不破坏原始全角标点。
+     */
+    const original=
+        clean(value);
 
-    return GROUP_CODES.includes(v)
-        ? `${v}组`
-        : v;
+    const fixed=
+        folded(original);
+
+    return GROUP_CODES.includes(
+        fixed
+    )
+        ? `${fixed}组`
+        : original;
 }
 
 function codeGroupValue(value){
-    const v=clean(value);
+    const original=
+        clean(value);
 
-    const match=v.match(
-        /^(11|12|13|14|21|22|23)组$/
-    );
+    const fixed=
+        folded(original);
+
+    const match=
+        fixed.match(
+            /^(11|12|13|14|21|22|23)组$/
+        );
 
     return match
         ? match[1]
-        : v;
+        : original;
 }
 
 function tagPrefixNumber(value){
-    const match=clean(value).match(/^(\d{2})/);
+    const match=
+        folded(value)
+            .match(
+                /^(\d{2})/
+            );
 
     return match
         ? Number(match[1])
@@ -1117,8 +2127,11 @@ function tagPrefixNumber(value){
 }
 
 function compareTagsByPrefix(a,b){
-    const ap=tagPrefixNumber(a);
-    const bp=tagPrefixNumber(b);
+    const ap=
+        tagPrefixNumber(a);
+
+    const bp=
+        tagPrefixNumber(b);
 
     if(ap!==bp){
         return ap-bp;
@@ -1135,295 +2148,55 @@ function sortTags(values){
         Array.isArray(values)
             ? values
             : [values]
-    ).sort(compareTagsByPrefix);
+    )
+    .sort(
+        compareTagsByPrefix
+    );
 }
 
 function titleIsChinese(raw){
-    const visible=String(raw??'')
-        .replace(
-            /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
-            '$1'
-        );
+    const visible=
+        String(raw??'')
+            .replace(
+                /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
+                '$1'
+            );
 
     return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
         .test(visible);
 }
 
-function codeGroupsFromEntry(entry){
-    const raw=normalizeMulti(entry?.tag)
-        .map(clean)
-        .filter(Boolean);
-
-    if(!raw.length){
-        return null;
-    }
-
-    const codes=raw.map(codeGroupValue);
-
-    if(
-        codes.some(
-            value=>!CODE_GROUP_OPTIONS.includes(value)
-        )
-    ){
-        return null;
-    }
-
-    return uniq(codes).sort(
-        (a,b)=>Number(a)-Number(b)
-    );
-}
-
-function mergeCodeRanges(ranges){
-    const ordered=(ranges||[])
-        .map(range=>[
-            Number(range[0]),
-            Number(range[1])
-        ])
-        .filter(
-            range=>
-                Number.isFinite(range[0]) &&
-                Number.isFinite(range[1]) &&
-                range[0]<=range[1]
-        )
-        .sort(
-            (a,b)=>
-                a[0]-b[0] ||
-                a[1]-b[1]
-        );
-
-    const merged=[];
-
-    for(const range of ordered){
-        const last=merged[merged.length-1];
-
-        if(
-            last &&
-            range[0]<=last[1]+1
-        ){
-            last[1]=Math.max(
-                last[1],
-                range[1]
-            );
-        }else{
-            merged.push([...range]);
-        }
-    }
-
-    return merged;
-}
-
-function codeRangesForEntry(entry){
-    const groups=codeGroupsFromEntry(entry);
-
-    if(!groups?.length){
-        return [];
-    }
-
-    const rules=titleIsChinese(entry.bookName)
-        ? CODE_RULES.zh
-        : CODE_RULES.en;
-
-    const combination=groups.join('/');
-
-    if(rules.exceptions[combination]){
-        return mergeCodeRanges(
-            rules.exceptions[combination]
-        );
-    }
-
-    return mergeCodeRanges(
-        groups.flatMap(
-            group=>rules.groups[group]||[]
-        )
-    );
-}
-
-function normalizeStoredCode(raw){
-    const value=clean(raw);
-
-    return /^\d{6}$/.test(value)
-        ? value
-        : '';
-}
-
-function codeAllowedForEntry(entry,rawCode){
-    const code=Number(
-        normalizeStoredCode(rawCode)
-    );
-
-    if(!Number.isInteger(code)){
-        return false;
-    }
-
-    return codeRangesForEntry(entry)
-        .some(
-            ([start,end])=>
-                code>=start &&
-                code<=end
-        );
-}
-
-function smallestAvailableCode(entry,used){
-    for(
-        const [start,end]
-        of codeRangesForEntry(entry)
-    ){
-        let number=start;
-
-        while(
-            number<=end &&
-            used.has(number)
-        ){
-            number++;
-        }
-
-        if(number<=end){
-            return String(number)
-                .padStart(6,'0');
-        }
-    }
-
-    return '';
-}
-
-function ensureEntryCodes(
-    entries,
-    {repack=false}={}
-){
-    const list=entries||[];
-    const used=new Set();
-
-    /*
-     * codeManualEdited：
-     * 是否已经使用过唯一一次“直接手动修改编码”的机会。
-     *
-     * codeManualPinned：
-     * 当前编码是否仍然是用户手动指定的那个编码。
-     *
-     * 编组/标题变化触发的自动编码变化不会重置
-     * codeManualEdited，也不会增加任何次数。
-     */
-    for(const entry of list){
-        entry.codeManualEdited=
-            Boolean(entry.codeManualEdited);
-
-        entry.codeManualPinned=
-            Boolean(
-                entry.codeManualEdited &&
-                entry.codeManualPinned
-            );
-    }
-
-    /*
-     * 第一阶段：
-     * 合法、不重复的手工编码优先保留。
-     */
-    for(const entry of list){
-        if(!entry.codeManualPinned){
-            continue;
-        }
-
-        const code=
-            normalizeStoredCode(entry.code);
-
-        if(
-            code &&
-            codeAllowedForEntry(entry,code) &&
-            !used.has(Number(code))
-        ){
-            entry.code=code;
-
-            used.add(
-                Number(code)
-            );
-        }else{
-            /*
-             * 如果编组或标题变化，
-             * 导致原来的手工编码不再属于新范围，
-             * 当前手工固定状态自动解除。
-             *
-             * 但“手动修改机会已经使用过”
-             * 这一事实永久保留。
-             */
-            entry.code='';
-            entry.codeManualPinned=false;
-        }
-    }
-
-    /*
-     * 第二阶段：
-     * 普通自动编码。
-     */
-    for(const entry of list){
-        if(entry.codeManualPinned){
-            continue;
-        }
-
-        if(repack){
-            entry.code='';
-            continue;
-        }
-
-        const code=
-            normalizeStoredCode(entry.code);
-
-        if(
-            code &&
-            codeAllowedForEntry(entry,code) &&
-            !used.has(Number(code))
-        ){
-            entry.code=code;
-            used.add(Number(code));
-        }else{
-            entry.code='';
-        }
-    }
-
-    /*
-     * 第三阶段：
-     * 没有编码的条目按照网页原规则
-     * 领取最小可用编码。
-     */
-    for(const entry of list){
-        if(entry.code){
-            continue;
-        }
-
-        const code=
-            smallestAvailableCode(
-                entry,
-                used
-            );
-
-        entry.code=code;
-
-        if(code){
-            used.add(Number(code));
-        }
-    }
-
-    return list;
-}
-
-function repackEntryCodes(entries){
-    return ensureEntryCodes(
-        entries,
-        {repack:true}
-    );
-}
-
 function compareBookNo(a,b){
-    const aa=clean(a);
-    const bb=clean(b);
+    /*
+     * 这里只对用于排序的临时副本做 NFKC，
+     * 从而兼容用户输入的全角数字。
+     *
+     * 原书号文本仍原样保存和展示，
+     * 中文标点不会被改成半角。
+     */
+    const aa=
+        folded(a);
 
-    if(aa&&!bb)return -1;
-    if(!aa&&bb)return 1;
-    if(!aa&&!bb)return 0;
+    const bb=
+        folded(b);
+
+    if(aa&&!bb){
+        return -1;
+    }
+
+    if(!aa&&bb){
+        return 1;
+    }
+
+    if(!aa&&!bb){
+        return 0;
+    }
 
     function triple(value){
-        const match=value.match(
-            /^(\d+)-(\d+)-(\d+)$/
-        );
+        const match=
+            value.match(
+                /^(\d+)-(\d+)-(\d+)$/
+            );
 
         return match
             ? [
@@ -1434,38 +2207,459 @@ function compareBookNo(a,b){
             : null;
     }
 
-    const at=triple(aa);
-    const bt=triple(bb);
+    const at=
+        triple(aa);
 
-    const group=(value,tripleValue)=>
-        tripleValue
-            ? 0
-            : (
-                value.includes('·')
-                    ? 1
-                    : 2
-            );
+    const bt=
+        triple(bb);
 
-    const ga=group(aa,at);
-    const gb=group(bb,bt);
+    const group=
+        (
+            value,
+            tripleValue
+        )=>
+            tripleValue
+                ? 0
+                : (
+                    value.includes('·')
+                        ? 1
+                        : 2
+                );
+
+    const ga=
+        group(
+            aa,
+            at
+        );
+
+    const gb=
+        group(
+            bb,
+            bt
+        );
 
     if(ga!==gb){
         return ga-gb;
     }
 
     if(ga===0){
-        for(let i=0;i<3;i++){
-            if(at[i]!==bt[i]){
+        for(
+            let i=0;
+            i<3;
+            i++
+        ){
+            if(
+                at[i]!==bt[i]
+            ){
                 return at[i]-bt[i];
             }
         }
     }
 
-    return collator.compare(aa,bb);
+    return collator.compare(
+        aa,
+        bb
+    );
+}
+
+function codeGroupsFromEntry(
+    entry
+){
+    const raw=
+        normalizeMulti(
+            entry?.tag
+        )
+        .map(clean)
+        .filter(Boolean);
+
+    if(!raw.length){
+        return null;
+    }
+
+    const codes=
+        raw.map(
+            codeGroupValue
+        );
+
+    if(
+        codes.some(
+            value=>
+                !CODE_GROUP_OPTIONS
+                    .includes(value)
+        )
+    ){
+        return null;
+    }
+
+    return uniq(codes)
+        .sort(
+            (a,b)=>
+                Number(a)-
+                Number(b)
+        );
+}
+
+function mergeCodeRanges(
+    ranges
+){
+    const ordered=
+        (ranges||[])
+            .map(
+                range=>[
+                    Number(
+                        range[0]
+                    ),
+                    Number(
+                        range[1]
+                    )
+                ]
+            )
+            .filter(
+                range=>
+                    Number.isFinite(
+                        range[0]
+                    ) &&
+                    Number.isFinite(
+                        range[1]
+                    ) &&
+                    range[0]<=
+                    range[1]
+            )
+            .sort(
+                (a,b)=>
+                    a[0]-b[0] ||
+                    a[1]-b[1]
+            );
+
+    const merged=[];
+
+    for(
+        const range
+        of ordered
+    ){
+        const last=
+            merged[
+                merged.length-1
+            ];
+
+        if(
+            last &&
+            range[0]<=
+                last[1]+1
+        ){
+            last[1]=
+                Math.max(
+                    last[1],
+                    range[1]
+                );
+        }else{
+            merged.push(
+                [...range]
+            );
+        }
+    }
+
+    return merged;
+}
+
+function codeRangesForEntry(
+    entry
+){
+    const groups=
+        codeGroupsFromEntry(
+            entry
+        );
+
+    if(!groups?.length){
+        return [];
+    }
+
+    const rules=
+        titleIsChinese(
+            entry.bookName
+        )
+            ? CODE_RULES.zh
+            : CODE_RULES.en;
+
+    const combination=
+        groups.join('/');
+
+    if(
+        rules.exceptions[
+            combination
+        ]
+    ){
+        return mergeCodeRanges(
+            rules.exceptions[
+                combination
+            ]
+        );
+    }
+
+    return mergeCodeRanges(
+        groups.flatMap(
+            group=>
+                rules.groups[group]
+                ||[]
+        )
+    );
+}
+
+function normalizeStoredCode(
+    raw
+){
+    /*
+     * 编码属于纯数字机器字段，
+     * 因此这里允许全角数字临时折叠成 ASCII。
+     */
+    const value=
+        folded(raw);
+
+    return /^\d{6}$/.test(
+        value
+    )
+        ? value
+        : '';
+}
+
+function codeAllowedForEntry(
+    entry,
+    rawCode
+){
+    const code=
+        Number(
+            normalizeStoredCode(
+                rawCode
+            )
+        );
+
+    if(
+        !Number.isInteger(code)
+    ){
+        return false;
+    }
+
+    return codeRangesForEntry(
+        entry
+    )
+    .some(
+        ([start,end])=>
+            code>=start &&
+            code<=end
+    );
+}
+
+function smallestAvailableCode(
+    entry,
+    used
+){
+    for(
+        const [start,end]
+        of codeRangesForEntry(
+            entry
+        )
+    ){
+        let number=
+            start;
+
+        while(
+            number<=end &&
+            used.has(number)
+        ){
+            number++;
+        }
+
+        if(number<=end){
+            return String(number)
+                .padStart(
+                    6,
+                    '0'
+                );
+        }
+    }
+
+    return '';
+}
+
+function ensureEntryCodes(
+    entries,
+    {repack=false}={}
+){
+    const list=
+        entries||[];
+
+    const used=
+        new Set();
+
+    /*
+     * codeManualEdited：
+     * 是否已经使用过唯一一次
+     * “直接手动修改编码”的机会。
+     *
+     * codeManualPinned：
+     * 当前编码是否仍然是手工指定编码。
+     */
+    for(
+        const entry
+        of list
+    ){
+        entry.codeManualEdited=
+            Boolean(
+                entry.codeManualEdited
+            );
+
+        entry.codeManualPinned=
+            Boolean(
+                entry.codeManualEdited &&
+                entry.codeManualPinned
+            );
+    }
+
+    /*
+     * 第一阶段：
+     * 优先保留仍合法的手工编码。
+     */
+    for(
+        const entry
+        of list
+    ){
+        if(
+            !entry.codeManualPinned
+        ){
+            continue;
+        }
+
+        const code=
+            normalizeStoredCode(
+                entry.code
+            );
+
+        if(
+            code &&
+            codeAllowedForEntry(
+                entry,
+                code
+            ) &&
+            !used.has(
+                Number(code)
+            )
+        ){
+            entry.code=
+                code;
+
+            used.add(
+                Number(code)
+            );
+        }else{
+            /*
+             * 因编组或标题变化，
+             * 手工编码已经不再适用。
+             *
+             * 自动释放这个编码，
+             * 但 codeManualEdited 保留 true。
+             */
+            entry.code='';
+
+            entry.codeManualPinned=
+                false;
+        }
+    }
+
+    /*
+     * 第二阶段：
+     * 保留合法自动编码。
+     */
+    for(
+        const entry
+        of list
+    ){
+        if(
+            entry.codeManualPinned
+        ){
+            continue;
+        }
+
+        if(repack){
+            entry.code='';
+            continue;
+        }
+
+        const code=
+            normalizeStoredCode(
+                entry.code
+            );
+
+        if(
+            code &&
+            codeAllowedForEntry(
+                entry,
+                code
+            ) &&
+            !used.has(
+                Number(code)
+            )
+        ){
+            entry.code=
+                code;
+
+            used.add(
+                Number(code)
+            );
+        }else{
+            entry.code='';
+        }
+    }
+
+    /*
+     * 第三阶段：
+     * 给缺失编码的条目分配最小可用编码。
+     */
+    for(
+        const entry
+        of list
+    ){
+        if(entry.code){
+            continue;
+        }
+
+        const code=
+            smallestAvailableCode(
+                entry,
+                used
+            );
+
+        entry.code=
+            code;
+
+        if(code){
+            used.add(
+                Number(code)
+            );
+        }
+    }
+
+    return list;
+}
+
+function repackEntryCodes(
+    entries
+){
+    return ensureEntryCodes(
+        entries,
+        {
+            repack:true
+        }
+    );
 }
 
 function renderLinkedText(raw){
-    const source=clean(raw);
+    /*
+     * raw 在这里直接使用保存的 NFC 原文，
+     * 不做 NFKC，
+     * 因此中文全角逗号、括号、冒号等保持原样。
+     */
+    const source=
+        clean(raw);
 
     const regex=
         /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
@@ -1475,24 +2669,33 @@ function renderLinkedText(raw){
     let match;
 
     while(
-        (match=regex.exec(source))
+        (
+            match=
+                regex.exec(source)
+        )
     ){
-        html+=esc(
-            source.slice(
-                last,
-                match.index
-            )
-        );
+        html+=
+            esc(
+                source.slice(
+                    last,
+                    match.index
+                )
+            );
 
         html+=
             `<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
 
         last=
-            match.index +
+            match.index+
             match[0].length;
     }
 
-    return html+esc(source.slice(last));
+    return (
+        html+
+        esc(
+            source.slice(last)
+        )
+    );
 }
 
 function normEntry(raw){
@@ -1504,22 +2707,30 @@ function normEntry(raw){
     }
 
     const bookName=
-        cleanTitle(raw.bookName);
+        cleanTitle(
+            raw.bookName
+        );
 
     if(!bookName){
         return null;
     }
 
     return {
-        id:clean(raw.id)||uid(),
+        id:
+            clean(raw.id) ||
+            uid(),
 
         bookName,
 
         bookNo:
-            clean(raw.bookNo),
+            clean(
+                raw.bookNo
+            ),
 
         institution:
-            clean(raw.institution),
+            clean(
+                raw.institution
+            ),
 
         category:
             normalizeMulti(
@@ -1528,14 +2739,18 @@ function normEntry(raw){
 
         tag:
             sortTags(
-                normalizeMulti(raw.tag)
-                    .map(
-                        normalizeFixedGroupLabel
-                    )
+                normalizeMulti(
+                    raw.tag
+                )
+                .map(
+                    normalizeFixedGroupLabel
+                )
             ),
 
         tagChecked:
-            Boolean(raw.tagChecked),
+            Boolean(
+                raw.tagChecked
+            ),
 
         code:
             normalizeStoredCode(
@@ -1558,17 +2773,22 @@ function normEntry(raw){
 function norm(value){
     const source=
         Array.isArray(value)
-            ? {entries:value}
+            ? {
+                entries:value
+              }
             : (
                 value &&
-                typeof value==='object'
+                typeof value===
+                'object'
                     ? value
                     : {}
             );
 
     const entries=
         (
-            Array.isArray(source.entries)
+            Array.isArray(
+                source.entries
+            )
                 ? source.entries
                 : []
         )
@@ -1577,21 +2797,27 @@ function norm(value){
 
     const institutions=
         uniq(
-            Array.isArray(source.institutions)
+            Array.isArray(
+                source.institutions
+            )
                 ? source.institutions
                 : entries
                     .map(
-                        entry=>entry.institution
+                        entry=>
+                            entry.institution
                     )
                     .filter(Boolean)
         );
 
     const categories=
         uniq(
-            Array.isArray(source.categories)
+            Array.isArray(
+                source.categories
+            )
                 ? source.categories
                 : entries.flatMap(
-                    entry=>entry.category
+                    entry=>
+                        entry.category
                 )
         );
 
@@ -1605,59 +2831,84 @@ function norm(value){
             )
         );
 
-    entries.sort((a,b)=>{
-        const ai=
-            orderMap.has(key(a.institution))
-                ? orderMap.get(key(a.institution))
-                : Number.MAX_SAFE_INTEGER;
+    entries.sort(
+        (a,b)=>{
+            const ai=
+                orderMap.has(
+                    key(
+                        a.institution
+                    )
+                )
+                    ? orderMap.get(
+                        key(
+                            a.institution
+                        )
+                    )
+                    : Number.MAX_SAFE_INTEGER;
 
-        const bi=
-            orderMap.has(key(b.institution))
-                ? orderMap.get(key(b.institution))
-                : Number.MAX_SAFE_INTEGER;
+            const bi=
+                orderMap.has(
+                    key(
+                        b.institution
+                    )
+                )
+                    ? orderMap.get(
+                        key(
+                            b.institution
+                        )
+                    )
+                    : Number.MAX_SAFE_INTEGER;
 
-        if(ai!==bi){
-            return ai-bi;
-        }
+            if(ai!==bi){
+                return ai-bi;
+            }
 
-        if(
-            ai===Number.MAX_SAFE_INTEGER
-        ){
-            const result=
-                collator.compare(
-                    a.institution,
-                    b.institution
+            if(
+                ai===
+                Number.MAX_SAFE_INTEGER
+            ){
+                const result=
+                    collator.compare(
+                        a.institution,
+                        b.institution
+                    );
+
+                if(result!==0){
+                    return result;
+                }
+            }
+
+            const bookNoResult=
+                compareBookNo(
+                    a.bookNo,
+                    b.bookNo
                 );
 
-            if(result!==0){
-                return result;
+            if(
+                bookNoResult!==0
+            ){
+                return bookNoResult;
             }
-        }
 
-        const bookNoResult=
-            compareBookNo(
-                a.bookNo,
-                b.bookNo
+            return collator.compare(
+                a.bookName,
+                b.bookName
             );
-
-        if(bookNoResult!==0){
-            return bookNoResult;
         }
+    );
 
-        return collator.compare(
-            a.bookName,
-            b.bookName
-        );
-    });
-
-    ensureEntryCodes(entries);
+    ensureEntryCodes(
+        entries
+    );
 
     return {
         schemaVersion:7,
         entries,
         institutions,
         categories,
-        tags:[...GROUP_OPTIONS]
+        tags:[
+            ...GROUP_OPTIONS
+        ]
     };
 }
 
@@ -1670,25 +2921,41 @@ function admin(){
     );
 }
 
-function show(message,type='info'){
-    toast.textContent=message;
-    toast.className=`toast ${type}`;
+function show(
+    message,
+    type='info'
+){
+    toast.textContent=
+        message;
 
-    clearTimeout(toastTimer);
+    toast.className=
+        `toast ${type}`;
 
-    toastTimer=setTimeout(
-        ()=>{
-            toast.classList.add('hidden');
-        },
-        3000
+    clearTimeout(
+        toastTimer
     );
+
+    toastTimer=
+        setTimeout(
+            ()=>{
+                toast.classList
+                    .add(
+                        'hidden'
+                    );
+            },
+            3000
+        );
 }
 
-function status(kind,text){
+function status(
+    kind,
+    text
+){
     statusDot.className=
         `status-dot ${kind}`;
 
-    statusText.textContent=text;
+    statusText.textContent=
+        text;
 }
 
 function openStorageDb(){
@@ -1698,46 +2965,66 @@ function openStorageDb(){
 
     storageDbPromise=
         new Promise(
-            (resolve,reject)=>{
+            (
+                resolve,
+                reject
+            )=>{
                 const request=
                     indexedDB.open(
                         DB_NAME,
                         1
                     );
 
-                request.onupgradeneeded=()=>{
-                    const db=request.result;
+                request.onupgradeneeded=
+                    ()=>{
+                        const db=
+                            request.result;
 
-                    if(
-                        !db.objectStoreNames
-                            .contains(DB_STORE)
-                    ){
-                        db.createObjectStore(
-                            DB_STORE
+                        if(
+                            !db
+                                .objectStoreNames
+                                .contains(
+                                    DB_STORE
+                                )
+                        ){
+                            db
+                                .createObjectStore(
+                                    DB_STORE
+                                );
+                        }
+                    };
+
+                request.onsuccess=
+                    ()=>{
+                        resolve(
+                            request.result
                         );
-                    }
-                };
+                    };
 
-                request.onsuccess=()=>{
-                    resolve(request.result);
-                };
-
-                request.onerror=()=>{
-                    reject(request.error);
-                };
+                request.onerror=
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
             }
         );
 
     return storageDbPromise;
 }
 
-async function idbGet(storageKey){
+async function idbGet(
+    storageKey
+){
     try{
         const db=
             await openStorageDb();
 
         return await new Promise(
-            (resolve,reject)=>{
+            (
+                resolve,
+                reject
+            )=>{
                 const tx=
                     db.transaction(
                         DB_STORE,
@@ -1745,100 +3032,160 @@ async function idbGet(storageKey){
                     );
 
                 const request=
-                    tx.objectStore(DB_STORE)
-                        .get(storageKey);
+                    tx
+                        .objectStore(
+                            DB_STORE
+                        )
+                        .get(
+                            storageKey
+                        );
 
-                request.onsuccess=()=>{
-                    resolve(
-                        request.result??null
-                    );
-                };
+                request.onsuccess=
+                    ()=>{
+                        resolve(
+                            request.result ??
+                            null
+                        );
+                    };
 
-                request.onerror=()=>{
-                    reject(request.error);
-                };
+                request.onerror=
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
             }
         );
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
+
         return null;
     }
 }
 
-async function idbSet(storageKey,value){
+async function idbSet(
+    storageKey,
+    value
+){
     const db=
         await openStorageDb();
 
     return new Promise(
-        (resolve,reject)=>{
+        (
+            resolve,
+            reject
+        )=>{
             const tx=
                 db.transaction(
                     DB_STORE,
                     'readwrite'
                 );
 
-            tx.objectStore(DB_STORE)
+            tx
+                .objectStore(
+                    DB_STORE
+                )
                 .put(
                     value,
                     storageKey
                 );
 
-            tx.oncomplete=()=>{
-                resolve(true);
-            };
+            tx.oncomplete=
+                ()=>{
+                    resolve(
+                        true
+                    );
+                };
 
-            tx.onerror=()=>{
-                reject(tx.error);
-            };
+            tx.onerror=
+                ()=>{
+                    reject(
+                        tx.error
+                    );
+                };
         }
     );
 }
 
-async function idbDelete(storageKey){
+async function idbDelete(
+    storageKey
+){
     try{
         const db=
             await openStorageDb();
 
         await new Promise(
-            (resolve,reject)=>{
+            (
+                resolve,
+                reject
+            )=>{
                 const tx=
                     db.transaction(
                         DB_STORE,
                         'readwrite'
                     );
 
-                tx.objectStore(DB_STORE)
-                    .delete(storageKey);
+                tx
+                    .objectStore(
+                        DB_STORE
+                    )
+                    .delete(
+                        storageKey
+                    );
 
-                tx.oncomplete=resolve;
-                tx.onerror=()=>reject(tx.error);
+                tx.oncomplete=
+                    resolve;
+
+                tx.onerror=
+                    ()=>{
+                        reject(
+                            tx.error
+                        );
+                    };
             }
         );
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
     }
 }
 
-function saveLocal(snapshot=state){
-    state=norm(snapshot);
-    workCopyCache=state;
+function saveLocal(
+    snapshot=state
+){
+    state=
+        norm(
+            snapshot
+        );
+
+    workCopyCache=
+        state;
 
     idbSet(
         WORKCOPY_KEY,
         {
             savedAt:
-                new Date().toISOString(),
+                new Date()
+                    .toISOString(),
 
             state
         }
-    ).catch(console.error);
+    )
+    .catch(
+        console.error
+    );
 
     return true;
 }
 
 function loadLocal(){
     return workCopyCache
-        ? norm(workCopyCache)
+        ? norm(
+            workCopyCache
+        )
         : null;
 }
 
@@ -1859,11 +3206,17 @@ function updateAdmin(){
             !admin()
         );
 
-    syncBtn.disabled=!editable;
-    manageBtn.disabled=!editable;
+    syncBtn.disabled=
+        !editable;
+
+    manageBtn.disabled=
+        !editable;
 }
 
-function multiMeta(type,which){
+function multiMeta(
+    type,
+    which
+){
     const edit=
         which==='edit';
 
@@ -1930,7 +3283,9 @@ function multiMeta(type,which){
     };
 }
 
-function institutionMeta(which){
+function institutionMeta(
+    which
+){
     const edit=
         which==='edit';
 
@@ -1952,128 +3307,182 @@ function institutionMeta(which){
     };
 }
 
-function sortHistory(type,values){
+function sortHistory(
+    type,
+    values
+){
     if(type==='tag'){
-        return [...GROUP_OPTIONS];
+        return [
+            ...GROUP_OPTIONS
+        ];
     }
 
-    return uniq(values);
+    return uniq(
+        values
+    );
 }
 
-function groupDisplay(value){
-    return normalizeFixedGroupLabel(value);
+function groupDisplay(
+    value
+){
+    return normalizeFixedGroupLabel(
+        value
+    );
 }
 
-function multiAllowsMultiple(type){
+function multiAllowsMultiple(
+    type
+){
     return type==='tag';
 }
 
-function renderMultiSelected(type,which){
+function renderMultiSelected(
+    type,
+    which
+){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     const values=
         type==='tag'
-            ? sortTags(meta.selection)
+            ? sortTags(
+                meta.selection
+            )
             : meta.selection;
 
     meta.selectedBox.innerHTML=
         values
             .map(
                 value=>`
-                <span class="selected-pill">
-                    <span class="selected-pill-label">${esc(
-                        type==='tag'
-                            ? groupDisplay(value)
-                            : value
-                    )}</span>
+                    <span class="selected-pill">
 
-                    <button
-                        class="selected-pill-remove"
-                        type="button"
-                        data-remove-value="${attr(value)}"
-                    >×</button>
-                </span>
+                        <span class="selected-pill-label">
+                            ${esc(
+                                type==='tag'
+                                    ? groupDisplay(
+                                        value
+                                      )
+                                    : value
+                            )}
+                        </span>
+
+                        <button
+                            class="selected-pill-remove"
+                            type="button"
+                            data-remove-value="${attr(value)}"
+                        >
+                            ×
+                        </button>
+
+                    </span>
                 `
             )
             .join('');
 }
 
-function renderMultiOptions(type,which){
+function renderMultiOptions(
+    type,
+    which
+){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     /*
-     * 部分数字、部分文字都使用 includes()。
+     * key() 内部使用 folded() 做搜索比较，
+     * 因此：
      *
-     * 例如：
-     * 输入 12 -> 可以匹配 12组
-     * 输入 2  -> 可匹配 12组、21组、22组、23组
-     * 书架文字同样支持部分文字筛选。
+     * - 用户输入半角数字可找到全角数字；
+     * - 输入全角数字也可找到半角数字；
+     * - 但真实文字绝不会被改写。
      */
     const search=
-        key(meta.input.value);
+        key(
+            meta.input.value
+        );
 
     const values=
         sortHistory(
             type,
-            state[meta.historyKey]
+            state[
+                meta.historyKey
+            ]
         )
         .filter(
             value=>
                 !search ||
-                key(value).includes(search)
+                key(value)
+                    .includes(
+                        search
+                    )
         );
 
     const selected=
         new Set(
-            meta.selection.map(key)
+            meta.selection
+                .map(key)
         );
 
     meta.options.innerHTML=
         values.length
             ? `
-              <div class="combo-option-list">
-              ${values.map(
-                  value=>`
-                  <span class="combo-pill${selected.has(key(value))?' selected':''}">
-                      <button
-                          class="combo-pill-select"
-                          type="button"
-                          data-select-value="${attr(value)}"
-                      >${esc(
-                          type==='tag'
-                              ? groupDisplay(value)
-                              : value
-                      )}</button>
-                  </span>
-                  `
-              ).join('')}
-              </div>
-              `
-            : `<div class="combo-empty">暂无匹配选项</div>`;
+                <div class="combo-option-list">
+
+                ${values.map(
+                    value=>`
+                        <span
+                            class="combo-pill${selected.has(key(value))?' selected':''}"
+                        >
+
+                            <button
+                                class="combo-pill-select"
+                                type="button"
+                                data-select-value="${attr(value)}"
+                            >
+                                ${esc(
+                                    type==='tag'
+                                        ? groupDisplay(
+                                            value
+                                          )
+                                        : value
+                                )}
+                            </button>
+
+                        </span>
+                    `
+                ).join('')}
+
+                </div>
+            `
+            : `
+                <div class="combo-empty">
+                    暂无匹配选项
+                </div>
+            `;
 }
 
-function renderMultiField(type,which){
+function renderMultiField(
+    type,
+    which
+){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     renderMultiSelected(
         type,
         which
     );
 
-    /*
-     * 四个位置全部允许输入：
-     *
-     * 添加 → 编组
-     * 添加 → 书架
-     * 编辑 → 编组
-     * 编辑 → 书架
-     *
-     * 不设置 placeholder。
-     */
-    meta.input.readOnly=false;
+    meta.input.readOnly=
+        false;
 
     meta.input.removeAttribute(
         'readonly'
@@ -2089,93 +3498,135 @@ function renderMultiField(type,which){
     );
 }
 
-function renderInstitutionOptions(which){
+function renderInstitutionOptions(
+    which
+){
     const meta=
-        institutionMeta(which);
+        institutionMeta(
+            which
+        );
 
     const search=
-        key(meta.input.value);
+        key(
+            meta.input.value
+        );
 
     const values=
-        uniq(state.institutions)
-            .filter(
-                value=>
-                    !search ||
-                    key(value)
-                        .includes(search)
-            );
+        uniq(
+            state.institutions
+        )
+        .filter(
+            value=>
+                !search ||
+                key(value)
+                    .includes(
+                        search
+                    )
+        );
 
     meta.options.innerHTML=
         values.length
             ? `
-              <div class="combo-option-list">
-              ${values.map(
-                  value=>`
-                  <span class="combo-pill">
-                      <button
-                          class="combo-pill-select"
-                          type="button"
-                          data-select-value="${attr(value)}"
-                      >${renderLinkedText(value)}</button>
-                  </span>
-                  `
-              ).join('')}
-              </div>
-              `
-            : `<div class="combo-empty">暂无匹配出版</div>`;
+                <div class="combo-option-list">
+
+                ${values.map(
+                    value=>`
+                        <span class="combo-pill">
+
+                            <button
+                                class="combo-pill-select"
+                                type="button"
+                                data-select-value="${attr(value)}"
+                            >
+                                ${renderLinkedText(value)}
+                            </button>
+
+                        </span>
+                    `
+                ).join('')}
+
+                </div>
+            `
+            : `
+                <div class="combo-empty">
+                    暂无匹配出版
+                </div>
+            `;
 }
 
 function renderManageInstitutionOptions(){
     const history=
-        uniq(state.institutions);
+        uniq(
+            state.institutions
+        );
 
     manageInstitutionOptions.innerHTML=
         history.length
             ? history
                 .map(
-                    (value,index)=>`
-                    <div
-                        class="manage-option-row"
-                        data-manage-value="${attr(value)}"
-                    >
-                        <span>${renderLinkedText(value)}</span>
-
-                        <input
-                            class="manage-line-input"
-                            type="number"
-                            min="1"
-                            max="${history.length}"
-                            value="${index+1}"
-                            data-move-value="${attr(value)}"
+                    (
+                        value,
+                        index
+                    )=>`
+                        <div
+                            class="manage-option-row"
+                            data-manage-value="${attr(value)}"
                         >
 
-                        <button
-                            class="combo-pill-edit"
-                            type="button"
-                            data-edit-value="${attr(value)}"
-                        >✓</button>
+                            <span>
+                                ${renderLinkedText(value)}
+                            </span>
 
-                        <button
-                            class="combo-pill-delete"
-                            type="button"
-                            data-delete-value="${attr(value)}"
-                        >×</button>
-                    </div>
+                            <input
+                                class="manage-line-input"
+                                type="number"
+                                min="1"
+                                max="${history.length}"
+                                value="${index+1}"
+                                data-move-value="${attr(value)}"
+                            >
+
+                            <button
+                                class="combo-pill-edit"
+                                type="button"
+                                data-edit-value="${attr(value)}"
+                            >
+                                ✓
+                            </button>
+
+                            <button
+                                class="combo-pill-delete"
+                                type="button"
+                                data-delete-value="${attr(value)}"
+                            >
+                                ×
+                            </button>
+
+                        </div>
                     `
                 )
                 .join('')
-            : '<div class="empty-state">暂无出版选项</div>';
+            : `
+                <div class="empty-state">
+                    暂无出版选项
+                </div>
+            `;
 
     manageInstitutionLineInput.max=
-        String(history.length+1);
+        String(
+            history.length+1
+        );
 
     if(
         !clean(
-            manageInstitutionLineInput.value
+            manageInstitutionLineInput
+                .value
         )
     ){
         manageInstitutionLineInput.value=
-            String(history.length+1);
+            String(
+                history.length+1
+            );
     }
 }
 
@@ -2196,7 +3647,8 @@ function updateCountDisplay(){
     const checked=
         state.entries
             .filter(
-                entry=>entry.tagChecked
+                entry=>
+                    entry.tagChecked
             )
             .length;
 
@@ -2205,13 +3657,20 @@ function updateCountDisplay(){
 }
 
 function render(){
-    state=norm(state);
+    state=
+        norm(state);
 
     updateAdmin();
+
     updateCountDisplay();
 
-    renderInstitutionOptions('add');
-    renderInstitutionOptions('edit');
+    renderInstitutionOptions(
+        'add'
+    );
+
+    renderInstitutionOptions(
+        'edit'
+    );
 
     renderMultiField(
         'tag',
@@ -2235,93 +3694,152 @@ function render(){
 
     renderManageInstitutionOptions();
 
-    if(!state.entries.length){
+    if(
+        !state.entries.length
+    ){
         pressList.innerHTML=
-            '<div class="empty-state">暂无条目</div>';
+            `
+                <div class="empty-state">
+                    暂无条目
+                </div>
+            `;
 
         return;
     }
 
     pressList.innerHTML=
-        state.entries.map(
-            entry=>{
-                const code=
-                    normalizeStoredCode(
-                        entry.code
-                    );
+        state.entries
+            .map(
+                entry=>{
+                    const code=
+                        normalizeStoredCode(
+                            entry.code
+                        );
 
-                const editLabel=
-                    code||'编辑';
+                    const editLabel=
+                        code ||
+                        '编辑';
 
-                const rows=[];
+                    const rows=[];
 
-                if(entry.institution){
+                    if(
+                        entry.institution
+                    ){
+                        rows.push(
+                            `
+                                <div class="meta-row institution">
+                                    <span class="meta-label">
+                                        出版：
+                                    </span>${renderLinkedText(entry.institution)}
+                                </div>
+                            `
+                        );
+                    }
+
+                    if(
+                        entry.bookNo
+                    ){
+                        rows.push(
+                            `
+                                <div class="meta-row">
+                                    <span class="meta-label">
+                                        书号：
+                                    </span>${esc(entry.bookNo)}
+                                </div>
+                            `
+                        );
+                    }
+
                     rows.push(
-                        `<div class="meta-row institution"><span class="meta-label">出版：</span>${renderLinkedText(entry.institution)}</div>`
+                        `
+                            <div class="meta-row tag-row">
+
+                                <span class="meta-label">
+                                    编组：
+                                </span>
+
+                                <span>
+                                    ${esc(
+                                        entry.tag
+                                            .map(
+                                                groupDisplay
+                                            )
+                                            .join('/')
+                                    )}
+                                </span>
+
+                                <input
+                                    class="entry-tag-checkbox"
+                                    type="checkbox"
+                                    data-id="${attr(entry.id)}"
+                                    ${entry.tagChecked?'checked':''}
+                                    ${admin()&&adminReady?'':'disabled'}
+                                >
+
+                            </div>
+                        `
                     );
-                }
 
-                if(entry.bookNo){
-                    rows.push(
-                        `<div class="meta-row"><span class="meta-label">书号：</span>${esc(entry.bookNo)}</div>`
-                    );
-                }
+                    if(
+                        entry.category.length
+                    ){
+                        /*
+                         * 与出版、书号完全相同：
+                         * 标签和内容保持在同一个普通文本流里。
+                         */
+                        rows.push(
+                            `
+                                <div class="meta-row bookshelf-row">
+                                    <span class="meta-label">
+                                        书架：
+                                    </span><span class="bookshelf-text">${esc(
+                                        entry.category
+                                            .join('、')
+                                    )}</span>
+                                </div>
+                            `
+                        );
+                    }
 
-                rows.push(
-                    `<div class="meta-row tag-row">
-                        <span class="meta-label">编组：</span>
-                        <span>${esc(entry.tag.map(groupDisplay).join('/'))}</span>
+                    return `
+                        <article class="press-item">
 
-                        <input
-                            class="entry-tag-checkbox"
-                            type="checkbox"
-                            data-id="${attr(entry.id)}"
-                            ${entry.tagChecked?'checked':''}
-                            ${admin()&&adminReady?'':'disabled'}
-                        >
-                    </div>`
-                );
+                            <div class="press-head">
 
-                if(entry.category.length){
-                    rows.push(
-                        `<div class="meta-row bookshelf-row">
-                            <span class="bookshelf-text">
-                                <span class="meta-label">书架：</span>
-                                ${esc(entry.category.join('、'))}
-                            </span>
-                        </div>`
-                    );
-                }
+                                <div class="press-content">
 
-                return `
-                    <article class="press-item">
-                        <div class="press-head">
-                            <div class="press-content">
-                                <div class="book-title">
-                                    ${renderLinkedText(entry.bookName)}
+                                    <div class="book-title">
+                                        ${renderLinkedText(entry.bookName)}
+                                    </div>
+
+                                    <div class="meta">
+                                        ${rows.join('')}
+                                    </div>
+
                                 </div>
 
-                                <div class="meta">
-                                    ${rows.join('')}
-                                </div>
+                                ${
+                                    admin() &&
+                                    adminReady
+                                        ? `
+                                            <button
+                                                class="edit-btn"
+                                                type="button"
+                                                data-id="${attr(entry.id)}"
+                                            >
+                                                ${esc(editLabel)}
+                                            </button>
+                                        `
+                                        : ''
+                                }
+
                             </div>
 
-                            ${
-                                admin()&&adminReady
-                                    ? `
-                                      <button
-                                          class="edit-btn"
-                                          type="button"
-                                          data-id="${attr(entry.id)}"
-                                      >${esc(editLabel)}</button>
-                                      `
-                                    : ''
-                            }
-                        </div>
-                    </article>
-                `;
-            }
-        ).join('');
+                        </article>
+                    `;
+                }
+            )
+            .join('');
 }
 
 function removeSelection(
@@ -2330,7 +3848,10 @@ function removeSelection(
     value
 ){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     const target=
         key(value);
@@ -2339,7 +3860,8 @@ function removeSelection(
         meta.selection
             .filter(
                 item=>
-                    key(item)!==target
+                    key(item)!==
+                    target
             );
 
     if(which==='edit'){
@@ -2372,15 +3894,21 @@ function toggleSelection(
     value
 ){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     const target=
         key(value);
 
     const exists=
-        meta.selection.some(
-            item=>key(item)===target
-        );
+        meta.selection
+            .some(
+                item=>
+                    key(item)===
+                    target
+            );
 
     if(exists){
         removeSelection(
@@ -2393,16 +3921,14 @@ function toggleSelection(
     }
 
     const multiple=
-        multiAllowsMultiple(type);
+        multiAllowsMultiple(
+            type
+        );
 
     if(
         meta.selection.length &&
         !multiple
     ){
-        /*
-         * 书架是单选。
-         * 必须先删掉原来的书架。
-         */
         meta.panel.classList.add(
             'hidden'
         );
@@ -2420,8 +3946,10 @@ function toggleSelection(
             ? uniq([
                 ...meta.selection,
                 clean(value)
-            ])
-            : [clean(value)];
+              ])
+            : [
+                clean(value)
+              ];
 
     if(which==='edit'){
         editSelections[type]=
@@ -2435,9 +3963,6 @@ function toggleSelection(
                 : next;
     }
 
-    /*
-     * 每次选中后清除搜索内容。
-     */
     meta.input.value='';
 
     renderMultiField(
@@ -2446,21 +3971,33 @@ function toggleSelection(
     );
 
     /*
-     * 编组和书架都立即折叠。
+     * 选择完成后立即收起。
      */
     meta.panel.classList.add(
         'hidden'
     );
 }
 
-function commitInstitution(which){
+function commitInstitution(
+    which
+){
     const meta=
-        institutionMeta(which);
+        institutionMeta(
+            which
+        );
 
+    /*
+     * clean() 现在只使用 NFC，
+     * 中文全角标点会原样保存。
+     */
     meta.input.value=
-        clean(meta.input.value);
+        clean(
+            meta.input.value
+        );
 
-    renderInstitutionOptions(which);
+    renderInstitutionOptions(
+        which
+    );
 }
 
 function addEntry(){
@@ -2487,15 +4024,24 @@ function addEntry(){
         return;
     }
 
-    commitInstitution('add');
+    commitInstitution(
+        'add'
+    );
 
     const entry={
-        id:uid(),
+        id:
+            uid(),
 
         bookName,
 
+        /*
+         * 书号保存原始全角标点，
+         * 排序时才使用 folded()。
+         */
         bookNo:
-            clean(bookNoInput.value),
+            clean(
+                bookNoInput.value
+            ),
 
         institution:
             clean(
@@ -2503,33 +4049,30 @@ function addEntry(){
             ),
 
         category:
-            [...addSelections.category],
+            [
+                ...addSelections.category
+            ],
 
         tag:
             sortTags(
                 addSelections.tag
             ),
 
-        tagChecked:false,
+        tagChecked:
+            false,
 
-        /*
-         * 添加板块没有编码字段。
-         * 新增条目始终由系统自动分配。
-         */
         code:'',
 
-        /*
-         * 尚未使用过手动改码机会。
-         */
-        codeManualEdited:false,
+        codeManualEdited:
+            false,
 
-        /*
-         * 当前编码也不是人工固定编码。
-         */
-        codeManualPinned:false
+        codeManualPinned:
+            false
     };
 
-    state.entries.push(entry);
+    state.entries.push(
+        entry
+    );
 
     bookNameInput.value='';
     bookNoInput.value='';
@@ -2543,6 +4086,7 @@ function addEntry(){
     };
 
     render();
+
     schedule();
 
     bookNameInput.focus();
@@ -2560,7 +4104,9 @@ function getEditSnapshot(){
             editInstitution.value,
 
         category:
-            [...editSelections.category],
+            [
+                ...editSelections.category
+            ],
 
         tag:
             sortTags(
@@ -2578,6 +4124,14 @@ function getEditSnapshot(){
     });
 }
 
+function editIsUnchanged(){
+    return (
+        Boolean(editingId) &&
+        getEditSnapshot()===
+        editInitialSnapshot
+    );
+}
+
 function openEdit(id){
     if(
         !admin() ||
@@ -2588,14 +4142,16 @@ function openEdit(id){
 
     const entry=
         state.entries.find(
-            item=>item.id===id
+            item=>
+                item.id===id
         );
 
     if(!entry){
         return;
     }
 
-    editingId=id;
+    editingId=
+        id;
 
     editBookName.value=
         entry.bookName;
@@ -2607,8 +4163,9 @@ function openEdit(id){
         entry.institution;
 
     editSelections={
-        category:
-            [...entry.category],
+        category:[
+            ...entry.category
+        ],
 
         tag:
             sortTags(
@@ -2619,23 +4176,11 @@ function openEdit(id){
     editCategory.value='';
     editTag.value='';
 
-    /*
-     * 编码只在编辑弹窗出现。
-     */
     editCode.value=
         normalizeStoredCode(
             entry.code
         );
 
-    /*
-     * 唯一一次手动改码已经使用过：
-     * 输入框永久进入只读状态。
-     *
-     * 注意：
-     * 这里的只读只限制用户直接手改。
-     * 编组、标题变化引起的自动重算
-     * 完全不受限制。
-     */
     editCode.readOnly=
         Boolean(
             entry.codeManualEdited
@@ -2647,6 +4192,11 @@ function openEdit(id){
             ? 'true'
             : 'false'
     );
+
+    editCode.title=
+        editCode.readOnly
+            ? '编码已手动修改过一次；编组或标题变化仍可触发自动重算'
+            : '编码可手动修改一次；保存成功后将转为只读';
 
     renderInstitutionOptions(
         'edit'
@@ -2662,15 +4212,23 @@ function openEdit(id){
         'edit'
     );
 
+    /*
+     * 必须在所有字段初始化完成后记录快照。
+     */
     editInitialSnapshot=
         getEditSnapshot();
+
+    editOverlayPointerDown=
+        false;
 
     editModal.classList.remove(
         'hidden'
     );
 
     setTimeout(
-        ()=>editBookName.focus(),
+        ()=>{
+            editBookName.focus();
+        },
         30
     );
 }
@@ -2678,7 +4236,9 @@ function openEdit(id){
 function saveEdit(){
     const entry=
         state.entries.find(
-            item=>item.id===editingId
+            item=>
+                item.id===
+                editingId
         );
 
     if(!entry){
@@ -2723,6 +4283,10 @@ function saveEdit(){
             entry.codeManualEdited
         );
 
+    commitInstitution(
+        'edit'
+    );
+
     const nextTag=
         sortTags(
             editSelections.tag
@@ -2730,34 +4294,38 @@ function saveEdit(){
 
     const groupsChanged=
         previousGroups !==
-        JSON.stringify(nextTag);
+        JSON.stringify(
+            nextTag
+        );
 
     const languageChanged=
         previousLanguage !==
-        titleIsChinese(bookName);
+        titleIsChinese(
+            bookName
+        );
+
+    let manualCode='';
+
+    let manualChangeRequested=
+        false;
 
     /*
-     * =========================================
-     * 判断是否发生“直接手动修改编码”
-     * =========================================
-     *
-     * 只有用户直接改 editCode 的内容，
-     * 才消耗唯一一次机会。
-     *
-     * 编组/标签变化导致的自动编码变化，
-     * 完全不属于手动修改。
+     * 只有用户直接改编码框才算一次手动修改。
      */
-    let manualCode='';
-    let manualChangeRequested=false;
-
     if(!manualAlreadyUsed){
+
         const typed=
-            clean(editCode.value);
+            clean(
+                editCode.value
+            );
 
         manualChangeRequested=
-            typed!==previousCode;
+            typed !==
+            previousCode;
 
-        if(manualChangeRequested){
+        if(
+            manualChangeRequested
+        ){
             manualCode=
                 normalizeStoredCode(
                     typed
@@ -2777,7 +4345,8 @@ function saveEdit(){
             const candidate={
                 ...entry,
                 bookName,
-                tag:nextTag
+                tag:
+                    nextTag
             };
 
             if(
@@ -2797,13 +4366,16 @@ function saveEdit(){
             }
 
             const occupied=
-                state.entries.some(
-                    other=>
-                        other.id!==entry.id &&
-                        normalizeStoredCode(
-                            other.code
-                        )===manualCode
-                );
+                state.entries
+                    .some(
+                        other=>
+                            other.id !==
+                            entry.id &&
+                            normalizeStoredCode(
+                                other.code
+                            )===
+                            manualCode
+                    );
 
             if(occupied){
                 show(
@@ -2818,6 +4390,10 @@ function saveEdit(){
         }
     }
 
+    /*
+     * 所有普通文字字段继续使用 NFC clean()，
+     * 不再把全角逗号、括号等改成半角。
+     */
     entry.bookName=
         bookName;
 
@@ -2832,82 +4408,43 @@ function saveEdit(){
         );
 
     entry.category=
-        [...editSelections.category];
+        [
+            ...editSelections.category
+        ];
 
     entry.tag=
         nextTag;
 
-    if(manualChangeRequested){
-        /*
-         * =========================================
-         * 第一次手工修改编码
-         * =========================================
-         */
-
-        /*
-         * 当前条目使用新手工编码。
-         */
+    /*
+     * 第一次直接手动修改编码。
+     */
+    if(
+        manualChangeRequested
+    ){
         entry.code=
             manualCode;
 
-        /*
-         * 永久记录：
-         * 唯一一次直接手动修改机会已经使用。
-         */
         entry.codeManualEdited=
             true;
 
-        /*
-         * 当前编码属于人工指定。
-         */
         entry.codeManualPinned=
             true;
-
-        /*
-         * 原来的自动编码此时不再被该条目占用。
-         *
-         * 下次 ensureEntryCodes() 为其它需要编码
-         * 的条目分配时，该号码可以重新被使用。
-         */
     }
 
+    /*
+     * 编组或标题语言变化：
+     * 自动重算编码，
+     * 不属于手动修改，
+     * 次数不限。
+     */
     else if(
         groupsChanged ||
         languageChanged
     ){
-        /*
-         * =========================================
-         * 编组 / 标签 / 标题语言变化
-         * =========================================
-         *
-         * 这种变化属于自动编码机制。
-         * 不计入手工修改次数。
-         * 可以无限次发生。
-         */
-
-        /*
-         * 清空当前编码。
-         * render() -> norm() -> ensureEntryCodes()
-         * 会重新按当前网页规则自动分配。
-         */
         entry.code='';
 
-        /*
-         * 即使之前的编码曾经是人工指定，
-         * 编组变化后当前编码已经重新进入自动模式。
-         */
-        entry.codeManualPinned=false;
-
-        /*
-         * entry.codeManualEdited 不修改。
-         *
-         * 如果用户以前已经直接手改过一次，
-         * 它仍然保持 true。
-         *
-         * 因此：
-         * 自动变化不限次数，
-         * 但用户不会获得第二次直接手改机会。
-         */
+        entry.codeManualPinned=
+            false;
     }
 
     editModal.classList.add(
@@ -2915,7 +4452,11 @@ function saveEdit(){
     );
 
     editingId='';
+
     editInitialSnapshot='';
+
+    editOverlayPointerDown=
+        false;
 
     editSelections={
         category:[],
@@ -2923,13 +4464,15 @@ function saveEdit(){
     };
 
     render();
+
     schedule();
 }
 
 function deleteEntry(id){
     const entry=
         state.entries.find(
-            item=>item.id===id
+            item=>
+                item.id===id
         );
 
     if(!entry){
@@ -2946,14 +4489,10 @@ function deleteEntry(id){
 
     state.entries=
         state.entries.filter(
-            item=>item.id!==id
+            item=>
+                item.id!==id
         );
 
-    /*
-     * 删除条目后，
-     * 普通自动号码重新按规则补位；
-     * 当前仍有效的人工固定号码保持不变。
-     */
     repackEntryCodes(
         state.entries
     );
@@ -2963,9 +4502,14 @@ function deleteEntry(id){
     );
 
     editingId='';
+
     editInitialSnapshot='';
 
+    editOverlayPointerDown=
+        false;
+
     render();
+
     schedule();
 }
 
@@ -2994,7 +4538,10 @@ function setupMultiCombo(
     which
 ){
     const meta=
-        multiMeta(type,which);
+        multiMeta(
+            type,
+            which
+        );
 
     const combo=
         type==='tag'
@@ -3010,21 +4557,18 @@ function setupMultiCombo(
             );
 
     /*
-     * 点击输入框：
-     * 打开当前菜单。
+     * 点击输入框打开选项。
      */
     meta.input.addEventListener(
         'click',
         event=>{
             event.stopPropagation();
 
-            /*
-             * 书架已经选择时，
-             * 必须先点 × 删除。
-             */
             if(
                 meta.selection.length &&
-                !multiAllowsMultiple(type)
+                !multiAllowsMultiple(
+                    type
+                )
             ){
                 closePanels();
                 return;
@@ -3044,8 +4588,8 @@ function setupMultiCombo(
     );
 
     /*
-     * 输入部分数字或部分文字：
-     * 自动弹出对应筛选结果。
+     * 输入部分数字/文字，
+     * 自动展开并进行包含筛选。
      */
     meta.input.addEventListener(
         'input',
@@ -3058,7 +4602,9 @@ function setupMultiCombo(
 
             if(
                 current.selection.length &&
-                !multiAllowsMultiple(type)
+                !multiAllowsMultiple(
+                    type
+                )
             ){
                 meta.input.value='';
 
@@ -3080,9 +4626,6 @@ function setupMultiCombo(
         }
     );
 
-    /*
-     * 下拉选项点击。
-     */
     meta.options.addEventListener(
         'click',
         event=>{
@@ -3100,14 +4643,12 @@ function setupMultiCombo(
             toggleSelection(
                 type,
                 which,
-                button.dataset.selectValue
+                button.dataset
+                    .selectValue
             );
         }
     );
 
-    /*
-     * 删除已选项。
-     */
     meta.selectedBox.addEventListener(
         'click',
         event=>{
@@ -3125,20 +4666,18 @@ function setupMultiCombo(
             removeSelection(
                 type,
                 which,
-                button.dataset.removeValue
+                button.dataset
+                    .removeValue
             );
         }
     );
 
-    /*
-     * Enter：
-     * 如果筛选后只有一个选项，
-     * 可以直接选择。
-     */
     meta.input.addEventListener(
         'keydown',
         event=>{
-            if(event.key==='Escape'){
+            if(
+                event.key==='Escape'
+            ){
                 meta.panel.classList.add(
                     'hidden'
                 );
@@ -3146,7 +4685,9 @@ function setupMultiCombo(
                 return;
             }
 
-            if(event.key!=='Enter'){
+            if(
+                event.key!=='Enter'
+            ){
                 return;
             }
 
@@ -3159,7 +4700,9 @@ function setupMultiCombo(
 
             if(
                 !meta.panel.classList
-                    .contains('hidden') &&
+                    .contains(
+                        'hidden'
+                    ) &&
                 options.length===1
             ){
                 event.preventDefault();
@@ -3177,13 +4720,18 @@ function setupMultiCombo(
 
     combo.addEventListener(
         'click',
-        event=>event.stopPropagation()
+        event=>
+            event.stopPropagation()
     );
 }
 
-function setupInstitutionCombo(which){
+function setupInstitutionCombo(
+    which
+){
     const meta=
-        institutionMeta(which);
+        institutionMeta(
+            which
+        );
 
     meta.input.addEventListener(
         'click',
@@ -3229,8 +4777,13 @@ function setupInstitutionCombo(which){
                 return;
             }
 
+            /*
+             * 保存的是原始选项文字，
+             * 不进行 NFKC 转换。
+             */
             meta.input.value=
-                button.dataset.selectValue;
+                button.dataset
+                    .selectValue;
 
             renderInstitutionOptions(
                 which
@@ -3244,41 +4797,59 @@ function setupInstitutionCombo(which){
 }
 
 function schedule(){
-    state=norm(state);
+    state=
+        norm(state);
 
-    saveLocal(state);
+    saveLocal(
+        state
+    );
 
-    meta.dirty=true;
+    meta.dirty=
+        true;
 
     idbSet(
         META_KEY,
         meta
-    ).catch(console.error);
+    )
+    .catch(
+        console.error
+    );
 
-    if(admin()&&adminReady){
-        clearTimeout(autoTimer);
-
-        autoTimer=setTimeout(
-            ()=>sync(false),
-            AUTO_DELAY
+    if(
+        admin() &&
+        adminReady
+    ){
+        clearTimeout(
+            autoTimer
         );
+
+        autoTimer=
+            setTimeout(
+                ()=>{
+                    sync(
+                        false
+                    );
+                },
+                AUTO_DELAY
+            );
     }
 
     return true;
 }
 
 function basePath(){
-    return location.pathname.replace(
-        /[^/]*$/,
-        ''
-    );
+    return location.pathname
+        .replace(
+            /[^/]*$/,
+            ''
+        );
 }
 
 function publicUrl(){
     return (
-        location.origin +
-        basePath() +
-        PUBLIC_FILE +
+        location.origin+
+        basePath()+
+        PUBLIC_FILE+
         `?v=${Date.now()}`
     );
 }
@@ -3287,7 +4858,9 @@ function pathEncode(path){
     return String(path)
         .split('/')
         .filter(Boolean)
-        .map(encodeURIComponent)
+        .map(
+            encodeURIComponent
+        )
         .join('/');
 }
 
@@ -3312,14 +4885,21 @@ function toB64(value){
             );
     }
 
-    return btoa(binary);
+    return btoa(
+        binary
+    );
 }
 
 function fromB64(value){
     const binary=
         atob(
-            String(value||'')
-                .replace(/\s/g,'')
+            String(
+                value||''
+            )
+            .replace(
+                /\s/g,
+                ''
+            )
         );
 
     const bytes=
@@ -3337,7 +4917,9 @@ function fromB64(value){
     }
 
     return new TextDecoder()
-        .decode(bytes);
+        .decode(
+            bytes
+        );
 }
 
 async function githubApi(
@@ -3371,13 +4953,16 @@ async function githubApi(
                     )
                 },
 
-                cache:'no-store',
+                cache:
+                    'no-store',
 
                 ...(
                     body!==null
                         ? {
                             body:
-                                JSON.stringify(body)
+                                JSON.stringify(
+                                    body
+                                )
                           }
                         : {}
                 )
@@ -3387,14 +4972,19 @@ async function githubApi(
     const text=
         await response.text();
 
-    let data=null;
+    let data=
+        null;
 
     if(text){
         try{
-            data=JSON.parse(text);
+            data=
+                JSON.parse(
+                    text
+                );
         }catch{
             data={
-                message:text
+                message:
+                    text
             };
         }
     }
@@ -3425,20 +5015,32 @@ async function readRemote(){
 
         const parsed=
             JSON.parse(
-                fromB64(data.content)
+                fromB64(
+                    data.content
+                )
             );
 
         return {
             exists:true,
-            sha:data.sha,
-            state:norm(parsed)
+
+            sha:
+                data.sha,
+
+            state:
+                norm(
+                    parsed
+                )
         };
     }catch(error){
-        if(error.status===404){
+        if(
+            error.status===404
+        ){
             return {
                 exists:false,
                 sha:null,
-                state:norm({})
+
+                state:
+                    norm({})
             };
         }
 
@@ -3473,11 +5075,14 @@ async function writeRemote(
             `更新 Press 数据 - ${new Date().toLocaleString()}`,
 
         content:
-            toB64(raw)
+            toB64(
+                raw
+            )
     };
 
     if(sha){
-        body.sha=sha;
+        body.sha=
+            sha;
     }
 
     const result=
@@ -3487,7 +5092,10 @@ async function writeRemote(
             body
         );
 
-    return result?.content?.sha||null;
+    return (
+        result?.content?.sha ||
+        null
+    );
 }
 
 async function sync(
@@ -3506,13 +5114,6 @@ async function sync(
         const remote=
             await readRemote();
 
-        /*
-         * 直接以当前本机状态写入。
-         *
-         * codeManualEdited / codeManualPinned
-         * 已包含在 state 中，因此刷新和同步之后
-         * 仍然保持一次性手改限制。
-         */
         const snapshot=
             norm(state);
 
@@ -3522,12 +5123,18 @@ async function sync(
                 remote.sha
             );
 
-        state=snapshot;
+        state=
+            snapshot;
 
-        meta.dirty=false;
-        meta.sha=sha;
+        meta.dirty=
+            false;
 
-        saveLocal(state);
+        meta.sha=
+            sha;
+
+        saveLocal(
+            state
+        );
 
         await idbSet(
             META_KEY,
@@ -3551,19 +5158,24 @@ async function sync(
 
         return true;
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
 
-        /*
-         * 同步失败时保留本机工作副本。
-         */
-        saveLocal(state);
+        saveLocal(
+            state
+        );
 
-        meta.dirty=true;
+        meta.dirty=
+            true;
 
         idbSet(
             META_KEY,
             meta
-        ).catch(console.error);
+        )
+        .catch(
+            console.error
+        );
 
         status(
             'offline',
@@ -3590,7 +5202,8 @@ async function loadPublic(){
             await fetch(
                 publicUrl(),
                 {
-                    cache:'no-store'
+                    cache:
+                        'no-store'
                 }
             );
 
@@ -3605,7 +5218,8 @@ async function loadPublic(){
                 await response.json()
             );
 
-        publicCacheValue=state;
+        publicCacheValue=
+            state;
 
         await idbSet(
             PUBLIC_CACHE_KEY,
@@ -3628,9 +5242,13 @@ async function loadPublic(){
         lastSyncTime.textContent=
             `公开数据 · ${state.entries.length} 条`;
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
 
-        if(publicCacheValue){
+        if(
+            publicCacheValue
+        ){
             state=
                 norm(
                     publicCacheValue
@@ -3647,7 +5265,9 @@ async function loadPublic(){
 }
 
 async function loadAdminState(){
-    adminReady=false;
+    adminReady=
+        false;
+
     updateAdmin();
 
     status(
@@ -3662,14 +5282,12 @@ async function loadAdminState(){
         const local=
             loadLocal();
 
-        /*
-         * 如果本机有未同步数据则优先保留本机。
-         */
         if(
             meta.dirty &&
             local
         ){
-            state=local;
+            state=
+                local;
         }else{
             state=
                 remote.exists
@@ -3680,12 +5298,15 @@ async function loadAdminState(){
                     );
         }
 
-        saveLocal(state);
+        saveLocal(
+            state
+        );
 
         meta.sha=
             remote.sha;
 
-        adminReady=true;
+        adminReady=
+            true;
 
         render();
 
@@ -3695,16 +5316,21 @@ async function loadAdminState(){
         );
 
         if(meta.dirty){
-            sync(false);
+            sync(
+                false
+            );
         }
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
 
         state=
             loadLocal() ||
             norm({});
 
-        adminReady=true;
+        adminReady=
+            true;
 
         render();
 
@@ -3724,30 +5350,52 @@ async function bootstrapStorage(){
         cache
     ]=
         await Promise.all([
-            idbGet(CONFIG_KEY),
-            idbGet(TOKEN_PERSISTED_KEY),
-            idbGet(META_KEY),
-            idbGet(WORKCOPY_KEY),
-            idbGet(PUBLIC_CACHE_KEY)
+            idbGet(
+                CONFIG_KEY
+            ),
+
+            idbGet(
+                TOKEN_PERSISTED_KEY
+            ),
+
+            idbGet(
+                META_KEY
+            ),
+
+            idbGet(
+                WORKCOPY_KEY
+            ),
+
+            idbGet(
+                PUBLIC_CACHE_KEY
+            )
         ]);
 
     if(
         storedConfig &&
-        typeof storedConfig==='object'
+        typeof storedConfig===
+        'object'
     ){
         config.owner=
-            clean(storedConfig.owner);
+            clean(
+                storedConfig.owner
+            );
 
         config.repo=
-            clean(storedConfig.repo);
+            clean(
+                storedConfig.repo
+            );
 
         config.file=
-            clean(storedConfig.file) ||
+            clean(
+                storedConfig.file
+            ) ||
             'press_data.json';
     }
 
     persistedToken=
-        typeof storedToken==='string'
+        typeof storedToken===
+        'string'
             ? storedToken
             : '';
 
@@ -3756,7 +5404,8 @@ async function bootstrapStorage(){
 
     if(
         storedMeta &&
-        typeof storedMeta==='object'
+        typeof storedMeta===
+        'object'
     ){
         meta={
             ...meta,
@@ -3764,33 +5413,51 @@ async function bootstrapStorage(){
         };
     }
 
-    if(work?.state){
+    if(
+        work?.state
+    ){
         workCopyCache=
-            norm(work.state);
+            norm(
+                work.state
+            );
     }
 
-    if(cache?.state){
+    if(
+        cache?.state
+    ){
         publicCacheValue=
-            norm(cache.state);
+            norm(
+                cache.state
+            );
     }
 }
 
-async function saveConfig(event){
+async function saveConfig(
+    event
+){
     event.preventDefault();
 
     config={
         owner:
-            clean(cfgOwner.value),
+            clean(
+                cfgOwner.value
+            ),
 
         repo:
-            clean(cfg.value),
+            clean(
+                cfg.value
+            ),
 
         file:
-            clean(cfgFile.value) ||
+            clean(
+                cfgFile.value
+            ) ||
             'press_data.json',
 
         token:
-            clean(cfgToken.value)
+            clean(
+                cfgToken.value
+            )
     };
 
     if(
@@ -3809,13 +5476,20 @@ async function saveConfig(event){
     await idbSet(
         CONFIG_KEY,
         {
-            owner:config.owner,
-            repo:config.repo,
-            file:config.file
+            owner:
+                config.owner,
+
+            repo:
+                config.repo,
+
+            file:
+                config.file
         }
     );
 
-    if(rememberToken.checked){
+    if(
+        rememberToken.checked
+    ){
         persistedToken=
             config.token;
 
@@ -3850,7 +5524,10 @@ function openManage(){
 
     manageInstitutionLineInput.value=
         String(
-            state.institutions.length+1
+            state
+                .institutions
+                .length+
+            1
         );
 
     renderManageInstitutionOptions();
@@ -3861,6 +5538,10 @@ function openManage(){
 }
 
 function addManagedInstitution(){
+    /*
+     * 同样只 NFC 清理，
+     * 保留中文全角标点。
+     */
     const value=
         clean(
             manageInstitutionInput.value
@@ -3871,9 +5552,12 @@ function addManagedInstitution(){
     }
 
     if(
-        state.institutions.some(
-            item=>key(item)===key(value)
-        )
+        state.institutions
+            .some(
+                item=>
+                    key(item)===
+                    key(value)
+            )
     ){
         show(
             '出版选项已经存在',
@@ -3885,14 +5569,22 @@ function addManagedInstitution(){
 
     let line=
         Number(
-            manageInstitutionLineInput.value
+            folded(
+                manageInstitutionLineInput
+                    .value
+            )
         );
 
     if(
-        !Number.isInteger(line)
+        !Number.isInteger(
+            line
+        )
     ){
         line=
-            state.institutions.length+1;
+            state
+                .institutions
+                .length+
+            1;
     }
 
     line=
@@ -3900,7 +5592,10 @@ function addManagedInstitution(){
             1,
             Math.min(
                 line,
-                state.institutions.length+1
+                state
+                    .institutions
+                    .length+
+                1
             )
         );
 
@@ -3913,6 +5608,7 @@ function addManagedInstitution(){
     manageInstitutionInput.value='';
 
     render();
+
     schedule();
 }
 
@@ -3920,13 +5616,15 @@ function moveManagedInstitution(
     value,
     rawLine
 ){
-    const history=
-        [...state.institutions];
+    const history=[
+        ...state.institutions
+    ];
 
     const from=
         history.findIndex(
             item=>
-                key(item)===key(value)
+                key(item)===
+                key(value)
         );
 
     if(from<0){
@@ -3934,14 +5632,22 @@ function moveManagedInstitution(
     }
 
     let line=
-        Number(rawLine);
+        Number(
+            folded(
+                rawLine
+            )
+        );
 
     if(
-        !Number.isInteger(line) ||
+        !Number.isInteger(
+            line
+        ) ||
         line<1 ||
-        line>history.length
+        line>
+            history.length
     ){
         renderManageInstitutionOptions();
+
         return;
     }
 
@@ -3961,6 +5667,7 @@ function moveManagedInstitution(
         history;
 
     render();
+
     schedule();
 }
 
@@ -3968,10 +5675,12 @@ function renameManagedInstitution(
     value
 ){
     const index=
-        state.institutions.findIndex(
-            item=>
-                key(item)===key(value)
-        );
+        state.institutions
+            .findIndex(
+                item=>
+                    key(item)===
+                    key(value)
+            );
 
     if(index<0){
         return;
@@ -3980,15 +5689,22 @@ function renameManagedInstitution(
     const next=
         prompt(
             '修改出版选项：',
-            state.institutions[index]
+            state.institutions[
+                index
+            ]
         );
 
     if(next===null){
         return;
     }
 
+    /*
+     * NFC 保留中文全角标点。
+     */
     const cleaned=
-        clean(next);
+        clean(
+            next
+        );
 
     if(!cleaned){
         return;
@@ -3997,12 +5713,19 @@ function renameManagedInstitution(
     const oldKey=
         key(value);
 
-    state.institutions[index]=
+    state.institutions[
+        index
+    ]=
         cleaned;
 
-    for(const entry of state.entries){
+    for(
+        const entry
+        of state.entries
+    ){
         if(
-            key(entry.institution)===
+            key(
+                entry.institution
+            )===
             oldKey
         ){
             entry.institution=
@@ -4011,6 +5734,7 @@ function renameManagedInstitution(
     }
 
     render();
+
     schedule();
 }
 
@@ -4026,19 +5750,24 @@ function deleteManagedInstitution(
     }
 
     state.institutions=
-        state.institutions.filter(
-            item=>
-                key(item)!==key(value)
-        );
+        state.institutions
+            .filter(
+                item=>
+                    key(item)!==
+                    key(value)
+            );
 
     render();
+
     schedule();
 }
 
 function exportHtml(){
     const source=
-        '<!DOCTYPE html>\n' +
-        document.documentElement.outerHTML;
+        '<!DOCTYPE html>\n'+
+        document
+            .documentElement
+            .outerHTML;
 
     const blob=
         new Blob(
@@ -4050,35 +5779,47 @@ function exportHtml(){
         );
 
     const url=
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
     const link=
-        document.createElement('a');
+        document.createElement(
+            'a'
+        );
 
-    link.href=url;
+    link.href=
+        url;
 
     link.download=
         `press${Math.floor(Date.now()/1000)}.html`;
 
-    document.body.appendChild(link);
+    document.body
+        .appendChild(
+            link
+        );
+
     link.click();
+
     link.remove();
 
     setTimeout(
-        ()=>URL.revokeObjectURL(url),
+        ()=>{
+            URL.revokeObjectURL(
+                url
+            );
+        },
         1000
     );
 }
 
-function importHtml(file){
+function importHtml(
+    file
+){
     if(!file){
         return;
     }
 
-    /*
-     * 导入 HTML 本身只保留原页面已有逻辑。
-     * 数据仍主要通过 JSON / IndexedDB 管理。
-     */
     show(
         'HTML 导入功能保留',
         'success'
@@ -4087,8 +5828,13 @@ function importHtml(file){
     importInput.value='';
 }
 
-setupInstitutionCombo('add');
-setupInstitutionCombo('edit');
+setupInstitutionCombo(
+    'add'
+);
+
+setupInstitutionCombo(
+    'edit'
+);
 
 setupMultiCombo(
     'tag',
@@ -4163,6 +5909,7 @@ pressList.addEventListener(
             checkbox.checked;
 
         updateCountDisplay();
+
         schedule();
     }
 );
@@ -4176,7 +5923,9 @@ editDelete.addEventListener(
     'click',
     ()=>{
         if(editingId){
-            deleteEntry(editingId);
+            deleteEntry(
+                editingId
+            );
         }
     }
 );
@@ -4185,7 +5934,11 @@ editCancel.addEventListener(
     'click',
     ()=>{
         editingId='';
+
         editInitialSnapshot='';
+
+        editOverlayPointerDown=
+            false;
 
         editSelections={
             category:[],
@@ -4202,6 +5955,7 @@ clearEditBookName.addEventListener(
     'click',
     ()=>{
         editBookName.value='';
+
         editBookName.focus();
     }
 );
@@ -4210,9 +5964,93 @@ clearEditBookNo.addEventListener(
     'click',
     ()=>{
         editBookNo.value='';
+
         editBookNo.focus();
     }
 );
+
+
+/*
+ * =========================================================
+ * 恢复：单击遮罩关闭“未修改”的编辑弹窗
+ * =========================================================
+ *
+ * 只有按下和松开都直接发生在 editModal 遮罩本身，
+ * 并且编辑内容与打开时完全一致，
+ * 才允许关闭。
+ *
+ * 这样：
+ * - 普通单击灰色遮罩：未修改时关闭；
+ * - 已修改任何字段：不关闭；
+ * - 从输入框内部拖选文字再松到遮罩：不关闭。
+ */
+editModal.addEventListener(
+    'pointerdown',
+    event=>{
+        editOverlayPointerDown=
+            event.target===
+            editModal;
+    }
+);
+
+editModal.addEventListener(
+    'pointerup',
+    event=>{
+        const genuineOutsideClick=
+            editOverlayPointerDown &&
+            event.target===
+            editModal;
+
+        editOverlayPointerDown=
+            false;
+
+        if(
+            !genuineOutsideClick
+        ){
+            return;
+        }
+
+        if(
+            !editIsUnchanged()
+        ){
+            return;
+        }
+
+        editingId='';
+
+        editInitialSnapshot='';
+
+        editSelections={
+            category:[],
+            tag:[]
+        };
+
+        editInstitutionPanel
+            .classList
+            .add('hidden');
+
+        editCategoryPanel
+            .classList
+            .add('hidden');
+
+        editTagPanel
+            .classList
+            .add('hidden');
+
+        editModal
+            .classList
+            .add('hidden');
+    }
+);
+
+editModal.addEventListener(
+    'pointercancel',
+    ()=>{
+        editOverlayPointerDown=
+            false;
+    }
+);
+
 
 configBtn.addEventListener(
     'click',
@@ -4283,7 +6121,8 @@ manageInstitutionOptions.addEventListener(
 
         if(edit){
             renameManagedInstitution(
-                edit.dataset.editValue
+                edit.dataset
+                    .editValue
             );
 
             return;
@@ -4296,7 +6135,8 @@ manageInstitutionOptions.addEventListener(
 
         if(remove){
             deleteManagedInstitution(
-                remove.dataset.deleteValue
+                remove.dataset
+                    .deleteValue
             );
         }
     }
@@ -4312,7 +6152,9 @@ manageInstitutionOptions.addEventListener(
 
         if(input){
             moveManagedInstitution(
-                input.dataset.moveValue,
+                input.dataset
+                    .moveValue,
+
                 input.value
             );
         }
@@ -4321,7 +6163,11 @@ manageInstitutionOptions.addEventListener(
 
 syncBtn.addEventListener(
     'click',
-    ()=>sync(true)
+    ()=>{
+        sync(
+            true
+        );
+    }
 );
 
 exportBtn.addEventListener(
@@ -4331,14 +6177,17 @@ exportBtn.addEventListener(
 
 importBtn.addEventListener(
     'click',
-    ()=>importInput.click()
+    ()=>{
+        importInput.click();
+    }
 );
 
 importInput.addEventListener(
     'change',
     ()=>{
         importHtml(
-            importInput.files?.[0]
+            importInput
+                .files?.[0]
         );
     }
 );
@@ -4358,7 +6207,8 @@ returnTopControl.addEventListener(
             );
 
         if(scroll){
-            scroll.scrollTop=0;
+            scroll.scrollTop=
+                0;
         }
     }
 );
@@ -4366,15 +6216,43 @@ returnTopControl.addEventListener(
 document.addEventListener(
     'keydown',
     event=>{
-        if(event.key!=='Escape'){
+        if(
+            event.key!==
+            'Escape'
+        ){
             return;
         }
 
         closePanels();
 
-        editModal.classList.add(
-            'hidden'
-        );
+        /*
+         * 编辑弹窗：
+         * 只有未修改时允许 Escape 关闭，
+         * 与遮罩关闭规则保持一致。
+         */
+        if(
+            !editModal.classList
+                .contains(
+                    'hidden'
+                ) &&
+            editIsUnchanged()
+        ){
+            editingId='';
+
+            editInitialSnapshot='';
+
+            editOverlayPointerDown=
+                false;
+
+            editSelections={
+                category:[],
+                tag:[]
+            };
+
+            editModal.classList.add(
+                'hidden'
+            );
+        }
 
         configModal.classList.add(
             'hidden'
@@ -4390,15 +6268,15 @@ async function initialize(){
     await bootstrapStorage();
 
     /*
-     * 明确移除四个输入框的 placeholder，
-     * 防止旧版本 HTML 中遗留的占位文字继续显示。
+     * 强制清除编组/书架占位文字。
      */
     [
         tagInput,
         categoryInput,
         editTag,
         editCategory
-    ].forEach(
+    ]
+    .forEach(
         input=>
             input.removeAttribute(
                 'placeholder'
@@ -4410,30 +6288,35 @@ async function initialize(){
             loadLocal();
 
         if(local){
-            state=local;
+            state=
+                local;
         }
 
         await loadAdminState();
     }else{
         updateAdmin();
+
         render();
 
         await loadPublic();
     }
 }
 
-initialize().catch(
-    error=>{
-        console.error(error);
+initialize()
+    .catch(
+        error=>{
+            console.error(
+                error
+            );
 
-        status(
-            'offline',
-            '初始化失败'
-        );
+            status(
+                'offline',
+                '初始化失败'
+            );
 
-        render();
-    }
-);
+            render();
+        }
+    );
 
 window.addEventListener(
     'online',
@@ -4443,12 +6326,15 @@ window.addEventListener(
             adminReady &&
             meta.dirty
         ){
-            sync(false);
+            sync(
+                false
+            );
         }
     }
 );
 
 })();
 </script>
+
 </body>
 </html>
