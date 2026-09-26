@@ -501,9 +501,11 @@
       "bookNo": "7-03-035761",
       "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
+      "code": "130014",
       "codeManualEdited": false,
       "codeManualPinned": false
     },
