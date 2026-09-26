@@ -116,11 +116,13 @@
       "bookNo": "7-01-008454",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "code": "130006",
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "5245590d-b27e-49cf-8f88-f10767c53d34",
