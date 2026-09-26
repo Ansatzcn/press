@@ -3854,15 +3854,21 @@ const button=
 event.target.closest(
 '.selected-pill-remove[data-remove-value]'
 );
-if(!button){
-return;
-}
+if(button){
 removeSelection(
 type,
 which,
 button.dataset
 .removeValue
 );
+return;
+}
+// 已选项区域的空白处也属于整个输入框：点击任意位置都可继续选择。
+if(openPanel()){
+meta.input.focus({
+preventScroll:true
+});
+}
 }
 );
 meta.input.addEventListener(
@@ -3974,8 +3980,23 @@ options[0]
 );
 combo.addEventListener(
 'click',
-event=>
-event.stopPropagation()
+event=>{
+event.stopPropagation();
+// input、已选项和下拉面板都有自己的处理；这里只接管外框剩余空白区域。
+if(
+event.target.closest('.combo-panel') ||
+event.target.closest('.selected-pill-remove') ||
+event.target.closest('.combo-pill-select') ||
+event.target===meta.input
+){
+return;
+}
+if(openPanel()){
+meta.input.focus({
+preventScroll:true
+});
+}
+}
 );
 }
 function setupInstitutionCombo(
