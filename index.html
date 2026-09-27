@@ -494,6 +494,27 @@ line-height:1.55
 .edit-btn:hover{
 color:#475569
 }
+
+/* 总表：除书名外，其余文字统一为纯黑 */
+#pressList .press-item,
+#pressList .press-item .meta,
+#pressList .press-item .meta-label,
+#pressList .press-item .meta-value,
+#pressList .press-item .institution a,
+#pressList .press-item .institution a:visited,
+#pressList .press-item .institution a:hover,
+#pressList .press-item .edit-btn,
+#pressList .press-item .edit-btn:hover{
+color:#000000
+}
+#pressList .press-item .book-title,
+#pressList .press-item .book-title a,
+#pressList .press-item .book-title a:visited{
+color:#1E40AF
+}
+#pressList .press-item .book-title a:hover{
+color:#1E3A8A
+}
 .empty-state{
 padding:2.6rem 1rem;
 background:#fafcff;
@@ -538,6 +559,20 @@ margin-bottom:.95rem
 display:grid;
 grid-template-columns:repeat(2,minmax(0,1fr));
 gap:1rem
+}
+.edit-code-row{
+display:grid;
+grid-template-columns:minmax(0,1fr) auto;
+align-items:center;
+gap:10px
+}
+.edit-code-checkbox{
+margin:0;
+flex:0 0 auto;
+cursor:pointer
+}
+.edit-code-checkbox:disabled{
+cursor:not-allowed
 }
 .dialog-actions{
 flex:0 0 auto;
@@ -1114,6 +1149,7 @@ id="editCategoryPanel"
 <label for="editCode">
 编码
 </label>
+<div class="edit-code-row">
 <input
 autocomplete="off"
 id="editCode"
@@ -1122,6 +1158,13 @@ inputmode="numeric"
 maxlength="6"
 aria-label="编码"
 >
+<input
+class="edit-code-checkbox"
+id="editTagChecked"
+type="checkbox"
+aria-label="勾选状态"
+>
+</div>
 </div>
 </div>
 <div class="dialog-actions">
@@ -1365,7 +1408,9 @@ exceptions:{
 [218001,219999]
 ],
 '13/22':[
-[138001,139999],
+[138001,139999]
+],
+'13/23':[
 [188001,189999]
 ],
 '21/22':[
@@ -1529,6 +1574,8 @@ const editCategoryOptions=
 $('editCategoryOptions');
 const editCode=
 $('editCode');
+const editTagChecked=
+$('editTagChecked');
 const editDelete=
 $('editDelete');
 const editCancel=
@@ -3394,6 +3441,8 @@ editSelections.tag
 ),
 code:
 editCode.value,
+tagChecked:
+editTagChecked.checked,
 categoryDraft:
 editCategory.value,
 tagDraft:
@@ -3444,6 +3493,10 @@ editTag.value='';
 editCode.value=
 normalizeStoredCode(
 entry.code
+);
+editTagChecked.checked=
+Boolean(
+entry.tagChecked
 );
 editCode.readOnly=
 Boolean(
@@ -3623,6 +3676,8 @@ entry.category=
 ];
 entry.tag=
 nextTag;
+entry.tagChecked=
+editTagChecked.checked;
 if(
 manualChangeRequested
 ){
