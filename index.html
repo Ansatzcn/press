@@ -848,9 +848,11 @@ Press
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
+
 <section class="add-section hidden" id="addSection">
 <h2>添加</h2>
 <div class="form-grid">
+
 <div class="form-group full">
 <label for="bookNameInput">书名</label>
 <input
@@ -860,6 +862,7 @@ autocomplete="off"
 autofocus
 >
 </div>
+
 <div class="bookno-tag-row">
 <div class="form-group">
 <label for="bookNoInput">书号</label>
@@ -869,6 +872,34 @@ id="bookNoInput"
 autocomplete="off"
 >
 </div>
+
+<div class="form-group">
+<label for="institutionInput">出版</label>
+<div class="combo" id="institutionCombo">
+<div class="combo-row">
+<input
+type="text"
+id="institutionInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="institutionToggle"
+type="button"
+aria-label="展开出版历史"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="institutionPanel"
+>
+<div id="institutionOptions"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bookno-tag-row">
 <div class="form-group">
 <label for="tagInput">编组</label>
 <div class="combo" id="tagCombo">
@@ -897,45 +928,10 @@ id="tagPanel"
 </div>
 </div>
 </div>
-</div>
-<div class="bookno-tag-row">
+
 <div class="form-group">
-<label for="institutionInput">
-出版
-</label>
-<div
-class="combo"
-id="institutionCombo"
->
-<div class="combo-row">
-<input
-type="text"
-id="institutionInput"
-autocomplete="off"
->
-<button
-class="combo-toggle"
-id="institutionToggle"
-type="button"
-aria-label="展开出版历史"
-></button>
-</div>
-<div
-class="combo-panel hidden"
-id="institutionPanel"
->
-<div id="institutionOptions"></div>
-</div>
-</div>
-</div>
-<div class="form-group">
-<label for="categoryInput">
-书架
-</label>
-<div
-class="combo"
-id="categoryCombo"
->
+<label for="categoryInput">书架</label>
+<div class="combo" id="categoryCombo">
 <div
 class="combo-selected"
 id="categorySelected"
@@ -962,6 +958,7 @@ id="categoryPanel"
 </div>
 </div>
 </div>
+
 <button
 class="add-button"
 id="addBtn"
@@ -971,6 +968,7 @@ type="button"
 </button>
 </div>
 </section>
+
 <section>
 <div class="list-header">
 <h2>总表</h2>
@@ -991,16 +989,16 @@ id="pressList"
 </div>
 </section>
 </main>
+
 <section
 class="overlay hidden"
 id="editModal"
 >
 <div class="dialog">
 <div class="dialog-scroll">
+
 <div class="form-group">
-<label for="editBookName">
-书名
-</label>
+<label for="editBookName">书名</label>
 <div class="edit-title-field">
 <input
 autocomplete="off"
@@ -1017,10 +1015,9 @@ aria-label="清空书名"
 </button>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editInstitution">
-出版
-</label>
+<label for="editInstitution">出版</label>
 <div
 class="combo"
 id="editInstitutionCombo"
@@ -1046,11 +1043,10 @@ id="editInstitutionPanel"
 </div>
 </div>
 </div>
+
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editBookNo">
-书号
-</label>
+<label for="editBookNo">书号</label>
 <div class="clearable-field">
 <input
 autocomplete="off"
@@ -1067,10 +1063,9 @@ aria-label="清空书号"
 </button>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editCode">
-编码
-</label>
+<label for="editCode">编码</label>
 <input
 autocomplete="off"
 id="editCode"
@@ -1081,11 +1076,10 @@ aria-label="编码"
 >
 </div>
 </div>
+
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editTag">
-编组
-</label>
+<label for="editTag">编组</label>
 <div
 class="combo"
 id="editTagCombo"
@@ -1115,10 +1109,9 @@ id="editTagPanel"
 </div>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editCategory">
-书架
-</label>
+<label for="editCategory">书架</label>
 <div
 class="combo"
 id="editCategoryCombo"
@@ -1149,7 +1142,9 @@ id="editCategoryPanel"
 </div>
 </div>
 </div>
+
 </div>
+
 <div class="dialog-actions">
 <button
 class="btn btn-danger"
@@ -1175,6 +1170,7 @@ type="button"
 </div>
 </div>
 </section>
+
 <section
 class="overlay hidden"
 id="configModal"
@@ -1187,27 +1183,21 @@ autocomplete="on"
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
 <div class="form-group">
-<label for="cfgOwner">
-仓库所有者
-</label>
+<label for="cfgOwner">仓库所有者</label>
 <input
 id="cfgOwner"
 type="text"
 >
 </div>
 <div class="form-group">
-<label for="cfg">
-仓库名称
-</label>
+<label for="cfg">仓库名称</label>
 <input
 id="cfg"
 type="text"
 >
 </div>
 <div class="form-group">
-<label for="cfgFile">
-数据文件路径
-</label>
+<label for="cfgFile">数据文件路径</label>
 <input
 id="cfgFile"
 type="text"
@@ -1215,9 +1205,7 @@ value="press_data.json"
 >
 </div>
 <div class="form-group">
-<label for="cfgToken">
-GitHub Personal Access Token
-</label>
+<label for="cfgToken">GitHub Personal Access Token</label>
 <input
 id="cfgToken"
 type="password"
@@ -1249,6 +1237,7 @@ type="submit"
 </div>
 </form>
 </section>
+
 <section
 class="overlay hidden"
 id="manageModal"
@@ -1296,15 +1285,18 @@ type="button"
 </div>
 </div>
 </section>
+
 <button
 id="returnTopControl"
 type="button"
 title="回到顶部"
 ></button>
+
 <div
 class="toast hidden"
 id="toast"
 ></div>
+
 <script>
 (()=>{
 'use strict';
@@ -2494,6 +2486,22 @@ remoteEntry
 );
 
 if(
+!local.code &&
+local.codeAutoPending===true &&
+remote.code
+){
+return local;
+}
+
+if(
+!remote.code &&
+remote.codeAutoPending===true &&
+local.code
+){
+return remote;
+}
+
+if(
 local.code &&
 !remote.code
 ){
@@ -3421,6 +3429,22 @@ const candidateCode=
 clean(
 candidateEntry?.code
 );
+
+const explicitPendingReset=
+Boolean(
+(
+localEntry?.codeAutoPending===true &&
+!clean(localEntry?.code)
+) ||
+(
+remoteEntry?.codeAutoPending===true &&
+!clean(remoteEntry?.code)
+)
+);
+
+if(explicitPendingReset){
+continue;
+}
 
 if(
 !candidateCode ||
@@ -4852,18 +4876,15 @@ if(which==='add'){
 refreshAddDraftCode();
 
 }else{
-const currentEntry=
-state.entries.find(
-item=>
-item.id===editingId
-);
-
-if(
-currentEntry &&
-!clean(currentEntry.code)
-){
+editCode.value='';
 editAutoManagedDraft=true;
-}
+editCode.readOnly=false;
+editCode.setAttribute(
+'aria-readonly',
+'false'
+);
+editCode.title=
+'编组已删除；编码将在保存并同步后按当前编组重新分配';
 }
 }
 
