@@ -393,9 +393,14 @@ color:#1E40AF
 color:#1E40AF;
 text-decoration:none
 }
-.book-title a:hover,
-.institution a:hover{
+.book-title a:hover{
 color:#1E3A8A;
+text-decoration:underline
+}
+
+.institution a:visited,
+.institution a:hover{
+color:#1E40AF;
 text-decoration:underline
 }
 #institutionOptions a,
@@ -410,7 +415,7 @@ text-decoration:none
 #institutionOptions a:hover,
 #editInstitutionOptions a:hover,
 #manageInstitutionOptions a:hover{
-color:#1E3A8A!important;
+color:#1E40AF!important;
 text-decoration:underline
 }
 .meta{
@@ -495,14 +500,11 @@ line-height:1.55
 color:#475569
 }
 
-/* 总表：除书名外，其余文字统一为纯黑 */
+/* 总表：正文保持纯黑；书名与出版链接使用主色 */
 #pressList .press-item,
 #pressList .press-item .meta,
 #pressList .press-item .meta-label,
 #pressList .press-item .meta-value,
-#pressList .press-item .institution a,
-#pressList .press-item .institution a:visited,
-#pressList .press-item .institution a:hover,
 #pressList .press-item .edit-btn,
 #pressList .press-item .edit-btn:hover{
 color:#000000
@@ -514,6 +516,12 @@ color:#1E40AF
 }
 #pressList .press-item .book-title a:hover{
 color:#1E3A8A
+}
+
+#pressList .press-item .institution a,
+#pressList .press-item .institution a:visited,
+#pressList .press-item .institution a:hover{
+color:#1E40AF
 }
 .empty-state{
 padding:2.6rem 1rem;
@@ -832,7 +840,7 @@ min-width:50px
 Press
 <span class="cloud-status">
 <span class="status-dot" id="statusDot"></span>
-<span id="statusText">正在读取公开数据…</span>
+<span id="statusText">正在读取公开数据</span>
 </span>
 </h1>
 <section class="toolbar">
@@ -982,7 +990,7 @@ class="press-list"
 id="pressList"
 >
 <div class="empty-state">
-加载中…
+加载中
 </div>
 </div>
 </section>
@@ -1321,11 +1329,13 @@ const MAX_BYTES=
 const SYNC_INTERVAL=
 5000;
 const SYNC_RETRY_LIMIT=
-6;
-const NETWORK_RETRY_LIMIT=
 3;
+const NETWORK_RETRY_LIMIT=
+2;
 const GITHUB_TIMEOUT=
-25000;
+15000;
+const PUBLIC_FETCH_TIMEOUT=
+15000;
 const GROUP_CODES=
 Object.freeze([
 '11',
@@ -4262,7 +4272,7 @@ addBtn.disabled=
 true;
 status(
 'syncing',
-'正在拉取服务器最新版并分配编码…'
+'正在拉取服务器最新版并分配编码'
 );
 try{
 const ok=
@@ -5301,31 +5311,108 @@ return error.message;
 }
 return '未知同步错误';
 }
-async function githubApi(
-method,
-endpoint,
-body=null
+function requestTimeoutError(
+message='请求超时'
+){
+const error=
+new Error(
+message
+);
+error.code=
+'timeout';
+error.status=
+0;
+return error;
+}
+async function fetchTextWithTimeout(
+url,
+options={},
+timeoutMs=GITHUB_TIMEOUT
 ){
 const controller=
 typeof AbortController!=='undefined'
 ? new AbortController()
 : null;
-const timer=
+let timer=
+null;
+const request=
+(async()=>{
+try{
+const response=
+await fetch(
+url,
+{
+...options,
+...(
 controller
-? setTimeout(
+? {
+signal:
+controller.signal
+}
+: {}
+)
+}
+);
+const text=
+await response.text();
+return {
+response,
+text
+};
+}catch(error){
+if(
+error?.name==='AbortError'
+){
+throw requestTimeoutError();
+}
+if(
+error &&
+typeof error==='object' &&
+!('status' in error)
+){
+error.status=
+0;
+}
+throw error;
+}
+})();
+const timeout=
+new Promise(
+(_,reject)=>{
+timer=
+setTimeout(
 ()=>{
 try{
-controller.abort();
+controller?.abort();
 }catch{}
+reject(
+requestTimeoutError()
+);
 },
-GITHUB_TIMEOUT
-)
-: null;
+timeoutMs
+);
+}
+);
 try{
-let response;
-try{
-response=
-await fetch(
+return await Promise.race([
+request,
+timeout
+]);
+}finally{
+if(timer!==null){
+clearTimeout(
+timer
+);
+}
+}
+}
+async function githubApi(
+method,
+endpoint,
+body=null
+){
+const {response,text}=
+await fetchTextWithTimeout(
 `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,
 {
 method,
@@ -5348,14 +5435,6 @@ body!==null
 cache:
 'no-store',
 ...(
-controller
-? {
-signal:
-controller.signal
-}
-: {}
-),
-...(
 body!==null
 ? {
 body:
@@ -5365,27 +5444,9 @@ body
 }
 : {}
 )
-}
+},
+GITHUB_TIMEOUT
 );
-}catch(error){
-if(
-error?.name==='AbortError'
-){
-error.code=
-'timeout';
-}
-if(
-error &&
-typeof error==='object' &&
-!('status' in error)
-){
-error.status=
-0;
-}
-throw error;
-}
-const text=
-await response.text();
 let data=
 null;
 if(text){
@@ -5414,13 +5475,6 @@ data;
 throw error;
 }
 return data;
-}finally{
-if(timer!==null){
-clearTimeout(
-timer
-);
-}
-}
 }
 async function readRemote(){
 try{
@@ -5573,9 +5627,10 @@ async function verifyRemoteEquals(
 expectedState
 ){
 try{
+/* 写入结果不确定时只做一次确认读取；失败就留待下一轮同步。 */
 const checked=
 await readRemoteWithRetry(
-2
+1
 );
 return {
 matched:
@@ -5612,7 +5667,7 @@ true;
 updateAdmin();
 status(
 'syncing',
-'正在拉取服务器最新版…'
+'正在拉取服务器最新版'
 );
 try{
 let lastError=
@@ -5628,26 +5683,13 @@ try{
 remote=
 await readRemoteWithRetry();
 }catch(error){
+/*
+readRemoteWithRetry() 已经完成网络层重试。
+这里不再由外层同步循环重复整组 GET，避免弱网手机出现
+“读取重试 × 同步重试”的分钟级等待。
+*/
 lastError=
 error;
-if(
-isTransientSyncError(
-error
-) &&
-attempt<
-SYNC_RETRY_LIMIT-1
-){
-await delay(
-350*Math.pow(
-2,
-Math.min(
-attempt,
-3
-)
-)
-);
-continue;
-}
 throw error;
 }
 /*
@@ -5754,21 +5796,12 @@ finalSha=
 verification.remote.sha;
 wroteRemote=
 true;
-}else if(
-attempt<
-SYNC_RETRY_LIMIT-1
-){
-await delay(
-350*Math.pow(
-2,
-Math.min(
-attempt,
-3
-)
-)
-);
-continue;
 }else{
+/*
+网络错误后的确认读取也未能证明写入成功时，立即结束本轮。
+不要在同一轮里继续重复 PUT；下一次 5 秒空闲检查会重新从 GET 开始，
+既缩短手机端等待，也避免不确定状态下连续写入。
+*/
 throw error;
 }
 }else{
@@ -5978,22 +6011,36 @@ updateAdmin();
 }
 }
 function sync(
-showResult=true
+showResult=true,
+queueIfBusy=true
 ){
 if(!admin()){
 return Promise.resolve(
 false
 );
 }
-/* 所有手动、自动、联网恢复同步都进入同一个串行队列。 */
+/*
+手动同步和本机修改可以在当前同步结束后追加一轮；
+定时轮询与前台恢复检查在已有同步进行中时必须直接跳过，
+否则 5 秒定时器会持续把 syncRequested 重新置为 true，
+在慢速手机网络上形成永不退出的同步链。
+*/
+if(syncInFlight){
+if(showResult){
+syncShowResult=
+true;
+}
+if(queueIfBusy){
+syncRequested=
+true;
+}
+return syncInFlight;
+}
 syncRequested=
 true;
 if(showResult){
 syncShowResult=
 true;
-}
-if(syncInFlight){
-return syncInFlight;
 }
 syncInFlight=
 (
@@ -6034,7 +6081,7 @@ return syncInFlight;
 async function loadPublic(){
 status(
 'syncing',
-'正在读取公开数据…'
+'正在读取公开数据'
 );
 const url=
 publicUrl();
@@ -6060,13 +6107,14 @@ publicCacheValue
 return;
 }
 try{
-const response=
-await fetch(
+const {response,text}=
+await fetchTextWithTimeout(
 url,
 {
 cache:
 'no-store'
-}
+},
+PUBLIC_FETCH_TIMEOUT
 );
 if(!response.ok){
 throw new Error(
@@ -6075,7 +6123,9 @@ throw new Error(
 }
 state=
 norm(
-await response.json()
+JSON.parse(
+text
+)
 );
 publicCacheValue=
 state;
@@ -6126,7 +6176,7 @@ false;
 updateAdmin();
 status(
 'syncing',
-'正在读取管理数据…'
+'正在读取管理数据'
 );
 try{
 const remote=
@@ -7213,15 +7263,24 @@ syncIntervalTimer=
 setInterval(
 ()=>{
 /*
-每一台已连接管理设备每 5 秒都调用一次 sync(false)。
-syncOnce() 的第一步永远是 GET，因此本机即便完全没有修改，
-也会主动拉取另一台设备已经提交的最新版。
+每 5 秒检查一次是否空闲；只有没有同步任务在执行时才发起同步。
+syncOnce() 的第一步永远是 GET，因此空闲设备仍会主动拉取另一台设备的最新版，
+但不会因为上一轮网络较慢而无限追加下一轮。
 */
 if(
 admin() &&
-adminReady
+adminReady &&
+!syncInFlight &&
+!syncRunning
 ){
-sync(false);
+/*
+定时检查只在空闲时启动，不给正在执行的同步排队。
+这保证即使一次移动网络请求超过 5 秒，也不会形成永久续跑。
+*/
+sync(
+false,
+false
+);
 }
 },
 SYNC_INTERVAL
@@ -7233,6 +7292,7 @@ if(
 !admin() ||
 !adminReady ||
 syncRunning ||
+Boolean(syncInFlight) ||
 !editModal.classList.contains(
 'hidden'
 ) ||
@@ -7261,6 +7321,7 @@ now;
 避免手机浏览器后台暂停定时器后继续使用旧数据。
 */
 sync(
+false,
 false
 );
 }
