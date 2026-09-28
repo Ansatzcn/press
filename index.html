@@ -560,20 +560,6 @@ display:grid;
 grid-template-columns:repeat(2,minmax(0,1fr));
 gap:1rem
 }
-.edit-code-row{
-display:grid;
-grid-template-columns:minmax(0,1fr) auto;
-align-items:center;
-gap:10px
-}
-.edit-code-checkbox{
-margin:0;
-flex:0 0 auto;
-cursor:pointer
-}
-.edit-code-checkbox:disabled{
-cursor:not-allowed
-}
 .dialog-actions{
 flex:0 0 auto;
 display:flex;
@@ -721,6 +707,8 @@ cursor:text!important;
 background:#fff!important;
 color:#0f172a!important
 }
+/* 编组多选框：已选标签按内容宽度排列，输入区自动占据剩余空间。
+   不再把整框硬切成左右两半，避免两个标签被挤压、换行或堆叠。 */
 #tagCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)){
 display:flex!important;
@@ -863,182 +851,429 @@ Press
 <div class="form-grid">
 <div class="form-group full">
 <label for="bookNameInput">书名</label>
-<input type="text" id="bookNameInput" autocomplete="off" autofocus>
+<input
+type="text"
+id="bookNameInput"
+autocomplete="off"
+autofocus
+>
 </div>
 <div class="bookno-tag-row">
 <div class="form-group">
 <label for="bookNoInput">书号</label>
-<input type="text" id="bookNoInput" autocomplete="off">
+<input
+type="text"
+id="bookNoInput"
+autocomplete="off"
+>
 </div>
 <div class="form-group">
 <label for="tagInput">编组</label>
 <div class="combo" id="tagCombo">
-<div class="combo-selected" id="tagSelected"></div>
+<div
+class="combo-selected"
+id="tagSelected"
+></div>
 <div class="combo-row">
-<input type="text" id="tagInput" autocomplete="off">
-<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项"></button>
+<input
+type="text"
+id="tagInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="tagToggle"
+type="button"
+aria-label="展开编组选项"
+></button>
 </div>
-<div class="combo-panel hidden" id="tagPanel">
+<div
+class="combo-panel hidden"
+id="tagPanel"
+>
 <div id="tagOptions"></div>
 </div>
 </div>
 </div>
 </div>
 <div class="form-group full">
-<label for="institutionInput">出版</label>
-<div class="combo" id="institutionCombo">
+<label for="institutionInput">
+出版
+</label>
+<div
+class="combo"
+id="institutionCombo"
+>
 <div class="combo-row">
-<input type="text" id="institutionInput" autocomplete="off">
-<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史"></button>
+<input
+type="text"
+id="institutionInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="institutionToggle"
+type="button"
+aria-label="展开出版历史"
+></button>
 </div>
-<div class="combo-panel hidden" id="institutionPanel">
+<div
+class="combo-panel hidden"
+id="institutionPanel"
+>
 <div id="institutionOptions"></div>
 </div>
 </div>
 </div>
 <div class="form-group full">
-<label for="categoryInput">书架</label>
-<div class="combo" id="categoryCombo">
-<div class="combo-selected" id="categorySelected"></div>
+<label for="categoryInput">
+书架
+</label>
+<div
+class="combo"
+id="categoryCombo"
+>
+<div
+class="combo-selected"
+id="categorySelected"
+></div>
 <div class="combo-row">
-<input type="text" id="categoryInput" autocomplete="off">
-<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史"></button>
+<input
+type="text"
+id="categoryInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="categoryToggle"
+type="button"
+aria-label="展开书架历史"
+></button>
 </div>
-<div class="combo-panel hidden" id="categoryPanel">
+<div
+class="combo-panel hidden"
+id="categoryPanel"
+>
 <div id="categoryOptions"></div>
 </div>
 </div>
 </div>
-<button class="add-button" id="addBtn" type="button">添加</button>
+<button
+class="add-button"
+id="addBtn"
+type="button"
+>
+添加
+</button>
 </div>
 </section>
 <section>
 <div class="list-header">
 <h2>总表</h2>
-<span class="count-badge" id="countDisplay">0/0/0</span>
+<span
+class="count-badge"
+id="countDisplay"
+>
+0/0/0
+</span>
 </div>
-<div class="press-list" id="pressList">
-<div class="empty-state">加载中…</div>
+<div
+class="press-list"
+id="pressList"
+>
+<div class="empty-state">
+加载中…
+</div>
 </div>
 </section>
 </main>
-
-<section class="overlay hidden" id="editModal">
+<section
+class="overlay hidden"
+id="editModal"
+>
 <div class="dialog">
 <div class="dialog-scroll">
 <h3>编辑</h3>
 <div class="form-group">
-<label for="editBookName">书名</label>
+<label for="editBookName">
+书名
+</label>
 <div class="edit-title-field">
-<input autocomplete="off" id="editBookName" type="text">
-<button class="clear-field-btn" id="clearEditBookName" type="button" aria-label="清空书名">×</button>
+<input
+autocomplete="off"
+id="editBookName"
+type="text"
+>
+<button
+class="clear-field-btn"
+id="clearEditBookName"
+type="button"
+aria-label="清空书名"
+>
+×
+</button>
 </div>
 </div>
 <div class="form-group">
-<label for="editInstitution">出版</label>
-<div class="combo" id="editInstitutionCombo">
+<label for="editInstitution">
+出版
+</label>
+<div
+class="combo"
+id="editInstitutionCombo"
+>
 <div class="combo-row">
-<input autocomplete="off" id="editInstitution" type="text">
-<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button"></button>
+<input
+autocomplete="off"
+id="editInstitution"
+type="text"
+>
+<button
+aria-label="展开出版历史"
+class="combo-toggle"
+id="editInstitutionToggle"
+type="button"
+></button>
 </div>
-<div class="combo-panel hidden" id="editInstitutionPanel">
+<div
+class="combo-panel hidden"
+id="editInstitutionPanel"
+>
 <div id="editInstitutionOptions"></div>
 </div>
 </div>
 </div>
 <div class="form-group">
-<label for="editBookNo">书号</label>
+<label for="editBookNo">
+书号
+</label>
 <div class="clearable-field">
-<input autocomplete="off" id="editBookNo" type="text">
-<button class="clear-field-btn" id="clearEditBookNo" type="button" aria-label="清空书号">×</button>
+<input
+autocomplete="off"
+id="editBookNo"
+type="text"
+>
+<button
+class="clear-field-btn"
+id="clearEditBookNo"
+type="button"
+aria-label="清空书号"
+>
+×
+</button>
 </div>
 </div>
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editTag">编组</label>
-<div class="combo" id="editTagCombo">
-<div class="combo-selected" id="editTagSelected"></div>
+<label for="editTag">
+编组
+</label>
+<div
+class="combo"
+id="editTagCombo"
+>
+<div
+class="combo-selected"
+id="editTagSelected"
+></div>
 <div class="combo-row">
-<input autocomplete="off" id="editTag" type="text">
-<button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button"></button>
+<input
+autocomplete="off"
+id="editTag"
+type="text"
+>
+<button
+aria-label="展开编组选项"
+class="combo-toggle"
+id="editTagToggle"
+type="button"
+></button>
 </div>
-<div class="combo-panel hidden" id="editTagPanel">
+<div
+class="combo-panel hidden"
+id="editTagPanel"
+>
 <div id="editTagOptions"></div>
 </div>
 </div>
 </div>
 <div class="form-group">
-<label for="editCategory">书架</label>
-<div class="combo" id="editCategoryCombo">
-<div class="combo-selected" id="editCategorySelected"></div>
+<label for="editCategory">
+书架
+</label>
+<div
+class="combo"
+id="editCategoryCombo"
+>
+<div
+class="combo-selected"
+id="editCategorySelected"
+></div>
 <div class="combo-row">
-<input autocomplete="off" id="editCategory" type="text">
-<button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button"></button>
+<input
+autocomplete="off"
+id="editCategory"
+type="text"
+>
+<button
+aria-label="展开书架历史"
+class="combo-toggle"
+id="editCategoryToggle"
+type="button"
+></button>
 </div>
-<div class="combo-panel hidden" id="editCategoryPanel">
+<div
+class="combo-panel hidden"
+id="editCategoryPanel"
+>
 <div id="editCategoryOptions"></div>
 </div>
 </div>
 </div>
 </div>
 <div class="form-group">
-<label for="editCode">编码</label>
-<div class="edit-code-row">
-<input autocomplete="off" id="editCode" type="text" inputmode="numeric" maxlength="6" aria-label="编码">
-<input class="edit-code-checkbox" id="editTagChecked" type="checkbox" aria-label="勾选状态">
-</div>
+<label for="editCode">
+编码
+</label>
+<input
+autocomplete="off"
+id="editCode"
+type="text"
+inputmode="numeric"
+maxlength="6"
+aria-label="编码"
+>
 </div>
 </div>
 <div class="dialog-actions">
-<button class="btn btn-danger" id="editDelete" type="button">删除</button>
-<button class="btn" id="editCancel" type="button">取消</button>
-<button class="btn btn-primary" id="editSave" type="button">保存</button>
+<button
+class="btn btn-danger"
+id="editDelete"
+type="button"
+>
+删除
+</button>
+<button
+class="btn"
+id="editCancel"
+type="button"
+>
+取消
+</button>
+<button
+class="btn btn-primary"
+id="editSave"
+type="button"
+>
+保存
+</button>
 </div>
 </div>
 </section>
-
-<section class="overlay hidden" id="configModal">
-<form class="dialog" id="configForm" autocomplete="on">
+<section
+class="overlay hidden"
+id="configModal"
+>
+<form
+class="dialog"
+id="configForm"
+autocomplete="on"
+>
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
 <div class="form-group">
-<label for="cfgOwner">仓库所有者</label>
-<input id="cfgOwner" type="text">
+<label for="cfgOwner">
+仓库所有者
+</label>
+<input
+id="cfgOwner"
+type="text"
+>
 </div>
 <div class="form-group">
-<label for="cfg">仓库名称</label>
-<input id="cfg" type="text">
+<label for="cfg">
+仓库名称
+</label>
+<input
+id="cfg"
+type="text"
+>
 </div>
 <div class="form-group">
-<label for="cfgFile">数据文件路径</label>
-<input id="cfgFile" type="text" value="press_data.json">
+<label for="cfgFile">
+数据文件路径
+</label>
+<input
+id="cfgFile"
+type="text"
+value="press_data.json"
+>
 </div>
 <div class="form-group">
-<label for="cfgToken">GitHub Personal Access Token</label>
-<input id="cfgToken" type="password">
+<label for="cfgToken">
+GitHub Personal Access Token
+</label>
+<input
+id="cfgToken"
+type="password"
+>
 </div>
 <label>
-<input type="checkbox" id="rememberToken" checked>
+<input
+type="checkbox"
+id="rememberToken"
+checked
+>
 在本设备保存 Token
 </label>
 </div>
 <div class="dialog-actions">
-<button class="btn" id="configCancel" type="button">取消</button>
-<button class="btn btn-primary" type="submit">保存并连接</button>
+<button
+class="btn"
+id="configCancel"
+type="button"
+>
+取消
+</button>
+<button
+class="btn btn-primary"
+type="submit"
+>
+保存并连接
+</button>
 </div>
 </form>
 </section>
-
-<section class="overlay hidden" id="manageModal">
+<section
+class="overlay hidden"
+id="manageModal"
+>
 <div class="dialog manage-dialog">
 <div class="manage-fixed-top">
 <h3>出版管理</h3>
 <div class="form-group">
-<label for="manageInstitutionInput">新增出版选项</label>
+<label for="manageInstitutionInput">
+新增出版选项
+</label>
 <div class="manage-add-row">
-<input type="text" id="manageInstitutionInput">
-<input type="number" id="manageInstitutionLineInput" min="1" step="1" inputmode="numeric">
-<button class="btn btn-primary" id="manageInstitutionAdd" type="button">添加</button>
+<input
+type="text"
+id="manageInstitutionInput"
+>
+<input
+type="number"
+id="manageInstitutionLineInput"
+min="1"
+step="1"
+inputmode="numeric"
+>
+<button
+class="btn btn-primary"
+id="manageInstitutionAdd"
+type="button"
+>
+添加
+</button>
 </div>
 </div>
 </div>
@@ -1046,21 +1281,32 @@ Press
 <div id="manageInstitutionOptions"></div>
 </div>
 <div class="dialog-actions">
-<button class="btn btn-primary" id="manageClose" type="button">完成</button>
+<button
+class="btn btn-primary"
+id="manageClose"
+type="button"
+>
+完成
+</button>
 </div>
 </div>
 </section>
-
-<button id="returnTopControl" type="button" title="回到顶部"></button>
-<div class="toast hidden" id="toast"></div>
-
+<button
+id="returnTopControl"
+type="button"
+title="回到顶部"
+></button>
+<div
+class="toast hidden"
+id="toast"
+></div>
 <script>
 (()=>{
 'use strict';
-
 const PUBLIC_FILE='press_data.json';
 const NS='press_public_v1';
-const DB_NAME=`${NS}:idb_v1`;
+const DB_NAME=
+`${NS}:idb_v1`;
 const DB_STORE='kv';
 const CONFIG_KEY='config';
 const TOKEN_PERSISTED_KEY='token_persisted';
@@ -1068,27 +1314,42 @@ const META_KEY='meta';
 const WORKCOPY_KEY='workcopy';
 const PUBLIC_CACHE_KEY='public_cache';
 const SYNC_BASE_KEY='sync_base_v3_5s';
-const SYNC_ENGINE_VERSION=3;
-const MAX_BYTES=750*1024;
-const SYNC_INTERVAL=5000;
-const SYNC_RETRY_LIMIT=6;
-const NETWORK_RETRY_LIMIT=3;
-const GITHUB_TIMEOUT=25000;
-
-const GROUP_CODES=Object.freeze([
-'11','12','13','14','21','22','23'
+const SYNC_ENGINE_VERSION=
+3;
+const MAX_BYTES=
+750*1024;
+const SYNC_INTERVAL=
+5000;
+const SYNC_RETRY_LIMIT=
+6;
+const NETWORK_RETRY_LIMIT=
+3;
+const GITHUB_TIMEOUT=
+25000;
+const GROUP_CODES=
+Object.freeze([
+'11',
+'12',
+'13',
+'14',
+'21',
+'22',
+'23'
 ]);
-
-const GROUP_OPTIONS=Object.freeze(
-GROUP_CODES.map(value=>`${value}组`)
+const GROUP_OPTIONS=
+Object.freeze(
+GROUP_CODES.map(
+value=>
+`${value}组`
+)
 );
-
-const CODE_GROUP_OPTIONS=Object.freeze([
+const CODE_GROUP_OPTIONS=
+Object.freeze([
 ...GROUP_CODES,
 '24'
 ]);
-
-const CODE_RULES=Object.freeze({
+const CODE_RULES=
+Object.freeze({
 zh:{
 groups:{
 '11':[
@@ -1187,149 +1448,213 @@ exceptions:{
 }
 }
 });
-
-const $=id=>document.getElementById(id);
-
-const statusDot=$('statusDot');
-const statusText=$('statusText');
-const syncBtn=$('syncBtn');
-const configBtn=$('configBtn');
-const manageBtn=$('manageBtn');
-const importBtn=$('importBtn');
-const importInput=$('importInput');
-const exportBtn=$('exportBtn');
-const lastSyncTime=$('lastSyncTime');
-const addSection=$('addSection');
-const bookNameInput=$('bookNameInput');
-const bookNoInput=$('bookNoInput');
-const institutionCombo=$('institutionCombo');
-const institutionInput=$('institutionInput');
-const institutionToggle=$('institutionToggle');
-const institutionPanel=$('institutionPanel');
-const institutionOptions=$('institutionOptions');
-const tagCombo=$('tagCombo');
-const tagSelected=$('tagSelected');
-const tagInput=$('tagInput');
-const tagToggle=$('tagToggle');
-const tagPanel=$('tagPanel');
-const tagOptions=$('tagOptions');
-const categoryCombo=$('categoryCombo');
-const categorySelected=$('categorySelected');
-const categoryInput=$('categoryInput');
-const categoryToggle=$('categoryToggle');
-const categoryPanel=$('categoryPanel');
-const categoryOptions=$('categoryOptions');
-const addBtn=$('addBtn');
-const pressList=$('pressList');
-const countDisplay=$('countDisplay');
-const editModal=$('editModal');
-const editBookName=$('editBookName');
-const clearEditBookName=$('clearEditBookName');
-const editBookNo=$('editBookNo');
-const clearEditBookNo=$('clearEditBookNo');
-const editInstitutionCombo=$('editInstitutionCombo');
-const editInstitution=$('editInstitution');
-const editInstitutionToggle=$('editInstitutionToggle');
-const editInstitutionPanel=$('editInstitutionPanel');
-const editInstitutionOptions=$('editInstitutionOptions');
-const editTagCombo=$('editTagCombo');
-const editTagSelected=$('editTagSelected');
-const editTag=$('editTag');
-const editTagToggle=$('editTagToggle');
-const editTagPanel=$('editTagPanel');
-const editTagOptions=$('editTagOptions');
-const editCategoryCombo=$('editCategoryCombo');
-const editCategorySelected=$('editCategorySelected');
-const editCategory=$('editCategory');
-const editCategoryToggle=$('editCategoryToggle');
-const editCategoryPanel=$('editCategoryPanel');
-const editCategoryOptions=$('editCategoryOptions');
-const editCode=$('editCode');
-const editTagChecked=$('editTagChecked');
-const editDelete=$('editDelete');
-const editCancel=$('editCancel');
-const editSave=$('editSave');
-const configModal=$('configModal');
-const configForm=$('configForm');
-const cfgOwner=$('cfgOwner');
-const cfg=$('cfg');
-const cfgFile=$('cfgFile');
-const cfgToken=$('cfgToken');
-const rememberToken=$('rememberToken');
-const configCancel=$('configCancel');
-const manageModal=$('manageModal');
-const manageInstitutionInput=$('manageInstitutionInput');
-const manageInstitutionLineInput=$('manageInstitutionLineInput');
-const manageInstitutionAdd=$('manageInstitutionAdd');
-const manageInstitutionOptions=$('manageInstitutionOptions');
-const manageClose=$('manageClose');
-const returnTopControl=$('returnTopControl');
-const toast=$('toast');
-
-const collator=new Intl.Collator(
+const $=
+id=>
+document.getElementById(id);
+const statusDot=
+$('statusDot');
+const statusText=
+$('statusText');
+const syncBtn=
+$('syncBtn');
+const configBtn=
+$('configBtn');
+const manageBtn=
+$('manageBtn');
+const importBtn=
+$('importBtn');
+const importInput=
+$('importInput');
+const exportBtn=
+$('exportBtn');
+const lastSyncTime=
+$('lastSyncTime');
+const addSection=
+$('addSection');
+const bookNameInput=
+$('bookNameInput');
+const bookNoInput=
+$('bookNoInput');
+const institutionCombo=
+$('institutionCombo');
+const institutionInput=
+$('institutionInput');
+const institutionToggle=
+$('institutionToggle');
+const institutionPanel=
+$('institutionPanel');
+const institutionOptions=
+$('institutionOptions');
+const tagCombo=
+$('tagCombo');
+const tagSelected=
+$('tagSelected');
+const tagInput=
+$('tagInput');
+const tagToggle=
+$('tagToggle');
+const tagPanel=
+$('tagPanel');
+const tagOptions=
+$('tagOptions');
+const categoryCombo=
+$('categoryCombo');
+const categorySelected=
+$('categorySelected');
+const categoryInput=
+$('categoryInput');
+const categoryToggle=
+$('categoryToggle');
+const categoryPanel=
+$('categoryPanel');
+const categoryOptions=
+$('categoryOptions');
+const addBtn=
+$('addBtn');
+const pressList=
+$('pressList');
+const countDisplay=
+$('countDisplay');
+const editModal=
+$('editModal');
+const editBookName=
+$('editBookName');
+const clearEditBookName=
+$('clearEditBookName');
+const editBookNo=
+$('editBookNo');
+const clearEditBookNo=
+$('clearEditBookNo');
+const editInstitutionCombo=
+$('editInstitutionCombo');
+const editInstitution=
+$('editInstitution');
+const editInstitutionToggle=
+$('editInstitutionToggle');
+const editInstitutionPanel=
+$('editInstitutionPanel');
+const editInstitutionOptions=
+$('editInstitutionOptions');
+const editTagCombo=
+$('editTagCombo');
+const editTagSelected=
+$('editTagSelected');
+const editTag=
+$('editTag');
+const editTagToggle=
+$('editTagToggle');
+const editTagPanel=
+$('editTagPanel');
+const editTagOptions=
+$('editTagOptions');
+const editCategoryCombo=
+$('editCategoryCombo');
+const editCategorySelected=
+$('editCategorySelected');
+const editCategory=
+$('editCategory');
+const editCategoryToggle=
+$('editCategoryToggle');
+const editCategoryPanel=
+$('editCategoryPanel');
+const editCategoryOptions=
+$('editCategoryOptions');
+const editCode=
+$('editCode');
+const editDelete=
+$('editDelete');
+const editCancel=
+$('editCancel');
+const editSave=
+$('editSave');
+const configModal=
+$('configModal');
+const configForm=
+$('configForm');
+const cfgOwner=
+$('cfgOwner');
+const cfg=
+$('cfg');
+const cfgFile=
+$('cfgFile');
+const cfgToken=
+$('cfgToken');
+const rememberToken=
+$('rememberToken');
+const configCancel=
+$('configCancel');
+const manageModal=
+$('manageModal');
+const manageInstitutionInput=
+$('manageInstitutionInput');
+const manageInstitutionLineInput=
+$('manageInstitutionLineInput');
+const manageInstitutionAdd=
+$('manageInstitutionAdd');
+const manageInstitutionOptions=
+$('manageInstitutionOptions');
+const manageClose=
+$('manageClose');
+const returnTopControl=
+$('returnTopControl');
+const toast=
+$('toast');
+const collator=
+new Intl.Collator(
 'zh-CN-u-co-pinyin',
 {
 numeric:true,
 sensitivity:'base'
 }
 );
-
 let state={
 entries:[],
 institutions:[],
 categories:[],
-tags:[...GROUP_OPTIONS]
+tags:[
+...GROUP_OPTIONS
+]
 };
-
 let addSelections={
 category:[],
 tag:[]
 };
-
 let editSelections={
 category:[],
 tag:[]
 };
-
 let editingId='';
 let editInitialSnapshot='';
-
 let config={
 owner:'',
 repo:'',
 file:'press_data.json',
 token:''
 };
-
 let meta={
 dirty:false,
 sha:null
 };
-
 let adminReady=false;
 let toastTimer=null;
 let syncIntervalTimer=null;
 let storageDbPromise=null;
 let storageDbDisabled=false;
 const storageMemory=new Map();
-
 let workCopyCache=null;
 let publicCacheValue=null;
 let syncBaseCache=null;
 let syncBaseSha=null;
 let persistedToken='';
 let editOverlayPointerDown=false;
-
 let syncInFlight=null;
 let syncRequested=false;
 let syncShowResult=false;
 let syncRunning=false;
 let localMutationVersion=0;
-
 let workCopyWriteChain=Promise.resolve();
 let metaWriteChain=Promise.resolve();
 let syncBaseWriteChain=Promise.resolve();
-
 let lastPassiveSyncAt=0;
 let syncEngineMigration=false;
 
@@ -1338,53 +1663,67 @@ return String(value??'')
 .normalize('NFC')
 .trim();
 }
-
 function cleanTitle(value){
 return String(value??'')
 .normalize('NFC')
 .trim();
 }
-
 function folded(value){
 return clean(value)
 .normalize('NFKC');
 }
-
 function key(value){
 return folded(value)
-.toLocaleLowerCase('zh-CN');
+.toLocaleLowerCase(
+'zh-CN'
+);
 }
-
 function esc(value){
-const div=document.createElement('div');
-div.textContent=String(value??'');
+const div=
+document.createElement(
+'div'
+);
+div.textContent=
+String(value??'');
 return div.innerHTML;
 }
-
 function attr(value){
-return esc(value).replace(/"/g,'&quot;');
+return esc(value)
+.replace(
+/"/g,
+'&quot;'
+);
 }
-
 function uid(){
 return crypto?.randomUUID
 ? crypto.randomUUID()
 : `press_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 }
-
 function uniq(values){
-const map=new Map();
-for(const raw of values||[]){
-const value=clean(raw);
+const map=
+new Map();
+for(
+const raw
+of values||[]
+){
+const value=
+clean(raw);
 if(
 value &&
-!map.has(key(value))
+!map.has(
+key(value)
+)
 ){
-map.set(key(value),value);
+map.set(
+key(value),
+value
+);
 }
 }
-return [...map.values()];
+return [
+...map.values()
+];
 }
-
 function normalizeMulti(value){
 return uniq(
 Array.isArray(value)
@@ -1392,36 +1731,47 @@ Array.isArray(value)
 : [value]
 );
 }
-
-function normalizeFixedGroupLabel(value){
-const original=clean(value);
-const fixed=folded(original);
-return GROUP_CODES.includes(fixed)
+function normalizeFixedGroupLabel(
+value
+){
+const original=
+clean(value);
+const fixed=
+folded(original);
+return GROUP_CODES.includes(
+fixed
+)
 ? `${fixed}组`
 : original;
 }
-
 function codeGroupValue(value){
-const original=clean(value);
-const fixed=folded(original);
-const match=fixed.match(
+const original=
+clean(value);
+const fixed=
+folded(original);
+const match=
+fixed.match(
 /^(11|12|13|14|21|22|23)组$/
 );
 return match
 ? match[1]
 : original;
 }
-
 function tagPrefixNumber(value){
-const match=folded(value).match(/^(\d{2})/);
+const match=
+folded(value)
+.match(
+/^(\d{2})/
+);
 return match
 ? Number(match[1])
 : Number.POSITIVE_INFINITY;
 }
-
 function compareTagsByPrefix(a,b){
-const ap=tagPrefixNumber(a);
-const bp=tagPrefixNumber(b);
+const ap=
+tagPrefixNumber(a);
+const bp=
+tagPrefixNumber(b);
 if(ap!==bp){
 return ap-bp;
 }
@@ -1430,18 +1780,19 @@ clean(a),
 clean(b)
 );
 }
-
 function sortTags(values){
 return uniq(
 Array.isArray(values)
 ? values
 : [values]
 )
-.sort(compareTagsByPrefix);
+.sort(
+compareTagsByPrefix
+);
 }
-
 function titleIsChinese(raw){
-const visible=String(raw??'')
+const visible=
+String(raw??'')
 .replace(
 /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
 '$1'
@@ -1449,11 +1800,11 @@ const visible=String(raw??'')
 return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
 .test(visible);
 }
-
 function compareBookNo(a,b){
-const aa=folded(a);
-const bb=folded(b);
-
+const aa=
+folded(a);
+const bb=
+folded(b);
 if(aa&&!bb){
 return -1;
 }
@@ -1463,12 +1814,11 @@ return 1;
 if(!aa&&!bb){
 return 0;
 }
-
 function triple(value){
-const match=value.match(
+const match=
+value.match(
 /^(\d+)-(\d+)-(\d+)$/
 );
-
 return match
 ? [
 Number(match[1]),
@@ -1477,11 +1827,15 @@ Number(match[3])
 ]
 : null;
 }
-
-const at=triple(aa);
-const bt=triple(bb);
-
-const group=(value,tripleValue)=>
+const at=
+triple(aa);
+const bt=
+triple(bb);
+const group=
+(
+value,
+tripleValue
+)=>
 tripleValue
 ? 0
 : (
@@ -1489,214 +1843,293 @@ value.includes('·')
 ? 1
 : 2
 );
-
-const ga=group(aa,at);
-const gb=group(bb,bt);
-
+const ga=
+group(
+aa,
+at
+);
+const gb=
+group(
+bb,
+bt
+);
 if(ga!==gb){
 return ga-gb;
 }
-
 if(ga===0){
-for(let i=0;i<3;i++){
-if(at[i]!==bt[i]){
+for(
+let i=0;
+i<3;
+i++
+){
+if(
+at[i]!==bt[i]
+){
 return at[i]-bt[i];
 }
 }
 }
-
-return collator.compare(aa,bb);
+return collator.compare(
+aa,
+bb
+);
 }
-
-function codeGroupsFromEntry(entry){
-const raw=normalizeMulti(entry?.tag)
+function codeGroupsFromEntry(
+entry
+){
+const raw=
+normalizeMulti(
+entry?.tag
+)
 .map(clean)
 .filter(Boolean);
-
 if(!raw.length){
 return null;
 }
-
-const codes=raw.map(codeGroupValue);
-
+const codes=
+raw.map(
+codeGroupValue
+);
 if(
 codes.some(
-value=>!CODE_GROUP_OPTIONS.includes(value)
+value=>
+!CODE_GROUP_OPTIONS
+.includes(value)
 )
 ){
 return null;
 }
-
 return uniq(codes)
 .sort(
-(a,b)=>Number(a)-Number(b)
+(a,b)=>
+Number(a)-
+Number(b)
 );
 }
-
-function mergeCodeRanges(ranges){
-const ordered=(ranges||[])
+function mergeCodeRanges(
+ranges
+){
+const ordered=
+(ranges||[])
 .map(
 range=>[
-Number(range[0]),
-Number(range[1])
+Number(
+range[0]
+),
+Number(
+range[1]
+)
 ]
 )
 .filter(
 range=>
-Number.isFinite(range[0]) &&
-Number.isFinite(range[1]) &&
-range[0]<=range[1]
+Number.isFinite(
+range[0]
+) &&
+Number.isFinite(
+range[1]
+) &&
+range[0]<=
+range[1]
 )
 .sort(
-(a,b)=>a[0]-b[0] || a[1]-b[1]
+(a,b)=>
+a[0]-b[0] ||
+a[1]-b[1]
 );
-
 const merged=[];
-
-for(const range of ordered){
-const last=merged[merged.length-1];
-
+for(
+const range
+of ordered
+){
+const last=
+merged[
+merged.length-1
+];
 if(
 last &&
-range[0]<=last[1]+1
+range[0]<=
+last[1]+1
 ){
-last[1]=Math.max(last[1],range[1]);
+last[1]=
+Math.max(
+last[1],
+range[1]
+);
 }else{
-merged.push([...range]);
+merged.push(
+[...range]
+);
 }
 }
-
 return merged;
 }
-
-function codeRangesForEntry(entry){
-const groups=codeGroupsFromEntry(entry);
-
+function codeRangesForEntry(
+entry
+){
+const groups=
+codeGroupsFromEntry(
+entry
+);
 if(!groups?.length){
 return [];
 }
-
 const rules=
-titleIsChinese(entry.bookName)
+titleIsChinese(
+entry.bookName
+)
 ? CODE_RULES.zh
 : CODE_RULES.en;
-
-const combination=groups.join('/');
-
-if(rules.exceptions[combination]){
+const combination=
+groups.join('/');
+if(
+rules.exceptions[
+combination
+]
+){
 return mergeCodeRanges(
-rules.exceptions[combination]
+rules.exceptions[
+combination
+]
 );
 }
-
 return mergeCodeRanges(
 groups.flatMap(
-group=>rules.groups[group]||[]
+group=>
+rules.groups[group]
+||[]
 )
 );
 }
-
-function normalizeStoredCode(raw){
-const value=folded(raw);
-
-return /^\d{6}$/.test(value)
+function normalizeStoredCode(
+raw
+){
+const value=
+folded(raw);
+return /^\d{6}$/.test(
+value
+)
 ? value
 : '';
 }
-
 function codeAllowedForEntry(
 entry,
 rawCode
 ){
-const code=Number(
-normalizeStoredCode(rawCode)
+const code=
+Number(
+normalizeStoredCode(
+rawCode
+)
 );
-
-if(!Number.isInteger(code)){
+if(
+!Number.isInteger(code)
+){
 return false;
 }
-
-return codeRangesForEntry(entry)
+return codeRangesForEntry(
+entry
+)
 .some(
 ([start,end])=>
 code>=start &&
 code<=end
 );
 }
-
 function smallestAvailableCode(
 entry,
 used
 ){
-for(const [start,end] of codeRangesForEntry(entry)){
-let number=start;
-
+for(
+const [start,end]
+of codeRangesForEntry(
+entry
+)
+){
+let number=
+start;
 while(
 number<=end &&
 used.has(number)
 ){
 number++;
 }
-
 if(number<=end){
-return String(number).padStart(6,'0');
+return String(number)
+.padStart(
+6,
+'0'
+);
 }
 }
-
 return '';
 }
-
 function usedCodesExcept(
 entries,
 excludeId=''
 ){
-const used=new Set();
-
-for(const entry of entries||[]){
+const used=
+new Set();
+for(
+const entry
+of entries||[]
+){
 if(
 excludeId &&
 entry.id===excludeId
 ){
 continue;
 }
-
-const code=normalizeStoredCode(entry.code);
-
+const code=
+normalizeStoredCode(
+entry.code
+);
 if(code){
-used.add(Number(code));
+used.add(
+Number(code)
+);
 }
 }
-
 return used;
 }
-
 /*
 自动编码不再提供“基于当前本机 state 直接分配”的入口。
 所有自动分配统一由 assignMissingCodesAfterPull() 在服务器 GET 完成后执行。
 */
-
 function renderLinkedText(raw){
-const source=clean(raw);
-const regex=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
-
+const source=
+clean(raw);
+const regex=
+/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
 let html='';
 let last=0;
 let match;
-
-while((match=regex.exec(source))){
-html+=esc(
-source.slice(last,match.index)
+while(
+(
+match=
+regex.exec(source)
+)
+){
+html+=
+esc(
+source.slice(
+last,
+match.index
+)
 );
-
 html+=
 `<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
-
-last=match.index+match[0].length;
+last=
+match.index+
+match[0].length;
 }
-
-return html+esc(source.slice(last));
+return (
+html+
+esc(
+source.slice(last)
+)
+);
 }
-
 function normEntry(raw){
 if(
 !raw ||
@@ -1704,67 +2137,107 @@ typeof raw!=='object'
 ){
 return null;
 }
-
-const bookName=cleanTitle(raw.bookName);
-
+const bookName=
+cleanTitle(
+raw.bookName
+);
 if(!bookName){
 return null;
 }
-
 return {
-id:clean(raw.id)||uid(),
+id:
+clean(raw.id) ||
+uid(),
 bookName,
-bookNo:clean(raw.bookNo),
-institution:clean(raw.institution),
-category:normalizeMulti(raw.category),
-tag:sortTags(
-normalizeMulti(raw.tag)
-.map(normalizeFixedGroupLabel)
+bookNo:
+clean(
+raw.bookNo
 ),
-tagChecked:Boolean(raw.tagChecked),
-code:normalizeStoredCode(raw.code),
-codeManualEdited:Boolean(raw.codeManualEdited),
-codeManualPinned:Boolean(
+institution:
+clean(
+raw.institution
+),
+category:
+normalizeMulti(
+raw.category
+),
+tag:
+sortTags(
+normalizeMulti(
+raw.tag
+)
+.map(
+normalizeFixedGroupLabel
+)
+),
+tagChecked:
+Boolean(
+raw.tagChecked
+),
+code:
+normalizeStoredCode(
+raw.code
+),
+codeManualEdited:
+Boolean(
+raw.codeManualEdited
+),
+codeManualPinned:
+Boolean(
 raw.codeManualEdited &&
 raw.codeManualPinned
 )
 };
 }
-
 function norm(value){
 const source=
 Array.isArray(value)
-? {entries:value}
+? {
+entries:value
+}
 : (
 value &&
-typeof value==='object'
+typeof value===
+'object'
 ? value
 : {}
 );
-
-const entries=(
-Array.isArray(source.entries)
+const entries=
+(
+Array.isArray(
+source.entries
+)
 ? source.entries
 : []
 )
 .map(normEntry)
 .filter(Boolean);
-
-const institutions=uniq(
-Array.isArray(source.institutions)
+const institutions=
+uniq(
+Array.isArray(
+source.institutions
+)
 ? source.institutions
 : entries
-.map(entry=>entry.institution)
+.map(
+entry=>
+entry.institution
+)
 .filter(Boolean)
 );
-
-const categories=uniq(
-Array.isArray(source.categories)
+const categories=
+uniq(
+Array.isArray(
+source.categories
+)
 ? source.categories
-: entries.flatMap(entry=>entry.category)
+: entries.flatMap(
+entry=>
+entry.category
+)
 );
-
-const orderMap=new Map(
+const orderMap=
+new Map(
 institutions.map(
 (value,index)=>[
 key(value),
@@ -1772,74 +2245,108 @@ index
 ]
 )
 );
-
 entries.sort(
 (a,b)=>{
 const ai=
-orderMap.has(key(a.institution))
-? orderMap.get(key(a.institution))
+orderMap.has(
+key(
+a.institution
+)
+)
+? orderMap.get(
+key(
+a.institution
+)
+)
 : Number.MAX_SAFE_INTEGER;
-
 const bi=
-orderMap.has(key(b.institution))
-? orderMap.get(key(b.institution))
+orderMap.has(
+key(
+b.institution
+)
+)
+? orderMap.get(
+key(
+b.institution
+)
+)
 : Number.MAX_SAFE_INTEGER;
-
 if(ai!==bi){
 return ai-bi;
 }
-
-if(ai===Number.MAX_SAFE_INTEGER){
-const result=collator.compare(
+if(
+ai===
+Number.MAX_SAFE_INTEGER
+){
+const result=
+collator.compare(
 a.institution,
 b.institution
 );
-
 if(result!==0){
 return result;
 }
 }
-
-const bookNoResult=compareBookNo(
+const bookNoResult=
+compareBookNo(
 a.bookNo,
 b.bookNo
 );
-
-if(bookNoResult!==0){
+if(
+bookNoResult!==0
+){
 return bookNoResult;
 }
-
 return collator.compare(
 a.bookName,
 b.bookName
 );
 }
 );
-
 return {
 schemaVersion:7,
 entries,
 institutions,
 categories,
-tags:[...GROUP_OPTIONS]
+tags:[
+...GROUP_OPTIONS
+]
 };
 }
 
-function sameSyncValue(a,b){
-return JSON.stringify(a)===JSON.stringify(b);
+function sameSyncValue(
+a,
+b
+){
+return JSON.stringify(
+a
+)===
+JSON.stringify(
+b
+);
 }
-
-function stateSignature(value){
-return JSON.stringify(norm(value));
+function stateSignature(
+value
+){
+return JSON.stringify(
+norm(
+value
+)
+);
 }
-
-function copySyncValue(value){
-return Array.isArray(value)
-? [...value]
+function copySyncValue(
+value
+){
+return Array.isArray(
+value
+)
+? [
+...value
+]
 : value;
 }
-
-const ENTRY_SYNC_FIELDS=Object.freeze([
+const ENTRY_SYNC_FIELDS=
+Object.freeze([
 'bookName',
 'bookNo',
 'institution',
@@ -1850,7 +2357,6 @@ const ENTRY_SYNC_FIELDS=Object.freeze([
 'codeManualEdited',
 'codeManualPinned'
 ]);
-
 function mergeEntryVersions(
 baseEntry,
 localEntry,
@@ -1859,128 +2365,224 @@ stats
 ){
 if(!baseEntry){
 if(!localEntry){
-return remoteEntry||null;
+return remoteEntry ||
+null;
 }
-
 if(!remoteEntry){
 return localEntry;
 }
-
-if(sameSyncValue(localEntry,remoteEntry)){
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
 return localEntry;
 }
-
 const merged={
-id:localEntry.id||remoteEntry.id
+id:
+localEntry.id ||
+remoteEntry.id
 };
-
-for(const field of ENTRY_SYNC_FIELDS){
-const localValue=localEntry[field];
-const remoteValue=remoteEntry[field];
-
-if(sameSyncValue(localValue,remoteValue)){
-merged[field]=copySyncValue(localValue);
+for(
+const field
+of ENTRY_SYNC_FIELDS
+){
+const localValue=
+localEntry[field];
+const remoteValue=
+remoteEntry[field];
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
 }else{
-merged[field]=copySyncValue(localValue);
+merged[field]=
+copySyncValue(
+localValue
+);
 stats.conflicts++;
 }
 }
-
-return normEntry(merged);
+return normEntry(
+merged
+);
 }
-
-if(!localEntry&&!remoteEntry){
+if(
+!localEntry &&
+!remoteEntry
+){
 return null;
 }
-
 if(!localEntry){
-if(sameSyncValue(remoteEntry,baseEntry)){
+if(
+sameSyncValue(
+remoteEntry,
+baseEntry
+)
+){
 return null;
 }
-
+/* 本机删除、远端同时编辑：优先保留有内容的一侧，避免静默丢失。 */
 stats.conflicts++;
 return remoteEntry;
 }
-
 if(!remoteEntry){
-if(sameSyncValue(localEntry,baseEntry)){
+if(
+sameSyncValue(
+localEntry,
+baseEntry
+)
+){
 return null;
 }
-
+/* 远端删除、本机同时编辑：优先保留有内容的一侧，避免静默丢失。 */
 stats.conflicts++;
 return localEntry;
 }
-
-if(sameSyncValue(localEntry,baseEntry)){
+if(
+sameSyncValue(
+localEntry,
+baseEntry
+)
+){
 return remoteEntry;
 }
-
-if(sameSyncValue(remoteEntry,baseEntry)){
+if(
+sameSyncValue(
+remoteEntry,
+baseEntry
+)
+){
 return localEntry;
 }
-
-if(sameSyncValue(localEntry,remoteEntry)){
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
 return localEntry;
 }
-
 const merged={
-id:localEntry.id
+id:
+localEntry.id
 };
-
-for(const field of ENTRY_SYNC_FIELDS){
-const baseValue=baseEntry[field];
-const localValue=localEntry[field];
-const remoteValue=remoteEntry[field];
-
-if(sameSyncValue(localValue,remoteValue)){
-merged[field]=copySyncValue(localValue);
+for(
+const field
+of ENTRY_SYNC_FIELDS
+){
+const baseValue=
+baseEntry[field];
+const localValue=
+localEntry[field];
+const remoteValue=
+remoteEntry[field];
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
 continue;
 }
-
-if(sameSyncValue(localValue,baseValue)){
-merged[field]=copySyncValue(remoteValue);
+if(
+sameSyncValue(
+localValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(
+remoteValue
+);
 continue;
 }
-
-if(sameSyncValue(remoteValue,baseValue)){
-merged[field]=copySyncValue(localValue);
+if(
+sameSyncValue(
+remoteValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
 continue;
 }
-
-merged[field]=copySyncValue(localValue);
+/* 同一字段被两台设备同时改动时，不丢弃整条记录；仅该字段保留本机值。 */
+merged[field]=
+copySyncValue(
+localValue
+);
 stats.conflicts++;
 }
-
-return normEntry(merged);
+return normEntry(
+merged
+);
 }
-
 function mergeOrderedHistory(
 baseValues,
 localValues,
 remoteValues,
 stats
 ){
-const base=uniq(baseValues||[]);
-const local=uniq(localValues||[]);
-const remote=uniq(remoteValues||[]);
-
-if(sameSyncValue(local,base)){
+const base=
+uniq(
+baseValues ||
+[]
+);
+const local=
+uniq(
+localValues ||
+[]
+);
+const remote=
+uniq(
+remoteValues ||
+[]
+);
+if(
+sameSyncValue(
+local,
+base
+)
+){
 return remote;
 }
-
-if(sameSyncValue(remote,base)){
+if(
+sameSyncValue(
+remote,
+base
+)
+){
 return local;
 }
-
-if(sameSyncValue(local,remote)){
+if(
+sameSyncValue(
+local,
+remote
+)
+){
 return local;
 }
-
 stats.collectionConflicts++;
-
-const baseKeys=new Set(base.map(key));
-
-const localMap=new Map(
+const baseKeys=
+new Set(
+base.map(key)
+);
+const localMap=
+new Map(
 local.map(
 value=>[
 key(value),
@@ -1988,8 +2590,8 @@ value
 ]
 )
 );
-
-const remoteMap=new Map(
+const remoteMap=
+new Map(
 remote.map(
 value=>[
 key(value),
@@ -1997,32 +2599,50 @@ value
 ]
 )
 );
-
-const ordered=uniq([
+const ordered=
+uniq([
 ...local,
 ...remote
 ]);
-
 return ordered.filter(
 value=>{
-const itemKey=key(value);
-
-if(!baseKeys.has(itemKey)){
+const itemKey=
+key(value);
+if(
+!baseKeys.has(
+itemKey
+)
+){
 return (
-localMap.has(itemKey) ||
-remoteMap.has(itemKey)
+localMap.has(
+itemKey
+) ||
+remoteMap.has(
+itemKey
+)
 );
 }
-
+/* 旧选项若任一设备明确删除，则删除优先；新增项则两侧取并集。 */
 return (
-localMap.has(itemKey) &&
-remoteMap.has(itemKey)
+localMap.has(
+itemKey
+) &&
+remoteMap.has(
+itemKey
+)
 );
 }
 );
 }
-
-function stableEntryCodeCompare(a,b){
+function stableEntryCodeCompare(
+a,
+b
+){
+/*
+重复编码的保留者必须在所有设备上得到同一结果，
+不能依赖当前数组顺序，否则两台设备可能各自保留自己的条目。
+优先级：手动固定 > 手动编辑 > 稳定 id。
+*/
 const ap=
 a.codeManualPinned
 ? 0
@@ -2031,7 +2651,6 @@ a.codeManualEdited
 ? 1
 : 2
 );
-
 const bp=
 b.codeManualPinned
 ? 0
@@ -2040,87 +2659,130 @@ b.codeManualEdited
 ? 1
 : 2
 );
-
 if(ap!==bp){
 return ap-bp;
 }
-
 return String(a.id||'')
 .localeCompare(
 String(b.id||''),
 'en'
 );
 }
-
-function repairMergedCodeCollisions(snapshot){
-const fixed=norm(snapshot);
-const byCode=new Map();
-
-for(const entry of fixed.entries){
-const code=normalizeStoredCode(entry.code);
-
+function repairMergedCodeCollisions(
+snapshot
+){
+const fixed=
+norm(
+snapshot
+);
+const byCode=
+new Map();
+for(
+const entry
+of fixed.entries
+){
+const code=
+normalizeStoredCode(
+entry.code
+);
 if(!code){
 continue;
 }
-
-const number=Number(code);
-
-if(!byCode.has(number)){
-byCode.set(number,[]);
+const number=
+Number(
+code
+);
+if(
+!byCode.has(
+number
+)
+){
+byCode.set(
+number,
+[]
+);
 }
-
-byCode.get(number).push(entry);
+byCode.get(
+number
+)
+.push(
+entry
+);
 }
-
-const used=new Set(byCode.keys());
-
+/*
+先把所有现有编码视为已占用。
+重复组只保留一个，其余条目只能领取真正未使用的新编码。
+*/
+const used=
+new Set(
+byCode.keys()
+);
 let repaired=0;
 let unresolved=0;
-
-for(const entries of byCode.values()){
-if(entries.length<2){
+for(
+const entries
+of byCode.values()
+){
+if(
+entries.length<2
+){
 continue;
 }
-
 const ordered=[
 ...entries
 ]
-.sort(stableEntryCodeCompare);
-
-for(let i=1;i<ordered.length;i++){
-const entry=ordered[i];
-
-const replacement=smallestAvailableCode(
+.sort(
+stableEntryCodeCompare
+);
+/* ordered[0] 在所有设备上都是同一个保留者。 */
+for(
+let i=1;
+i<ordered.length;
+i++
+){
+const entry=
+ordered[i];
+const replacement=
+smallestAvailableCode(
 entry,
 used
 );
-
 if(replacement){
-entry.code=replacement;
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-
-used.add(Number(replacement));
+entry.code=
+replacement;
+entry.codeManualEdited=
+false;
+entry.codeManualPinned=
+false;
+used.add(
+Number(
+replacement
+)
+);
 repaired++;
 }else{
 unresolved++;
 }
 }
 }
-
 return {
-state:norm(fixed),
+state:
+norm(
+fixed
+),
 repaired,
 unresolved
 };
 }
-
 function assignMissingCodesAfterPull(snapshot){
-const fixed=norm(snapshot);
-const used=new Set();
-
-let assigned=0;
-let clearedInvalid=0;
+const fixed=
+norm(snapshot);
+const used=
+new Set();
+let assigned=
+0;
+let clearedInvalid=
+0;
 
 /*
 这里只接受刚完成远端 GET 并合并后的状态。
@@ -2128,21 +2790,28 @@ let clearedInvalid=0;
 不合法的旧编码清空，稍后重新分配。
 */
 for(const entry of fixed.entries){
-const code=normalizeStoredCode(entry.code);
-
+const code=
+normalizeStoredCode(
+entry.code
+);
 if(!code){
 continue;
 }
-
-if(!codeAllowedForEntry(entry,code)){
+if(
+!codeAllowedForEntry(
+entry,
+code
+)
+){
 entry.code='';
 entry.codeManualEdited=false;
 entry.codeManualPinned=false;
 clearedInvalid++;
 continue;
 }
-
-used.add(Number(code));
+used.add(
+Number(code)
+);
 }
 
 /*
@@ -2150,29 +2819,39 @@ used.add(Number(code));
 因为 used 来自“服务器最新版 + 本机待提交修改”，
 所以不会基于某一台设备的陈旧本地列表计算。
 */
-const waiting=fixed.entries
+const waiting=
+fixed.entries
 .filter(
 entry=>
-!normalizeStoredCode(entry.code) &&
-codeRangesForEntry(entry).length
+!normalizeStoredCode(
+entry.code
+) &&
+codeRangesForEntry(
+entry
+).length
 )
-.sort(stableEntryCodeCompare);
+.sort(
+stableEntryCodeCompare
+);
 
 for(const entry of waiting){
-const code=smallestAvailableCode(
+const code=
+smallestAvailableCode(
 entry,
 used
 );
-
 if(!code){
 continue;
 }
-
-entry.code=code;
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-
-used.add(Number(code));
+entry.code=
+code;
+entry.codeManualEdited=
+false;
+entry.codeManualPinned=
+false;
+used.add(
+Number(code)
+);
 assigned++;
 }
 
@@ -2183,145 +2862,207 @@ clearedInvalid
 };
 }
 
-function duplicateCodeCount(snapshot){
-const counts=new Map();
-
-for(const entry of norm(snapshot).entries){
-const code=normalizeStoredCode(entry.code);
-
+function duplicateCodeCount(
+snapshot
+){
+const counts=
+new Map();
+for(
+const entry
+of norm(snapshot).entries
+){
+const code=
+normalizeStoredCode(
+entry.code
+);
 if(!code){
 continue;
 }
-
 counts.set(
 code,
 (counts.get(code)||0)+1
 );
 }
-
 let duplicates=0;
-
-for(const count of counts.values()){
+for(
+const count
+of counts.values()
+){
 if(count>1){
-duplicates+=count-1;
+duplicates+=
+count-1;
 }
 }
-
 return duplicates;
 }
-
 function mergeStates(
 baseValue,
 localValue,
 remoteValue
 ){
-const base=norm(baseValue||{});
-const local=norm(localValue||{});
-const remote=norm(remoteValue||{});
-
+const base=
+norm(
+baseValue ||
+{}
+);
+const local=
+norm(
+localValue ||
+{}
+);
+const remote=
+norm(
+remoteValue ||
+{}
+);
 const stats={
 conflicts:0,
 collectionConflicts:0
 };
-
-const baseSig=stateSignature(base);
-const localSig=stateSignature(local);
-const remoteSig=stateSignature(remote);
-
+const baseSig=
+stateSignature(
+base
+);
+const localSig=
+stateSignature(
+local
+);
+const remoteSig=
+stateSignature(
+remote
+);
 let merged;
-
-if(localSig===baseSig){
-merged=remote;
-}else if(remoteSig===baseSig){
-merged=local;
-}else if(localSig===remoteSig){
-merged=local;
+if(
+localSig===
+baseSig
+){
+merged=
+remote;
+}else if(
+remoteSig===
+baseSig
+){
+merged=
+local;
+}else if(
+localSig===
+remoteSig
+){
+merged=
+local;
 }else{
-const baseMap=new Map(
+const baseMap=
+new Map(
 base.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
-
-const localMap=new Map(
+const localMap=
+new Map(
 local.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
-
-const remoteMap=new Map(
+const remoteMap=
+new Map(
 remote.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
-
-const ids=new Set([
+const ids=
+new Set([
 ...baseMap.keys(),
 ...localMap.keys(),
 ...remoteMap.keys()
 ]);
-
 const entries=[];
-
-for(const id of ids){
-const entry=mergeEntryVersions(
+for(
+const id
+of ids
+){
+const entry=
+mergeEntryVersions(
 baseMap.get(id),
 localMap.get(id),
 remoteMap.get(id),
 stats
 );
-
 if(entry){
-entries.push(entry);
+entries.push(
+entry
+);
 }
 }
-
-let institutions=mergeOrderedHistory(
+let institutions=
+mergeOrderedHistory(
 base.institutions,
 local.institutions,
 remote.institutions,
 stats
 );
-
-let categories=mergeOrderedHistory(
+let categories=
+mergeOrderedHistory(
 base.categories,
 local.categories,
 remote.categories,
 stats
 );
-
-institutions=uniq([
+/* 条目仍在使用的出版/书架不能因并发菜单调整而从历史选项里消失。 */
+institutions=
+uniq([
 ...institutions,
 ...entries
-.map(entry=>entry.institution)
+.map(
+entry=>
+entry.institution
+)
 .filter(Boolean)
 ]);
-
-categories=uniq([
+categories=
+uniq([
 ...categories,
-...entries.flatMap(entry=>entry.category)
+...entries.flatMap(
+entry=>
+entry.category
+)
 ]);
-
-merged=norm({
+merged=
+norm({
 schemaVersion:7,
 entries,
 institutions,
 categories,
-tags:[...GROUP_OPTIONS]
+tags:[
+...GROUP_OPTIONS
+]
 });
 }
-
-const repaired=repairMergedCodeCollisions(merged);
-
+const repaired=
+repairMergedCodeCollisions(
+merged
+);
 return {
-state:repaired.state,
-conflicts:stats.conflicts,
-collectionConflicts:stats.collectionConflicts,
-codeRepairs:repaired.repaired,
-unresolvedCodeConflicts:repaired.unresolved
+state:
+repaired.state,
+conflicts:
+stats.conflicts,
+collectionConflicts:
+stats.collectionConflicts,
+codeRepairs:
+repaired.repaired,
+unresolvedCodeConflicts:
+repaired.unresolved
 };
 }
-
 function admin(){
 return Boolean(
 config.owner &&
@@ -2330,73 +3071,85 @@ config.file &&
 config.token
 );
 }
-
-function show(message,type='info'){
-toast.textContent=message;
-toast.className=`toast ${type}`;
-
-clearTimeout(toastTimer);
-
-toastTimer=setTimeout(
+function show(
+message,
+type='info'
+){
+toast.textContent=
+message;
+toast.className=
+`toast ${type}`;
+clearTimeout(
+toastTimer
+);
+toastTimer=
+setTimeout(
 ()=>{
-toast.classList.add('hidden');
+toast.classList
+.add(
+'hidden'
+);
 },
 3000
 );
 }
-
-function status(kind,text){
-statusDot.className=`status-dot ${kind}`;
-statusText.textContent=text;
+function status(
+kind,
+text
+){
+statusDot.className=
+`status-dot ${kind}`;
+statusText.textContent=
+text;
 }
-
 function fallbackStorageKey(storageKey){
 return `${NS}:fallback:${storageKey}`;
 }
-
 function fallbackGet(storageKey){
 if(storageMemory.has(storageKey)){
 return storageMemory.get(storageKey);
 }
-
 try{
-const raw=localStorage.getItem(
+const raw=
+localStorage.getItem(
 fallbackStorageKey(storageKey)
 );
-
 if(raw!==null){
-const value=JSON.parse(raw);
-storageMemory.set(storageKey,value);
+const value=
+JSON.parse(raw);
+storageMemory.set(
+storageKey,
+value
+);
 return value;
 }
 }catch{}
-
 return null;
 }
-
-function fallbackSet(storageKey,value){
-storageMemory.set(storageKey,value);
-
+function fallbackSet(
+storageKey,
+value
+){
+storageMemory.set(
+storageKey,
+value
+);
 try{
 localStorage.setItem(
 fallbackStorageKey(storageKey),
 JSON.stringify(value)
 );
 }catch{}
-
 return true;
 }
-
 function fallbackDelete(storageKey){
 storageMemory.delete(storageKey);
-
 try{
 localStorage.removeItem(
 fallbackStorageKey(storageKey)
 );
 }catch{}
 }
-
 function openStorageDb(){
 if(
 storageDbDisabled ||
@@ -2406,17 +3159,19 @@ return Promise.reject(
 new Error('IndexedDB unavailable')
 );
 }
-
 if(storageDbPromise){
 return storageDbPromise;
 }
-
-storageDbPromise=new Promise(
-(resolve,reject)=>{
+storageDbPromise=
+new Promise(
+(
+resolve,
+reject
+)=>{
 let request;
-
 try{
-request=indexedDB.open(
+request=
+indexedDB.open(
 DB_NAME,
 1
 );
@@ -2424,72 +3179,91 @@ DB_NAME,
 reject(error);
 return;
 }
-
-request.onupgradeneeded=()=>{
-const db=request.result;
-
-if(!db.objectStoreNames.contains(DB_STORE)){
-db.createObjectStore(DB_STORE);
+request.onupgradeneeded=
+()=>{
+const db=
+request.result;
+if(
+!db
+.objectStoreNames
+.contains(
+DB_STORE
+)
+){
+db
+.createObjectStore(
+DB_STORE
+);
 }
 };
-
-request.onsuccess=()=>{
-resolve(request.result);
+request.onsuccess=
+()=>{
+resolve(
+request.result
+);
 };
-
-request.onerror=()=>{
+request.onerror=
+()=>{
 reject(
 request.error ||
 new Error('IndexedDB open failed')
 );
 };
-
-request.onblocked=()=>{
+request.onblocked=
+()=>{
 reject(
 new Error('IndexedDB blocked')
 );
 };
 }
 );
-
 storageDbPromise.catch(
 ()=>{
 storageDbDisabled=true;
 storageDbPromise=null;
 }
 );
-
 return storageDbPromise;
 }
-
-async function idbGet(storageKey){
+async function idbGet(
+storageKey
+){
 if(storageDbDisabled){
 return fallbackGet(storageKey);
 }
-
 try{
-const db=await openStorageDb();
-
+const db=
+await openStorageDb();
 return await new Promise(
-(resolve,reject)=>{
-const tx=db.transaction(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
 DB_STORE,
 'readonly'
 );
-
-const request=tx
-.objectStore(DB_STORE)
-.get(storageKey);
-
-request.onsuccess=()=>{
+const request=
+tx
+.objectStore(
+DB_STORE
+)
+.get(
+storageKey
+);
+request.onsuccess=
+()=>{
 resolve(
 request.result ??
 fallbackGet(storageKey)
 );
 };
-
-request.onerror=()=>{
-reject(request.error);
+request.onerror=
+()=>{
+reject(
+request.error
+);
 };
 }
 );
@@ -2499,40 +3273,49 @@ storageDbPromise=null;
 return fallbackGet(storageKey);
 }
 }
-
-async function idbSet(storageKey,value){
+async function idbSet(
+storageKey,
+value
+){
 if(storageDbDisabled){
 return fallbackSet(
 storageKey,
 value
 );
 }
-
 try{
-const db=await openStorageDb();
-
+const db=
+await openStorageDb();
 await new Promise(
-(resolve,reject)=>{
-const tx=db.transaction(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
 DB_STORE,
 'readwrite'
 );
-
-tx.objectStore(DB_STORE)
+tx
+.objectStore(
+DB_STORE
+)
 .put(
 value,
 storageKey
 );
-
-tx.oncomplete=()=>{
+tx.oncomplete=
+()=>{
 resolve(true);
 };
-
-tx.onerror=()=>{
-reject(tx.error);
+tx.onerror=
+()=>{
+reject(
+tx.error
+);
 };
-
-tx.onabort=()=>{
+tx.onabort=
+()=>{
 reject(
 tx.error ||
 new Error('IndexedDB transaction aborted')
@@ -2540,47 +3323,57 @@ new Error('IndexedDB transaction aborted')
 };
 }
 );
-
-storageMemory.set(storageKey,value);
+storageMemory.set(
+storageKey,
+value
+);
 return true;
-
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
-
 return fallbackSet(
 storageKey,
 value
 );
 }
 }
-
-async function idbDelete(storageKey){
+async function idbDelete(
+storageKey
+){
 if(storageDbDisabled){
 fallbackDelete(storageKey);
 return;
 }
-
 try{
-const db=await openStorageDb();
-
+const db=
+await openStorageDb();
 await new Promise(
-(resolve,reject)=>{
-const tx=db.transaction(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
 DB_STORE,
 'readwrite'
 );
-
-tx.objectStore(DB_STORE)
-.delete(storageKey);
-
-tx.oncomplete=resolve;
-
-tx.onerror=()=>{
-reject(tx.error);
+tx
+.objectStore(
+DB_STORE
+)
+.delete(
+storageKey
+);
+tx.oncomplete=
+resolve;
+tx.onerror=
+()=>{
+reject(
+tx.error
+);
 };
-
-tx.onabort=()=>{
+tx.onabort=
+()=>{
 reject(
 tx.error ||
 new Error('IndexedDB transaction aborted')
@@ -2588,195 +3381,284 @@ new Error('IndexedDB transaction aborted')
 };
 }
 );
-
 storageMemory.delete(storageKey);
-
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
 fallbackDelete(storageKey);
 }
 }
-
 function syncTargetId(){
 return [
-clean(config.owner),
-clean(config.repo),
-clean(config.file)
+clean(
+config.owner
+),
+clean(
+config.repo
+),
+clean(
+config.file
+)
 ].join('/');
 }
-
-function saveLocal(snapshot=state){
-const savedState=norm(snapshot);
-
-state=savedState;
-workCopyCache=norm(savedState);
-
+function saveLocal(
+snapshot=state
+){
+const savedState=
+norm(
+snapshot
+);
+state=
+savedState;
+workCopyCache=
+norm(
+savedState
+);
 const payload={
-savedAt:new Date().toISOString(),
-target:syncTargetId(),
-state:norm(savedState)
+savedAt:
+new Date()
+.toISOString(),
+target:
+syncTargetId(),
+state:
+norm(
+savedState
+)
 };
-
 workCopyWriteChain=
 workCopyWriteChain
-.catch(()=>{})
+.catch(
+()=>{}
+)
 .then(
-()=>idbSet(
+()=>
+idbSet(
 WORKCOPY_KEY,
 payload
 )
 );
-
-workCopyWriteChain.catch(console.error);
-
+workCopyWriteChain.catch(
+console.error
+);
 return true;
 }
-
 function loadLocal(){
 return workCopyCache
-? norm(workCopyCache)
+? norm(
+workCopyCache
+)
 : null;
 }
-
 function persistMeta(){
-meta.syncVersion=SYNC_ENGINE_VERSION;
-
+meta.syncVersion=
+SYNC_ENGINE_VERSION;
 const payload={
 ...meta,
-target:syncTargetId()
+target:
+syncTargetId()
 };
-
 metaWriteChain=
 metaWriteChain
-.catch(()=>{})
+.catch(
+()=>{}
+)
 .then(
-()=>idbSet(
+()=>
+idbSet(
 META_KEY,
 payload
 )
 );
-
 return metaWriteChain;
 }
-
-function persistSyncBase(snapshot,sha){
-const savedState=norm(snapshot);
-
-syncBaseCache=savedState;
-syncBaseSha=sha||null;
-
+function persistSyncBase(
+snapshot,
+sha
+){
+const savedState=
+norm(
+snapshot
+);
+syncBaseCache=
+savedState;
+syncBaseSha=
+sha ||
+null;
 const payload={
-savedAt:new Date().toISOString(),
-target:syncTargetId(),
-sha:syncBaseSha,
-state:norm(savedState)
+savedAt:
+new Date()
+.toISOString(),
+target:
+syncTargetId(),
+sha:
+syncBaseSha,
+state:
+norm(
+savedState
+)
 };
-
 syncBaseWriteChain=
 syncBaseWriteChain
-.catch(()=>{})
+.catch(
+()=>{}
+)
 .then(
-()=>idbSet(
+()=>
+idbSet(
 SYNC_BASE_KEY,
 payload
 )
 );
-
 return syncBaseWriteChain;
 }
-
 function updateAdmin(){
 const editable=
 admin() &&
 adminReady;
-
-addSection.classList.toggle(
+addSection.classList
+.toggle(
 'hidden',
 !editable
 );
-
-syncBtn.classList.toggle(
+syncBtn.classList
+.toggle(
 'hidden',
 !admin()
 );
-
 syncBtn.disabled=
 !editable ||
 syncRunning;
-
 manageBtn.disabled=
 !editable;
 }
-
-function multiMeta(type,which){
-const edit=which==='edit';
-
+function multiMeta(
+type,
+which
+){
+const edit=
+which==='edit';
 if(type==='tag'){
 return {
 label:'编组',
 historyKey:'tags',
-input:edit?editTag:tagInput,
-panel:edit?editTagPanel:tagPanel,
-options:edit?editTagOptions:tagOptions,
-selectedBox:edit?editTagSelected:tagSelected,
-selection:edit?editSelections.tag:addSelections.tag
+input:
+edit
+? editTag
+: tagInput,
+panel:
+edit
+? editTagPanel
+: tagPanel,
+options:
+edit
+? editTagOptions
+: tagOptions,
+selectedBox:
+edit
+? editTagSelected
+: tagSelected,
+selection:
+edit
+? editSelections.tag
+: addSelections.tag
 };
 }
-
 return {
 label:'书架',
 historyKey:'categories',
-input:edit?editCategory:categoryInput,
-panel:edit?editCategoryPanel:categoryPanel,
-options:edit?editCategoryOptions:categoryOptions,
-selectedBox:edit?editCategorySelected:categorySelected,
-selection:edit?editSelections.category:addSelections.category
+input:
+edit
+? editCategory
+: categoryInput,
+panel:
+edit
+? editCategoryPanel
+: categoryPanel,
+options:
+edit
+? editCategoryOptions
+: categoryOptions,
+selectedBox:
+edit
+? editCategorySelected
+: categorySelected,
+selection:
+edit
+? editSelections.category
+: addSelections.category
 };
 }
-
-function institutionMeta(which){
-const edit=which==='edit';
-
+function institutionMeta(
+which
+){
+const edit=
+which==='edit';
 return {
-input:edit?editInstitution:institutionInput,
-panel:edit?editInstitutionPanel:institutionPanel,
-options:edit?editInstitutionOptions:institutionOptions
+input:
+edit
+? editInstitution
+: institutionInput,
+panel:
+edit
+? editInstitutionPanel
+: institutionPanel,
+options:
+edit
+? editInstitutionOptions
+: institutionOptions
 };
 }
-
-function sortHistory(type,values){
+function sortHistory(
+type,
+values
+){
 if(type==='tag'){
-return [...GROUP_OPTIONS];
+return [
+...GROUP_OPTIONS
+];
 }
-
-return uniq(values);
+return uniq(
+values
+);
 }
-
-function groupDisplay(value){
-return normalizeFixedGroupLabel(value);
+function groupDisplay(
+value
+){
+return normalizeFixedGroupLabel(
+value
+);
 }
-
-function multiAllowsMultiple(type){
+function multiAllowsMultiple(
+type
+){
 return type==='tag';
 }
-
-function renderMultiSelected(type,which){
-const metaInfo=multiMeta(type,which);
-
+function renderMultiSelected(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
 const values=
 type==='tag'
-? sortTags(metaInfo.selection)
-: metaInfo.selection;
-
-metaInfo.selectedBox.innerHTML=
-values.map(
+? sortTags(
+meta.selection
+)
+: meta.selection;
+meta.selectedBox.innerHTML=
+values
+.map(
 value=>`
 <span class="selected-pill">
 <span class="selected-pill-label">
 ${esc(
 type==='tag'
-? groupDisplay(value)
+? groupDisplay(
+value
+)
 : value
 )}
 </span>
@@ -2784,37 +3666,56 @@ type==='tag'
 class="selected-pill-remove"
 type="button"
 data-remove-value="${attr(value)}"
->×</button>
+>
+×
+</button>
 </span>
 `
-).join('');
+)
+.join('');
 }
-
-function renderMultiOptions(type,which){
-const metaInfo=multiMeta(type,which);
-const search=key(metaInfo.input.value);
-
-const values=sortHistory(
+function renderMultiOptions(
 type,
-state[metaInfo.historyKey]
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+const search=
+key(
+meta.input.value
+);
+const values=
+sortHistory(
+type,
+state[
+meta.historyKey
+]
 )
 .filter(
 value=>
 !search ||
-key(value).includes(search)
+key(value)
+.includes(
+search
+)
 );
-
-const selected=new Set(
-metaInfo.selection.map(key)
+const selected=
+new Set(
+meta.selection
+.map(key)
 );
-
-metaInfo.options.innerHTML=
+meta.options.innerHTML=
 values.length
 ? `
 <div class="combo-option-list">
 ${values.map(
 value=>`
-<span class="combo-pill${selected.has(key(value))?' selected':''}">
+<span
+class="combo-pill${selected.has(key(value))?' selected':''}"
+>
 <button
 class="combo-pill-select"
 type="button"
@@ -2822,7 +3723,9 @@ data-select-value="${attr(value)}"
 >
 ${esc(
 type==='tag'
-? groupDisplay(value)
+? groupDisplay(
+value
+)
 : value
 )}
 </button>
@@ -2837,33 +3740,56 @@ type==='tag'
 </div>
 `;
 }
-
-function renderMultiField(type,which){
-const metaInfo=multiMeta(type,which);
-
-renderMultiSelected(type,which);
-
-metaInfo.input.readOnly=false;
-metaInfo.input.removeAttribute('readonly');
-metaInfo.input.removeAttribute('placeholder');
-
-renderMultiOptions(type,which);
+function renderMultiField(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+renderMultiSelected(
+type,
+which
+);
+meta.input.readOnly=
+false;
+meta.input.removeAttribute(
+'readonly'
+);
+meta.input.removeAttribute(
+'placeholder'
+);
+renderMultiOptions(
+type,
+which
+);
 }
-
-function renderInstitutionOptions(which){
-const metaInfo=institutionMeta(which);
-const search=key(metaInfo.input.value);
-
-const values=uniq(
+function renderInstitutionOptions(
+which
+){
+const meta=
+institutionMeta(
+which
+);
+const search=
+key(
+meta.input.value
+);
+const values=
+uniq(
 state.institutions
 )
 .filter(
 value=>
 !search ||
-key(value).includes(search)
+key(value)
+.includes(
+search
+)
 );
-
-metaInfo.options.innerHTML=
+meta.options.innerHTML=
 values.length
 ? `
 <div class="combo-option-list">
@@ -2888,14 +3814,19 @@ ${renderLinkedText(value)}
 </div>
 `;
 }
-
 function renderManageInstitutionOptions(){
-const history=uniq(state.institutions);
-
+const history=
+uniq(
+state.institutions
+);
 manageInstitutionOptions.innerHTML=
 history.length
-? history.map(
-(value,index)=>`
+? history
+.map(
+(
+value,
+index
+)=>`
 <div
 class="manage-option-row"
 data-manage-value="${attr(value)}"
@@ -2915,83 +3846,117 @@ data-move-value="${attr(value)}"
 class="combo-pill-edit"
 type="button"
 data-edit-value="${attr(value)}"
->✓</button>
+>
+✓
+</button>
 <button
 class="combo-pill-delete"
 type="button"
 data-delete-value="${attr(value)}"
->×</button>
+>
+×
+</button>
 </div>
 `
-).join('')
+)
+.join('')
 : `
 <div class="empty-state">
 暂无出版选项
 </div>
 `;
-
 manageInstitutionLineInput.max=
-String(history.length+1);
-
-if(!clean(manageInstitutionLineInput.value)){
+String(
+history.length+1
+);
+if(
+!clean(
+manageInstitutionLineInput
+.value
+)
+){
 manageInstitutionLineInput.value=
-String(history.length+1);
+String(
+history.length+1
+);
 }
 }
-
 function updateCountDisplay(){
-const total=state.entries.length;
-
-const coded=state.entries
+const total=
+state.entries.length;
+const coded=
+state.entries
 .filter(
-entry=>normalizeStoredCode(entry.code)
+entry=>
+normalizeStoredCode(
+entry.code
+)
 )
 .length;
-
-const checked=state.entries
+const checked=
+state.entries
 .filter(
-entry=>entry.tagChecked
+entry=>
+entry.tagChecked
 )
 .length;
-
 countDisplay.textContent=
 `${checked}/${coded}/${total}`;
 }
-
 function render(){
-state=norm(state);
-
+state=
+norm(state);
 updateAdmin();
 updateCountDisplay();
-
-renderInstitutionOptions('add');
-renderInstitutionOptions('edit');
-
-renderMultiField('tag','add');
-renderMultiField('tag','edit');
-
-renderMultiField('category','add');
-renderMultiField('category','edit');
-
+renderInstitutionOptions(
+'add'
+);
+renderInstitutionOptions(
+'edit'
+);
+renderMultiField(
+'tag',
+'add'
+);
+renderMultiField(
+'tag',
+'edit'
+);
+renderMultiField(
+'category',
+'add'
+);
+renderMultiField(
+'category',
+'edit'
+);
 renderManageInstitutionOptions();
-
-if(!state.entries.length){
-pressList.innerHTML=`
+if(
+!state.entries.length
+){
+pressList.innerHTML=
+`
 <div class="empty-state">
 暂无条目
 </div>
 `;
 return;
 }
-
 pressList.innerHTML=
-state.entries.map(
+state.entries
+.map(
 entry=>{
-const code=normalizeStoredCode(entry.code);
-const editLabel=code||'编辑';
+const code=
+normalizeStoredCode(
+entry.code
+);
+const editLabel=
+code ||
+'编辑';
 const rows=[];
-
-if(entry.institution){
+if(
+entry.institution
+){
 rows.push(
 `
 <div class="meta-row institution">
@@ -3002,8 +3967,9 @@ rows.push(
 `
 );
 }
-
-if(entry.bookNo){
+if(
+entry.bookNo
+){
 rows.push(
 `
 <div class="meta-row">
@@ -3014,7 +3980,6 @@ rows.push(
 `
 );
 }
-
 rows.push(
 `
 <div class="meta-row tag-row">
@@ -3025,7 +3990,9 @@ rows.push(
 <span>
 ${esc(
 entry.tag
-.map(groupDisplay)
+.map(
+groupDisplay
+)
 .join('/')
 )}
 </span>
@@ -3040,21 +4007,22 @@ ${admin()&&adminReady?'':'disabled'}
 </div>
 `
 );
-
-if(entry.category.length){
+if(
+entry.category.length
+){
 rows.push(
 `
 <div class="meta-row bookshelf-row">
 <span class="meta-label">
 书架：
 </span><span class="meta-value bookshelf-text">${esc(
-entry.category.join('、')
+entry.category
+.join('、')
 )}</span>
 </div>
 `
 );
 }
-
 return `
 <article class="press-item">
 <div class="press-head">
@@ -3084,22 +4052,28 @@ ${esc(editLabel)}
 </article>
 `;
 }
-).join('');
+)
+.join('');
 }
-
 function removeSelection(
 type,
 which,
 value
 ){
-const metaInfo=multiMeta(type,which);
-const target=key(value);
-
-const next=metaInfo.selection
-.filter(
-item=>key(item)!==target
+const meta=
+multiMeta(
+type,
+which
 );
-
+const target=
+key(value);
+const next=
+meta.selection
+.filter(
+item=>
+key(item)!==
+target
+);
 if(which==='edit'){
 editSelections[type]=
 type==='tag'
@@ -3111,30 +4085,34 @@ type==='tag'
 ? sortTags(next)
 : next;
 }
-
-metaInfo.input.value='';
-
+meta.input.value='';
 renderMultiField(
 type,
 which
 );
-
-metaInfo.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 }
-
 function toggleSelection(
 type,
 which,
 value
 ){
-const metaInfo=multiMeta(type,which);
-const target=key(value);
-
-const exists=metaInfo.selection
-.some(
-item=>key(item)===target
+const meta=
+multiMeta(
+type,
+which
 );
-
+const target=
+key(value);
+const exists=
+meta.selection
+.some(
+item=>
+key(item)===
+target
+);
 if(exists){
 removeSelection(
 type,
@@ -3143,31 +4121,32 @@ value
 );
 return;
 }
-
-const multiple=multiAllowsMultiple(type);
-
+const multiple=
+multiAllowsMultiple(
+type
+);
 if(
-metaInfo.selection.length &&
+meta.selection.length &&
 !multiple
 ){
-metaInfo.panel.classList.add('hidden');
-
+meta.panel.classList.add(
+'hidden'
+);
 show(
-`请先删除当前${metaInfo.label}，再选择新的${metaInfo.label}`,
+`请先删除当前${meta.label}，再选择新的${meta.label}`,
 'error'
 );
-
 return;
 }
-
 const next=
 multiple
 ? uniq([
-...metaInfo.selection,
+...meta.selection,
 clean(value)
 ])
-: [clean(value)];
-
+: [
+clean(value)
+];
 if(which==='edit'){
 editSelections[type]=
 type==='tag'
@@ -3179,26 +4158,30 @@ type==='tag'
 ? sortTags(next)
 : next;
 }
-
-metaInfo.input.value='';
-
+meta.input.value='';
 renderMultiField(
 type,
 which
 );
-
-metaInfo.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 }
-
-function commitInstitution(which){
-const metaInfo=institutionMeta(which);
-
-metaInfo.input.value=
-clean(metaInfo.input.value);
-
-renderInstitutionOptions(which);
+function commitInstitution(
+which
+){
+const meta=
+institutionMeta(
+which
+);
+meta.input.value=
+clean(
+meta.input.value
+);
+renderInstitutionOptions(
+which
+);
 }
-
 async function addEntry(){
 if(
 !admin() ||
@@ -3206,55 +4189,66 @@ if(
 ){
 return;
 }
-
-const bookName=cleanTitle(
+const bookName=
+cleanTitle(
 bookNameInput.value
 );
-
 if(!bookName){
 show(
 '书名不能为空',
 'error'
 );
-
 bookNameInput.focus();
 return;
 }
-
-commitInstitution('add');
-
+commitInstitution(
+'add'
+);
 const entry={
-id:uid(),
+id:
+uid(),
 bookName,
-bookNo:clean(bookNoInput.value),
-institution:clean(institutionInput.value),
-category:[...addSelections.category],
-tag:sortTags(addSelections.tag),
-tagChecked:false,
+bookNo:
+clean(
+bookNoInput.value
+),
+institution:
+clean(
+institutionInput.value
+),
+category:
+[
+...addSelections.category
+],
+tag:
+sortTags(
+addSelections.tag
+),
+tagChecked:
+false,
 code:'',
-codeManualEdited:false,
-codeManualPinned:false
+codeManualEdited:
+false,
+codeManualPinned:
+false
 };
-
 /*
 新增时绝不在本机直接分配编码。
 先保存为无编码待同步条目；真正编码只允许在服务器最新版拉取完成后产生。
 */
 entry.code='';
-
-state.entries.push(entry);
-
+state.entries.push(
+entry
+);
 bookNameInput.value='';
 bookNoInput.value='';
 institutionInput.value='';
 categoryInput.value='';
 tagInput.value='';
-
 addSelections={
 category:[],
 tag:[]
 };
-
 render();
 schedule();
 bookNameInput.focus();
@@ -3264,16 +4258,17 @@ bookNameInput.focus();
 GET 最新数据 -> 合并 -> 分配编码 -> 用当前 SHA 提交。
 如果服务器暂时不可达，条目仍保留，但保持无编码，5 秒循环会继续重试。
 */
-addBtn.disabled=true;
-
+addBtn.disabled=
+true;
 status(
 'syncing',
 '正在拉取服务器最新版并分配编码…'
 );
-
 try{
-const ok=await sync(false);
-
+const ok=
+await sync(
+false
+);
 if(!ok){
 show(
 '条目已保存在本机，但尚未取得服务器最新版，因此暂不分配编码；系统会每 5 秒重试',
@@ -3281,31 +4276,41 @@ show(
 );
 }
 }finally{
-addBtn.disabled=false;
+addBtn.disabled=
+false;
 }
 }
-
 function getEditSnapshot(){
 return JSON.stringify({
-bookName:editBookName.value,
-bookNo:editBookNo.value,
-institution:editInstitution.value,
-category:[...editSelections.category],
-tag:sortTags(editSelections.tag),
-code:editCode.value,
-tagChecked:editTagChecked.checked,
-categoryDraft:editCategory.value,
-tagDraft:editTag.value
+bookName:
+editBookName.value,
+bookNo:
+editBookNo.value,
+institution:
+editInstitution.value,
+category:
+[
+...editSelections.category
+],
+tag:
+sortTags(
+editSelections.tag
+),
+code:
+editCode.value,
+categoryDraft:
+editCategory.value,
+tagDraft:
+editTag.value
 });
 }
-
 function editIsUnchanged(){
 return (
 Boolean(editingId) &&
-getEditSnapshot()===editInitialSnapshot
+getEditSnapshot()===
+editInitialSnapshot
 );
 }
-
 function openEdit(id){
 if(
 !admin() ||
@@ -3313,59 +4318,69 @@ if(
 ){
 return;
 }
-
-const entry=state.entries.find(
-item=>item.id===id
+const entry=
+state.entries.find(
+item=>
+item.id===id
 );
-
 if(!entry){
 return;
 }
-
-editingId=id;
-
-editBookName.value=entry.bookName;
-editBookNo.value=entry.bookNo;
-editInstitution.value=entry.institution;
-
+editingId=
+id;
+editBookName.value=
+entry.bookName;
+editBookNo.value=
+entry.bookNo;
+editInstitution.value=
+entry.institution;
 editSelections={
-category:[...entry.category],
-tag:sortTags(entry.tag)
+category:[
+...entry.category
+],
+tag:
+sortTags(
+entry.tag
+)
 };
-
 editCategory.value='';
 editTag.value='';
-
 editCode.value=
-normalizeStoredCode(entry.code);
-
-editTagChecked.checked=
-Boolean(entry.tagChecked);
-
+normalizeStoredCode(
+entry.code
+);
 editCode.readOnly=
-Boolean(entry.codeManualEdited);
-
+Boolean(
+entry.codeManualEdited
+);
 editCode.setAttribute(
 'aria-readonly',
 editCode.readOnly
 ? 'true'
 : 'false'
 );
-
 editCode.title=
 editCode.readOnly
 ? '当前编组设置下已手动修改过一次；编组变化并自动重算后可再次手动修改一次'
 : '当前编组设置下可手动修改一次；保存成功后将转为只读';
-
-renderInstitutionOptions('edit');
-renderMultiField('tag','edit');
-renderMultiField('category','edit');
-
-editInitialSnapshot=getEditSnapshot();
-editOverlayPointerDown=false;
-
-editModal.classList.remove('hidden');
-
+renderInstitutionOptions(
+'edit'
+);
+renderMultiField(
+'tag',
+'edit'
+);
+renderMultiField(
+'category',
+'edit'
+);
+editInitialSnapshot=
+getEditSnapshot();
+editOverlayPointerDown=
+false;
+editModal.classList.remove(
+'hidden'
+);
 setTimeout(
 ()=>{
 editBookName.focus();
@@ -3373,86 +4388,95 @@ editBookName.focus();
 30
 );
 }
-
 function saveEdit(){
-const entry=state.entries.find(
-item=>item.id===editingId
+const entry=
+state.entries.find(
+item=>
+item.id===
+editingId
 );
-
 if(!entry){
 return;
 }
-
-const bookName=cleanTitle(
+const bookName=
+cleanTitle(
 editBookName.value
 );
-
 if(!bookName){
 show(
 '书名不能为空',
 'error'
 );
-
 editBookName.focus();
 return;
 }
-
 const previousGroups=
 JSON.stringify(
-sortTags(entry.tag)
+sortTags(
+entry.tag
+)
 );
-
 const previousLanguage=
-titleIsChinese(entry.bookName);
-
+titleIsChinese(
+entry.bookName
+);
 const previousCode=
-normalizeStoredCode(entry.code);
-
+normalizeStoredCode(
+entry.code
+);
 const manualAlreadyUsed=
-Boolean(entry.codeManualEdited);
-
-commitInstitution('edit');
-
+Boolean(
+entry.codeManualEdited
+);
+commitInstitution(
+'edit'
+);
 const nextTag=
-sortTags(editSelections.tag);
-
+sortTags(
+editSelections.tag
+);
 const groupsChanged=
-previousGroups!==
-JSON.stringify(nextTag);
-
+previousGroups !==
+JSON.stringify(
+nextTag
+);
 const languageChanged=
-previousLanguage!==
-titleIsChinese(bookName);
-
+previousLanguage !==
+titleIsChinese(
+bookName
+);
 let manualCode='';
-let manualChangeRequested=false;
-
+let manualChangeRequested=
+false;
 if(!manualAlreadyUsed){
-const typed=clean(editCode.value);
-
+const typed=
+clean(
+editCode.value
+);
 manualChangeRequested=
-typed!==previousCode;
-
-if(manualChangeRequested){
+typed !==
+previousCode;
+if(
+manualChangeRequested
+){
 manualCode=
-normalizeStoredCode(typed);
-
+normalizeStoredCode(
+typed
+);
 if(!manualCode){
 show(
 '编码必须是 6 位数字',
 'error'
 );
-
 editCode.focus();
 return;
 }
-
 const candidate={
 ...entry,
 bookName,
-tag:nextTag
+tag:
+nextTag
 };
-
 if(
 !codeAllowedForEntry(
 candidate,
@@ -3463,43 +4487,57 @@ show(
 '该编码不在当前编组与书名语言对应的编码区间内',
 'error'
 );
-
 editCode.focus();
 return;
 }
-
-const occupied=state.entries
+const occupied=
+state.entries
 .some(
 other=>
-other.id!==entry.id &&
-normalizeStoredCode(other.code)===manualCode
+other.id !==
+entry.id &&
+normalizeStoredCode(
+other.code
+)===
+manualCode
 );
-
 if(occupied){
 show(
 `编码 ${manualCode} 已被其它条目使用`,
 'error'
 );
-
 editCode.focus();
 return;
 }
 }
 }
-
-entry.bookName=bookName;
-entry.bookNo=clean(editBookNo.value);
-entry.institution=clean(editInstitution.value);
-entry.category=[...editSelections.category];
-entry.tag=nextTag;
-entry.tagChecked=editTagChecked.checked;
-
-if(manualChangeRequested){
-entry.code=manualCode;
-entry.codeManualEdited=true;
-entry.codeManualPinned=true;
-
-}else if(
+entry.bookName=
+bookName;
+entry.bookNo=
+clean(
+editBookNo.value
+);
+entry.institution=
+clean(
+editInstitution.value
+);
+entry.category=
+[
+...editSelections.category
+];
+entry.tag=
+nextTag;
+if(
+manualChangeRequested
+){
+entry.code=
+manualCode;
+entry.codeManualEdited=
+true;
+entry.codeManualPinned=
+true;
+}
+else if(
 groupsChanged ||
 languageChanged
 ){
@@ -3507,40 +4545,39 @@ languageChanged
 编组或书名语言变化后，不再用本机旧数据重算编码。
 先清空，下一轮同步在 GET 服务器最新版之后重新分配。
 */
-entry.codeManualPinned=false;
-entry.codeManualEdited=false;
+entry.codeManualPinned=
+false;
+entry.codeManualEdited=
+false;
 entry.code='';
 }
-
-editModal.classList.add('hidden');
-
+editModal.classList.add(
+'hidden'
+);
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=false;
-
+editOverlayPointerDown=
+false;
 editSelections={
 category:[],
 tag:[]
 };
-
 render();
 schedule();
-
 if(!normalizeStoredCode(entry.code)){
 /* 自动重算编码的场景立即进行一次服务器优先同步。 */
 sync(false);
 }
 }
-
 function deleteEntry(id){
-const entry=state.entries.find(
-item=>item.id===id
+const entry=
+state.entries.find(
+item=>
+item.id===id
 );
-
 if(!entry){
 return;
 }
-
 if(
 !confirm(
 `确定删除“${entry.bookName}”吗？`
@@ -3548,22 +4585,21 @@ if(
 ){
 return;
 }
-
 state.entries=
 state.entries.filter(
-item=>item.id!==id
+item=>
+item.id!==id
 );
-
-editModal.classList.add('hidden');
-
+editModal.classList.add(
+'hidden'
+);
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=false;
-
+editOverlayPointerDown=
+false;
 render();
 schedule();
 }
-
 function allPanels(){
 return [
 institutionPanel,
@@ -3574,13 +4610,14 @@ categoryPanel,
 editCategoryPanel
 ];
 }
-
 function closePanels(){
 allPanels().forEach(
-panel=>panel.classList.add('hidden')
+panel=>
+panel.classList.add(
+'hidden'
+)
 );
 }
-
 function getKeyboardOptions(container){
 return [
 ...container.querySelectorAll(
@@ -3588,58 +4625,70 @@ return [
 )
 ];
 }
-
 function clearKeyboardActive(container){
 getKeyboardOptions(container)
 .forEach(
 button=>
-button.classList.remove('keyboard-active')
+button.classList.remove(
+'keyboard-active'
+)
 );
 }
-
 function setKeyboardActive(
 container,
 index
 ){
-const options=getKeyboardOptions(container);
-
+const options=
+getKeyboardOptions(
+container
+);
 if(!options.length){
 return -1;
 }
-
-const normalized=(
-index%options.length+
+const normalized=
+(
+index%
+options.length+
 options.length
-)%options.length;
-
+)%
+options.length;
 options.forEach(
-(button,optionIndex)=>{
+(
+button,
+optionIndex
+)=>{
 button.classList.toggle(
 'keyboard-active',
 optionIndex===normalized
 );
 }
 );
-
 options[normalized]
 .scrollIntoView({
 block:'nearest'
 });
-
 return normalized;
 }
-
 function currentKeyboardIndex(container){
-return getKeyboardOptions(container)
+return getKeyboardOptions(
+container
+)
 .findIndex(
 button=>
-button.classList.contains('keyboard-active')
+button.classList.contains(
+'keyboard-active'
+)
 );
 }
-
-function setupMultiCombo(type,which){
-const metaInfo=multiMeta(type,which);
-
+function setupMultiCombo(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
 const combo=
 type==='tag'
 ? (
@@ -3652,147 +4701,158 @@ which==='edit'
 ? editCategoryCombo
 : categoryCombo
 );
-
 function openPanel(){
-const current=multiMeta(type,which);
-
+const current=
+multiMeta(
+type,
+which
+);
 if(
 current.selection.length &&
-!multiAllowsMultiple(type)
+!multiAllowsMultiple(
+type
+)
 ){
 closePanels();
 return false;
 }
-
 closePanels();
-
-metaInfo.panel.classList.remove('hidden');
-
+meta.panel.classList.remove(
+'hidden'
+);
 renderMultiOptions(
 type,
 which
 );
-
-clearKeyboardActive(metaInfo.options);
-
+clearKeyboardActive(
+meta.options
+);
 return true;
 }
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
 openPanel();
 }
 );
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'input',
 ()=>{
-const current=multiMeta(type,which);
-
+const current=
+multiMeta(
+type,
+which
+);
 if(
 current.selection.length &&
-!multiAllowsMultiple(type)
+!multiAllowsMultiple(
+type
+)
 ){
-metaInfo.input.value='';
-metaInfo.panel.classList.add('hidden');
+meta.input.value='';
+meta.panel.classList.add(
+'hidden'
+);
 return;
 }
-
-metaInfo.panel.classList.remove('hidden');
-
+meta.panel.classList.remove(
+'hidden'
+);
 renderMultiOptions(
 type,
 which
 );
-
-clearKeyboardActive(metaInfo.options);
+clearKeyboardActive(
+meta.options
+);
 }
 );
-
-metaInfo.options.addEventListener(
+meta.options.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
-
-const button=event.target.closest(
+const button=
+event.target.closest(
 '.combo-pill-select[data-select-value]'
 );
-
 if(!button){
 return;
 }
-
 toggleSelection(
 type,
 which,
-button.dataset.selectValue
+button.dataset
+.selectValue
 );
 }
 );
-
-metaInfo.selectedBox.addEventListener(
+meta.selectedBox.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
-
-const button=event.target.closest(
+const button=
+event.target.closest(
 '.selected-pill-remove[data-remove-value]'
 );
-
 if(button){
 removeSelection(
 type,
 which,
-button.dataset.removeValue
+button.dataset
+.removeValue
 );
 return;
 }
-
+// 已选项区域的空白处也属于整个输入框：点击任意位置都可继续选择。
 if(openPanel()){
-metaInfo.input.focus({
+meta.input.focus({
 preventScroll:true
 });
 }
 }
 );
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'keydown',
 event=>{
-if(event.key==='Escape'){
-clearKeyboardActive(metaInfo.options);
-metaInfo.panel.classList.add('hidden');
+if(
+event.key==='Escape'
+){
+clearKeyboardActive(
+meta.options
+);
+meta.panel.classList.add(
+'hidden'
+);
 return;
 }
-
 if(
 event.key==='ArrowDown' ||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
 event.stopPropagation();
-
 if(
-metaInfo.panel.classList
-.contains('hidden')
+meta.panel.classList
+.contains(
+'hidden'
+)
 ){
 if(!openPanel()){
 return;
 }
 }
-
-const options=getKeyboardOptions(metaInfo.options);
-
+const options=
+getKeyboardOptions(
+meta.options
+);
 if(!options.length){
 return;
 }
-
-const current=currentKeyboardIndex(
-metaInfo.options
+const current=
+currentKeyboardIndex(
+meta.options
 );
-
 const next=
 current<0
 ? (
@@ -3806,157 +4866,176 @@ event.key==='ArrowDown'
 ? 1
 : -1
 );
-
 setKeyboardActive(
-metaInfo.options,
+meta.options,
 next
 );
-
 return;
 }
-
-if(event.key!=='Enter'){
-return;
-}
-
-const options=getKeyboardOptions(metaInfo.options);
-
 if(
-metaInfo.panel.classList
-.contains('hidden')
+event.key!=='Enter'
+){
+return;
+}
+const options=
+getKeyboardOptions(
+meta.options
+);
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
 ){
 if(!openPanel()){
 return;
 }
 return;
 }
-
-const activeIndex=currentKeyboardIndex(
-metaInfo.options
+const activeIndex=
+currentKeyboardIndex(
+meta.options
 );
-
 if(activeIndex>=0){
 event.preventDefault();
-
 toggleSelection(
 type,
 which,
 options[activeIndex]
-.dataset.selectValue
+.dataset
+.selectValue
 );
-
 return;
 }
-
 if(options.length===1){
 event.preventDefault();
-
 toggleSelection(
 type,
 which,
 options[0]
-.dataset.selectValue
+.dataset
+.selectValue
 );
 }
 }
 );
-
 combo.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
-
+// input、已选项和下拉面板都有自己的处理；这里只接管外框剩余空白区域。
 if(
 event.target.closest('.combo-panel') ||
 event.target.closest('.selected-pill-remove') ||
 event.target.closest('.combo-pill-select') ||
-event.target===metaInfo.input
+event.target===meta.input
 ){
 return;
 }
-
 if(openPanel()){
-metaInfo.input.focus({
+meta.input.focus({
 preventScroll:true
 });
 }
 }
 );
 }
-
-function setupInstitutionCombo(which){
-const metaInfo=institutionMeta(which);
-
+function setupInstitutionCombo(
+which
+){
+const meta=
+institutionMeta(
+which
+);
 function openPanel(){
 closePanels();
-metaInfo.panel.classList.remove('hidden');
-renderInstitutionOptions(which);
-clearKeyboardActive(metaInfo.options);
+meta.panel.classList.remove(
+'hidden'
+);
+renderInstitutionOptions(
+which
+);
+clearKeyboardActive(
+meta.options
+);
 }
-
 function selectInstitution(button){
 if(!button){
 return;
 }
-
-metaInfo.input.value=
-button.dataset.selectValue;
-
-renderInstitutionOptions(which);
-clearKeyboardActive(metaInfo.options);
-metaInfo.panel.classList.add('hidden');
+meta.input.value=
+button.dataset
+.selectValue;
+renderInstitutionOptions(
+which
+);
+clearKeyboardActive(
+meta.options
+);
+meta.panel.classList.add(
+'hidden'
+);
 }
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
 openPanel();
 }
 );
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'input',
 ()=>{
-metaInfo.panel.classList.remove('hidden');
-renderInstitutionOptions(which);
-clearKeyboardActive(metaInfo.options);
+meta.panel.classList.remove(
+'hidden'
+);
+renderInstitutionOptions(
+which
+);
+clearKeyboardActive(
+meta.options
+);
 }
 );
-
-metaInfo.input.addEventListener(
+meta.input.addEventListener(
 'keydown',
 event=>{
-if(event.key==='Escape'){
-clearKeyboardActive(metaInfo.options);
-metaInfo.panel.classList.add('hidden');
+if(
+event.key==='Escape'
+){
+clearKeyboardActive(
+meta.options
+);
+meta.panel.classList.add(
+'hidden'
+);
 return;
 }
-
 if(
 event.key==='ArrowDown' ||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
 event.stopPropagation();
-
 if(
-metaInfo.panel.classList
-.contains('hidden')
+meta.panel.classList
+.contains(
+'hidden'
+)
 ){
 openPanel();
 }
-
-const options=getKeyboardOptions(metaInfo.options);
-
+const options=
+getKeyboardOptions(
+meta.options
+);
 if(!options.length){
 return;
 }
-
-const current=currentKeyboardIndex(
-metaInfo.options
+const current=
+currentKeyboardIndex(
+meta.options
 );
-
 const next=
 current<0
 ? (
@@ -3970,33 +5049,35 @@ event.key==='ArrowDown'
 ? 1
 : -1
 );
-
 setKeyboardActive(
-metaInfo.options,
+meta.options,
 next
 );
-
 return;
 }
-
-if(event.key!=='Enter'){
-return;
-}
-
 if(
-metaInfo.panel.classList
-.contains('hidden')
+event.key!=='Enter'
+){
+return;
+}
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
 ){
 event.preventDefault();
 openPanel();
 return;
 }
-
-const options=getKeyboardOptions(metaInfo.options);
-const activeIndex=currentKeyboardIndex(
-metaInfo.options
+const options=
+getKeyboardOptions(
+meta.options
 );
-
+const activeIndex=
+currentKeyboardIndex(
+meta.options
+);
 if(activeIndex>=0){
 event.preventDefault();
 selectInstitution(
@@ -4004,7 +5085,6 @@ options[activeIndex]
 );
 return;
 }
-
 if(options.length===1){
 event.preventDefault();
 selectInstitution(
@@ -4013,32 +5093,33 @@ options[0]
 }
 }
 );
-
-metaInfo.options.addEventListener(
+meta.options.addEventListener(
 'click',
 event=>{
 event.stopPropagation();
-
-const button=event.target.closest(
+const button=
+event.target.closest(
 '.combo-pill-select[data-select-value]'
 );
-
-selectInstitution(button);
+selectInstitution(
+button
+);
 }
 );
 }
-
 function schedule(){
-state=norm(state);
+state=
+norm(state);
 localMutationVersion++;
-
-saveLocal(state);
-
-meta.dirty=true;
-
+saveLocal(
+state
+);
+meta.dirty=
+true;
 persistMeta()
-.catch(console.error);
-
+.catch(
+console.error
+);
 /*
 所有普通修改只标记为待同步。
 固定的 5 秒服务器循环负责“先拉取，再合并，再上传”。
@@ -4050,84 +5131,111 @@ admin() &&
 adminReady &&
 syncRunning
 ){
-syncRequested=true;
+syncRequested=
+true;
 }
-
 return true;
 }
-
+function basePath(){
+return location.pathname
+.replace(
+/[^/]*$/,
+''
+);
+}
 function publicUrl(){
 try{
-const url=new URL(
+const url=
+new URL(
 PUBLIC_FILE,
 location.href
 );
-
 url.searchParams.set(
 'v',
 String(Date.now())
 );
-
 return url.href;
 }catch{
 return '';
 }
 }
-
 function pathEncode(path){
 return String(path)
 .split('/')
 .filter(Boolean)
-.map(encodeURIComponent)
+.map(
+encodeURIComponent
+)
 .join('/');
 }
-
 function toB64(value){
-const bytes=new TextEncoder().encode(value);
+const bytes=
+new TextEncoder()
+.encode(value);
 let binary='';
-
 for(
 let i=0;
 i<bytes.length;
 i+=0x8000
 ){
-binary+=String.fromCharCode(
-...bytes.subarray(i,i+0x8000)
+binary+=
+String.fromCharCode(
+...bytes.subarray(
+i,
+i+0x8000
+)
 );
 }
-
-return btoa(binary);
+return btoa(
+binary
+);
 }
-
 function fromB64(value){
-const binary=atob(
-String(value||'')
-.replace(/\s/g,'')
+const binary=
+atob(
+String(
+value||''
+)
+.replace(
+/\s/g,
+''
+)
 );
-
-const bytes=new Uint8Array(
+const bytes=
+new Uint8Array(
 binary.length
 );
-
-for(let i=0;i<binary.length;i++){
-bytes[i]=binary.charCodeAt(i);
+for(
+let i=0;
+i<binary.length;
+i++
+){
+bytes[i]=
+binary.charCodeAt(i);
 }
-
 return new TextDecoder()
-.decode(bytes);
-}
-
-function delay(ms){
-return new Promise(
-resolve=>setTimeout(resolve,ms)
+.decode(
+bytes
 );
 }
-
-function isTransientSyncError(error){
-const statusCode=Number(
+function delay(
+ms
+){
+return new Promise(
+resolve=>
+setTimeout(
+resolve,
+ms
+)
+);
+}
+function isTransientSyncError(
+error
+){
+const statusCode=
+Number(
 error?.status||0
 );
-
 return (
 statusCode===0 ||
 statusCode===408 ||
@@ -4135,25 +5243,28 @@ statusCode===429 ||
 statusCode>=500
 );
 }
-
-function isWriteConflictError(error){
-const statusCode=Number(
+function isWriteConflictError(
+error
+){
+const statusCode=
+Number(
 error?.status||0
 );
-
 if(statusCode===409){
 return true;
 }
-
 if(statusCode!==422){
 return false;
 }
-
-const message=String(
+const message=
+String(
 error?.message||''
 )
 .toLocaleLowerCase();
-
+/*
+GitHub 在文件刚被另一设备创建/更新时，部分场景可能以 422
+而不是 409 返回 SHA/更新冲突。仅对这类 422 做并发重试。
+*/
 return (
 message.includes('sha') ||
 message.includes('does not match') ||
@@ -4161,34 +5272,35 @@ message.includes('already exists') ||
 message.includes('update')
 );
 }
-
-function syncErrorText(error){
+function syncErrorText(
+error
+){
 if(
 error?.name==='AbortError' ||
 error?.code==='timeout'
 ){
 return 'GitHub 请求超时';
 }
-
-if(Number(error?.status)===401){
+if(
+Number(error?.status)===401
+){
 return 'GitHub Token 无效或已失效';
 }
-
-if(Number(error?.status)===403){
+if(
+Number(error?.status)===403
+){
 return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 权限'}`;
 }
-
-if(Number(error?.status)===404){
+if(
+Number(error?.status)===404
+){
 return `GitHub 资源不存在：${error.message||'请检查仓库和文件路径'}`;
 }
-
 if(error?.message){
 return error.message;
 }
-
 return '未知同步错误';
 }
-
 async function githubApi(
 method,
 endpoint,
@@ -4198,7 +5310,6 @@ const controller=
 typeof AbortController!=='undefined'
 ? new AbortController()
 : null;
-
 const timer=
 controller
 ? setTimeout(
@@ -4210,95 +5321,114 @@ controller.abort();
 GITHUB_TIMEOUT
 )
 : null;
-
 try{
 let response;
-
 try{
-response=await fetch(
+response=
+await fetch(
 `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,
 {
 method,
 headers:{
-Authorization:`Bearer ${config.token}`,
-Accept:'application/vnd.github+json',
-'X-GitHub-Api-Version':'2026-03-10',
+Authorization:
+`Bearer ${config.token}`,
+Accept:
+'application/vnd.github+json',
+'X-GitHub-Api-Version':
+'2026-03-10',
 ...(
 body!==null
-? {'Content-Type':'application/json'}
+? {
+'Content-Type':
+'application/json'
+}
 : {}
 )
 },
-cache:'no-store',
+cache:
+'no-store',
 ...(
 controller
-? {signal:controller.signal}
+? {
+signal:
+controller.signal
+}
 : {}
 ),
 ...(
 body!==null
-? {body:JSON.stringify(body)}
+? {
+body:
+JSON.stringify(
+body
+)
+}
 : {}
 )
 }
 );
-
 }catch(error){
-if(error?.name==='AbortError'){
-error.code='timeout';
+if(
+error?.name==='AbortError'
+){
+error.code=
+'timeout';
 }
-
 if(
 error &&
 typeof error==='object' &&
 !('status' in error)
 ){
-error.status=0;
+error.status=
+0;
 }
-
 throw error;
 }
-
-const text=await response.text();
-
-let data=null;
-
+const text=
+await response.text();
+let data=
+null;
 if(text){
 try{
-data=JSON.parse(text);
+data=
+JSON.parse(
+text
+);
 }catch{
-data={message:text};
+data={
+message:
+text
+};
 }
 }
-
 if(!response.ok){
-const error=new Error(
+const error=
+new Error(
 data?.message ||
 `HTTP ${response.status}`
 );
-
-error.status=response.status;
-error.apiData=data;
-
+error.status=
+response.status;
+error.apiData=
+data;
 throw error;
 }
-
 return data;
-
 }finally{
 if(timer!==null){
-clearTimeout(timer);
+clearTimeout(
+timer
+);
 }
 }
 }
-
 async function readRemote(){
 try{
-const data=await githubApi(
+const data=
+await githubApi(
 'GET',
 `contents/${pathEncode(config.file)}`
 );
-
 if(
 !data ||
 typeof data.content!=='string'
@@ -4307,123 +5437,157 @@ throw new Error(
 'GitHub 返回的数据文件内容无效'
 );
 }
-
-const parsed=JSON.parse(
-fromB64(data.content)
+const parsed=
+JSON.parse(
+fromB64(
+data.content
+)
 );
-
 return {
 exists:true,
-sha:data.sha,
-state:norm(parsed)
+sha:
+data.sha,
+state:
+norm(
+parsed
+)
 };
-
 }catch(error){
-if(error.status===404){
+if(
+error.status===404
+){
 return {
 exists:false,
 sha:null,
-state:norm({})
+state:
+norm({})
 };
 }
-
 throw error;
 }
 }
-
 async function readRemoteWithRetry(
 limit=NETWORK_RETRY_LIMIT
 ){
-let lastError=null;
-
-for(let attempt=0;attempt<limit;attempt++){
+let lastError=
+null;
+for(
+let attempt=0;
+attempt<limit;
+attempt++
+){
 try{
 return await readRemote();
-
 }catch(error){
-lastError=error;
-
+lastError=
+error;
 if(
-!isTransientSyncError(error) ||
+!isTransientSyncError(
+error
+) ||
 attempt===limit-1
 ){
 throw error;
 }
-
 await delay(
-300*Math.pow(2,attempt)
+300*Math.pow(
+2,
+attempt
+)
 );
 }
 }
-
 throw lastError ||
-new Error('读取 GitHub 数据失败');
+new Error(
+'读取 GitHub 数据失败'
+);
 }
-
-function resolveSyncBase(localSnapshot){
+function resolveSyncBase(
+localSnapshot
+){
 if(syncBaseCache){
-return norm(syncBaseCache);
+return norm(
+syncBaseCache
+);
 }
-
 /*
 不再在手动同步链路中额外调用 git/blobs 历史接口。
+旧版手机端一次同步可能发出多次依赖请求，任一环节抖动都会放大失败率。
 
 没有持久化基线时：
-- 本机没有未同步修改：本机当前状态就是上次看到的版本；
-- 本机存在旧版本遗留的未同步修改：使用空基线保守合并。
+- 本机没有未同步修改：本机当前状态就是上次看到的版本，可作为基线；
+- 本机有旧版本遗留的未同步修改：使用空基线做保守合并，优先避免丢内容。
 */
 return meta.dirty
 ? norm({})
-: norm(localSnapshot);
+: norm(
+localSnapshot
+);
 }
-
-async function writeRemote(snapshot,sha){
-const raw=JSON.stringify(
-norm(snapshot),
+async function writeRemote(
+snapshot,
+sha
+){
+const raw=
+JSON.stringify(
+norm(
+snapshot
+),
 null,
 2
 );
-
 if(
 new TextEncoder()
 .encode(raw)
-.length>MAX_BYTES
+.length >
+MAX_BYTES
 ){
 throw new Error(
 '数据超过 750 KB'
 );
 }
-
 const body={
 message:
 `更新 Press 数据 - ${new Date().toLocaleString()}`,
-content:toB64(raw)
+content:
+toB64(
+raw
+)
 };
-
 if(sha){
-body.sha=sha;
+body.sha=
+sha;
 }
-
-const result=await githubApi(
+const result=
+await githubApi(
 'PUT',
 `contents/${pathEncode(config.file)}`,
 body
 );
-
-return result?.content?.sha||null;
+return (
+result?.content?.sha ||
+null
+);
 }
-
-async function verifyRemoteEquals(expectedState){
+async function verifyRemoteEquals(
+expectedState
+){
 try{
-const checked=await readRemoteWithRetry(2);
-
+const checked=
+await readRemoteWithRetry(
+2
+);
 return {
 matched:
-stateSignature(checked.state)===
-stateSignature(expectedState),
-remote:checked
+stateSignature(
+checked.state
+)===
+stateSignature(
+expectedState
+),
+remote:
+checked
 };
-
 }catch{
 return {
 matched:false,
@@ -4431,296 +5595,314 @@ remote:null
 };
 }
 }
-
-async function syncOnce(showResult=true){
+async function syncOnce(
+showResult=true
+){
 if(!admin()){
 return false;
 }
-
-const dirtyAtStart=Boolean(meta.dirty);
-const mutationAtStart=localMutationVersion;
-
-syncRunning=true;
+const dirtyAtStart=
+Boolean(
+meta.dirty
+);
+const mutationAtStart=
+localMutationVersion;
+syncRunning=
+true;
 updateAdmin();
-
 status(
 'syncing',
 '正在拉取服务器最新版…'
 );
-
 try{
-let lastError=null;
-
+let lastError=
+null;
 for(
 let attempt=0;
-attempt<SYNC_RETRY_LIMIT;
+attempt<
+SYNC_RETRY_LIMIT;
 attempt++
 ){
 let remote;
-
 try{
-/*
-每一轮同步的第一步必须是服务器 GET。
-编码分配函数在这一步之前不会被调用。
-*/
-remote=await readRemoteWithRetry();
-
+remote=
+await readRemoteWithRetry();
 }catch(error){
-lastError=error;
-
+lastError=
+error;
 if(
-isTransientSyncError(error) &&
-attempt<SYNC_RETRY_LIMIT-1
+isTransientSyncError(
+error
+) &&
+attempt<
+SYNC_RETRY_LIMIT-1
 ){
 await delay(
 350*Math.pow(
 2,
-Math.min(attempt,3)
+Math.min(
+attempt,
+3
+)
 )
 );
-
 continue;
 }
-
 throw error;
 }
-
 /*
-远端读取完成后才抓本机快照。
+远端读取完成后才抓本机快照，确保等待网络期间刚发生的本机修改不会漏掉。
 */
-const localBefore=norm(state);
-const base=resolveSyncBase(localBefore);
-
+const localBefore=
+norm(
+state
+);
+const base=
+resolveSyncBase(
+localBefore
+);
 const mutationVersionBeforeWrite=
 localMutationVersion;
-
-const mergedResult=mergeStates(
+const mergedResult=
+mergeStates(
 base,
 localBefore,
 remote.state
 );
-
 /*
-关键顺序：
-GET 服务器
-→ 与本机待同步数据合并
-→ 修复历史重复编码
-→ 给无编码条目分配号码
-→ PUT。
+关键顺序固定为：GET 服务器 -> 合并 -> 去重 -> 分配缺失编码。
+任何自动编码都只能出现在这一行之后。
 */
 const allocationResult=
 assignMissingCodesAfterPull(
 mergedResult.state
 );
-
 const mergedState=
 allocationResult.state;
-
-const baseSig=stateSignature(base);
-const localSig=stateSignature(localBefore);
-const remoteSig=stateSignature(remote.state);
-const mergedSig=stateSignature(mergedState);
-
+const baseSig=
+stateSignature(
+base
+);
+const localSig=
+stateSignature(
+localBefore
+);
+const remoteSig=
+stateSignature(
+remote.state
+);
+const mergedSig=
+stateSignature(
+mergedState
+);
 const localChanged=
-localSig!==baseSig;
-
+localSig!==
+baseSig;
 const remoteChanged=
-remoteSig!==baseSig;
-
+remoteSig!==
+baseSig;
 const pulledChanges=
-localSig!==mergedSig;
-
-let wroteRemote=false;
-let finalSha=remote.sha;
-
-if(remoteSig!==mergedSig){
+localSig!==
+mergedSig;
+let wroteRemote=
+false;
+let finalSha=
+remote.sha;
+if(
+remoteSig!==
+mergedSig
+){
 try{
-/*
-必须使用刚刚 GET 得到的 SHA。
-另一台设备若已经先写入，这个 SHA 会失效，
-下面捕获冲突后整轮重新 GET、重新分配编码。
-*/
-finalSha=await writeRemote(
+finalSha=
+await writeRemote(
 mergedState,
 remote.sha
 );
-
-wroteRemote=true;
-
+wroteRemote=
+true;
 }catch(error){
-lastError=error;
-
-if(isWriteConflictError(error)){
+lastError=
+error;
+if(
+isWriteConflictError(
+error
+)
+){
+/* 另一台设备抢先更新，重新 GET 最新 SHA 后再合并。 */
 await delay(
 180+attempt*120
 );
-
-/*
-绝不沿用这一轮已经计算出来的编码。
-continue 回到循环顶部重新 GET。
-*/
 continue;
 }
-
-if(isTransientSyncError(error)){
+if(
+isTransientSyncError(
+error
+)
+){
 /*
-手机网络可能出现服务器已经写入，
-但客户端没有收到成功响应的情况。
-先重新 GET 验证。
+手机网络可能出现“服务器已写入，但客户端没收到响应”。
+先重新读取远端验证，避免把已经成功的提交误报为失败。
 */
 const verification=
 await verifyRemoteEquals(
 mergedState
 );
-
-if(verification.matched){
+if(
+verification.matched
+){
 finalSha=
 verification.remote.sha;
-
-wroteRemote=true;
-
+wroteRemote=
+true;
 }else if(
-attempt<SYNC_RETRY_LIMIT-1
+attempt<
+SYNC_RETRY_LIMIT-1
 ){
 await delay(
 350*Math.pow(
 2,
-Math.min(attempt,3)
+Math.min(
+attempt,
+3
+)
 )
 );
-
 continue;
-
 }else{
 throw error;
 }
-
 }else{
 throw error;
 }
 }
 }
-
 /*
-如果网络请求过程中用户又修改了本机，
-不能用旧快照覆盖这些新修改。
+网络请求期间如果用户继续修改，不能用旧快照覆盖它。
+把期间新增的本机变化再与刚刚确认的云端状态做一次三方合并，
+并排队下一轮同步。
 */
-let finalLocalState=mergedState;
-let dirtyAfterSync=false;
-
-let extraConflicts=0;
-let extraCollectionConflicts=0;
-let extraCodeRepairs=0;
-let extraUnresolvedCodes=0;
-
+let finalLocalState=
+mergedState;
+let dirtyAfterSync=
+false;
+let extraConflicts=
+0;
+let extraCollectionConflicts=
+0;
+let extraCodeRepairs=
+0;
+let extraUnresolvedCodes=
+0;
 if(
 localMutationVersion!==
 mutationVersionBeforeWrite
 ){
-const currentLocal=norm(state);
-
-const afterWriteMerge=mergeStates(
+const currentLocal=
+norm(
+state
+);
+const afterWriteMerge=
+mergeStates(
 localBefore,
 currentLocal,
 mergedState
 );
-
 finalLocalState=
 afterWriteMerge.state;
-
 extraConflicts=
 afterWriteMerge.conflicts;
-
 extraCollectionConflicts=
 afterWriteMerge.collectionConflicts;
-
 extraCodeRepairs=
 afterWriteMerge.codeRepairs;
-
 extraUnresolvedCodes=
 afterWriteMerge.unresolvedCodeConflicts;
-
 dirtyAfterSync=
-stateSignature(finalLocalState)!==
+stateSignature(
+finalLocalState
+)!==
 mergedSig;
-
 if(dirtyAfterSync){
-syncRequested=true;
+syncRequested=
+true;
 }
 }
-
-state=norm(finalLocalState);
-
-meta.dirty=dirtyAfterSync;
-meta.sha=finalSha;
-
-saveLocal(state);
-
-const baseWrite=persistSyncBase(
+state=
+norm(
+finalLocalState
+);
+meta.dirty=
+dirtyAfterSync;
+meta.sha=
+finalSha;
+saveLocal(
+state
+);
+/*
+云端同步已经成功后，本地 IndexedDB/缓存写入失败不应把“云端同步成功”误报成失败。
+本地持久化改为 best-effort；内存中的基线已立即更新。
+*/
+const baseWrite=
+persistSyncBase(
 mergedState,
 finalSha
 );
-
-const metaWrite=persistMeta();
-
+const metaWrite=
+persistMeta();
 await Promise.allSettled([
 workCopyWriteChain,
 baseWrite,
 metaWrite
 ]);
-
 render();
-
 status(
 'online',
 '公开阅读 · 管理已连接'
 );
-
 lastSyncTime.textContent=
 `已同步 ${new Date().toLocaleString()}`;
-
 const conflictCount=
 mergedResult.conflicts+
 mergedResult.collectionConflicts+
 extraConflicts+
 extraCollectionConflicts;
-
 const codeRepairCount=
 mergedResult.codeRepairs+
 extraCodeRepairs;
-
 const unresolvedCodeCount=
 mergedResult.unresolvedCodeConflicts+
 extraUnresolvedCodes;
-
 const allocatedCodeCount=
 allocationResult.assigned;
-
 if(showResult){
-if(unresolvedCodeCount){
+if(
+unresolvedCodeCount
+){
 show(
 `同步完成，但仍有 ${unresolvedCodeCount} 个编码无法自动重新分配，请人工检查`,
 'error'
 );
-
-}else if(codeRepairCount){
+}else if(
+codeRepairCount
+){
 show(
 `同步完成；已自动修复 ${codeRepairCount} 个重复编码`,
 'success'
 );
-
-}else if(allocatedCodeCount){
+}else if(
+allocatedCodeCount
+){
 show(
 `同步完成；基于服务器最新版分配了 ${allocatedCodeCount} 个编码`,
 'success'
 );
-
-}else if(conflictCount){
+}else if(
+conflictCount
+){
 show(
 `双向同步完成；检测到 ${conflictCount} 处并发修改并已合并`,
 'success'
 );
-
 }else if(
 wroteRemote &&
 localChanged &&
@@ -4730,19 +5912,16 @@ show(
 '已合并两台设备的修改并同步 GitHub',
 'success'
 );
-
 }else if(wroteRemote){
 show(
 '已同步到 GitHub',
 'success'
 );
-
 }else if(pulledChanges){
 show(
 '已获取另一设备的最新修改',
 'success'
 );
-
 }else{
 show(
 '本机与 GitHub 已是最新',
@@ -4750,248 +5929,241 @@ show(
 );
 }
 }
-
 return true;
 }
-
 throw (
 lastError ||
 new Error(
 '多次重试后仍无法完成同步'
 )
 );
-
 }catch(error){
-console.error(error);
-
+console.error(
+error
+);
 /*
-同步失败本身绝不能把原本干净的副本伪装为本机修改。
+关键修正：同步失败本身绝不能把一个原本干净的本机副本标记成 dirty。
+旧版这里无条件 meta.dirty=true，会把“没改过的旧缓存”伪装成本机修改，
+下一次同步时反而可能压住另一台设备的新内容。
 */
 meta.dirty=
 Boolean(
 meta.dirty ||
 dirtyAtStart ||
-localMutationVersion!==mutationAtStart
+localMutationVersion!==
+mutationAtStart
 );
-
-saveLocal(state);
-
+saveLocal(
+state
+);
 await Promise.allSettled([
 workCopyWriteChain,
 persistMeta()
 ]);
-
 status(
 'offline',
 '同步失败 · 本地数据已保留'
 );
-
 if(showResult){
 show(
 `同步失败：${syncErrorText(error)}`,
 'error'
 );
 }
-
 return false;
-
 }finally{
-syncRunning=false;
+syncRunning=
+false;
 updateAdmin();
 }
 }
-
-function sync(showResult=true){
+function sync(
+showResult=true
+){
 if(!admin()){
-return Promise.resolve(false);
+return Promise.resolve(
+false
+);
 }
-
-/*
-手动同步、5 秒同步、联网恢复同步全部串行化。
-*/
-syncRequested=true;
-
+/* 所有手动、自动、联网恢复同步都进入同一个串行队列。 */
+syncRequested=
+true;
 if(showResult){
-syncShowResult=true;
+syncShowResult=
+true;
 }
-
 if(syncInFlight){
 return syncInFlight;
 }
-
-syncInFlight=(async()=>{
-let allOk=true;
-
+syncInFlight=
+(
+async()=>{
+let allOk=
+true;
 while(syncRequested){
-const announce=syncShowResult;
-
-syncRequested=false;
-syncShowResult=false;
-
-const ok=await syncOnce(announce);
-
-allOk=allOk&&ok;
-
+const announce=
+syncShowResult;
+syncRequested=
+false;
+syncShowResult=
+false;
+const ok=
+await syncOnce(
+announce
+);
+allOk=
+allOk &&
+ok;
 if(!ok){
-syncRequested=false;
+syncRequested=
+false;
 break;
 }
 }
-
 return allOk;
-})()
+}
+)()
 .finally(
 ()=>{
-syncInFlight=null;
+syncInFlight=
+null;
 }
 );
-
 return syncInFlight;
 }
-
 async function loadPublic(){
 status(
 'syncing',
 '正在读取公开数据…'
 );
-
-const url=publicUrl();
-
+const url=
+publicUrl();
 const canFetchPublic=
 Boolean(url) &&
 /^https?:/i.test(url);
-
 if(!canFetchPublic){
 state=
 publicCacheValue
 ? norm(publicCacheValue)
 : norm({});
-
 render();
-
 status(
 'online',
 publicCacheValue
 ? '本地预览 · 使用缓存'
 : '本地预览 · 未读取公开数据文件'
 );
-
 lastSyncTime.textContent=
 publicCacheValue
 ? `缓存数据 · ${state.entries.length} 条`
 : '本地预览模式';
-
 return;
 }
-
 try{
-const response=await fetch(
+const response=
+await fetch(
 url,
 {
-cache:'no-store'
+cache:
+'no-store'
 }
 );
-
 if(!response.ok){
 throw new Error(
 `HTTP ${response.status}`
 );
 }
-
-state=norm(
+state=
+norm(
 await response.json()
 );
-
-publicCacheValue=state;
-
+publicCacheValue=
+state;
 await idbSet(
 PUBLIC_CACHE_KEY,
 {
-savedAt:new Date().toISOString(),
+savedAt:
+new Date()
+.toISOString(),
 state
 }
 );
-
 render();
-
 status(
 'online',
 '公开阅读'
 );
-
 lastSyncTime.textContent=
 `公开数据 · ${state.entries.length} 条`;
-
 }catch(error){
-console.error(error);
-
-if(publicCacheValue){
-state=norm(publicCacheValue);
+console.error(
+error
+);
+if(
+publicCacheValue
+){
+state=
+norm(
+publicCacheValue
+);
 }
-
 render();
-
 status(
 'offline',
 publicCacheValue
 ? '公开数据读取失败 · 使用缓存'
 : '公开数据读取失败'
 );
-
 lastSyncTime.textContent=
 publicCacheValue
 ? `缓存数据 · ${state.entries.length} 条`
 : '请确认 press_data.json 与本页同目录';
 }
 }
-
 async function loadAdminState(){
-adminReady=false;
+adminReady=
+false;
 updateAdmin();
-
 status(
 'syncing',
 '正在读取管理数据…'
 );
-
 try{
 const remote=
 await readRemoteWithRetry();
-
-const local=loadLocal();
+const local=
+loadLocal();
 
 /*
-从旧同步引擎第一次升级时：
-旧 dirty 和旧同步基线可能已经不可信。
-因此先把本机工作副本与服务器最新版保守合并，
-以免其中一个设备上的未上传条目消失。
+首次从旧同步引擎升级时，旧 dirty/基线可能已经不可信。
+保守合并本机工作副本与服务器最新版，先救回两端可能各自存在的条目；
+随后把服务器当前版本保存为新基线，再由新引擎提交合并结果。
 */
 if(
 syncEngineMigration &&
 local &&
 remote.exists
 ){
-const migrated=mergeStates(
+const migrated=
+mergeStates(
 norm({}),
 local,
 remote.state
 );
-
 const allocated=
 assignMissingCodesAfterPull(
 migrated.state
 );
-
-state=allocated.state;
-
+state=
+allocated.state;
 meta.dirty=
 stateSignature(state)!==
 stateSignature(remote.state);
-
-meta.sha=remote.sha;
-
-saveLocal(state);
-
+meta.sha=
+remote.sha;
+saveLocal(
+state
+);
 await Promise.allSettled([
 workCopyWriteChain,
 persistSyncBase(
@@ -5000,21 +6172,18 @@ remote.sha
 ),
 persistMeta()
 ]);
-
-syncEngineMigration=false;
-adminReady=true;
-
+syncEngineMigration=
+false;
+adminReady=
+true;
 render();
-
 status(
 'online',
 '公开阅读 · 已升级为 5 秒服务器优先同步'
 );
-
 if(meta.dirty){
 sync(false);
 }
-
 return;
 }
 
@@ -5022,30 +6191,38 @@ if(
 meta.dirty &&
 local
 ){
-state=local;
-
-saveLocal(state);
-
-adminReady=true;
-
+/*
+本机有未同步修改时，绝不能用“刚读到的远端 SHA”覆盖 meta.sha。
+meta.sha 表示本机这些修改所基于的旧版本，是三方合并的关键基线。
+*/
+state=
+local;
+saveLocal(
+state
+);
+adminReady=
+true;
 render();
-
 status(
 'online',
 '公开阅读 · 管理已连接 · 正在合并未同步修改'
 );
-
-sync(false);
+sync(
+false
+);
 return;
 }
-
 if(remote.exists){
-state=remote.state;
-meta.dirty=false;
-meta.sha=remote.sha;
-
-saveLocal(state);
-
+/* 本机无未同步修改：远端是权威最新版本，直接拉取。 */
+state=
+remote.state;
+meta.dirty=
+false;
+meta.sha=
+remote.sha;
+saveLocal(
+state
+);
 await Promise.all([
 workCopyWriteChain,
 persistSyncBase(
@@ -5054,17 +6231,21 @@ remote.sha
 ),
 persistMeta()
 ]);
-
 }else if(local){
-state=local;
-meta.dirty=true;
-meta.sha=null;
-
-syncBaseCache=norm({});
-syncBaseSha=null;
-
-saveLocal(state);
-
+/* 仓库里还没有数据文件，但本机已有工作副本：把本机作为待上传内容。 */
+state=
+local;
+meta.dirty=
+true;
+meta.sha=
+null;
+syncBaseCache=
+norm({});
+syncBaseSha=
+null;
+saveLocal(
+state
+);
 await Promise.all([
 workCopyWriteChain,
 persistSyncBase(
@@ -5073,14 +6254,16 @@ null
 ),
 persistMeta()
 ]);
-
 }else{
-state=norm({});
-meta.dirty=false;
-meta.sha=null;
-
-saveLocal(state);
-
+state=
+norm({});
+meta.dirty=
+false;
+meta.sha=
+null;
+saveLocal(
+state
+);
 await Promise.all([
 workCopyWriteChain,
 persistSyncBase(
@@ -5090,43 +6273,43 @@ null
 persistMeta()
 ]);
 }
-
-adminReady=true;
-
+adminReady=
+true;
 render();
-
 status(
 'online',
 '公开阅读 · 管理已连接'
 );
-
+/* 远端若已经存在历史重复编码，连接后立即触发一次修复同步。 */
 if(
-duplicateCodeCount(state)>0
+duplicateCodeCount(
+state
+)>0
 ){
-sync(false);
-
+sync(
+false
+);
 }else if(meta.dirty){
-sync(false);
+sync(
+false
+);
 }
-
 }catch(error){
-console.error(error);
-
+console.error(
+error
+);
 state=
 loadLocal() ||
 norm({});
-
-adminReady=true;
-
+adminReady=
+true;
 render();
-
 status(
 'offline',
 '云端读取失败 · 使用本机数据'
 );
 }
 }
-
 async function bootstrapStorage(){
 const [
 storedConfig,
@@ -5135,50 +6318,70 @@ storedMeta,
 work,
 cache,
 base
-]=await Promise.all([
-idbGet(CONFIG_KEY),
-idbGet(TOKEN_PERSISTED_KEY),
-idbGet(META_KEY),
-idbGet(WORKCOPY_KEY),
-idbGet(PUBLIC_CACHE_KEY),
-idbGet(SYNC_BASE_KEY)
+]=
+await Promise.all([
+idbGet(
+CONFIG_KEY
+),
+idbGet(
+TOKEN_PERSISTED_KEY
+),
+idbGet(
+META_KEY
+),
+idbGet(
+WORKCOPY_KEY
+),
+idbGet(
+PUBLIC_CACHE_KEY
+),
+idbGet(
+SYNC_BASE_KEY
+)
 ]);
-
 syncEngineMigration=
 Boolean(
 storedMeta &&
-Number(storedMeta.syncVersion||0)
-<SYNC_ENGINE_VERSION
+Number(
+storedMeta.syncVersion||0
+)<SYNC_ENGINE_VERSION
 );
-
 if(
 storedConfig &&
-typeof storedConfig==='object'
+typeof storedConfig===
+'object'
 ){
-config.owner=clean(storedConfig.owner);
-config.repo=clean(storedConfig.repo);
-
+config.owner=
+clean(
+storedConfig.owner
+);
+config.repo=
+clean(
+storedConfig.repo
+);
 config.file=
-clean(storedConfig.file) ||
+clean(
+storedConfig.file
+) ||
 'press_data.json';
 }
-
 persistedToken=
-typeof storedToken==='string'
+typeof storedToken===
+'string'
 ? storedToken
 : '';
-
-config.token=persistedToken;
-
+config.token=
+persistedToken;
 const currentTarget=
 syncTargetId();
-
 if(
 storedMeta &&
-typeof storedMeta==='object' &&
+typeof storedMeta===
+'object' &&
 (
 !storedMeta.target ||
-storedMeta.target===currentTarget
+storedMeta.target===
+currentTarget
 )
 ){
 meta={
@@ -5186,70 +6389,90 @@ meta={
 ...storedMeta
 };
 }
-
 if(
 work?.state &&
 (
 !work.target ||
-work.target===currentTarget
+work.target===
+currentTarget
 )
 ){
-workCopyCache=norm(work.state);
+workCopyCache=
+norm(
+work.state
+);
 }
-
 if(
 base?.state &&
 (
 !base.target ||
-base.target===currentTarget
+base.target===
+currentTarget
 )
 ){
-syncBaseCache=norm(base.state);
-
+syncBaseCache=
+norm(
+base.state
+);
 syncBaseSha=
-clean(base.sha) ||
+clean(
+base.sha
+) ||
 null;
-
+/* 基线 SHA 比没有 SHA 更可靠，但不覆盖明确保存的 dirty 基线 SHA。 */
 if(
 !meta.sha &&
 !meta.dirty &&
 syncBaseSha
 ){
-meta.sha=syncBaseSha;
+meta.sha=
+syncBaseSha;
 }
 }
-
-if(cache?.state){
-publicCacheValue=norm(cache.state);
+if(
+cache?.state
+){
+publicCacheValue=
+norm(
+cache.state
+);
 }
 }
-
-async function saveConfig(event){
+async function saveConfig(
+event
+){
 event.preventDefault();
-
+/* 配置切换时先等当前同步链路结束，避免同一次同步中途换仓库。 */
 if(syncInFlight){
 await syncInFlight;
 }
-
 const hadPreviousTarget=
 Boolean(
 config.owner &&
 config.repo &&
 config.file
 );
-
 const previousTarget=
 syncTargetId();
-
 const nextConfig={
-owner:clean(cfgOwner.value),
-repo:clean(cfg.value),
+owner:
+clean(
+cfgOwner.value
+),
+repo:
+clean(
+cfg.value
+),
 file:
-clean(cfgFile.value) ||
+clean(
+cfgFile.value
+) ||
 'press_data.json',
-token:clean(cfgToken.value)
+token:
+clean(
+cfgToken.value
+)
 };
-
 if(
 !nextConfig.owner ||
 !nextConfig.repo ||
@@ -5259,74 +6482,87 @@ show(
 '请完整填写仓库和 Token',
 'error'
 );
-
 return;
 }
-
-config=nextConfig;
-
+config=
+nextConfig;
 const targetChanged=
 hadPreviousTarget &&
-previousTarget!==syncTargetId();
-
+previousTarget!==
+syncTargetId();
 if(targetChanged){
+/*
+不同仓库/文件不能继续沿用上一个目标的 dirty、SHA、工作副本和同步基线，
+否则会把旧仓库数据误写到新仓库。
+先等旧目标已排队的 IndexedDB 写入完成，再删除，防止旧写入在删除后重新写回来。
+*/
 await Promise.allSettled([
 workCopyWriteChain,
 metaWriteChain,
 syncBaseWriteChain
 ]);
-
-syncRequested=false;
-syncShowResult=false;
-
+/* 5 秒同步循环为全局固定循环，此处无需清除。 */
+syncRequested=
+false;
+syncShowResult=
+false;
 meta={
 dirty:false,
 sha:null
 };
-
-workCopyCache=null;
-syncBaseCache=null;
-syncBaseSha=null;
-state=norm({});
-localMutationVersion=0;
-
+workCopyCache=
+null;
+syncBaseCache=
+null;
+syncBaseSha=
+null;
+state=
+norm({});
+localMutationVersion=
+0;
 await Promise.all([
-idbDelete(META_KEY),
-idbDelete(WORKCOPY_KEY),
-idbDelete(SYNC_BASE_KEY)
+idbDelete(
+META_KEY
+),
+idbDelete(
+WORKCOPY_KEY
+),
+idbDelete(
+SYNC_BASE_KEY
+)
 ]);
 }
-
 await idbSet(
 CONFIG_KEY,
 {
-owner:config.owner,
-repo:config.repo,
-file:config.file
+owner:
+config.owner,
+repo:
+config.repo,
+file:
+config.file
 }
 );
-
-if(rememberToken.checked){
-persistedToken=config.token;
-
+if(
+rememberToken.checked
+){
+persistedToken=
+config.token;
 await idbSet(
 TOKEN_PERSISTED_KEY,
 config.token
 );
-
 }else{
 persistedToken='';
-
 await idbDelete(
 TOKEN_PERSISTED_KEY
 );
 }
-
-configModal.classList.add('hidden');
-
+configModal.classList.add(
+'hidden'
+);
 await loadAdminState();
 }
-
 function openManage(){
 if(
 !admin() ||
@@ -5334,73 +6570,79 @@ if(
 ){
 return;
 }
-
 manageInstitutionInput.value='';
-
 manageInstitutionLineInput.value=
 String(
-state.institutions.length+1
+state
+.institutions
+.length+
+1
 );
-
 renderManageInstitutionOptions();
-
-manageModal.classList.remove('hidden');
+manageModal.classList.remove(
+'hidden'
+);
 }
-
 function addManagedInstitution(){
-const value=clean(
+const value=
+clean(
 manageInstitutionInput.value
 );
-
 if(!value){
 return;
 }
-
 if(
 state.institutions
 .some(
-item=>key(item)===key(value)
+item=>
+key(item)===
+key(value)
 )
 ){
 show(
 '出版选项已经存在',
 'error'
 );
-
 return;
 }
-
-let line=Number(
+let line=
+Number(
 folded(
-manageInstitutionLineInput.value
+manageInstitutionLineInput
+.value
 )
 );
-
-if(!Number.isInteger(line)){
+if(
+!Number.isInteger(
+line
+)
+){
 line=
-state.institutions.length+1;
+state
+.institutions
+.length+
+1;
 }
-
-line=Math.max(
+line=
+Math.max(
 1,
 Math.min(
 line,
-state.institutions.length+1
+state
+.institutions
+.length+
+1
 )
 );
-
 state.institutions.splice(
 line-1,
 0,
 value
 );
-
 manageInstitutionInput.value='';
-
 render();
 schedule();
 }
-
 function moveManagedInstitution(
 value,
 rawLine
@@ -5408,85 +6650,103 @@ rawLine
 const history=[
 ...state.institutions
 ];
-
-const from=history.findIndex(
-item=>key(item)===key(value)
+const from=
+history.findIndex(
+item=>
+key(item)===
+key(value)
 );
-
 if(from<0){
 return;
 }
-
-let line=Number(
-folded(rawLine)
+let line=
+Number(
+folded(
+rawLine
+)
 );
-
 if(
-!Number.isInteger(line) ||
+!Number.isInteger(
+line
+) ||
 line<1 ||
-line>history.length
+line>
+history.length
 ){
 renderManageInstitutionOptions();
 return;
 }
-
-const [item]=history.splice(
+const [item]=
+history.splice(
 from,
 1
 );
-
 history.splice(
 line-1,
 0,
 item
 );
-
-state.institutions=history;
-
+state.institutions=
+history;
 render();
 schedule();
 }
-
-function renameManagedInstitution(value){
-const index=state.institutions
+function renameManagedInstitution(
+value
+){
+const index=
+state.institutions
 .findIndex(
-item=>key(item)===key(value)
+item=>
+key(item)===
+key(value)
 );
-
 if(index<0){
 return;
 }
-
-const next=prompt(
+const next=
+prompt(
 '修改出版选项：',
-state.institutions[index]
+state.institutions[
+index
+]
 );
-
 if(next===null){
 return;
 }
-
-const cleaned=clean(next);
-
+const cleaned=
+clean(
+next
+);
 if(!cleaned){
 return;
 }
-
-const oldKey=key(value);
-
-state.institutions[index]=cleaned;
-
-for(const entry of state.entries){
-if(key(entry.institution)===oldKey){
-entry.institution=cleaned;
+const oldKey=
+key(value);
+state.institutions[
+index
+]=
+cleaned;
+for(
+const entry
+of state.entries
+){
+if(
+key(
+entry.institution
+)===
+oldKey
+){
+entry.institution=
+cleaned;
 }
 }
-
 render();
 schedule();
 }
-
-function deleteManagedInstitution(value){
+function deleteManagedInstitution(
+value
+){
 if(
 !confirm(
 `确定从出版菜单删除“${value}”吗？`
@@ -5494,87 +6754,106 @@ if(
 ){
 return;
 }
-
 state.institutions=
-state.institutions.filter(
-item=>key(item)!==key(value)
+state.institutions
+.filter(
+item=>
+key(item)!==
+key(value)
 );
-
 render();
 schedule();
 }
-
 function exportHtml(){
 const source=
 '<!DOCTYPE html>\n'+
-document.documentElement.outerHTML;
-
-const blob=new Blob(
+document
+.documentElement
+.outerHTML;
+const blob=
+new Blob(
 [source],
 {
-type:'text/html;charset=utf-8'
+type:
+'text/html;charset=utf-8'
 }
 );
-
-const url=URL.createObjectURL(blob);
-const link=document.createElement('a');
-
-link.href=url;
+const url=
+URL.createObjectURL(
+blob
+);
+const link=
+document.createElement(
+'a'
+);
+link.href=
+url;
 link.download=
 `press${Math.floor(Date.now()/1000)}.html`;
-
-document.body.appendChild(link);
-
+document.body
+.appendChild(
+link
+);
 link.click();
 link.remove();
-
 setTimeout(
 ()=>{
-URL.revokeObjectURL(url);
+URL.revokeObjectURL(
+url
+);
 },
 1000
 );
 }
-
-function importHtml(file){
+function importHtml(
+file
+){
 if(!file){
 return;
 }
-
 show(
 'HTML 导入功能保留',
 'success'
 );
-
 importInput.value='';
 }
-
-setupInstitutionCombo('add');
-setupInstitutionCombo('edit');
-
-setupMultiCombo('tag','add');
-setupMultiCombo('tag','edit');
-
-setupMultiCombo('category','add');
-setupMultiCombo('category','edit');
-
+setupInstitutionCombo(
+'add'
+);
+setupInstitutionCombo(
+'edit'
+);
+setupMultiCombo(
+'tag',
+'add'
+);
+setupMultiCombo(
+'tag',
+'edit'
+);
+setupMultiCombo(
+'category',
+'add'
+);
+setupMultiCombo(
+'category',
+'edit'
+);
 document.addEventListener(
 'click',
 closePanels
 );
-
 addBtn.addEventListener(
 'click',
 addEntry
 );
-
 pressList.addEventListener(
 'click',
 event=>{
-const button=event.target.closest(
+const button=
+event.target.closest(
 '.edit-btn[data-id]'
 );
-
 if(button){
 openEdit(
 button.dataset.id
@@ -5582,63 +6861,61 @@ button.dataset.id
 }
 }
 );
-
 pressList.addEventListener(
 'change',
 event=>{
-const checkbox=event.target.closest(
+const checkbox=
+event.target.closest(
 '.entry-tag-checkbox[data-id]'
 );
-
 if(!checkbox){
 return;
 }
-
-const entry=state.entries.find(
-item=>item.id===checkbox.dataset.id
+const entry=
+state.entries.find(
+item=>
+item.id===
+checkbox.dataset.id
 );
-
 if(!entry){
 return;
 }
-
-entry.tagChecked=checkbox.checked;
-
+entry.tagChecked=
+checkbox.checked;
 updateCountDisplay();
 schedule();
 }
 );
-
 editSave.addEventListener(
 'click',
 saveEdit
 );
-
 editDelete.addEventListener(
 'click',
 ()=>{
 if(editingId){
-deleteEntry(editingId);
+deleteEntry(
+editingId
+);
 }
 }
 );
-
 editCancel.addEventListener(
 'click',
 ()=>{
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=false;
-
+editOverlayPointerDown=
+false;
 editSelections={
 category:[],
 tag:[]
 };
-
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 }
 );
-
 clearEditBookName.addEventListener(
 'click',
 ()=>{
@@ -5646,7 +6923,6 @@ editBookName.value='';
 editBookName.focus();
 }
 );
-
 clearEditBookNo.addEventListener(
 'click',
 ()=>{
@@ -5654,168 +6930,177 @@ editBookNo.value='';
 editBookNo.focus();
 }
 );
-
 editModal.addEventListener(
 'pointerdown',
 event=>{
 editOverlayPointerDown=
-event.target===editModal;
+event.target===
+editModal;
 }
 );
-
 editModal.addEventListener(
 'pointerup',
 event=>{
 const genuineOutsideClick=
 editOverlayPointerDown &&
-event.target===editModal;
-
-editOverlayPointerDown=false;
-
-if(!genuineOutsideClick){
+event.target===
+editModal;
+editOverlayPointerDown=
+false;
+if(
+!genuineOutsideClick
+){
 return;
 }
-
-if(!editIsUnchanged()){
+if(
+!editIsUnchanged()
+){
 return;
 }
-
 editingId='';
 editInitialSnapshot='';
-
 editSelections={
 category:[],
 tag:[]
 };
-
-editInstitutionPanel.classList.add('hidden');
-editCategoryPanel.classList.add('hidden');
-editTagPanel.classList.add('hidden');
-editModal.classList.add('hidden');
+editInstitutionPanel
+.classList
+.add('hidden');
+editCategoryPanel
+.classList
+.add('hidden');
+editTagPanel
+.classList
+.add('hidden');
+editModal
+.classList
+.add('hidden');
 }
 );
-
 editModal.addEventListener(
 'pointercancel',
 ()=>{
-editOverlayPointerDown=false;
+editOverlayPointerDown=
+false;
 }
 );
-
 configBtn.addEventListener(
 'click',
 ()=>{
-cfgOwner.value=config.owner;
-cfg.value=config.repo;
-cfgFile.value=config.file;
-cfgToken.value=config.token;
-
+cfgOwner.value=
+config.owner;
+cfg.value=
+config.repo;
+cfgFile.value=
+config.file;
+cfgToken.value=
+config.token;
 rememberToken.checked=
-Boolean(persistedToken);
-
-configModal.classList.remove('hidden');
+Boolean(
+persistedToken
+);
+configModal.classList.remove(
+'hidden'
+);
 }
 );
-
 configCancel.addEventListener(
 'click',
 ()=>{
-configModal.classList.add('hidden');
+configModal.classList.add(
+'hidden'
+);
 }
 );
-
 configForm.addEventListener(
 'submit',
 saveConfig
 );
-
 manageBtn.addEventListener(
 'click',
 openManage
 );
-
 manageClose.addEventListener(
 'click',
 ()=>{
-manageModal.classList.add('hidden');
+manageModal.classList.add(
+'hidden'
+);
 }
 );
-
 manageInstitutionAdd.addEventListener(
 'click',
 addManagedInstitution
 );
-
 manageInstitutionOptions.addEventListener(
 'click',
 event=>{
-const edit=event.target.closest(
+const edit=
+event.target.closest(
 '[data-edit-value]'
 );
-
 if(edit){
 renameManagedInstitution(
-edit.dataset.editValue
+edit.dataset
+.editValue
 );
 return;
 }
-
-const remove=event.target.closest(
+const remove=
+event.target.closest(
 '[data-delete-value]'
 );
-
 if(remove){
 deleteManagedInstitution(
-remove.dataset.deleteValue
+remove.dataset
+.deleteValue
 );
 }
 }
 );
-
 manageInstitutionOptions.addEventListener(
 'change',
 event=>{
-const input=event.target.closest(
+const input=
+event.target.closest(
 '.manage-line-input[data-move-value]'
 );
-
 if(input){
 moveManagedInstitution(
-input.dataset.moveValue,
+input.dataset
+.moveValue,
 input.value
 );
 }
 }
 );
-
 syncBtn.addEventListener(
 'click',
 ()=>{
-sync(true);
+sync(
+true
+);
 }
 );
-
 exportBtn.addEventListener(
 'click',
 exportHtml
 );
-
 importBtn.addEventListener(
 'click',
 ()=>{
 importInput.click();
 }
 );
-
 importInput.addEventListener(
 'change',
 ()=>{
 importHtml(
-importInput.files?.[0]
+importInput
+.files?.[0]
 );
 }
 );
-
 returnTopControl.addEventListener(
 'click',
 ()=>{
@@ -5824,50 +7109,55 @@ top:0,
 left:0,
 behavior:'auto'
 });
-
-const scroll=document.querySelector(
+const scroll=
+document.querySelector(
 '#editModal:not(.hidden) .dialog-scroll'
 );
-
 if(scroll){
-scroll.scrollTop=0;
+scroll.scrollTop=
+0;
 }
 }
 );
-
 document.addEventListener(
 'keydown',
 event=>{
-if(event.key!=='Escape'){
+if(
+event.key!==
+'Escape'
+){
 return;
 }
-
 closePanels();
-
 if(
-!editModal.classList.contains('hidden') &&
+!editModal.classList
+.contains(
+'hidden'
+) &&
 editIsUnchanged()
 ){
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=false;
-
+editOverlayPointerDown=
+false;
 editSelections={
 category:[],
 tag:[]
 };
-
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 }
-
-configModal.classList.add('hidden');
-manageModal.classList.add('hidden');
+configModal.classList.add(
+'hidden'
+);
+manageModal.classList.add(
+'hidden'
+);
 }
 );
-
 async function initialize(){
 await bootstrapStorage();
-
 [
 tagInput,
 categoryInput,
@@ -5875,57 +7165,57 @@ editTag,
 editCategory
 ]
 .forEach(
-input=>input.removeAttribute('placeholder')
+input=>
+input.removeAttribute(
+'placeholder'
+)
 );
-
 if(admin()){
-const local=loadLocal();
-
+const local=
+loadLocal();
 if(local){
-state=local;
+state=
+local;
 }
-
 await loadAdminState();
-
 }else{
 updateAdmin();
 render();
 await loadPublic();
 }
 }
-
 initialize()
 .catch(
 error=>{
-console.error(error);
-
+console.error(
+error
+);
 status(
 'offline',
 '初始化失败'
 );
-
 render();
 }
 );
-
 /*
-前台固定 5 秒轮询。
+前台固定 5 秒轮询。手机浏览器若在后台暂停 JavaScript，
+恢复前台/焦点/网络时 passiveSync() 会立即补拉。
 */
 startFiveSecondServerLoop();
 
 function startFiveSecondServerLoop(){
 if(syncIntervalTimer){
-clearInterval(syncIntervalTimer);
+clearInterval(
+syncIntervalTimer
+);
 }
-
-syncIntervalTimer=setInterval(
+syncIntervalTimer=
+setInterval(
 ()=>{
 /*
-每台已连接管理设备每 5 秒都执行一次 sync(false)。
-
-syncOnce() 第一件事永远是 GET，所以：
-- 有本机修改：先拉取最新版，再合并并上传；
-- 没有本机修改：照样拉取服务器，接收另一设备的修改。
+每一台已连接管理设备每 5 秒都调用一次 sync(false)。
+syncOnce() 的第一步永远是 GET，因此本机即便完全没有修改，
+也会主动拉取另一台设备已经提交的最新版。
 */
 if(
 admin() &&
@@ -5943,41 +7233,45 @@ if(
 !admin() ||
 !adminReady ||
 syncRunning ||
-!editModal.classList.contains('hidden') ||
-!configModal.classList.contains('hidden') ||
-!manageModal.classList.contains('hidden')
+!editModal.classList.contains(
+'hidden'
+) ||
+!configModal.classList.contains(
+'hidden'
+) ||
+!manageModal.classList.contains(
+'hidden'
+)
 ){
 return;
 }
-
-const now=Date.now();
-
+const now=
+Date.now();
 if(
-now-lastPassiveSyncAt<1000
+now-
+lastPassiveSyncAt<
+1000
 ){
 return;
 }
-
-lastPassiveSyncAt=now;
-
+lastPassiveSyncAt=
+now;
 /*
-手机浏览器进入后台时系统可能暂停 JavaScript。
-恢复前台、重新获得焦点或网络恢复时立即补拉一次，
-不继续依赖后台期间的旧本地副本。
+固定 5 秒循环之外，回到前台/恢复网络时立即补拉一次，
+避免手机浏览器后台暂停定时器后继续使用旧数据。
 */
-sync(false);
+sync(
+false
+);
 }
-
 window.addEventListener(
 'online',
 passiveSync
 );
-
 window.addEventListener(
 'focus',
 passiveSync
 );
-
 document.addEventListener(
 'visibilitychange',
 ()=>{
@@ -5986,7 +7280,6 @@ passiveSync();
 }
 }
 );
-
 })();
 </script>
 </body>
