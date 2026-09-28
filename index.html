@@ -721,8 +721,6 @@ cursor:text!important;
 background:#fff!important;
 color:#0f172a!important
 }
-/* 编组多选框：已选标签按内容宽度排列，输入区自动占据剩余空间。
-   不再把整框硬切成左右两半，避免两个标签被挤压、换行或堆叠。 */
 #tagCombo:has(> .combo-selected:not(:empty)),
 #editTagCombo:has(> .combo-selected:not(:empty)){
 display:flex!important;
@@ -800,33 +798,18 @@ display:none!important
 }
 @media(max-width:700px){
 body{padding:.8rem}
-.container{
-padding:1.25rem;
-border-radius:22px
-}
-.page-title{
-font-size:1.8rem
-}
-.toolbar{
-flex-direction:column
-}
-.form-grid{
-grid-template-columns:1fr
-}
-.bookno-tag-row{
-grid-template-columns:1fr
-}
-.edit-two-column-row{
-grid-template-columns:1fr
-}
+.container{padding:1.25rem;border-radius:22px}
+.page-title{font-size:1.8rem}
+.toolbar{flex-direction:column}
+.form-grid{grid-template-columns:1fr}
+.bookno-tag-row{grid-template-columns:1fr}
+.edit-two-column-row{grid-template-columns:1fr}
 .dialog{
 width:100%;
 max-height:calc(100dvh - 16px);
 border-radius:20px
 }
-.dialog-scroll{
-padding:1.2rem
-}
+.dialog-scroll{padding:1.2rem}
 #tagCombo > .combo-selected:not(:empty),
 #editTagCombo > .combo-selected:not(:empty){
 max-width:calc(100% - 54px)
@@ -914,7 +897,6 @@ Press
 <button class="add-button" id="addBtn" type="button">添加</button>
 </div>
 </section>
-
 <section>
 <div class="list-header">
 <h2>总表</h2>
@@ -930,7 +912,6 @@ Press
 <div class="dialog">
 <div class="dialog-scroll">
 <h3>编辑</h3>
-
 <div class="form-group">
 <label for="editBookName">书名</label>
 <div class="edit-title-field">
@@ -938,7 +919,6 @@ Press
 <button class="clear-field-btn" id="clearEditBookName" type="button" aria-label="清空书名">×</button>
 </div>
 </div>
-
 <div class="form-group">
 <label for="editInstitution">出版</label>
 <div class="combo" id="editInstitutionCombo">
@@ -951,7 +931,6 @@ Press
 </div>
 </div>
 </div>
-
 <div class="form-group">
 <label for="editBookNo">书号</label>
 <div class="clearable-field">
@@ -959,7 +938,6 @@ Press
 <button class="clear-field-btn" id="clearEditBookNo" type="button" aria-label="清空书号">×</button>
 </div>
 </div>
-
 <div class="edit-two-column-row">
 <div class="form-group">
 <label for="editTag">编组</label>
@@ -974,7 +952,6 @@ Press
 </div>
 </div>
 </div>
-
 <div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
@@ -989,7 +966,6 @@ Press
 </div>
 </div>
 </div>
-
 <div class="form-group">
 <label for="editCode">编码</label>
 <div class="edit-code-row">
@@ -998,7 +974,6 @@ Press
 </div>
 </div>
 </div>
-
 <div class="dialog-actions">
 <button class="btn btn-danger" id="editDelete" type="button">删除</button>
 <button class="btn" id="editCancel" type="button">取消</button>
@@ -1080,7 +1055,9 @@ const PUBLIC_CACHE_KEY='public_cache';
 const SYNC_BASE_KEY='sync_base_v2';
 const MAX_BYTES=750*1024;
 const AUTO_DELAY=1800;
-const SYNC_RETRY_LIMIT=4;
+const SYNC_RETRY_LIMIT=6;
+const NETWORK_RETRY_LIMIT=3;
+const GITHUB_TIMEOUT=25000;
 
 const GROUP_CODES=Object.freeze([
 '11','12','13','14','21','22','23'
@@ -1368,7 +1345,8 @@ return div.innerHTML;
 }
 
 function attr(value){
-return esc(value).replace(/"/g,'&quot;');
+return esc(value)
+.replace(/"/g,'&quot;');
 }
 
 function uid(){
@@ -1387,7 +1365,10 @@ if(
 value &&
 !map.has(key(value))
 ){
-map.set(key(value),value);
+map.set(
+key(value),
+value
+);
 }
 }
 
@@ -1425,7 +1406,8 @@ return match
 }
 
 function tagPrefixNumber(value){
-const match=folded(value).match(/^(\d{2})/);
+const match=folded(value)
+.match(/^(\d{2})/);
 
 return match
 ? Number(match[1])
@@ -1451,7 +1433,8 @@ return uniq(
 Array.isArray(values)
 ? values
 : [values]
-).sort(compareTagsByPrefix);
+)
+.sort(compareTagsByPrefix);
 }
 
 function titleIsChinese(raw){
@@ -1472,11 +1455,9 @@ const bb=folded(b);
 if(aa&&!bb){
 return -1;
 }
-
 if(!aa&&bb){
 return 1;
 }
-
 if(!aa&&!bb){
 return 0;
 }
@@ -1577,7 +1558,10 @@ if(
 last &&
 range[0]<=last[1]+1
 ){
-last[1]=Math.max(last[1],range[1]);
+last[1]=Math.max(
+last[1],
+range[1]
+);
 }else{
 merged.push([...range]);
 }
@@ -1621,7 +1605,10 @@ return /^\d{6}$/.test(value)
 : '';
 }
 
-function codeAllowedForEntry(entry,rawCode){
+function codeAllowedForEntry(
+entry,
+rawCode
+){
 const code=Number(
 normalizeStoredCode(rawCode)
 );
@@ -1638,8 +1625,14 @@ code<=end
 );
 }
 
-function smallestAvailableCode(entry,used){
-for(const [start,end] of codeRangesForEntry(entry)){
+function smallestAvailableCode(
+entry,
+used
+){
+for(
+const [start,end]
+of codeRangesForEntry(entry)
+){
 let number=start;
 
 while(
@@ -1650,14 +1643,18 @@ number++;
 }
 
 if(number<=end){
-return String(number).padStart(6,'0');
+return String(number)
+.padStart(6,'0');
 }
 }
 
 return '';
 }
 
-function usedCodesExcept(entries,excludeId=''){
+function usedCodesExcept(
+entries,
+excludeId=''
+){
 const used=new Set();
 
 for(const entry of entries||[]){
@@ -1668,7 +1665,9 @@ entry.id===excludeId
 continue;
 }
 
-const code=normalizeStoredCode(entry.code);
+const code=normalizeStoredCode(
+entry.code
+);
 
 if(code){
 used.add(Number(code));
@@ -1704,13 +1703,18 @@ let match;
 
 while((match=regex.exec(source))){
 html+=esc(
-source.slice(last,match.index)
+source.slice(
+last,
+match.index
+)
 );
 
 html+=
 `<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
 
-last=match.index+match[0].length;
+last=
+match.index+
+match[0].length;
 }
 
 return html+esc(source.slice(last));
@@ -1731,19 +1735,38 @@ return null;
 }
 
 return {
-id:clean(raw.id)||uid(),
+id:
+clean(raw.id)||
+uid(),
+
 bookName,
-bookNo:clean(raw.bookNo),
-institution:clean(raw.institution),
-category:normalizeMulti(raw.category),
-tag:sortTags(
+
+bookNo:
+clean(raw.bookNo),
+
+institution:
+clean(raw.institution),
+
+category:
+normalizeMulti(raw.category),
+
+tag:
+sortTags(
 normalizeMulti(raw.tag)
 .map(normalizeFixedGroupLabel)
 ),
-tagChecked:Boolean(raw.tagChecked),
-code:normalizeStoredCode(raw.code),
-codeManualEdited:Boolean(raw.codeManualEdited),
-codeManualPinned:Boolean(
+
+tagChecked:
+Boolean(raw.tagChecked),
+
+code:
+normalizeStoredCode(raw.code),
+
+codeManualEdited:
+Boolean(raw.codeManualEdited),
+
+codeManualPinned:
+Boolean(
 raw.codeManualEdited &&
 raw.codeManualPinned
 )
@@ -1780,7 +1803,9 @@ Array.isArray(source.institutions)
 const categories=uniq(
 Array.isArray(source.categories)
 ? source.categories
-: entries.flatMap(entry=>entry.category)
+: entries.flatMap(
+entry=>entry.category
+)
 );
 
 const orderMap=new Map(
@@ -1808,7 +1833,10 @@ if(ai!==bi){
 return ai-bi;
 }
 
-if(ai===Number.MAX_SAFE_INTEGER){
+if(
+ai===
+Number.MAX_SAFE_INTEGER
+){
 const result=collator.compare(
 a.institution,
 b.institution
@@ -1844,10 +1872,9 @@ tags:[...GROUP_OPTIONS]
 };
 }
 
-/* ---------- 双向同步的三方合并 ---------- */
-
 function sameSyncValue(a,b){
-return JSON.stringify(a)===JSON.stringify(b);
+return JSON.stringify(a)===
+JSON.stringify(b);
 }
 
 function stateSignature(value){
@@ -1887,26 +1914,37 @@ if(!remoteEntry){
 return localEntry;
 }
 
-if(sameSyncValue(localEntry,remoteEntry)){
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
 return localEntry;
 }
 
 const merged={
-id:localEntry.id||remoteEntry.id
+id:
+localEntry.id||
+remoteEntry.id
 };
 
 for(const field of ENTRY_SYNC_FIELDS){
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(sameSyncValue(localValue,remoteValue)){
-merged[field]=copySyncValue(localValue);
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(localValue);
 }else{
-/*
-没有历史基线而同一条目的同一字段不同：
-为避免把本机未同步内容静默删除，保留本机字段。
-*/
-merged[field]=copySyncValue(localValue);
+merged[field]=
+copySyncValue(localValue);
+
 stats.conflicts++;
 }
 }
@@ -1914,47 +1952,65 @@ stats.conflicts++;
 return normEntry(merged);
 }
 
-if(!localEntry&&!remoteEntry){
+if(
+!localEntry &&
+!remoteEntry
+){
 return null;
 }
 
 if(!localEntry){
-if(sameSyncValue(remoteEntry,baseEntry)){
-/* 本机删除，远端没改：删除有效。 */
+if(
+sameSyncValue(
+remoteEntry,
+baseEntry
+)
+){
 return null;
 }
 
-/*
-本机删除，但远端同时编辑：
-保留远端编辑后的条目，避免静默丢失内容。
-*/
 stats.conflicts++;
 return remoteEntry;
 }
 
 if(!remoteEntry){
-if(sameSyncValue(localEntry,baseEntry)){
-/* 远端删除，本机没改：删除有效。 */
+if(
+sameSyncValue(
+localEntry,
+baseEntry
+)
+){
 return null;
 }
 
-/*
-远端删除，但本机同时编辑：
-保留本机编辑后的条目，避免静默丢失内容。
-*/
 stats.conflicts++;
 return localEntry;
 }
 
-if(sameSyncValue(localEntry,baseEntry)){
+if(
+sameSyncValue(
+localEntry,
+baseEntry
+)
+){
 return remoteEntry;
 }
 
-if(sameSyncValue(remoteEntry,baseEntry)){
+if(
+sameSyncValue(
+remoteEntry,
+baseEntry
+)
+){
 return localEntry;
 }
 
-if(sameSyncValue(localEntry,remoteEntry)){
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
 return localEntry;
 }
 
@@ -1967,28 +2023,42 @@ const baseValue=baseEntry[field];
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(sameSyncValue(localValue,remoteValue)){
-merged[field]=copySyncValue(localValue);
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(localValue);
 continue;
 }
 
-if(sameSyncValue(localValue,baseValue)){
-/* 本机没改这个字段，采用远端修改。 */
-merged[field]=copySyncValue(remoteValue);
+if(
+sameSyncValue(
+localValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(remoteValue);
 continue;
 }
 
-if(sameSyncValue(remoteValue,baseValue)){
-/* 远端没改这个字段，采用本机修改。 */
-merged[field]=copySyncValue(localValue);
+if(
+sameSyncValue(
+remoteValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(localValue);
 continue;
 }
 
-/*
-两台设备同时修改同一个字段。
-不丢弃整条记录，只让这个冲突字段保留本机值。
-*/
-merged[field]=copySyncValue(localValue);
+merged[field]=
+copySyncValue(localValue);
+
 stats.conflicts++;
 }
 
@@ -2005,15 +2075,30 @@ const base=uniq(baseValues||[]);
 const local=uniq(localValues||[]);
 const remote=uniq(remoteValues||[]);
 
-if(sameSyncValue(local,base)){
+if(
+sameSyncValue(
+local,
+base
+)
+){
 return remote;
 }
 
-if(sameSyncValue(remote,base)){
+if(
+sameSyncValue(
+remote,
+base
+)
+){
 return local;
 }
 
-if(sameSyncValue(local,remote)){
+if(
+sameSyncValue(
+local,
+remote
+)
+){
 return local;
 }
 
@@ -2051,17 +2136,12 @@ value=>{
 const itemKey=key(value);
 
 if(!baseKeys.has(itemKey)){
-/* 两边新增的选项取并集。 */
 return (
 localMap.has(itemKey) ||
 remoteMap.has(itemKey)
 );
 }
 
-/*
-原有选项被任一设备明确删除时，
-删除优先。
-*/
 return (
 localMap.has(itemKey) &&
 remoteMap.has(itemKey)
@@ -2070,12 +2150,49 @@ remoteMap.has(itemKey)
 );
 }
 
-function repairMergedCodeCollisions(snapshot){
+function stableEntryCodeCompare(
+a,
+b
+){
+const ap=
+a.codeManualPinned
+? 0
+: (
+a.codeManualEdited
+? 1
+: 2
+);
+
+const bp=
+b.codeManualPinned
+? 0
+: (
+b.codeManualEdited
+? 1
+: 2
+);
+
+if(ap!==bp){
+return ap-bp;
+}
+
+return String(a.id||'')
+.localeCompare(
+String(b.id||''),
+'en'
+);
+}
+
+function repairMergedCodeCollisions(
+snapshot
+){
 const fixed=norm(snapshot);
 const byCode=new Map();
 
 for(const entry of fixed.entries){
-const code=normalizeStoredCode(entry.code);
+const code=normalizeStoredCode(
+entry.code
+);
 
 if(!code){
 continue;
@@ -2090,36 +2207,32 @@ byCode.set(number,[]);
 byCode.get(number).push(entry);
 }
 
-const used=new Set();
-const keepers=new Set();
-
-for(const [number,entries] of byCode){
-const pinned=entries.filter(
-entry=>entry.codeManualPinned
+const used=new Set(
+byCode.keys()
 );
-
-const keeper=
-pinned[0] ||
-entries[0];
-
-used.add(number);
-keepers.add(keeper.id);
-}
 
 let repaired=0;
 let unresolved=0;
 
-for(const [,entries] of byCode){
+for(const entries of byCode.values()){
 if(entries.length<2){
 continue;
 }
 
-for(const entry of entries){
-if(keepers.has(entry.id)){
-continue;
-}
+const ordered=[
+...entries
+]
+.sort(stableEntryCodeCompare);
 
-const replacement=smallestAvailableCode(
+for(
+let i=1;
+i<ordered.length;
+i++
+){
+const entry=ordered[i];
+
+const replacement=
+smallestAvailableCode(
 entry,
 used
 );
@@ -2128,7 +2241,11 @@ if(replacement){
 entry.code=replacement;
 entry.codeManualEdited=false;
 entry.codeManualPinned=false;
-used.add(Number(replacement));
+
+used.add(
+Number(replacement)
+);
+
 repaired++;
 }else{
 unresolved++;
@@ -2141,6 +2258,35 @@ state:norm(fixed),
 repaired,
 unresolved
 };
+}
+
+function duplicateCodeCount(snapshot){
+const counts=new Map();
+
+for(const entry of norm(snapshot).entries){
+const code=normalizeStoredCode(
+entry.code
+);
+
+if(!code){
+continue;
+}
+
+counts.set(
+code,
+(counts.get(code)||0)+1
+);
+}
+
+let duplicates=0;
+
+for(const count of counts.values()){
+if(count>1){
+duplicates+=count-1;
+}
+}
+
+return duplicates;
 }
 
 function mergeStates(
@@ -2164,30 +2310,36 @@ const remoteSig=stateSignature(remote);
 let merged;
 
 if(localSig===baseSig){
-/* 本机没改：直接采用远端最新数据。 */
 merged=remote;
 }else if(remoteSig===baseSig){
-/* 远端没改：采用本机修改。 */
 merged=local;
 }else if(localSig===remoteSig){
-/* 两边已经一致。 */
 merged=local;
 }else{
 const baseMap=new Map(
 base.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
 
 const localMap=new Map(
 local.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
 
 const remoteMap=new Map(
 remote.entries.map(
-entry=>[entry.id,entry]
+entry=>[
+entry.id,
+entry
+]
 )
 );
 
@@ -2212,24 +2364,22 @@ entries.push(entry);
 }
 }
 
-let institutions=mergeOrderedHistory(
+let institutions=
+mergeOrderedHistory(
 base.institutions,
 local.institutions,
 remote.institutions,
 stats
 );
 
-let categories=mergeOrderedHistory(
+let categories=
+mergeOrderedHistory(
 base.categories,
 local.categories,
 remote.categories,
 stats
 );
 
-/*
-条目仍在使用的出版/书架不能因为菜单并发调整
-而从历史选项中消失。
-*/
 institutions=uniq([
 ...institutions,
 ...entries
@@ -2239,7 +2389,9 @@ institutions=uniq([
 
 categories=uniq([
 ...categories,
-...entries.flatMap(entry=>entry.category)
+...entries.flatMap(
+entry=>entry.category
+)
 ]);
 
 merged=norm({
@@ -2251,20 +2403,20 @@ tags:[...GROUP_OPTIONS]
 });
 }
 
-const repaired=repairMergedCodeCollisions(
-merged
-);
+const repaired=
+repairMergedCodeCollisions(merged);
 
 return {
 state:repaired.state,
 conflicts:stats.conflicts,
-collectionConflicts:stats.collectionConflicts,
-codeRepairs:repaired.repaired,
-unresolvedCodeConflicts:repaired.unresolved
+collectionConflicts:
+stats.collectionConflicts,
+codeRepairs:
+repaired.repaired,
+unresolvedCodeConflicts:
+repaired.unresolved
 };
 }
-
-/* ---------- 基础 UI ---------- */
 
 function admin(){
 return Boolean(
@@ -2275,9 +2427,13 @@ config.token
 );
 }
 
-function show(message,type='info'){
+function show(
+message,
+type='info'
+){
 toast.textContent=message;
-toast.className=`toast ${type}`;
+toast.className=
+`toast ${type}`;
 
 clearTimeout(toastTimer);
 
@@ -2290,11 +2446,10 @@ toast.classList.add('hidden');
 }
 
 function status(kind,text){
-statusDot.className=`status-dot ${kind}`;
+statusDot.className=
+`status-dot ${kind}`;
 statusText.textContent=text;
 }
-
-/* ---------- IndexedDB / localStorage ---------- */
 
 function fallbackStorageKey(storageKey){
 return `${NS}:fallback:${storageKey}`;
@@ -2325,8 +2480,14 @@ return value;
 return null;
 }
 
-function fallbackSet(storageKey,value){
-storageMemory.set(storageKey,value);
+function fallbackSet(
+storageKey,
+value
+){
+storageMemory.set(
+storageKey,
+value
+);
 
 try{
 localStorage.setItem(
@@ -2380,7 +2541,9 @@ request.onupgradeneeded=()=>{
 const db=request.result;
 
 if(
-!db.objectStoreNames.contains(DB_STORE)
+!db
+.objectStoreNames
+.contains(DB_STORE)
 ){
 db.createObjectStore(DB_STORE);
 }
@@ -2392,7 +2555,7 @@ resolve(request.result);
 
 request.onerror=()=>{
 reject(
-request.error ||
+request.error||
 new Error('IndexedDB open failed')
 );
 };
@@ -2436,7 +2599,7 @@ const request=tx
 
 request.onsuccess=()=>{
 resolve(
-request.result ??
+request.result??
 fallbackGet(storageKey)
 );
 };
@@ -2449,11 +2612,15 @@ reject(request.error);
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
+
 return fallbackGet(storageKey);
 }
 }
 
-async function idbSet(storageKey,value){
+async function idbSet(
+storageKey,
+value
+){
 if(storageDbDisabled){
 return fallbackSet(
 storageKey,
@@ -2471,7 +2638,8 @@ DB_STORE,
 'readwrite'
 );
 
-tx.objectStore(DB_STORE)
+tx
+.objectStore(DB_STORE)
 .put(
 value,
 storageKey
@@ -2487,8 +2655,10 @@ reject(tx.error);
 
 tx.onabort=()=>{
 reject(
-tx.error ||
-new Error('IndexedDB transaction aborted')
+tx.error||
+new Error(
+'IndexedDB transaction aborted'
+)
 );
 };
 }
@@ -2527,7 +2697,8 @@ DB_STORE,
 'readwrite'
 );
 
-tx.objectStore(DB_STORE)
+tx
+.objectStore(DB_STORE)
 .delete(storageKey);
 
 tx.oncomplete=resolve;
@@ -2538,8 +2709,10 @@ reject(tx.error);
 
 tx.onabort=()=>{
 reject(
-tx.error ||
-new Error('IndexedDB transaction aborted')
+tx.error||
+new Error(
+'IndexedDB transaction aborted'
+)
 );
 };
 }
@@ -2553,8 +2726,6 @@ fallbackDelete(storageKey);
 }
 }
 
-/* ---------- 本地工作副本 / 同步基线 ---------- */
-
 function syncTargetId(){
 return [
 clean(config.owner),
@@ -2563,22 +2734,21 @@ clean(config.file)
 ].join('/');
 }
 
-function saveLocal(snapshot=state){
+function saveLocal(
+snapshot=state
+){
 const savedState=norm(snapshot);
 
 state=savedState;
 workCopyCache=norm(savedState);
 
 const payload={
-savedAt:new Date().toISOString(),
+savedAt:
+new Date().toISOString(),
 target:syncTargetId(),
 state:norm(savedState)
 };
 
-/*
-所有工作副本写入串行执行，
-避免旧写入晚于新写入完成。
-*/
 workCopyWriteChain=
 workCopyWriteChain
 .catch(()=>{})
@@ -2589,7 +2759,9 @@ payload
 )
 );
 
-workCopyWriteChain.catch(console.error);
+workCopyWriteChain.catch(
+console.error
+);
 
 return true;
 }
@@ -2608,10 +2780,6 @@ const payload={
 target:syncTargetId()
 };
 
-/*
-meta 写入也串行化，防止旧的 dirty=true
-在同步成功后反过来覆盖 dirty=false。
-*/
 metaWriteChain=
 metaWriteChain
 .catch(()=>{})
@@ -2625,14 +2793,18 @@ payload
 return metaWriteChain;
 }
 
-function persistSyncBase(snapshot,sha){
+function persistSyncBase(
+snapshot,
+sha
+){
 const savedState=norm(snapshot);
 
 syncBaseCache=savedState;
 syncBaseSha=sha||null;
 
 const payload={
-savedAt:new Date().toISOString(),
+savedAt:
+new Date().toISOString(),
 target:syncTargetId(),
 sha:syncBaseSha,
 state:norm(savedState)
@@ -2653,7 +2825,7 @@ return syncBaseWriteChain;
 
 function updateAdmin(){
 const editable=
-admin() &&
+admin()&&
 adminReady;
 
 addSection.classList.toggle(
@@ -2667,14 +2839,12 @@ syncBtn.classList.toggle(
 );
 
 syncBtn.disabled=
-!editable ||
+!editable||
 syncRunning;
 
 manageBtn.disabled=
 !editable;
 }
-
-/* ---------- 表单 / 选项 ---------- */
 
 function multiMeta(type,which){
 const edit=which==='edit';
@@ -2761,13 +2931,14 @@ function renderMultiOptions(type,which){
 const metaInfo=multiMeta(type,which);
 const search=key(metaInfo.input.value);
 
-const values=sortHistory(
+const values=
+sortHistory(
 type,
 state[metaInfo.historyKey]
 )
 .filter(
 value=>
-!search ||
+!search||
 key(value).includes(search)
 );
 
@@ -2808,31 +2979,23 @@ type==='tag'
 function renderMultiField(type,which){
 const metaInfo=multiMeta(type,which);
 
-renderMultiSelected(
-type,
-which
-);
+renderMultiSelected(type,which);
 
 metaInfo.input.readOnly=false;
 metaInfo.input.removeAttribute('readonly');
 metaInfo.input.removeAttribute('placeholder');
 
-renderMultiOptions(
-type,
-which
-);
+renderMultiOptions(type,which);
 }
 
 function renderInstitutionOptions(which){
 const metaInfo=institutionMeta(which);
 const search=key(metaInfo.input.value);
 
-const values=uniq(
-state.institutions
-)
+const values=uniq(state.institutions)
 .filter(
 value=>
-!search ||
+!search||
 key(value).includes(search)
 );
 
@@ -2863,7 +3026,9 @@ ${renderLinkedText(value)}
 }
 
 function renderManageInstitutionOptions(){
-const history=uniq(state.institutions);
+const history=uniq(
+state.institutions
+);
 
 manageInstitutionOptions.innerHTML=
 history.length
@@ -2904,7 +3069,11 @@ data-delete-value="${attr(value)}"
 manageInstitutionLineInput.max=
 String(history.length+1);
 
-if(!clean(manageInstitutionLineInput.value)){
+if(
+!clean(
+manageInstitutionLineInput.value
+)
+){
 manageInstitutionLineInput.value=
 String(history.length+1);
 }
@@ -2915,7 +3084,9 @@ const total=state.entries.length;
 
 const coded=state.entries
 .filter(
-entry=>normalizeStoredCode(entry.code)
+entry=>normalizeStoredCode(
+entry.code
+)
 )
 .length;
 
@@ -2955,8 +3126,14 @@ return;
 pressList.innerHTML=
 state.entries.map(
 entry=>{
-const code=normalizeStoredCode(entry.code);
-const editLabel=code||'编辑';
+const code=normalizeStoredCode(
+entry.code
+);
+
+const editLabel=
+code||
+'编辑';
+
 const rows=[];
 
 if(entry.institution){
@@ -3005,7 +3182,9 @@ if(entry.category.length){
 rows.push(
 `
 <div class="meta-row bookshelf-row">
-<span class="meta-label">书架：</span><span class="meta-value bookshelf-text">${esc(entry.category.join('、'))}</span>
+<span class="meta-label">书架：</span><span class="meta-value bookshelf-text">${esc(
+entry.category.join('、')
+)}</span>
 </div>
 `
 );
@@ -3023,7 +3202,7 @@ ${rows.join('')}
 </div>
 </div>
 ${
-admin() &&
+admin()&&
 adminReady
 ? `
 <button
@@ -3100,7 +3279,8 @@ value
 return;
 }
 
-const multiple=multiAllowsMultiple(type);
+const multiple=
+multiAllowsMultiple(type);
 
 if(
 metaInfo.selection.length &&
@@ -3155,11 +3335,9 @@ clean(metaInfo.input.value);
 renderInstitutionOptions(which);
 }
 
-/* ---------- 条目编辑 ---------- */
-
 function addEntry(){
 if(
-!admin() ||
+!admin()||
 !adminReady
 ){
 return;
@@ -3233,14 +3411,15 @@ tagDraft:editTag.value
 
 function editIsUnchanged(){
 return (
-Boolean(editingId) &&
-getEditSnapshot()===editInitialSnapshot
+Boolean(editingId)&&
+getEditSnapshot()===
+editInitialSnapshot
 );
 }
 
 function openEdit(id){
 if(
-!admin() ||
+!admin()||
 !adminReady
 ){
 return;
@@ -3255,7 +3434,6 @@ return;
 }
 
 editingId=id;
-
 editBookName.value=entry.bookName;
 editBookNo.value=entry.bookNo;
 editInstitution.value=entry.institution;
@@ -3293,7 +3471,9 @@ renderInstitutionOptions('edit');
 renderMultiField('tag','edit');
 renderMultiField('category','edit');
 
-editInitialSnapshot=getEditSnapshot();
+editInitialSnapshot=
+getEditSnapshot();
+
 editOverlayPointerDown=false;
 
 editModal.classList.remove('hidden');
@@ -3329,7 +3509,8 @@ editBookName.focus();
 return;
 }
 
-const previousGroups=JSON.stringify(
+const previousGroups=
+JSON.stringify(
 sortTags(entry.tag)
 );
 
@@ -3344,9 +3525,8 @@ Boolean(entry.codeManualEdited);
 
 commitInstitution('edit');
 
-const nextTag=sortTags(
-editSelections.tag
-);
+const nextTag=
+sortTags(editSelections.tag);
 
 const groupsChanged=
 previousGroups!==
@@ -3404,7 +3584,8 @@ const occupied=state.entries
 .some(
 other=>
 other.id!==entry.id &&
-normalizeStoredCode(other.code)===manualCode
+normalizeStoredCode(other.code)===
+manualCode
 );
 
 if(occupied){
@@ -3431,7 +3612,7 @@ entry.code=manualCode;
 entry.codeManualEdited=true;
 entry.codeManualPinned=true;
 }else if(
-groupsChanged ||
+groupsChanged||
 languageChanged
 ){
 entry.codeManualPinned=false;
@@ -3479,7 +3660,8 @@ if(
 return;
 }
 
-state.entries=state.entries.filter(
+state.entries=
+state.entries.filter(
 item=>item.id!==id
 );
 
@@ -3492,8 +3674,6 @@ editOverlayPointerDown=false;
 render();
 schedule();
 }
-
-/* ---------- 组合框键盘/鼠标 ---------- */
 
 function allPanels(){
 return [
@@ -3508,7 +3688,8 @@ editCategoryPanel
 
 function closePanels(){
 allPanels().forEach(
-panel=>panel.classList.add('hidden')
+panel=>
+panel.classList.add('hidden')
 );
 }
 
@@ -3524,7 +3705,9 @@ function clearKeyboardActive(container){
 getKeyboardOptions(container)
 .forEach(
 button=>
-button.classList.remove('keyboard-active')
+button.classList.remove(
+'keyboard-active'
+)
 );
 }
 
@@ -3532,7 +3715,8 @@ function setKeyboardActive(
 container,
 index
 ){
-const options=getKeyboardOptions(container);
+const options=
+getKeyboardOptions(container);
 
 if(!options.length){
 return -1;
@@ -3552,7 +3736,8 @@ optionIndex===normalized
 }
 );
 
-options[normalized].scrollIntoView({
+options[normalized]
+.scrollIntoView({
 block:'nearest'
 });
 
@@ -3563,7 +3748,9 @@ function currentKeyboardIndex(container){
 return getKeyboardOptions(container)
 .findIndex(
 button=>
-button.classList.contains('keyboard-active')
+button.classList.contains(
+'keyboard-active'
+)
 );
 }
 
@@ -3681,6 +3868,7 @@ type,
 which,
 button.dataset.removeValue
 );
+
 return;
 }
 
@@ -3702,29 +3890,30 @@ return;
 }
 
 if(
-event.key==='ArrowDown' ||
+event.key==='ArrowDown'||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
 event.stopPropagation();
 
-if(metaInfo.panel.classList.contains('hidden')){
+if(
+metaInfo.panel.classList
+.contains('hidden')
+){
 if(!openPanel()){
 return;
 }
 }
 
-const options=getKeyboardOptions(
-metaInfo.options
-);
+const options=
+getKeyboardOptions(metaInfo.options);
 
 if(!options.length){
 return;
 }
 
-const current=currentKeyboardIndex(
-metaInfo.options
-);
+const current=
+currentKeyboardIndex(metaInfo.options);
 
 const next=
 current<0
@@ -3752,20 +3941,21 @@ if(event.key!=='Enter'){
 return;
 }
 
-const options=getKeyboardOptions(
-metaInfo.options
-);
+const options=
+getKeyboardOptions(metaInfo.options);
 
-if(metaInfo.panel.classList.contains('hidden')){
+if(
+metaInfo.panel.classList
+.contains('hidden')
+){
 if(!openPanel()){
 return;
 }
 return;
 }
 
-const activeIndex=currentKeyboardIndex(
-metaInfo.options
-);
+const activeIndex=
+currentKeyboardIndex(metaInfo.options);
 
 if(activeIndex>=0){
 event.preventDefault();
@@ -3773,7 +3963,8 @@ event.preventDefault();
 toggleSelection(
 type,
 which,
-options[activeIndex].dataset.selectValue
+options[activeIndex]
+.dataset.selectValue
 );
 
 return;
@@ -3785,7 +3976,8 @@ event.preventDefault();
 toggleSelection(
 type,
 which,
-options[0].dataset.selectValue
+options[0]
+.dataset.selectValue
 );
 }
 }
@@ -3797,9 +3989,9 @@ event=>{
 event.stopPropagation();
 
 if(
-event.target.closest('.combo-panel') ||
-event.target.closest('.selected-pill-remove') ||
-event.target.closest('.combo-pill-select') ||
+event.target.closest('.combo-panel')||
+event.target.closest('.selected-pill-remove')||
+event.target.closest('.combo-pill-select')||
 event.target===metaInfo.input
 ){
 return;
@@ -3864,27 +4056,28 @@ return;
 }
 
 if(
-event.key==='ArrowDown' ||
+event.key==='ArrowDown'||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
 event.stopPropagation();
 
-if(metaInfo.panel.classList.contains('hidden')){
+if(
+metaInfo.panel.classList
+.contains('hidden')
+){
 openPanel();
 }
 
-const options=getKeyboardOptions(
-metaInfo.options
-);
+const options=
+getKeyboardOptions(metaInfo.options);
 
 if(!options.length){
 return;
 }
 
-const current=currentKeyboardIndex(
-metaInfo.options
-);
+const current=
+currentKeyboardIndex(metaInfo.options);
 
 const next=
 current<0
@@ -3912,19 +4105,20 @@ if(event.key!=='Enter'){
 return;
 }
 
-if(metaInfo.panel.classList.contains('hidden')){
+if(
+metaInfo.panel.classList
+.contains('hidden')
+){
 event.preventDefault();
 openPanel();
 return;
 }
 
-const options=getKeyboardOptions(
-metaInfo.options
-);
+const options=
+getKeyboardOptions(metaInfo.options);
 
-const activeIndex=currentKeyboardIndex(
-metaInfo.options
-);
+const activeIndex=
+currentKeyboardIndex(metaInfo.options);
 
 if(activeIndex>=0){
 event.preventDefault();
@@ -3957,8 +4151,6 @@ selectInstitution(button);
 );
 }
 
-/* ---------- 修改后调度 ---------- */
-
 function schedule(){
 state=norm(state);
 localMutationVersion++;
@@ -3971,13 +4163,9 @@ persistMeta()
 .catch(console.error);
 
 if(
-admin() &&
+admin()&&
 adminReady
 ){
-/*
-同步过程中又有修改，
-确保当前同步结束后立即再跑一轮。
-*/
 if(syncRunning){
 syncRequested=true;
 }
@@ -3993,15 +4181,6 @@ AUTO_DELAY
 }
 
 return true;
-}
-
-/* ---------- GitHub ---------- */
-
-function basePath(){
-return location.pathname.replace(
-/[^/]*$/,
-''
-);
 }
 
 function publicUrl(){
@@ -4031,7 +4210,9 @@ return String(path)
 }
 
 function toB64(value){
-const bytes=new TextEncoder().encode(value);
+const bytes=
+new TextEncoder().encode(value);
+
 let binary='';
 
 for(
@@ -4040,7 +4221,10 @@ i<bytes.length;
 i+=0x8000
 ){
 binary+=String.fromCharCode(
-...bytes.subarray(i,i+0x8000)
+...bytes.subarray(
+i,
+i+0x8000
+)
 );
 }
 
@@ -4065,7 +4249,77 @@ i++
 bytes[i]=binary.charCodeAt(i);
 }
 
-return new TextDecoder().decode(bytes);
+return new TextDecoder()
+.decode(bytes);
+}
+
+function delay(ms){
+return new Promise(
+resolve=>setTimeout(resolve,ms)
+);
+}
+
+function isTransientSyncError(error){
+const statusCode=
+Number(error?.status||0);
+
+return (
+statusCode===0||
+statusCode===408||
+statusCode===429||
+statusCode>=500
+);
+}
+
+function isWriteConflictError(error){
+const statusCode=
+Number(error?.status||0);
+
+if(statusCode===409){
+return true;
+}
+
+if(statusCode!==422){
+return false;
+}
+
+const message=
+String(error?.message||'')
+.toLocaleLowerCase();
+
+return (
+message.includes('sha')||
+message.includes('does not match')||
+message.includes('already exists')||
+message.includes('update')
+);
+}
+
+function syncErrorText(error){
+if(
+error?.name==='AbortError'||
+error?.code==='timeout'
+){
+return 'GitHub 请求超时';
+}
+
+if(Number(error?.status)===401){
+return 'GitHub Token 无效或已失效';
+}
+
+if(Number(error?.status)===403){
+return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 权限'}`;
+}
+
+if(Number(error?.status)===404){
+return `GitHub 资源不存在：${error.message||'请检查仓库和文件路径'}`;
+}
+
+if(error?.message){
+return error.message;
+}
+
+return '未知同步错误';
 }
 
 async function githubApi(
@@ -4073,14 +4327,38 @@ method,
 endpoint,
 body=null
 ){
-const response=await fetch(
+const controller=
+typeof AbortController!=='undefined'
+? new AbortController()
+: null;
+
+const timer=
+controller
+? setTimeout(
+()=>{
+try{
+controller.abort();
+}catch{}
+},
+GITHUB_TIMEOUT
+)
+: null;
+
+try{
+let response;
+
+try{
+response=await fetch(
 `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,
 {
 method,
 headers:{
-Authorization:`Bearer ${config.token}`,
-Accept:'application/vnd.github+json',
-'X-GitHub-Api-Version':'2026-03-10',
+Authorization:
+`Bearer ${config.token}`,
+Accept:
+'application/vnd.github+json',
+'X-GitHub-Api-Version':
+'2026-03-10',
 ...(
 body!==null
 ? {'Content-Type':'application/json'}
@@ -4089,12 +4367,32 @@ body!==null
 },
 cache:'no-store',
 ...(
+controller
+? {signal:controller.signal}
+: {}
+),
+...(
 body!==null
 ? {body:JSON.stringify(body)}
 : {}
 )
 }
 );
+}catch(error){
+if(error?.name==='AbortError'){
+error.code='timeout';
+}
+
+if(
+error &&
+typeof error==='object' &&
+!('status' in error)
+){
+error.status=0;
+}
+
+throw error;
+}
 
 const text=await response.text();
 
@@ -4110,16 +4408,23 @@ data={message:text};
 
 if(!response.ok){
 const error=new Error(
-data?.message ||
+data?.message||
 `HTTP ${response.status}`
 );
 
 error.status=response.status;
+error.apiData=data;
 
 throw error;
 }
 
 return data;
+
+}finally{
+if(timer!==null){
+clearTimeout(timer);
+}
+}
 }
 
 async function readRemote(){
@@ -4128,6 +4433,15 @@ const data=await githubApi(
 'GET',
 `contents/${pathEncode(config.file)}`
 );
+
+if(
+!data||
+typeof data.content!=='string'
+){
+throw new Error(
+'GitHub 返回的数据文件内容无效'
+);
+}
 
 const parsed=JSON.parse(
 fromB64(data.content)
@@ -4138,6 +4452,7 @@ exists:true,
 sha:data.sha,
 state:norm(parsed)
 };
+
 }catch(error){
 if(error.status===404){
 return {
@@ -4151,73 +4466,46 @@ throw error;
 }
 }
 
-async function readRemoteBySha(sha){
-const fixedSha=clean(sha);
+async function readRemoteWithRetry(
+limit=NETWORK_RETRY_LIMIT
+){
+let lastError=null;
 
-if(!fixedSha){
-return null;
-}
-
+for(
+let attempt=0;
+attempt<limit;
+attempt++
+){
 try{
-const data=await githubApi(
-'GET',
-`git/blobs/${encodeURIComponent(fixedSha)}`
-);
+return await readRemote();
 
-if(!data?.content){
-return null;
-}
-
-return norm(
-JSON.parse(
-fromB64(data.content)
-)
-);
 }catch(error){
-/*
-老版本没有保存同步基线时，
-尽量利用旧 SHA 恢复基线。
-失败时会走保守合并，而不是直接覆盖。
-*/
-console.warn(
-'无法从历史 SHA 恢复同步基线',
-error
+lastError=error;
+
+if(
+!isTransientSyncError(error)||
+attempt===limit-1
+){
+throw error;
+}
+
+await delay(
+300*Math.pow(2,attempt)
 );
-
-return null;
 }
 }
 
-async function resolveSyncBase(localSnapshot){
+throw lastError||
+new Error(
+'读取 GitHub 数据失败'
+);
+}
+
+function resolveSyncBase(localSnapshot){
 if(syncBaseCache){
 return norm(syncBaseCache);
 }
 
-if(meta.sha){
-const historical=await readRemoteBySha(
-meta.sha
-);
-
-if(historical){
-await persistSyncBase(
-historical,
-meta.sha
-);
-
-return historical;
-}
-}
-
-/*
-没有可恢复基线时：
-
-1. 本机没有未同步修改：
-   当前本机状态可作为最近基线。
-
-2. 本机有未同步修改：
-   使用空基线做保守合并，
-   避免直接拿远端覆盖本机未同步内容。
-*/
 return meta.dirty
 ? norm({})
 : norm(localSnapshot);
@@ -4262,12 +4550,40 @@ body
 return result?.content?.sha||null;
 }
 
-/* ---------- 新的双向同步核心 ---------- */
+async function verifyRemoteEquals(
+expectedState
+){
+try{
+const checked=
+await readRemoteWithRetry(2);
 
-async function syncOnce(showResult=true){
+return {
+matched:
+stateSignature(checked.state)===
+stateSignature(expectedState),
+remote:checked
+};
+
+}catch{
+return {
+matched:false,
+remote:null
+};
+}
+}
+
+async function syncOnce(
+showResult=true
+){
 if(!admin()){
 return false;
 }
+
+const dirtyAtStart=
+Boolean(meta.dirty);
+
+const mutationAtStart=
+localMutationVersion;
 
 syncRunning=true;
 updateAdmin();
@@ -4278,38 +4594,47 @@ status(
 );
 
 try{
-let lastConflictError=null;
+let lastError=null;
 
 for(
 let attempt=0;
 attempt<SYNC_RETRY_LIMIT;
 attempt++
 ){
-/*
-每轮首先重新读取 GitHub 的最新状态和最新 SHA。
+let remote;
 
-如果另一台设备恰好在 GET 与 PUT 之间提交，
-PUT 会出现 409。
-下面会重新读取、重新合并、重新提交。
-*/
-const remote=await readRemote();
+try{
+remote=
+await readRemoteWithRetry();
 
-/*
-拿到“上一次成功同步时双方共同拥有的版本”。
-它是三方合并的共同祖先。
-*/
-const base=await resolveSyncBase(state);
+}catch(error){
+lastError=error;
 
-/*
-恢复历史基线可能需要网络等待，
-所以一定要在它完成之后再抓本机快照，
-否则用户等待期间做的新修改会漏掉。
-*/
+if(
+isTransientSyncError(error)&&
+attempt<SYNC_RETRY_LIMIT-1
+){
+await delay(
+350*Math.pow(
+2,
+Math.min(attempt,3)
+)
+);
+continue;
+}
+
+throw error;
+}
+
 const localBefore=norm(state);
+const base=
+resolveSyncBase(localBefore);
+
 const mutationVersionBeforeWrite=
 localMutationVersion;
 
-const mergedResult=mergeStates(
+const mergedResult=
+mergeStates(
 base,
 localBefore,
 remote.state
@@ -4342,15 +4667,6 @@ localSig!==mergedSig;
 let wroteRemote=false;
 let finalSha=remote.sha;
 
-/*
-只有合并后的状态与 GitHub 当前状态不同，
-才真正执行 PUT。
-
-因此：
-- 本机没改、远端改了 → 只拉取，不反写旧数据；
-- 远端没改、本机改了 → 推送；
-- 两边都改了 → 合并后再推送。
-*/
 if(remoteSig!==mergedSig){
 try{
 finalSha=await writeRemote(
@@ -4359,37 +4675,55 @@ remote.sha
 );
 
 wroteRemote=true;
-}catch(error){
-if(error.status===409){
-lastConflictError=error;
 
-/*
-另一台设备抢先提交。
-重新进入循环，重新 GET 最新版本和 SHA。
-*/
+}catch(error){
+lastError=error;
+
+if(isWriteConflictError(error)){
+await delay(
+180+attempt*120
+);
 continue;
 }
 
+if(isTransientSyncError(error)){
+const verification=
+await verifyRemoteEquals(
+mergedState
+);
+
+if(verification.matched){
+finalSha=
+verification.remote.sha;
+
+wroteRemote=true;
+
+}else if(
+attempt<
+SYNC_RETRY_LIMIT-1
+){
+await delay(
+350*Math.pow(
+2,
+Math.min(attempt,3)
+)
+);
+continue;
+
+}else{
+throw error;
+}
+
+}else{
 throw error;
 }
 }
+}
 
-/*
-网络请求期间用户仍然可以继续操作页面。
+let finalLocalState=
+mergedState;
 
-旧版最大的问题之一：
-PUT 完成后直接 state=snapshot，
-会把用户等待期间刚刚做的新修改覆盖掉，
-然后还把 dirty 错误改成 false。
-
-现在：
-用 localBefore 作为临时基线，
-把“网络等待期间的新本机修改”
-再次与刚刚成功同步的 mergedState 做三方合并。
-*/
-let finalLocalState=mergedState;
 let dirtyAfterSync=false;
-
 let extraConflicts=0;
 let extraCollectionConflicts=0;
 let extraCodeRepairs=0;
@@ -4401,7 +4735,8 @@ mutationVersionBeforeWrite
 ){
 const currentLocal=norm(state);
 
-const afterWriteMerge=mergeStates(
+const afterWriteMerge=
+mergeStates(
 localBefore,
 currentLocal,
 mergedState
@@ -4426,10 +4761,6 @@ dirtyAfterSync=
 stateSignature(finalLocalState)!==
 mergedSig;
 
-/*
-网络等待期间还有本机新改动，
-立即排队第二轮同步。
-*/
 if(dirtyAfterSync){
 syncRequested=true;
 }
@@ -4442,26 +4773,16 @@ meta.sha=finalSha;
 
 saveLocal(state);
 
-/*
-同步基线必须保存 GitHub 已经确认存在的 mergedState，
-不能保存等待期间又产生本机修改的 finalLocalState。
-*/
-const baseWrite=persistSyncBase(
+const baseWrite=
+persistSyncBase(
 mergedState,
 finalSha
 );
 
-const metaWrite=persistMeta();
+const metaWrite=
+persistMeta();
 
-/*
-三个关键本地状态一起等待落盘：
-- 当前工作副本
-- 同步基线
-- dirty / SHA 元数据
-
-避免页面紧接着关闭时只写入其中一部分。
-*/
-await Promise.all([
+await Promise.allSettled([
 workCopyWriteChain,
 baseWrite,
 metaWrite
@@ -4492,53 +4813,46 @@ mergedResult.unresolvedCodeConflicts+
 extraUnresolvedCodes;
 
 if(showResult){
-if(
-conflictCount ||
-codeRepairCount ||
-unresolvedCodeCount
-){
-let message='双向同步完成';
-
-if(conflictCount){
-message+=
-`；检测到 ${conflictCount} 处并发修改，同字段冲突保留本机值`;
-}
-
-if(codeRepairCount){
-message+=
-`；自动修复 ${codeRepairCount} 个重复编码`;
-}
-
 if(unresolvedCodeCount){
-message+=
-`；仍有 ${unresolvedCodeCount} 个编码冲突需人工检查`;
-}
-
 show(
-message,
-unresolvedCodeCount
-? 'error'
-: 'success'
+`同步完成，但仍有 ${unresolvedCodeCount} 个编码无法自动重新分配，请人工检查`,
+'error'
 );
+
+}else if(codeRepairCount){
+show(
+`同步完成；已自动修复 ${codeRepairCount} 个重复编码`,
+'success'
+);
+
+}else if(conflictCount){
+show(
+`双向同步完成；检测到 ${conflictCount} 处并发修改并已合并`,
+'success'
+);
+
 }else if(
-wroteRemote &&
-localChanged &&
+wroteRemote&&
+localChanged&&
 remoteChanged
 ){
 show(
 '已合并两台设备的修改并同步 GitHub',
 'success'
 );
+
 }else if(wroteRemote){
 show(
 '已同步到 GitHub',
 'success'
 );
+
 }else if(pulledChanges){
 show(
 '已获取另一设备的最新修改',
 'success'
 );
+
 }else{
 show(
 '本机与 GitHub 已是最新',
@@ -4551,21 +4865,24 @@ return true;
 }
 
 throw (
-lastConflictError ||
+lastError||
 new Error(
-'远端文件持续发生并发更新，请再次同步'
+'多次重试后仍无法完成同步'
 )
 );
 
 }catch(error){
 console.error(error);
 
-/*
-同步失败不清除本地修改，
-并明确保持 dirty=true。
-*/
+meta.dirty=
+Boolean(
+meta.dirty||
+dirtyAtStart||
+localMutationVersion!==
+mutationAtStart
+);
+
 saveLocal(state);
-meta.dirty=true;
 
 await Promise.allSettled([
 workCopyWriteChain,
@@ -4577,12 +4894,15 @@ status(
 '同步失败 · 本地数据已保留'
 );
 
+if(showResult){
 show(
-`同步失败：${error.message}`,
+`同步失败：${syncErrorText(error)}`,
 'error'
 );
+}
 
 return false;
+
 }finally{
 syncRunning=false;
 updateAdmin();
@@ -4594,16 +4914,6 @@ if(!admin()){
 return Promise.resolve(false);
 }
 
-/*
-所有来源的同步全部进入同一个串行队列：
-
-- 手动同步
-- 自动同步
-- 恢复联网
-- 页面重新获得焦点
-
-同一设备不再同时运行两套 GET/PUT。
-*/
 syncRequested=true;
 
 if(showResult){
@@ -4618,14 +4928,18 @@ syncInFlight=(async()=>{
 let allOk=true;
 
 while(syncRequested){
-const announce=syncShowResult;
+const announce=
+syncShowResult;
 
 syncRequested=false;
 syncShowResult=false;
 
-const ok=await syncOnce(announce);
+const ok=await syncOnce(
+announce
+);
 
-allOk=allOk&&ok;
+allOk=
+allOk&&ok;
 
 if(!ok){
 syncRequested=false;
@@ -4644,8 +4958,6 @@ syncInFlight=null;
 return syncInFlight;
 }
 
-/* ---------- 公开数据 ---------- */
-
 async function loadPublic(){
 status(
 'syncing',
@@ -4655,7 +4967,7 @@ status(
 const url=publicUrl();
 
 const canFetchPublic=
-Boolean(url) &&
+Boolean(url)&&
 /^https?:/i.test(url);
 
 if(!canFetchPublic){
@@ -4704,7 +5016,8 @@ publicCacheValue=state;
 await idbSet(
 PUBLIC_CACHE_KEY,
 {
-savedAt:new Date().toISOString(),
+savedAt:
+new Date().toISOString(),
 state
 }
 );
@@ -4742,8 +5055,6 @@ publicCacheValue
 }
 }
 
-/* ---------- 管理状态载入 ---------- */
-
 async function loadAdminState(){
 adminReady=false;
 updateAdmin();
@@ -4754,22 +5065,16 @@ status(
 );
 
 try{
-const remote=await readRemote();
-const local=loadLocal();
+const remote=
+await readRemoteWithRetry();
+
+const local=
+loadLocal();
 
 if(
-meta.dirty &&
+meta.dirty&&
 local
 ){
-/*
-极关键：
-
-本机已有未同步修改时，
-绝不能把刚刚读到的 remote.sha 写进 meta.sha。
-
-meta.sha 表示“本机这些修改是基于哪个旧版本做出来的”，
-它必须保留，才能正确进行三方合并。
-*/
 state=local;
 
 saveLocal(state);
@@ -4784,17 +5089,11 @@ status(
 );
 
 sync(false);
-
 return;
 }
 
 if(remote.exists){
-/*
-本机没有待同步修改：
-GitHub 就是当前权威版本。
-*/
 state=remote.state;
-
 meta.dirty=false;
 meta.sha=remote.sha;
 
@@ -4810,16 +5109,7 @@ persistMeta()
 ]);
 
 }else if(local){
-/*
-仓库中还没有 press_data.json，
-但本机已经存在工作副本。
-
-不能把本机副本当成“已经同步过的基线”；
-正确基线是空状态，
-这样下一次同步会创建远端文件。
-*/
 state=local;
-
 meta.dirty=true;
 meta.sha=null;
 
@@ -4839,7 +5129,6 @@ persistMeta()
 
 }else{
 state=norm({});
-
 meta.dirty=false;
 meta.sha=null;
 
@@ -4864,7 +5153,11 @@ status(
 '公开阅读 · 管理已连接'
 );
 
-if(meta.dirty){
+if(
+duplicateCodeCount(state)>0
+){
+sync(false);
+}else if(meta.dirty){
 sync(false);
 }
 
@@ -4872,7 +5165,7 @@ sync(false);
 console.error(error);
 
 state=
-loadLocal() ||
+loadLocal()||
 norm({});
 
 adminReady=true;
@@ -4885,8 +5178,6 @@ status(
 );
 }
 }
-
-/* ---------- 启动时读取本地状态 ---------- */
 
 async function bootstrapStorage(){
 const [
@@ -4906,14 +5197,17 @@ idbGet(SYNC_BASE_KEY)
 ]);
 
 if(
-storedConfig &&
+storedConfig&&
 typeof storedConfig==='object'
 ){
-config.owner=clean(storedConfig.owner);
-config.repo=clean(storedConfig.repo);
+config.owner=
+clean(storedConfig.owner);
+
+config.repo=
+clean(storedConfig.repo);
 
 config.file=
-clean(storedConfig.file) ||
+clean(storedConfig.file)||
 'press_data.json';
 }
 
@@ -4924,17 +5218,14 @@ typeof storedToken==='string'
 
 config.token=persistedToken;
 
-const currentTarget=syncTargetId();
+const currentTarget=
+syncTargetId();
 
-/*
-只有缓存属于当前 owner/repo/file 时才恢复。
-防止切换仓库后把上一个仓库的状态混进来。
-*/
 if(
-storedMeta &&
-typeof storedMeta==='object' &&
+storedMeta&&
+typeof storedMeta==='object'&&
 (
-!storedMeta.target ||
+!storedMeta.target||
 storedMeta.target===currentTarget
 )
 ){
@@ -4945,31 +5236,32 @@ meta={
 }
 
 if(
-work?.state &&
+work?.state&&
 (
-!work.target ||
+!work.target||
 work.target===currentTarget
 )
 ){
-workCopyCache=norm(work.state);
+workCopyCache=
+norm(work.state);
 }
 
 if(
-base?.state &&
+base?.state&&
 (
-!base.target ||
+!base.target||
 base.target===currentTarget
 )
 ){
-syncBaseCache=norm(base.state);
+syncBaseCache=
+norm(base.state);
 
 syncBaseSha=
-clean(base.sha) ||
-null;
+clean(base.sha)||null;
 
 if(
-!meta.sha &&
-!meta.dirty &&
+!meta.sha&&
+!meta.dirty&&
 syncBaseSha
 ){
 meta.sha=syncBaseSha;
@@ -4977,29 +5269,22 @@ meta.sha=syncBaseSha;
 }
 
 if(cache?.state){
-publicCacheValue=norm(cache.state);
+publicCacheValue=
+norm(cache.state);
 }
 }
-
-/* ---------- GitHub 配置 ---------- */
 
 async function saveConfig(event){
 event.preventDefault();
 
-/*
-若当前正在同步，先等旧同步结束。
-否则修改 owner/repo/file 时，
-一个同步流程可能前半段访问旧仓库、
-后半段访问新仓库。
-*/
 if(syncInFlight){
 await syncInFlight;
 }
 
 const hadPreviousTarget=
 Boolean(
-config.owner &&
-config.repo &&
+config.owner&&
+config.repo&&
 config.file
 );
 
@@ -5010,14 +5295,14 @@ const nextConfig={
 owner:clean(cfgOwner.value),
 repo:clean(cfg.value),
 file:
-clean(cfgFile.value) ||
+clean(cfgFile.value)||
 'press_data.json',
 token:clean(cfgToken.value)
 };
 
 if(
-!nextConfig.owner ||
-!nextConfig.repo ||
+!nextConfig.owner||
+!nextConfig.repo||
 !nextConfig.token
 ){
 show(
@@ -5031,20 +5316,11 @@ return;
 config=nextConfig;
 
 const targetChanged=
-hadPreviousTarget &&
-previousTarget!==syncTargetId();
+hadPreviousTarget&&
+previousTarget!==
+syncTargetId();
 
 if(targetChanged){
-/*
-不同仓库 / 文件之间：
-
-dirty、SHA、工作副本、同步基线
-全部不能沿用。
-
-先等待旧 IndexedDB 写入结束，
-然后再删除旧缓存，
-防止旧写入稍后又把已删除数据写回来。
-*/
 await Promise.allSettled([
 workCopyWriteChain,
 metaWriteChain,
@@ -5092,6 +5368,7 @@ await idbSet(
 TOKEN_PERSISTED_KEY,
 config.token
 );
+
 }else{
 persistedToken='';
 
@@ -5105,11 +5382,9 @@ configModal.classList.add('hidden');
 await loadAdminState();
 }
 
-/* ---------- 出版管理 ---------- */
-
 function openManage(){
 if(
-!admin() ||
+!admin()||
 !adminReady
 ){
 return;
@@ -5137,8 +5412,7 @@ return;
 }
 
 if(
-state.institutions
-.some(
+state.institutions.some(
 item=>key(item)===key(value)
 )
 ){
@@ -5157,7 +5431,8 @@ manageInstitutionLineInput.value
 );
 
 if(!Number.isInteger(line)){
-line=state.institutions.length+1;
+line=
+state.institutions.length+1;
 }
 
 line=Math.max(
@@ -5184,7 +5459,9 @@ function moveManagedInstitution(
 value,
 rawLine
 ){
-const history=[...state.institutions];
+const history=[
+...state.institutions
+];
 
 const from=history.findIndex(
 item=>key(item)===key(value)
@@ -5199,8 +5476,8 @@ folded(rawLine)
 );
 
 if(
-!Number.isInteger(line) ||
-line<1 ||
+!Number.isInteger(line)||
+line<1||
 line>history.length
 ){
 renderManageInstitutionOptions();
@@ -5254,7 +5531,10 @@ const oldKey=key(value);
 state.institutions[index]=cleaned;
 
 for(const entry of state.entries){
-if(key(entry.institution)===oldKey){
+if(
+key(entry.institution)===
+oldKey
+){
 entry.institution=cleaned;
 }
 }
@@ -5280,8 +5560,6 @@ item=>key(item)!==key(value)
 render();
 schedule();
 }
-
-/* ---------- 导出 / 导入 ---------- */
 
 function exportHtml(){
 const source=
@@ -5328,14 +5606,11 @@ show(
 importInput.value='';
 }
 
-/* ---------- 初始化组合框 ---------- */
-
 setupInstitutionCombo('add');
 setupInstitutionCombo('edit');
 
 setupMultiCombo('tag','add');
 setupMultiCombo('tag','edit');
-
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 
@@ -5343,8 +5618,6 @@ document.addEventListener(
 'click',
 closePanels
 );
-
-/* ---------- 事件 ---------- */
 
 addBtn.addEventListener(
 'click',
@@ -5386,7 +5659,8 @@ if(!entry){
 return;
 }
 
-entry.tagChecked=checkbox.checked;
+entry.tagChecked=
+checkbox.checked;
 
 updateCountDisplay();
 schedule();
@@ -5451,7 +5725,7 @@ editModal.addEventListener(
 'pointerup',
 event=>{
 const genuineOutsideClick=
-editOverlayPointerDown &&
+editOverlayPointerDown&&
 event.target===editModal;
 
 editOverlayPointerDown=false;
@@ -5541,7 +5815,6 @@ if(edit){
 renameManagedInstitution(
 edit.dataset.editValue
 );
-
 return;
 }
 
@@ -5630,7 +5903,7 @@ return;
 closePanels();
 
 if(
-!editModal.classList.contains('hidden') &&
+!editModal.classList.contains('hidden')&&
 editIsUnchanged()
 ){
 editingId='';
@@ -5649,8 +5922,6 @@ configModal.classList.add('hidden');
 manageModal.classList.add('hidden');
 }
 );
-
-/* ---------- 初始化 ---------- */
 
 async function initialize(){
 await bootstrapStorage();
@@ -5674,6 +5945,7 @@ state=local;
 }
 
 await loadAdminState();
+
 }else{
 updateAdmin();
 render();
@@ -5695,15 +5967,13 @@ render();
 }
 );
 
-/* ---------- 自动检查其它设备的新修改 ---------- */
-
 function passiveSync(){
 if(
-!admin() ||
-!adminReady ||
-syncRunning ||
-!editModal.classList.contains('hidden') ||
-!configModal.classList.contains('hidden') ||
+!admin()||
+!adminReady||
+syncRunning||
+!editModal.classList.contains('hidden')||
+!configModal.classList.contains('hidden')||
 !manageModal.classList.contains('hidden')
 ){
 return;
@@ -5712,20 +5982,14 @@ return;
 const now=Date.now();
 
 if(
-now-lastPassiveSyncAt<15000
+now-lastPassiveSyncAt<
+15000
 ){
 return;
 }
 
 lastPassiveSyncAt=now;
 
-/*
-回到页面或网络恢复时，
-即使本机 dirty=false 也必须检查 GitHub。
-
-这是第二台设备看到第一台设备修改
-所必需的拉取路径。
-*/
 sync(false);
 }
 
