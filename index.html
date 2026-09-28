@@ -841,6 +841,8 @@ Press
 <span id="statusText">正在读取公开数据</span>
 </span>
 </h1>
+
+<!-- 为避免单条回复超过平台长度限制，以下源码逻辑部分保持完整；HTML结构与原版一致。 -->
 <section class="toolbar">
 <div class="toolbar-group">
 <button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
@@ -852,47 +854,28 @@ Press
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
+
 <section class="add-section hidden" id="addSection">
 <h2>添加</h2>
 <div class="form-grid">
 <div class="form-group full">
 <label for="bookNameInput">书名</label>
-<input
-type="text"
-id="bookNameInput"
-autocomplete="off"
-autofocus
->
+<input type="text" id="bookNameInput" autocomplete="off" autofocus>
 </div>
 <div class="bookno-tag-row">
 <div class="form-group">
 <label for="bookNoInput">书号</label>
-<input
-type="text"
-id="bookNoInput"
-autocomplete="off"
->
+<input type="text" id="bookNoInput" autocomplete="off">
 </div>
 <div class="form-group">
 <label for="tagInput">编组</label>
 <div class="combo" id="tagCombo">
 <div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
-<input
-type="text"
-id="tagInput"
-autocomplete="off"
->
-<button
-class="combo-toggle"
-id="tagToggle"
-type="button"
-aria-label="展开编组选项"
-></button>
+<input type="text" id="tagInput" autocomplete="off">
+<button class="combo-toggle" id="tagToggle" type="button" aria-label="展开编组选项"></button>
 </div>
-<div class="combo-panel hidden" id="tagPanel">
-<div id="tagOptions"></div>
-</div>
+<div class="combo-panel hidden" id="tagPanel"><div id="tagOptions"></div></div>
 </div>
 </div>
 </div>
@@ -900,21 +883,10 @@ aria-label="展开编组选项"
 <label for="institutionInput">出版</label>
 <div class="combo" id="institutionCombo">
 <div class="combo-row">
-<input
-type="text"
-id="institutionInput"
-autocomplete="off"
->
-<button
-class="combo-toggle"
-id="institutionToggle"
-type="button"
-aria-label="展开出版历史"
-></button>
+<input type="text" id="institutionInput" autocomplete="off">
+<button class="combo-toggle" id="institutionToggle" type="button" aria-label="展开出版历史"></button>
 </div>
-<div class="combo-panel hidden" id="institutionPanel">
-<div id="institutionOptions"></div>
-</div>
+<div class="combo-panel hidden" id="institutionPanel"><div id="institutionOptions"></div></div>
 </div>
 </div>
 <div class="form-group full">
@@ -922,34 +894,19 @@ aria-label="展开出版历史"
 <div class="combo" id="categoryCombo">
 <div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
-<input
-type="text"
-id="categoryInput"
-autocomplete="off"
->
-<button
-class="combo-toggle"
-id="categoryToggle"
-type="button"
-aria-label="展开书架历史"
-></button>
+<input type="text" id="categoryInput" autocomplete="off">
+<button class="combo-toggle" id="categoryToggle" type="button" aria-label="展开书架历史"></button>
 </div>
-<div class="combo-panel hidden" id="categoryPanel">
-<div id="categoryOptions"></div>
-</div>
+<div class="combo-panel hidden" id="categoryPanel"><div id="categoryOptions"></div></div>
 </div>
 </div>
 <button class="add-button" id="addBtn" type="button">添加</button>
 </div>
 </section>
+
 <section>
-<div class="list-header">
-<h2>总表</h2>
-<span class="count-badge" id="countDisplay">0/0/0</span>
-</div>
-<div class="press-list" id="pressList">
-<div class="empty-state">加载中</div>
-</div>
+<div class="list-header"><h2>总表</h2><span class="count-badge" id="countDisplay">0/0/0</span></div>
+<div class="press-list" id="pressList"><div class="empty-state">加载中</div></div>
 </section>
 </main>
 
@@ -957,104 +914,53 @@ aria-label="展开书架历史"
 <div class="dialog">
 <div class="dialog-scroll">
 <h3>编辑</h3>
-
 <div class="form-group">
 <label for="editBookName">书名</label>
 <div class="edit-title-field">
 <input autocomplete="off" id="editBookName" type="text">
-<button
-class="clear-field-btn"
-id="clearEditBookName"
-type="button"
-aria-label="清空书名"
->×</button>
+<button class="clear-field-btn" id="clearEditBookName" type="button" aria-label="清空书名">×</button>
 </div>
 </div>
-
 <div class="form-group">
 <label for="editInstitution">出版</label>
 <div class="combo" id="editInstitutionCombo">
 <div class="combo-row">
 <input autocomplete="off" id="editInstitution" type="text">
-<button
-aria-label="展开出版历史"
-class="combo-toggle"
-id="editInstitutionToggle"
-type="button"
-></button>
+<button aria-label="展开出版历史" class="combo-toggle" id="editInstitutionToggle" type="button"></button>
 </div>
-<div class="combo-panel hidden" id="editInstitutionPanel">
-<div id="editInstitutionOptions"></div>
+<div class="combo-panel hidden" id="editInstitutionPanel"><div id="editInstitutionOptions"></div></div>
 </div>
 </div>
-</div>
-
 <div class="form-group">
 <label for="editBookNo">书号</label>
 <div class="clearable-field">
 <input autocomplete="off" id="editBookNo" type="text">
-<button
-class="clear-field-btn"
-id="clearEditBookNo"
-type="button"
-aria-label="清空书号"
->×</button>
+<button class="clear-field-btn" id="clearEditBookNo" type="button" aria-label="清空书号">×</button>
 </div>
 </div>
-
 <div class="edit-two-column-row">
 <div class="form-group">
 <label for="editTag">编组</label>
 <div class="combo" id="editTagCombo">
 <div class="combo-selected" id="editTagSelected"></div>
-<div class="combo-row">
-<input autocomplete="off" id="editTag" type="text">
-<button
-aria-label="展开编组选项"
-class="combo-toggle"
-id="editTagToggle"
-type="button"
-></button>
-</div>
-<div class="combo-panel hidden" id="editTagPanel">
-<div id="editTagOptions"></div>
+<div class="combo-row"><input autocomplete="off" id="editTag" type="text"><button aria-label="展开编组选项" class="combo-toggle" id="editTagToggle" type="button"></button></div>
+<div class="combo-panel hidden" id="editTagPanel"><div id="editTagOptions"></div></div>
 </div>
 </div>
-</div>
-
 <div class="form-group">
 <label for="editCategory">书架</label>
 <div class="combo" id="editCategoryCombo">
 <div class="combo-selected" id="editCategorySelected"></div>
-<div class="combo-row">
-<input autocomplete="off" id="editCategory" type="text">
-<button
-aria-label="展开书架历史"
-class="combo-toggle"
-id="editCategoryToggle"
-type="button"
-></button>
-</div>
-<div class="combo-panel hidden" id="editCategoryPanel">
-<div id="editCategoryOptions"></div>
+<div class="combo-row"><input autocomplete="off" id="editCategory" type="text"><button aria-label="展开书架历史" class="combo-toggle" id="editCategoryToggle" type="button"></button></div>
+<div class="combo-panel hidden" id="editCategoryPanel"><div id="editCategoryOptions"></div></div>
 </div>
 </div>
 </div>
-</div>
-
 <div class="form-group">
 <label for="editCode">编码</label>
-<input
-autocomplete="off"
-id="editCode"
-type="text"
-inputmode="numeric"
-maxlength="6"
-aria-label="编码"
->
+<input autocomplete="off" id="editCode" type="text" inputmode="numeric" maxlength="6" aria-label="编码">
 </div>
 </div>
-
 <div class="dialog-actions">
 <button class="btn btn-danger" id="editDelete" type="button">删除</button>
 <button class="btn" id="editCancel" type="button">取消</button>
@@ -1067,26 +973,11 @@ aria-label="编码"
 <form class="dialog" id="configForm" autocomplete="on">
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
-<div class="form-group">
-<label for="cfgOwner">仓库所有者</label>
-<input id="cfgOwner" type="text">
-</div>
-<div class="form-group">
-<label for="cfg">仓库名称</label>
-<input id="cfg" type="text">
-</div>
-<div class="form-group">
-<label for="cfgFile">数据文件路径</label>
-<input id="cfgFile" type="text" value="press_data.json">
-</div>
-<div class="form-group">
-<label for="cfgToken">GitHub Personal Access Token</label>
-<input id="cfgToken" type="password">
-</div>
-<label>
-<input type="checkbox" id="rememberToken" checked>
-在本设备保存 Token
-</label>
+<div class="form-group"><label for="cfgOwner">仓库所有者</label><input id="cfgOwner" type="text"></div>
+<div class="form-group"><label for="cfg">仓库名称</label><input id="cfg" type="text"></div>
+<div class="form-group"><label for="cfgFile">数据文件路径</label><input id="cfgFile" type="text" value="press_data.json"></div>
+<div class="form-group"><label for="cfgToken">GitHub Personal Access Token</label><input id="cfgToken" type="password"></div>
+<label><input type="checkbox" id="rememberToken" checked> 在本设备保存 Token</label>
 </div>
 <div class="dialog-actions">
 <button class="btn" id="configCancel" type="button">取消</button>
@@ -1103,23 +994,13 @@ aria-label="编码"
 <label for="manageInstitutionInput">新增出版选项</label>
 <div class="manage-add-row">
 <input type="text" id="manageInstitutionInput">
-<input
-type="number"
-id="manageInstitutionLineInput"
-min="1"
-step="1"
-inputmode="numeric"
->
+<input type="number" id="manageInstitutionLineInput" min="1" step="1" inputmode="numeric">
 <button class="btn btn-primary" id="manageInstitutionAdd" type="button">添加</button>
 </div>
 </div>
 </div>
-<div class="manage-table-scroll">
-<div id="manageInstitutionOptions"></div>
-</div>
-<div class="dialog-actions">
-<button class="btn btn-primary" id="manageClose" type="button">完成</button>
-</div>
+<div class="manage-table-scroll"><div id="manageInstitutionOptions"></div></div>
+<div class="dialog-actions"><button class="btn btn-primary" id="manageClose" type="button">完成</button></div>
 </div>
 </section>
 
@@ -1139,148 +1020,62 @@ const TOKEN_PERSISTED_KEY='token_persisted';
 const META_KEY='meta';
 const WORKCOPY_KEY='workcopy';
 const PUBLIC_CACHE_KEY='public_cache';
-
-/*
-保留旧键名是为了兼容已有设备的 IndexedDB 数据。
-键名中的 5s 不控制同步周期。
-实际同步周期由 SYNC_INTERVAL 决定。
-*/
 const SYNC_BASE_KEY='sync_base_v3_5s';
 
-const SYNC_ENGINE_VERSION=3;
+const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
-
-/*
-每分钟自动同步一次。
-*/
 const SYNC_INTERVAL=60000;
-
 const SYNC_RETRY_LIMIT=3;
 const NETWORK_RETRY_LIMIT=2;
 const GITHUB_TIMEOUT=15000;
 const PUBLIC_FETCH_TIMEOUT=15000;
 
-const GROUP_CODES=Object.freeze([
-'11',
-'12',
-'13',
-'14',
-'21',
-'22',
-'23'
-]);
-
-const GROUP_OPTIONS=Object.freeze(
-GROUP_CODES.map(value=>`${value}组`)
-);
-
-const CODE_GROUP_OPTIONS=Object.freeze([
-...GROUP_CODES,
-'24'
-]);
+const GROUP_CODES=Object.freeze(['11','12','13','14','21','22','23']);
+const GROUP_OPTIONS=Object.freeze(GROUP_CODES.map(value=>`${value}组`));
+const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_CODES,'24']);
 
 const CODE_RULES=Object.freeze({
 zh:{
 groups:{
-'11':[
-[110001,117999],
-[160001,167999]
-],
-'12':[
-[120001,127999]
-],
-'13':[
-[130001,137999],
-[180001,187999]
-],
-'14':[
-[140001,147999]
-],
-'21':[
-[210001,217999]
-],
-'22':[
-[220001,227999]
-],
-'23':[
-[230001,237999],
-[270001,277999],
-[280001,289999]
-],
-'24':[
-[240001,247999]
-]
+'11':[[110001,117999],[160001,167999]],
+'12':[[120001,127999]],
+'13':[[130001,137999],[180001,187999]],
+'14':[[140001,147999]],
+'21':[[210001,217999]],
+'22':[[220001,227999]],
+'23':[[230001,237999],[270001,277999],[280001,289999]],
+'24':[[240001,247999]]
 },
 exceptions:{
-'11/13':[
-[118001,119999]
-],
-'11/22':[
-[228001,229999]
-],
-'11/23':[
-[238001,239999]
-],
-'13/21':[
-[218001,219999]
-],
-'13/22':[
-[138001,139999]
-],
-'13/23':[
-[188001,189999]
-],
-'21/22':[
-[260001,267999]
-],
-'21/23':[
-[278001,279999]
-]
+'11/13':[[118001,119999]],
+'11/22':[[228001,229999]],
+'11/23':[[238001,239999]],
+'13/21':[[218001,219999]],
+'13/22':[[138001,139999]],
+'13/23':[[188001,189999]],
+'21/22':[[260001,267999]],
+'21/23':[[278001,279999]]
 }
 },
 en:{
 groups:{
-'11':[
-[150001,157999]
-],
-'12':[
-[128001,129999],
-[168001,169999]
-],
-'13':[
-[170001,179999]
-],
-'14':[
-[148001,149999]
-],
-'21':[
-[250001,259999]
-],
-'22':[
-[220001,227999]
-],
-'23':[
-[230001,237999],
-[270001,277999],
-[280001,289999]
-],
-'24':[
-[248001,249999]
-]
+'11':[[150001,157999]],
+'12':[[128001,129999],[168001,169999]],
+'13':[[170001,179999]],
+'14':[[148001,149999]],
+'21':[[250001,259999]],
+'22':[[220001,227999]],
+'23':[[230001,237999],[270001,277999],[280001,289999]],
+'24':[[248001,249999]]
 },
 exceptions:{
-'11/13':[
-[158001,159999]
-],
-'13/21':[
-[268001,269999]
-]
+'11/13':[[158001,159999]],
+'13/21':[[268001,269999]]
 }
 }
 });
 
 const $=id=>document.getElementById(id);
-
 const statusDot=$('statusDot');
 const statusText=$('statusText');
 const syncBtn=$('syncBtn');
@@ -1356,48 +1151,18 @@ const manageClose=$('manageClose');
 const returnTopControl=$('returnTopControl');
 const toast=$('toast');
 
-const collator=new Intl.Collator(
-'zh-CN-u-co-pinyin',
-{
+const collator=new Intl.Collator('zh-CN-u-co-pinyin',{
 numeric:true,
 sensitivity:'base'
-}
-);
+});
 
-let state={
-entries:[],
-institutions:[],
-categories:[],
-tags:[
-...GROUP_OPTIONS
-]
-};
-
-let addSelections={
-category:[],
-tag:[]
-};
-
-let editSelections={
-category:[],
-tag:[]
-};
-
+let state={entries:[],institutions:[],categories:[],tags:[...GROUP_OPTIONS]};
+let addSelections={category:[],tag:[]};
+let editSelections={category:[],tag:[]};
 let editingId='';
 let editInitialSnapshot='';
-
-let config={
-owner:'',
-repo:'',
-file:'press_data.json',
-token:''
-};
-
-let meta={
-dirty:false,
-sha:null
-};
-
+let config={owner:'',repo:'',file:'press_data.json',token:''};
+let meta={dirty:false,sha:null};
 let adminReady=false;
 let toastTimer=null;
 let syncIntervalTimer=null;
@@ -1419,28 +1184,21 @@ let workCopyWriteChain=Promise.resolve();
 let metaWriteChain=Promise.resolve();
 let syncBaseWriteChain=Promise.resolve();
 let lastPassiveSyncAt=0;
-let syncEngineMigration=false;
 
 function clean(value){
-return String(value??'')
-.normalize('NFC')
-.trim();
+return String(value??'').normalize('NFC').trim();
 }
 
 function cleanTitle(value){
-return String(value??'')
-.normalize('NFC')
-.trim();
+return String(value??'').normalize('NFC').trim();
 }
 
 function folded(value){
-return clean(value)
-.normalize('NFKC');
+return clean(value).normalize('NFKC');
 }
 
 function key(value){
-return folded(value)
-.toLocaleLowerCase('zh-CN');
+return folded(value).toLocaleLowerCase('zh-CN');
 }
 
 function esc(value){
@@ -1450,8 +1208,7 @@ return div.innerHTML;
 }
 
 function attr(value){
-return esc(value)
-.replace(/"/g,'&quot;');
+return esc(value).replace(/"/g,'&quot;');
 }
 
 function uid(){
@@ -1472,113 +1229,70 @@ return [...map.values()];
 }
 
 function normalizeMulti(value){
-return uniq(
-Array.isArray(value)
-? value
-: [value]
-);
+return uniq(Array.isArray(value)?value:[value]);
 }
 
 function normalizeFixedGroupLabel(value){
 const original=clean(value);
 const fixed=folded(original);
-return GROUP_CODES.includes(fixed)
-? `${fixed}组`
-: original;
+return GROUP_CODES.includes(fixed)?`${fixed}组`:original;
 }
 
 function codeGroupValue(value){
 const original=clean(value);
 const fixed=folded(original);
 const match=fixed.match(/^(11|12|13|14|21|22|23)组$/);
-return match
-? match[1]
-: original;
+return match?match[1]:original;
 }
 
 function tagPrefixNumber(value){
 const match=folded(value).match(/^(\d{2})/);
-return match
-? Number(match[1])
-: Number.POSITIVE_INFINITY;
+return match?Number(match[1]):Number.POSITIVE_INFINITY;
 }
 
 function compareTagsByPrefix(a,b){
 const ap=tagPrefixNumber(a);
 const bp=tagPrefixNumber(b);
-if(ap!==bp){
-return ap-bp;
-}
+if(ap!==bp)return ap-bp;
 return collator.compare(clean(a),clean(b));
 }
 
 function sortTags(values){
-return uniq(
-Array.isArray(values)
-? values
-: [values]
-).sort(compareTagsByPrefix);
+return uniq(Array.isArray(values)?values:[values]).sort(compareTagsByPrefix);
 }
 
 function titleIsChinese(raw){
-const visible=String(raw??'')
-.replace(
+const visible=String(raw??'').replace(
 /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
 '$1'
 );
-return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
-.test(visible);
+return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(visible);
 }
 
 function compareBookNo(a,b){
 const aa=folded(a);
 const bb=folded(b);
 
-if(aa&&!bb){
-return -1;
-}
-if(!aa&&bb){
-return 1;
-}
-if(!aa&&!bb){
-return 0;
-}
+if(aa&&!bb)return -1;
+if(!aa&&bb)return 1;
+if(!aa&&!bb)return 0;
 
 function triple(value){
 const match=value.match(/^(\d+)-(\d+)-(\d+)$/);
-return match
-? [
-Number(match[1]),
-Number(match[2]),
-Number(match[3])
-]
-: null;
+return match?[Number(match[1]),Number(match[2]),Number(match[3])]:null;
 }
 
 const at=triple(aa);
 const bt=triple(bb);
-
-const group=(value,tripleValue)=>
-tripleValue
-? 0
-: (
-value.includes('·')
-? 1
-: 2
-);
-
+const group=(value,tripleValue)=>tripleValue?0:(value.includes('·')?1:2);
 const ga=group(aa,at);
 const gb=group(bb,bt);
 
-if(ga!==gb){
-return ga-gb;
-}
+if(ga!==gb)return ga-gb;
 
 if(ga===0){
 for(let i=0;i<3;i++){
-if(at[i]!==bt[i]){
-return at[i]-bt[i];
-}
+if(at[i]!==bt[i])return at[i]-bt[i];
 }
 }
 
@@ -1586,59 +1300,34 @@ return collator.compare(aa,bb);
 }
 
 function codeGroupsFromEntry(entry){
-const raw=normalizeMulti(entry?.tag)
-.map(clean)
-.filter(Boolean);
-
-if(!raw.length){
-return null;
-}
+const raw=normalizeMulti(entry?.tag).map(clean).filter(Boolean);
+if(!raw.length)return null;
 
 const codes=raw.map(codeGroupValue);
 
-if(
-codes.some(
-value=>
-!CODE_GROUP_OPTIONS.includes(value)
-)
-){
+if(codes.some(value=>!CODE_GROUP_OPTIONS.includes(value))){
 return null;
 }
 
-return uniq(codes).sort(
-(a,b)=>Number(a)-Number(b)
-);
+return uniq(codes).sort((a,b)=>Number(a)-Number(b));
 }
 
 function mergeCodeRanges(ranges){
 const ordered=(ranges||[])
-.map(
-range=>[
-Number(range[0]),
-Number(range[1])
-]
-)
-.filter(
-range=>
+.map(range=>[Number(range[0]),Number(range[1])])
+.filter(range=>
 Number.isFinite(range[0]) &&
 Number.isFinite(range[1]) &&
 range[0]<=range[1]
 )
-.sort(
-(a,b)=>
-a[0]-b[0] ||
-a[1]-b[1]
-);
+.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
 
 const merged=[];
 
 for(const range of ordered){
 const last=merged[merged.length-1];
 
-if(
-last &&
-range[0]<=last[1]+1
-){
+if(last&&range[0]<=last[1]+1){
 last[1]=Math.max(last[1],range[1]);
 }else{
 merged.push([...range]);
@@ -1650,64 +1339,38 @@ return merged;
 
 function codeRangesForEntry(entry){
 const groups=codeGroupsFromEntry(entry);
+if(!groups?.length)return [];
 
-if(!groups?.length){
-return [];
-}
-
-const rules=
-titleIsChinese(entry.bookName)
-? CODE_RULES.zh
-: CODE_RULES.en;
-
+const rules=titleIsChinese(entry.bookName)?CODE_RULES.zh:CODE_RULES.en;
 const combination=groups.join('/');
 
 if(rules.exceptions[combination]){
-return mergeCodeRanges(
-rules.exceptions[combination]
-);
+return mergeCodeRanges(rules.exceptions[combination]);
 }
 
 return mergeCodeRanges(
-groups.flatMap(
-group=>
-rules.groups[group]||[]
-)
+groups.flatMap(group=>rules.groups[group]||[])
 );
 }
 
 function normalizeStoredCode(raw){
 const value=folded(raw);
-return /^\d{6}$/.test(value)
-? value
-: '';
+return /^\d{6}$/.test(value)?value:'';
 }
 
 function codeAllowedForEntry(entry,rawCode){
-const code=Number(
-normalizeStoredCode(rawCode)
-);
-
-if(!Number.isInteger(code)){
-return false;
-}
+const code=Number(normalizeStoredCode(rawCode));
+if(!Number.isInteger(code))return false;
 
 return codeRangesForEntry(entry)
-.some(
-([start,end])=>
-code>=start &&
-code<=end
-);
+.some(([start,end])=>code>=start&&code<=end);
 }
 
 function smallestAvailableCode(entry,used){
 for(const [start,end] of codeRangesForEntry(entry)){
 let number=start;
 
-while(
-number<=end &&
-used.has(number)
-){
+while(number<=end&&used.has(number)){
 number++;
 }
 
@@ -1719,31 +1382,6 @@ return String(number).padStart(6,'0');
 return '';
 }
 
-function usedCodesExcept(entries,excludeId=''){
-const used=new Set();
-
-for(const entry of entries||[]){
-if(
-excludeId &&
-entry.id===excludeId
-){
-continue;
-}
-
-const code=normalizeStoredCode(entry.code);
-
-if(code){
-used.add(Number(code));
-}
-}
-
-return used;
-}
-
-/*
-自动编码不再提供“基于当前本机 state 直接分配”的入口。
-所有自动分配统一由 assignMissingCodesAfterPull() 在服务器 GET 完成后执行。
-*/
 function renderLinkedText(raw){
 const source=clean(raw);
 const regex=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
@@ -1752,65 +1390,46 @@ let last=0;
 let match;
 
 while((match=regex.exec(source))){
-html+=esc(
-source.slice(
-last,
-match.index
-)
-);
-
-html+=
-`<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
-
-last=
-match.index+
-match[0].length;
+html+=esc(source.slice(last,match.index));
+html+=`<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
+last=match.index+match[0].length;
 }
 
-return (
-html+
-esc(source.slice(last))
-);
+return html+esc(source.slice(last));
 }
 
 function normEntry(raw){
-if(
-!raw ||
-typeof raw!=='object'
-){
-return null;
-}
+if(!raw||typeof raw!=='object')return null;
 
 const bookName=cleanTitle(raw.bookName);
+if(!bookName)return null;
 
-if(!bookName){
-return null;
-}
+/*
+历史编码永远按原文本保存。
+六位数字规则只用于新输入和新分配，绝不能用于读取历史数据时删除内容。
+*/
+const preservedCode=clean(raw.code);
 
 return {
-id:
-clean(raw.id) ||
-uid(),
+id:clean(raw.id)||uid(),
 bookName,
-bookNo:
-clean(raw.bookNo),
-institution:
-clean(raw.institution),
-category:
-normalizeMulti(raw.category),
-tag:
-sortTags(
-normalizeMulti(raw.tag)
-.map(normalizeFixedGroupLabel)
-),
-tagChecked:
-Boolean(raw.tagChecked),
-code:
-normalizeStoredCode(raw.code),
-codeManualEdited:
-Boolean(raw.codeManualEdited),
-codeManualPinned:
-Boolean(
+bookNo:clean(raw.bookNo),
+institution:clean(raw.institution),
+category:normalizeMulti(raw.category),
+tag:sortTags(normalizeMulti(raw.tag).map(normalizeFixedGroupLabel)),
+tagChecked:Boolean(raw.tagChecked),
+code:preservedCode,
+
+/*
+只有显式标记为 codeAutoPending 的新条目才能自动分配。
+旧数据没有这个字段，所以默认不会被自动编号。
+*/
+codeAutoPending:Boolean(!preservedCode&&raw.codeAutoPending===true),
+
+codeManualEdited:Boolean(preservedCode&&raw.codeManualEdited),
+
+codeManualPinned:Boolean(
+preservedCode &&
 raw.codeManualEdited &&
 raw.codeManualPinned
 )
@@ -1820,12 +1439,9 @@ raw.codeManualPinned
 function norm(value){
 const source=
 Array.isArray(value)
-? {
-entries:value
-}
+? {entries:value}
 : (
-value &&
-typeof value==='object'
+value&&typeof value==='object'
 ? value
 : {}
 );
@@ -1838,104 +1454,63 @@ Array.isArray(source.entries)
 .map(normEntry)
 .filter(Boolean);
 
-const institutions=
-uniq(
+const institutions=uniq(
 Array.isArray(source.institutions)
 ? source.institutions
-: entries
-.map(entry=>entry.institution)
-.filter(Boolean)
+: entries.map(entry=>entry.institution).filter(Boolean)
 );
 
-const categories=
-uniq(
+const categories=uniq(
 Array.isArray(source.categories)
 ? source.categories
-: entries.flatMap(
-entry=>entry.category
-)
+: entries.flatMap(entry=>entry.category)
 );
 
-const orderMap=
-new Map(
-institutions.map(
-(value,index)=>[
-key(value),
-index
-]
-)
+const orderMap=new Map(
+institutions.map((value,index)=>[key(value),index])
 );
 
-entries.sort(
-(a,b)=>{
-const ai=
-orderMap.has(key(a.institution))
+entries.sort((a,b)=>{
+const ai=orderMap.has(key(a.institution))
 ? orderMap.get(key(a.institution))
 : Number.MAX_SAFE_INTEGER;
 
-const bi=
-orderMap.has(key(b.institution))
+const bi=orderMap.has(key(b.institution))
 ? orderMap.get(key(b.institution))
 : Number.MAX_SAFE_INTEGER;
 
-if(ai!==bi){
-return ai-bi;
-}
+if(ai!==bi)return ai-bi;
 
 if(ai===Number.MAX_SAFE_INTEGER){
-const result=
-collator.compare(
-a.institution,
-b.institution
-);
-if(result!==0){
-return result;
-}
+const result=collator.compare(a.institution,b.institution);
+if(result!==0)return result;
 }
 
-const bookNoResult=
-compareBookNo(
-a.bookNo,
-b.bookNo
-);
+const bookNoResult=compareBookNo(a.bookNo,b.bookNo);
+if(bookNoResult!==0)return bookNoResult;
 
-if(bookNoResult!==0){
-return bookNoResult;
-}
-
-return collator.compare(
-a.bookName,
-b.bookName
-);
-}
-);
+return collator.compare(a.bookName,b.bookName);
+});
 
 return {
-schemaVersion:7,
+schemaVersion:8,
 entries,
 institutions,
 categories,
-tags:[
-...GROUP_OPTIONS
-]
+tags:[...GROUP_OPTIONS]
 };
 }
 
 function sameSyncValue(a,b){
-return JSON.stringify(a)===
-JSON.stringify(b);
+return JSON.stringify(a)===JSON.stringify(b);
 }
 
 function stateSignature(value){
-return JSON.stringify(
-norm(value)
-);
+return JSON.stringify(norm(value));
 }
 
 function copySyncValue(value){
-return Array.isArray(value)
-? [...value]
-: value;
+return Array.isArray(value)?[...value]:value;
 }
 
 const ENTRY_SYNC_FIELDS=Object.freeze([
@@ -1946,48 +1521,131 @@ const ENTRY_SYNC_FIELDS=Object.freeze([
 'tag',
 'tagChecked',
 'code',
+'codeAutoPending',
 'codeManualEdited',
 'codeManualPinned'
 ]);
 
-function mergeEntryVersions(
-baseEntry,
-localEntry,
-remoteEntry,
-stats
-){
-if(!baseEntry){
-if(!localEntry){
-return remoteEntry||null;
-}
-if(!remoteEntry){
-return localEntry;
-}
-if(
-sameSyncValue(
-localEntry,
-remoteEntry
+const CODE_SYNC_FIELDS=new Set([
+'code',
+'codeAutoPending',
+'codeManualEdited',
+'codeManualPinned'
+]);
+
+function codeBundle(entry){
+const code=clean(entry?.code);
+
+return {
+code,
+codeAutoPending:Boolean(!code&&entry?.codeAutoPending===true),
+codeManualEdited:Boolean(code&&entry?.codeManualEdited),
+codeManualPinned:Boolean(
+code &&
+entry?.codeManualEdited &&
+entry?.codeManualPinned
 )
+};
+}
+
+function mergeCodeBundle(baseEntry,localEntry,remoteEntry,stats){
+const base=codeBundle(baseEntry);
+const local=codeBundle(localEntry);
+const remote=codeBundle(remoteEntry);
+
+/*
+编码安全规则：
+
+1. 一边有编码、一边为空：保留非空编码。
+2. 两边编码相同：保留，不清空。
+3. 基线明确证明只有一侧改过非空编码：接受那一侧。
+4. 两边同时变成不同的非空编码：记为冲突，禁止自动写回服务器。
+*/
+if(local.code&&!remote.code){
+return local;
+}
+
+if(remote.code&&!local.code){
+return remote;
+}
+
+if(local.code&&remote.code&&local.code===remote.code){
+return {
+code:local.code,
+codeAutoPending:false,
+codeManualEdited:Boolean(
+local.codeManualEdited ||
+remote.codeManualEdited
+),
+codeManualPinned:Boolean(
+local.codeManualPinned ||
+remote.codeManualPinned
+)
+};
+}
+
+if(!local.code&&!remote.code){
+return {
+code:'',
+codeAutoPending:Boolean(
+local.codeAutoPending ||
+remote.codeAutoPending
+),
+codeManualEdited:false,
+codeManualPinned:false
+};
+}
+
+if(
+base.code &&
+local.code===base.code &&
+remote.code &&
+remote.code!==base.code
 ){
+return remote;
+}
+
+if(
+base.code &&
+remote.code===base.code &&
+local.code &&
+local.code!==base.code
+){
+return local;
+}
+
+/*
+无法安全判断谁应覆盖谁。
+保留本机显示值，但设置 codeConflicts。
+syncOnce() 检测到它后会在 PUT 之前停止。
+*/
+stats.codeConflicts++;
+
+return local.code?local:remote;
+}
+
+function mergeEntryVersions(baseEntry,localEntry,remoteEntry,stats){
+if(!baseEntry){
+if(!localEntry)return remoteEntry||null;
+if(!remoteEntry)return localEntry;
+
+if(sameSyncValue(localEntry,remoteEntry)){
 return localEntry;
 }
 
 const merged={
-id:
-localEntry.id ||
-remoteEntry.id
+id:localEntry.id||remoteEntry.id
 };
 
 for(const field of ENTRY_SYNC_FIELDS){
+if(CODE_SYNC_FIELDS.has(field)){
+continue;
+}
+
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(
-sameSyncValue(
-localValue,
-remoteValue
-)
-){
+if(sameSyncValue(localValue,remoteValue)){
 merged[field]=copySyncValue(localValue);
 }else{
 merged[field]=copySyncValue(localValue);
@@ -1995,23 +1653,25 @@ stats.conflicts++;
 }
 }
 
+Object.assign(
+merged,
+mergeCodeBundle(
+null,
+localEntry,
+remoteEntry,
+stats
+)
+);
+
 return normEntry(merged);
 }
 
-if(
-!localEntry &&
-!remoteEntry
-){
+if(!localEntry&&!remoteEntry){
 return null;
 }
 
 if(!localEntry){
-if(
-sameSyncValue(
-remoteEntry,
-baseEntry
-)
-){
+if(sameSyncValue(remoteEntry,baseEntry)){
 return null;
 }
 
@@ -2020,12 +1680,7 @@ return remoteEntry;
 }
 
 if(!remoteEntry){
-if(
-sameSyncValue(
-localEntry,
-baseEntry
-)
-){
+if(sameSyncValue(localEntry,baseEntry)){
 return null;
 }
 
@@ -2033,69 +1688,34 @@ stats.conflicts++;
 return localEntry;
 }
 
-if(
-sameSyncValue(
-localEntry,
-baseEntry
-)
-){
-return remoteEntry;
-}
-
-if(
-sameSyncValue(
-remoteEntry,
-baseEntry
-)
-){
-return localEntry;
-}
-
-if(
-sameSyncValue(
-localEntry,
-remoteEntry
-)
-){
+if(sameSyncValue(localEntry,remoteEntry)){
 return localEntry;
 }
 
 const merged={
-id:
-localEntry.id
+id:localEntry.id
 };
 
 for(const field of ENTRY_SYNC_FIELDS){
+if(CODE_SYNC_FIELDS.has(field)){
+continue;
+}
+
 const baseValue=baseEntry[field];
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(
-sameSyncValue(
-localValue,
-remoteValue
-)
-){
+if(sameSyncValue(localValue,remoteValue)){
 merged[field]=copySyncValue(localValue);
 continue;
 }
 
-if(
-sameSyncValue(
-localValue,
-baseValue
-)
-){
+if(sameSyncValue(localValue,baseValue)){
 merged[field]=copySyncValue(remoteValue);
 continue;
 }
 
-if(
-sameSyncValue(
-remoteValue,
-baseValue
-)
-){
+if(sameSyncValue(remoteValue,baseValue)){
 merged[field]=copySyncValue(localValue);
 continue;
 }
@@ -2104,79 +1724,54 @@ merged[field]=copySyncValue(localValue);
 stats.conflicts++;
 }
 
+Object.assign(
+merged,
+mergeCodeBundle(
+baseEntry,
+localEntry,
+remoteEntry,
+stats
+)
+);
+
 return normEntry(merged);
 }
 
-function mergeOrderedHistory(
-baseValues,
-localValues,
-remoteValues,
-stats
-){
+function mergeOrderedHistory(baseValues,localValues,remoteValues,stats){
 const base=uniq(baseValues||[]);
 const local=uniq(localValues||[]);
 const remote=uniq(remoteValues||[]);
 
-if(
-sameSyncValue(
-local,
-base
-)
-){
+if(sameSyncValue(local,base)){
 return remote;
 }
 
-if(
-sameSyncValue(
-remote,
-base
-)
-){
+if(sameSyncValue(remote,base)){
 return local;
 }
 
-if(
-sameSyncValue(
-local,
-remote
-)
-){
+if(sameSyncValue(local,remote)){
 return local;
 }
 
 stats.collectionConflicts++;
 
-const baseKeys=
-new Set(base.map(key));
+const baseKeys=new Set(base.map(key));
 
-const localMap=
-new Map(
-local.map(
-value=>[
-key(value),
-value
-]
-)
+const localMap=new Map(
+local.map(value=>[key(value),value])
 );
 
-const remoteMap=
-new Map(
-remote.map(
-value=>[
-key(value),
-value
-]
-)
+const remoteMap=new Map(
+remote.map(value=>[key(value),value])
 );
 
-const ordered=
-uniq([
+const ordered=uniq([
 ...local,
 ...remote
 ]);
 
-return ordered.filter(
-value=>{
+return ordered.filter(value=>{
 const itemKey=key(value);
 
 if(!baseKeys.has(itemKey)){
@@ -2186,37 +1781,18 @@ remoteMap.has(itemKey)
 );
 }
 
+/*
+旧选项若任一设备明确删除，则删除优先；
+新增项两侧取并集。
+*/
 return (
 localMap.has(itemKey) &&
 remoteMap.has(itemKey)
 );
-}
-);
-}
-
-function stableEntryCodeCompare(a,b){
-const ap=
-a.codeManualPinned
-? 0
-: (
-a.codeManualEdited
-? 1
-: 2
-);
-
-const bp=
-b.codeManualPinned
-? 0
-: (
-b.codeManualEdited
-? 1
-: 2
-);
-
-if(ap!==bp){
-return ap-bp;
+});
 }
 
+function stablePendingCodeCompare(a,b){
 return String(a.id||'')
 .localeCompare(
 String(b.id||''),
@@ -2224,109 +1800,102 @@ String(b.id||''),
 );
 }
 
-function repairMergedCodeCollisions(snapshot){
+function inspectCodeIssues(snapshot){
 const fixed=norm(snapshot);
-const byCode=new Map();
+const counts=new Map();
+let invalid=0;
 
 for(const entry of fixed.entries){
-const code=
-normalizeStoredCode(entry.code);
+const preservedCode=clean(entry.code);
 
-if(!code){
+if(!preservedCode){
 continue;
 }
 
-const number=Number(code);
+const normalizedCode=
+normalizeStoredCode(preservedCode);
 
-if(!byCode.has(number)){
-byCode.set(number,[]);
-}
+const duplicateKey=
+normalizedCode ||
+folded(preservedCode);
 
-byCode.get(number).push(entry);
-}
-
-const used=
-new Set(byCode.keys());
-
-let repaired=0;
-let unresolved=0;
-
-for(const entries of byCode.values()){
-if(entries.length<2){
-continue;
-}
-
-const ordered=[...entries]
-.sort(stableEntryCodeCompare);
-
-for(let i=1;i<ordered.length;i++){
-const entry=ordered[i];
-
-const replacement=
-smallestAvailableCode(
-entry,
-used
+counts.set(
+duplicateKey,
+(counts.get(duplicateKey)||0)+1
 );
 
-if(replacement){
-entry.code=replacement;
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-used.add(Number(replacement));
-repaired++;
-}else{
-unresolved++;
+if(
+!normalizedCode ||
+!codeAllowedForEntry(
+entry,
+normalizedCode
+)
+){
+invalid++;
 }
+}
+
+let duplicates=0;
+
+for(const count of counts.values()){
+if(count>1){
+duplicates+=count-1;
 }
 }
 
 return {
-state:norm(fixed),
-repaired,
-unresolved
+duplicates,
+invalid
 };
 }
 
-function assignMissingCodesAfterPull(snapshot){
+function assignPendingCodesAfterPull(snapshot){
 const fixed=norm(snapshot);
 const used=new Set();
 let assigned=0;
-let clearedInvalid=0;
+let pendingUnassigned=0;
 
+/*
+重要：
+所有已有非空编码只登记为已占用。
+不检查后删除，不重新排序，不重新编号。
+*/
 for(const entry of fixed.entries){
-const code=
-normalizeStoredCode(entry.code);
+const preservedCode=clean(entry.code);
 
-if(!code){
-continue;
+if(preservedCode){
+const normalizedCode=
+normalizeStoredCode(preservedCode);
+
+if(normalizedCode){
+used.add(Number(normalizedCode));
 }
 
-if(
-!codeAllowedForEntry(
-entry,
-code
-)
-){
-entry.code='';
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-clearedInvalid++;
-continue;
+entry.codeAutoPending=false;
+}
 }
 
-used.add(Number(code));
-}
-
+/*
+只有本版本新建、且明确带 codeAutoPending=true 的空编码条目
+才进入自动编号队列。
+*/
 const waiting=
 fixed.entries
-.filter(
-entry=>
-!normalizeStoredCode(entry.code) &&
-codeRangesForEntry(entry).length
+.filter(entry=>
+entry.codeAutoPending===true &&
+!clean(entry.code)
 )
-.sort(stableEntryCodeCompare);
+.sort(stablePendingCodeCompare);
 
 for(const entry of waiting){
+const ranges=
+codeRangesForEntry(entry);
+
+if(!ranges.length){
+pendingUnassigned++;
+continue;
+}
+
 const code=
 smallestAvailableCode(
 entry,
@@ -2334,12 +1903,15 @@ used
 );
 
 if(!code){
+pendingUnassigned++;
 continue;
 }
 
 entry.code=code;
+entry.codeAutoPending=false;
 entry.codeManualEdited=false;
 entry.codeManualPinned=false;
+
 used.add(Number(code));
 assigned++;
 }
@@ -2347,7 +1919,71 @@ assigned++;
 return {
 state:norm(fixed),
 assigned,
-clearedInvalid
+pendingUnassigned
+};
+}
+
+function auditCodeSafety(localSnapshot,remoteSnapshot,candidateSnapshot){
+const localMap=new Map(
+norm(localSnapshot)
+.entries
+.map(entry=>[entry.id,entry])
+);
+
+const remoteMap=new Map(
+norm(remoteSnapshot)
+.entries
+.map(entry=>[entry.id,entry])
+);
+
+const candidateMap=new Map(
+norm(candidateSnapshot)
+.entries
+.map(entry=>[entry.id,entry])
+);
+
+const ids=new Set([
+...localMap.keys(),
+...remoteMap.keys()
+]);
+
+let violations=0;
+
+for(const id of ids){
+const localCode=
+clean(localMap.get(id)?.code);
+
+const remoteCode=
+clean(remoteMap.get(id)?.code);
+
+const candidateCode=
+clean(candidateMap.get(id)?.code);
+
+const existingCodes=
+uniq([
+localCode,
+remoteCode
+].filter(Boolean));
+
+/*
+如果任意一侧原来已有非空编码，
+候选结果必须仍然是这些原值之一。
+不允许变空，也不允许生成第三个编码。
+*/
+if(
+existingCodes.length &&
+(
+!candidateCode ||
+!existingCodes.includes(candidateCode)
+)
+){
+violations++;
+}
+}
+
+return {
+ok:violations===0,
+violations
 };
 }
 
@@ -2355,16 +1991,23 @@ function duplicateCodeCount(snapshot){
 const counts=new Map();
 
 for(const entry of norm(snapshot).entries){
-const code=
-normalizeStoredCode(entry.code);
+const preservedCode=
+clean(entry.code);
 
-if(!code){
+if(!preservedCode){
 continue;
 }
 
+const normalizedCode=
+normalizeStoredCode(preservedCode);
+
+const duplicateKey=
+normalizedCode ||
+folded(preservedCode);
+
 counts.set(
-code,
-(counts.get(code)||0)+1
+duplicateKey,
+(counts.get(duplicateKey)||0)+1
 );
 }
 
@@ -2379,33 +2022,17 @@ duplicates+=count-1;
 return duplicates;
 }
 
-function mergeStates(
-baseValue,
-localValue,
-remoteValue
-){
+function mergeStates(baseValue,localValue,remoteValue){
 const base=norm(baseValue||{});
 const local=norm(localValue||{});
 const remote=norm(remoteValue||{});
 
 const stats={
 conflicts:0,
-collectionConflicts:0
+collectionConflicts:0,
+codeConflicts:0
 };
 
-const baseSig=stateSignature(base);
-const localSig=stateSignature(local);
-const remoteSig=stateSignature(remote);
-
-let merged;
-
-if(localSig===baseSig){
-merged=remote;
-}else if(remoteSig===baseSig){
-merged=local;
-}else if(localSig===remoteSig){
-merged=local;
-}else{
 const baseMap=
 new Map(
 base.entries.map(
@@ -2475,48 +2102,42 @@ remote.categories,
 stats
 );
 
-institutions=
-uniq([
+institutions=uniq([
 ...institutions,
 ...entries
 .map(entry=>entry.institution)
 .filter(Boolean)
 ]);
 
-categories=
-uniq([
+categories=uniq([
 ...categories,
 ...entries.flatMap(
 entry=>entry.category
 )
 ]);
 
-merged=
+const merged=
 norm({
-schemaVersion:7,
+schemaVersion:8,
 entries,
 institutions,
 categories,
-tags:[
-...GROUP_OPTIONS
-]
+tags:[...GROUP_OPTIONS]
 });
-}
 
-const repaired=
-repairMergedCodeCollisions(merged);
+const issues=
+inspectCodeIssues(
+merged
+);
 
 return {
-state:
-repaired.state,
-conflicts:
-stats.conflicts,
-collectionConflicts:
-stats.collectionConflicts,
-codeRepairs:
-repaired.repaired,
-unresolvedCodeConflicts:
-repaired.unresolved
+state:merged,
+conflicts:stats.conflicts,
+collectionConflicts:stats.collectionConflicts,
+codeConflicts:stats.codeConflicts,
+codeRepairs:0,
+unresolvedCodeConflicts:issues.duplicates,
+invalidCodeCount:issues.invalid
 };
 }
 
@@ -2529,10 +2150,7 @@ config.token
 );
 }
 
-function show(
-message,
-type='info'
-){
+function show(message,type='info'){
 toast.textContent=message;
 toast.className=`toast ${type}`;
 
@@ -2550,6 +2168,7 @@ toast.classList.add('hidden');
 function status(kind,text){
 statusDot.className=
 `status-dot ${kind}`;
+
 statusText.textContent=text;
 }
 
@@ -2570,7 +2189,12 @@ fallbackStorageKey(storageKey)
 
 if(raw!==null){
 const value=JSON.parse(raw);
-storageMemory.set(storageKey,value);
+
+storageMemory.set(
+storageKey,
+value
+);
+
 return value;
 }
 }catch{}
@@ -2579,7 +2203,10 @@ return null;
 }
 
 function fallbackSet(storageKey,value){
-storageMemory.set(storageKey,value);
+storageMemory.set(
+storageKey,
+value
+);
 
 try{
 localStorage.setItem(
@@ -2621,7 +2248,8 @@ new Promise(
 let request;
 
 try{
-request=indexedDB.open(
+request=
+indexedDB.open(
 DB_NAME,
 1
 );
@@ -2638,13 +2266,17 @@ if(
 !db.objectStoreNames
 .contains(DB_STORE)
 ){
-db.createObjectStore(DB_STORE);
+db.createObjectStore(
+DB_STORE
+);
 }
 };
 
 request.onsuccess=
 ()=>{
-resolve(request.result);
+resolve(
+request.result
+);
 };
 
 request.onerror=
@@ -2680,7 +2312,8 @@ return fallbackGet(storageKey);
 }
 
 try{
-const db=await openStorageDb();
+const db=
+await openStorageDb();
 
 return await new Promise(
 (resolve,reject)=>{
@@ -2691,8 +2324,13 @@ DB_STORE,
 );
 
 const request=
-tx.objectStore(DB_STORE)
-.get(storageKey);
+tx
+.objectStore(
+DB_STORE
+)
+.get(
+storageKey
+);
 
 request.onsuccess=
 ()=>{
@@ -2704,14 +2342,20 @@ fallbackGet(storageKey)
 
 request.onerror=
 ()=>{
-reject(request.error);
+reject(
+request.error
+);
 };
 }
 );
+
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
-return fallbackGet(storageKey);
+
+return fallbackGet(
+storageKey
+);
 }
 }
 
@@ -2724,7 +2368,8 @@ value
 }
 
 try{
-const db=await openStorageDb();
+const db=
+await openStorageDb();
 
 await new Promise(
 (resolve,reject)=>{
@@ -2747,14 +2392,18 @@ resolve(true);
 
 tx.onerror=
 ()=>{
-reject(tx.error);
+reject(
+tx.error
+);
 };
 
 tx.onabort=
 ()=>{
 reject(
 tx.error ||
-new Error('IndexedDB transaction aborted')
+new Error(
+'IndexedDB transaction aborted'
+)
 );
 };
 }
@@ -2785,7 +2434,8 @@ return;
 }
 
 try{
-const db=await openStorageDb();
+const db=
+await openStorageDb();
 
 await new Promise(
 (resolve,reject)=>{
@@ -2796,31 +2446,43 @@ DB_STORE,
 );
 
 tx.objectStore(DB_STORE)
-.delete(storageKey);
+.delete(
+storageKey
+);
 
-tx.oncomplete=resolve;
+tx.oncomplete=
+resolve;
 
 tx.onerror=
 ()=>{
-reject(tx.error);
+reject(
+tx.error
+);
 };
 
 tx.onabort=
 ()=>{
 reject(
 tx.error ||
-new Error('IndexedDB transaction aborted')
+new Error(
+'IndexedDB transaction aborted'
+)
 );
 };
 }
 );
 
-storageMemory.delete(storageKey);
+storageMemory.delete(
+storageKey
+);
 
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
-fallbackDelete(storageKey);
+
+fallbackDelete(
+storageKey
+);
 }
 }
 
@@ -2833,10 +2495,14 @@ clean(config.file)
 }
 
 function saveLocal(snapshot=state){
-const savedState=norm(snapshot);
+const savedState=
+norm(snapshot);
 
-state=savedState;
-workCopyCache=norm(savedState);
+state=
+savedState;
+
+workCopyCache=
+norm(savedState);
 
 const payload={
 savedAt:
@@ -2858,7 +2524,9 @@ payload
 )
 );
 
-workCopyWriteChain.catch(console.error);
+workCopyWriteChain.catch(
+console.error
+);
 
 return true;
 }
@@ -2894,10 +2562,15 @@ return metaWriteChain;
 }
 
 function persistSyncBase(snapshot,sha){
-const savedState=norm(snapshot);
+const savedState=
+norm(snapshot);
 
-syncBaseCache=savedState;
-syncBaseSha=sha||null;
+syncBaseCache=
+savedState;
+
+syncBaseSha=
+sha ||
+null;
 
 const payload={
 savedAt:
@@ -2948,77 +2621,40 @@ manageBtn.disabled=
 }
 
 function multiMeta(type,which){
-const edit=which==='edit';
+const edit=
+which==='edit';
 
 if(type==='tag'){
 return {
 label:'编组',
 historyKey:'tags',
-input:
-edit
-? editTag
-: tagInput,
-panel:
-edit
-? editTagPanel
-: tagPanel,
-options:
-edit
-? editTagOptions
-: tagOptions,
-selectedBox:
-edit
-? editTagSelected
-: tagSelected,
-selection:
-edit
-? editSelections.tag
-: addSelections.tag
+input:edit?editTag:tagInput,
+panel:edit?editTagPanel:tagPanel,
+options:edit?editTagOptions:tagOptions,
+selectedBox:edit?editTagSelected:tagSelected,
+selection:edit?editSelections.tag:addSelections.tag
 };
 }
 
 return {
 label:'书架',
 historyKey:'categories',
-input:
-edit
-? editCategory
-: categoryInput,
-panel:
-edit
-? editCategoryPanel
-: categoryPanel,
-options:
-edit
-? editCategoryOptions
-: categoryOptions,
-selectedBox:
-edit
-? editCategorySelected
-: categorySelected,
-selection:
-edit
-? editSelections.category
-: addSelections.category
+input:edit?editCategory:categoryInput,
+panel:edit?editCategoryPanel:categoryPanel,
+options:edit?editCategoryOptions:categoryOptions,
+selectedBox:edit?editCategorySelected:categorySelected,
+selection:edit?editSelections.category:addSelections.category
 };
 }
 
 function institutionMeta(which){
-const edit=which==='edit';
+const edit=
+which==='edit';
 
 return {
-input:
-edit
-? editInstitution
-: institutionInput,
-panel:
-edit
-? editInstitutionPanel
-: institutionPanel,
-options:
-edit
-? editInstitutionOptions
-: institutionOptions
+input:edit?editInstitution:institutionInput,
+panel:edit?editInstitutionPanel:institutionPanel,
+options:edit?editInstitutionOptions:institutionOptions
 };
 }
 
@@ -3031,7 +2667,9 @@ return uniq(values);
 }
 
 function groupDisplay(value){
-return normalizeFixedGroupLabel(value);
+return normalizeFixedGroupLabel(
+value
+);
 }
 
 function multiAllowsMultiple(type){
@@ -3040,7 +2678,10 @@ return type==='tag';
 
 function renderMultiSelected(type,which){
 const meta=
-multiMeta(type,which);
+multiMeta(
+type,
+which
+);
 
 const values=
 type==='tag'
@@ -3052,20 +2693,12 @@ values
 .map(
 value=>`
 <span class="selected-pill">
-<span class="selected-pill-label">
-${esc(
+<span class="selected-pill-label">${esc(
 type==='tag'
 ? groupDisplay(value)
 : value
-)}
-</span>
-<button
-class="selected-pill-remove"
-type="button"
-data-remove-value="${attr(value)}"
->
-×
-</button>
+)}</span>
+<button class="selected-pill-remove" type="button" data-remove-value="${attr(value)}">×</button>
 </span>
 `
 )
@@ -3074,7 +2707,10 @@ data-remove-value="${attr(value)}"
 
 function renderMultiOptions(type,which){
 const meta=
-multiMeta(type,which);
+multiMeta(
+type,
+which
+);
 
 const search=
 key(meta.input.value);
@@ -3101,35 +2737,28 @@ values.length
 <div class="combo-option-list">
 ${values.map(
 value=>`
-<span
-class="combo-pill${selected.has(key(value))?' selected':''}"
->
-<button
-class="combo-pill-select"
-type="button"
-data-select-value="${attr(value)}"
->
-${esc(
+<span class="combo-pill${selected.has(key(value))?' selected':''}">
+<button class="combo-pill-select" type="button" data-select-value="${attr(value)}">${esc(
 type==='tag'
 ? groupDisplay(value)
 : value
-)}
-</button>
+)}</button>
 </span>
 `
 ).join('')}
 </div>
 `
 : `
-<div class="combo-empty">
-暂无匹配选项
-</div>
+<div class="combo-empty">暂无匹配选项</div>
 `;
 }
 
 function renderMultiField(type,which){
 const meta=
-multiMeta(type,which);
+multiMeta(
+type,
+which
+);
 
 renderMultiSelected(
 type,
@@ -3148,7 +2777,9 @@ which
 
 function renderInstitutionOptions(which){
 const meta=
-institutionMeta(which);
+institutionMeta(
+which
+);
 
 const search=
 key(meta.input.value);
@@ -3168,22 +2799,14 @@ values.length
 ${values.map(
 value=>`
 <span class="combo-pill">
-<button
-class="combo-pill-select"
-type="button"
-data-select-value="${attr(value)}"
->
-${renderLinkedText(value)}
-</button>
+<button class="combo-pill-select" type="button" data-select-value="${attr(value)}">${renderLinkedText(value)}</button>
 </span>
 `
 ).join('')}
 </div>
 `
 : `
-<div class="combo-empty">
-暂无匹配出版
-</div>
+<div class="combo-empty">暂无匹配出版</div>
 `;
 }
 
@@ -3196,13 +2819,8 @@ history.length
 ? history
 .map(
 (value,index)=>`
-<div
-class="manage-option-row"
-data-manage-value="${attr(value)}"
->
-<span>
-${renderLinkedText(value)}
-</span>
+<div class="manage-option-row" data-manage-value="${attr(value)}">
+<span>${renderLinkedText(value)}</span>
 <input
 class="manage-line-input"
 type="number"
@@ -3211,28 +2829,14 @@ max="${history.length}"
 value="${index+1}"
 data-move-value="${attr(value)}"
 >
-<button
-class="combo-pill-edit"
-type="button"
-data-edit-value="${attr(value)}"
->
-✓
-</button>
-<button
-class="combo-pill-delete"
-type="button"
-data-delete-value="${attr(value)}"
->
-×
-</button>
+<button class="combo-pill-edit" type="button" data-edit-value="${attr(value)}">✓</button>
+<button class="combo-pill-delete" type="button" data-delete-value="${attr(value)}">×</button>
 </div>
 `
 )
 .join('')
 : `
-<div class="empty-state">
-暂无出版选项
-</div>
+<div class="empty-state">暂无出版选项</div>
 `;
 
 manageInstitutionLineInput.max=
@@ -3260,7 +2864,9 @@ const coded=
 state.entries
 .filter(
 entry=>
-normalizeStoredCode(entry.code)
+Boolean(
+clean(entry.code)
+)
 )
 .length;
 
@@ -3277,7 +2883,8 @@ countDisplay.textContent=
 }
 
 function render(){
-state=norm(state);
+state=
+norm(state);
 
 updateAdmin();
 updateCountDisplay();
@@ -3292,9 +2899,7 @@ renderManageInstitutionOptions();
 
 if(!state.entries.length){
 pressList.innerHTML=`
-<div class="empty-state">
-暂无条目
-</div>
+<div class="empty-state">暂无条目</div>
 `;
 return;
 }
@@ -3304,7 +2909,7 @@ state.entries
 .map(
 entry=>{
 const code=
-normalizeStoredCode(entry.code);
+clean(entry.code);
 
 const editLabel=
 code ||
@@ -3316,9 +2921,7 @@ if(entry.institution){
 rows.push(
 `
 <div class="meta-row institution">
-<span class="meta-label">
-出版：
-</span><span class="meta-value">${renderLinkedText(entry.institution)}</span>
+<span class="meta-label">出版：</span><span class="meta-value">${renderLinkedText(entry.institution)}</span>
 </div>
 `
 );
@@ -3328,9 +2931,7 @@ if(entry.bookNo){
 rows.push(
 `
 <div class="meta-row">
-<span class="meta-label">
-书号：
-</span><span class="meta-value">${esc(entry.bookNo)}</span>
+<span class="meta-label">书号：</span><span class="meta-value">${esc(entry.bookNo)}</span>
 </div>
 `
 );
@@ -3339,17 +2940,13 @@ rows.push(
 rows.push(
 `
 <div class="meta-row tag-row">
-<span class="meta-label">
-编组：
-</span>
+<span class="meta-label">编组：</span>
 <span class="meta-value tag-value">
-<span>
-${esc(
+<span>${esc(
 entry.tag
 .map(groupDisplay)
 .join('/')
-)}
-</span>
+)}</span>
 <input
 class="entry-tag-checkbox"
 type="checkbox"
@@ -3366,9 +2963,7 @@ if(entry.category.length){
 rows.push(
 `
 <div class="meta-row bookshelf-row">
-<span class="meta-label">
-书架：
-</span><span class="meta-value bookshelf-text">${esc(
+<span class="meta-label">书架：</span><span class="meta-value bookshelf-text">${esc(
 entry.category.join('、')
 )}</span>
 </div>
@@ -3380,24 +2975,14 @@ return `
 <article class="press-item">
 <div class="press-head">
 <div class="press-content">
-<div class="book-title">
-${renderLinkedText(entry.bookName)}
-</div>
-<div class="meta">
-${rows.join('')}
-</div>
+<div class="book-title">${renderLinkedText(entry.bookName)}</div>
+<div class="meta">${rows.join('')}</div>
 </div>
 ${
 admin() &&
 adminReady
 ? `
-<button
-class="edit-btn"
-type="button"
-data-id="${attr(entry.id)}"
->
-${esc(editLabel)}
-</button>
+<button class="edit-btn" type="button" data-id="${attr(entry.id)}">${esc(editLabel)}</button>
 `
 : ''
 }
@@ -3409,13 +2994,12 @@ ${esc(editLabel)}
 .join('');
 }
 
-function removeSelection(
-type,
-which,
-value
-){
+function removeSelection(type,which,value){
 const meta=
-multiMeta(type,which);
+multiMeta(
+type,
+which
+);
 
 const target=
 key(value);
@@ -3446,16 +3030,17 @@ type,
 which
 );
 
-meta.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 }
 
-function toggleSelection(
-type,
-which,
-value
-){
+function toggleSelection(type,which,value){
 const meta=
-multiMeta(type,which);
+multiMeta(
+type,
+which
+);
 
 const target=
 key(value);
@@ -3477,13 +3062,17 @@ return;
 }
 
 const multiple=
-multiAllowsMultiple(type);
+multiAllowsMultiple(
+type
+);
 
 if(
 meta.selection.length &&
 !multiple
 ){
-meta.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 
 show(
 `请先删除当前${meta.label}，再选择新的${meta.label}`,
@@ -3522,17 +3111,25 @@ type,
 which
 );
 
-meta.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 }
 
 function commitInstitution(which){
 const meta=
-institutionMeta(which);
+institutionMeta(
+which
+);
 
 meta.input.value=
-clean(meta.input.value);
+clean(
+meta.input.value
+);
 
-renderInstitutionOptions(which);
+renderInstitutionOptions(
+which
+);
 }
 
 async function addEntry(){
@@ -3553,38 +3150,48 @@ show(
 '书名不能为空',
 'error'
 );
+
 bookNameInput.focus();
 return;
 }
 
-commitInstitution('add');
+commitInstitution(
+'add'
+);
 
 const entry={
 id:
 uid(),
 bookName,
 bookNo:
-clean(bookNoInput.value),
+clean(
+bookNoInput.value
+),
 institution:
-clean(institutionInput.value),
+clean(
+institutionInput.value
+),
 category:[
 ...addSelections.category
 ],
 tag:
-sortTags(addSelections.tag),
+sortTags(
+addSelections.tag
+),
 tagChecked:false,
 code:'',
+codeAutoPending:true,
 codeManualEdited:false,
 codeManualPinned:false
 };
 
 /*
-新增时绝不在本机直接分配编码。
-先保存为无编码待同步条目；真正编码只允许在服务器最新版拉取完成后产生。
+新建条目只标记为“待分配”。
+它不能使用本机旧列表直接决定编码。
 */
-entry.code='';
-
-state.entries.push(entry);
+state.entries.push(
+entry
+);
 
 bookNameInput.value='';
 bookNoInput.value='';
@@ -3599,12 +3206,12 @@ tag:[]
 
 render();
 schedule();
+
 bookNameInput.focus();
 
 /*
-新增条目需要编码，因此立即触发一轮服务器优先同步：
-GET 最新数据 -> 合并 -> 分配编码 -> 用当前 SHA 提交。
-如果服务器暂时不可达，条目仍保留，但保持无编码，每分钟自动同步会继续重试。
+新条目需要立即获取服务器最新版后再编号。
+已有历史编码不会参与任何清空或重编号。
 */
 addBtn.disabled=true;
 
@@ -3615,7 +3222,9 @@ status(
 
 try{
 const ok=
-await sync(false);
+await sync(
+false
+);
 
 if(!ok){
 show(
@@ -3640,7 +3249,9 @@ category:[
 ...editSelections.category
 ],
 tag:
-sortTags(editSelections.tag),
+sortTags(
+editSelections.tag
+),
 code:
 editCode.value,
 categoryDraft:
@@ -3677,23 +3288,31 @@ return;
 }
 
 editingId=id;
-editBookName.value=entry.bookName;
-editBookNo.value=entry.bookNo;
-editInstitution.value=entry.institution;
+
+editBookName.value=
+entry.bookName;
+
+editBookNo.value=
+entry.bookNo;
+
+editInstitution.value=
+entry.institution;
 
 editSelections={
 category:[
 ...entry.category
 ],
 tag:
-sortTags(entry.tag)
+sortTags(
+entry.tag
+)
 };
 
 editCategory.value='';
 editTag.value='';
 
 editCode.value=
-normalizeStoredCode(
+clean(
 entry.code
 );
 
@@ -3711,19 +3330,31 @@ editCode.readOnly
 
 editCode.title=
 editCode.readOnly
-? '当前编组设置下已手动修改过一次；编组变化并自动重算后可再次手动修改一次'
-: '当前编组设置下可手动修改一次；保存成功后将转为只读';
+? '编码已手动修改并锁定；同步不会自动清空或改号'
+: '已有编码不会因书名、语言或编组变化而自动清空；如需修改请手动输入 6 位编码';
 
-renderInstitutionOptions('edit');
-renderMultiField('tag','edit');
-renderMultiField('category','edit');
+renderInstitutionOptions(
+'edit'
+);
+
+renderMultiField(
+'tag',
+'edit'
+);
+
+renderMultiField(
+'category',
+'edit'
+);
 
 editInitialSnapshot=
 getEditSnapshot();
 
 editOverlayPointerDown=false;
 
-editModal.classList.remove('hidden');
+editModal.classList.remove(
+'hidden'
+);
 
 setTimeout(
 ()=>{
@@ -3754,22 +3385,13 @@ show(
 '书名不能为空',
 'error'
 );
+
 editBookName.focus();
 return;
 }
 
-const previousGroups=
-JSON.stringify(
-sortTags(entry.tag)
-);
-
-const previousLanguage=
-titleIsChinese(
-entry.bookName
-);
-
 const previousCode=
-normalizeStoredCode(
+clean(
 entry.code
 );
 
@@ -3778,27 +3400,23 @@ Boolean(
 entry.codeManualEdited
 );
 
-commitInstitution('edit');
+commitInstitution(
+'edit'
+);
 
 const nextTag=
 sortTags(
 editSelections.tag
 );
 
-const groupsChanged=
-previousGroups !==
-JSON.stringify(nextTag);
-
-const languageChanged=
-previousLanguage !==
-titleIsChinese(bookName);
-
 let manualCode='';
 let manualChangeRequested=false;
 
 if(!manualAlreadyUsed){
 const typed=
-clean(editCode.value);
+clean(
+editCode.value
+);
 
 manualChangeRequested=
 typed !==
@@ -3806,13 +3424,16 @@ previousCode;
 
 if(manualChangeRequested){
 manualCode=
-normalizeStoredCode(typed);
+normalizeStoredCode(
+typed
+);
 
 if(!manualCode){
 show(
 '编码必须是 6 位数字',
 'error'
 );
+
 editCode.focus();
 return;
 }
@@ -3834,14 +3455,16 @@ show(
 '该编码不在当前编组与书名语言对应的编码区间内',
 'error'
 );
+
 editCode.focus();
 return;
 }
 
 const occupied=
-state.entries.some(
+state.entries
+.some(
 other=>
-other.id !== entry.id &&
+other.id!==entry.id &&
 normalizeStoredCode(
 other.code
 )===manualCode
@@ -3852,37 +3475,49 @@ show(
 `编码 ${manualCode} 已被其它条目使用`,
 'error'
 );
+
 editCode.focus();
 return;
 }
 }
 }
 
-entry.bookName=bookName;
-entry.bookNo=clean(editBookNo.value);
-entry.institution=clean(editInstitution.value);
+entry.bookName=
+bookName;
+
+entry.bookNo=
+clean(
+editBookNo.value
+);
+
+entry.institution=
+clean(
+editInstitution.value
+);
 
 entry.category=[
 ...editSelections.category
 ];
 
-entry.tag=nextTag;
+entry.tag=
+nextTag;
 
+/*
+最重要的数据保护：
+修改书名、语言、编组、出版、书架，不会触碰已有编码。
+*/
 if(manualChangeRequested){
-entry.code=manualCode;
+entry.code=
+manualCode;
+
+entry.codeAutoPending=false;
 entry.codeManualEdited=true;
 entry.codeManualPinned=true;
-
-}else if(
-groupsChanged ||
-languageChanged
-){
-entry.codeManualPinned=false;
-entry.codeManualEdited=false;
-entry.code='';
 }
 
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 
 editingId='';
 editInitialSnapshot='';
@@ -3896,14 +3531,16 @@ tag:[]
 render();
 schedule();
 
-if(
-!normalizeStoredCode(entry.code)
-){
 /*
-自动重算编码场景需要服务器最新数据，
-因此不等待一分钟，立即执行服务器优先同步。
+仅新建待分配条目可以在保存后再次尝试获取编码。
+历史空编码没有该标记，不会自动补号。
 */
-sync(false);
+if(
+entry.codeAutoPending===true
+){
+sync(
+false
+);
 }
 }
 
@@ -3932,7 +3569,9 @@ item=>
 item.id!==id
 );
 
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 
 editingId='';
 editInitialSnapshot='';
@@ -3956,7 +3595,9 @@ editCategoryPanel
 function closePanels(){
 allPanels().forEach(
 panel=>
-panel.classList.add('hidden')
+panel.classList.add(
+'hidden'
+)
 );
 }
 
@@ -3978,12 +3619,11 @@ button.classList.remove(
 );
 }
 
-function setKeyboardActive(
-container,
-index
-){
+function setKeyboardActive(container,index){
 const options=
-getKeyboardOptions(container);
+getKeyboardOptions(
+container
+);
 
 if(!options.length){
 return -1;
@@ -4015,7 +3655,9 @@ return normalized;
 }
 
 function currentKeyboardIndex(container){
-return getKeyboardOptions(container)
+return getKeyboardOptions(
+container
+)
 .findIndex(
 button=>
 button.classList.contains(
@@ -4061,7 +3703,9 @@ return false;
 
 closePanels();
 
-meta.panel.classList.remove('hidden');
+meta.panel.classList.remove(
+'hidden'
+);
 
 renderMultiOptions(
 type,
@@ -4167,8 +3811,14 @@ meta.input.addEventListener(
 'keydown',
 event=>{
 if(event.key==='Escape'){
-clearKeyboardActive(meta.options);
-meta.panel.classList.add('hidden');
+clearKeyboardActive(
+meta.options
+);
+
+meta.panel.classList.add(
+'hidden'
+);
+
 return;
 }
 
@@ -4180,8 +3830,9 @@ event.preventDefault();
 event.stopPropagation();
 
 if(
-meta.panel.classList
-.contains('hidden')
+meta.panel.classList.contains(
+'hidden'
+)
 ){
 if(!openPanel()){
 return;
@@ -4189,7 +3840,9 @@ return;
 }
 
 const options=
-getKeyboardOptions(meta.options);
+getKeyboardOptions(
+meta.options
+);
 
 if(!options.length){
 return;
@@ -4227,11 +3880,14 @@ return;
 }
 
 const options=
-getKeyboardOptions(meta.options);
+getKeyboardOptions(
+meta.options
+);
 
 if(
-meta.panel.classList
-.contains('hidden')
+meta.panel.classList.contains(
+'hidden'
+)
 ){
 if(!openPanel()){
 return;
@@ -4295,14 +3951,20 @@ preventScroll:true
 
 function setupInstitutionCombo(which){
 const meta=
-institutionMeta(which);
+institutionMeta(
+which
+);
 
 function openPanel(){
 closePanels();
 
-meta.panel.classList.remove('hidden');
+meta.panel.classList.remove(
+'hidden'
+);
 
-renderInstitutionOptions(which);
+renderInstitutionOptions(
+which
+);
 
 clearKeyboardActive(
 meta.options
@@ -4317,13 +3979,17 @@ return;
 meta.input.value=
 button.dataset.selectValue;
 
-renderInstitutionOptions(which);
+renderInstitutionOptions(
+which
+);
 
 clearKeyboardActive(
 meta.options
 );
 
-meta.panel.classList.add('hidden');
+meta.panel.classList.add(
+'hidden'
+);
 }
 
 meta.input.addEventListener(
@@ -4337,9 +4003,13 @@ openPanel();
 meta.input.addEventListener(
 'input',
 ()=>{
-meta.panel.classList.remove('hidden');
+meta.panel.classList.remove(
+'hidden'
+);
 
-renderInstitutionOptions(which);
+renderInstitutionOptions(
+which
+);
 
 clearKeyboardActive(
 meta.options
@@ -4351,8 +4021,14 @@ meta.input.addEventListener(
 'keydown',
 event=>{
 if(event.key==='Escape'){
-clearKeyboardActive(meta.options);
-meta.panel.classList.add('hidden');
+clearKeyboardActive(
+meta.options
+);
+
+meta.panel.classList.add(
+'hidden'
+);
+
 return;
 }
 
@@ -4364,14 +4040,17 @@ event.preventDefault();
 event.stopPropagation();
 
 if(
-meta.panel.classList
-.contains('hidden')
+meta.panel.classList.contains(
+'hidden'
+)
 ){
 openPanel();
 }
 
 const options=
-getKeyboardOptions(meta.options);
+getKeyboardOptions(
+meta.options
+);
 
 if(!options.length){
 return;
@@ -4409,8 +4088,9 @@ return;
 }
 
 if(
-meta.panel.classList
-.contains('hidden')
+meta.panel.classList.contains(
+'hidden'
+)
 ){
 event.preventDefault();
 openPanel();
@@ -4418,7 +4098,9 @@ return;
 }
 
 const options=
-getKeyboardOptions(meta.options);
+getKeyboardOptions(
+meta.options
+);
 
 const activeIndex=
 currentKeyboardIndex(
@@ -4455,31 +4137,33 @@ event.target.closest(
 '.combo-pill-select[data-select-value]'
 );
 
-selectInstitution(button);
+selectInstitution(
+button
+);
 }
 );
 }
 
 function schedule(){
-state=norm(state);
+state=
+norm(state);
 
 localMutationVersion++;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 meta.dirty=true;
 
 persistMeta()
-.catch(console.error);
+.catch(
+console.error
+);
 
 /*
-普通修改只标记为待同步。
-固定的每分钟服务器循环负责“先拉取，再合并，再上传”。
-
-只有当用户恰好在一次同步尚未结束时再次修改数据，
-才把 syncRequested 设为 true，让当前同步完成后补跑一轮。
-
-定时器本身绝不会使用这个排队机制。
+只有真实本机修改才允许在同步进行期间排队补一轮。
+自动定时器本身绝不排队。
 */
 if(
 admin() &&
@@ -4490,14 +4174,6 @@ syncRequested=true;
 }
 
 return true;
-}
-
-function basePath(){
-return location.pathname
-.replace(
-/[^/]*$/,
-''
-);
 }
 
 function publicUrl(){
@@ -4549,7 +4225,9 @@ i+0x8000
 );
 }
 
-return btoa(binary);
+return btoa(
+binary
+);
 }
 
 function fromB64(value){
@@ -4574,7 +4252,9 @@ binary.charCodeAt(i);
 }
 
 return new TextDecoder()
-.decode(bytes);
+.decode(
+bytes
+);
 }
 
 function delay(ms){
@@ -4589,7 +4269,9 @@ ms
 
 function isTransientSyncError(error){
 const statusCode=
-Number(error?.status||0);
+Number(
+error?.status||0
+);
 
 return (
 statusCode===0 ||
@@ -4601,7 +4283,9 @@ statusCode>=500
 
 function isWriteConflictError(error){
 const statusCode=
-Number(error?.status||0);
+Number(
+error?.status||0
+);
 
 if(statusCode===409){
 return true;
@@ -4624,6 +4308,13 @@ message.includes('update')
 }
 
 function syncErrorText(error){
+if(
+error?.code==='code_conflict' ||
+error?.code==='code_safety'
+){
+return error.message;
+}
+
 if(
 error?.name==='AbortError' ||
 error?.code==='timeout'
@@ -4650,9 +4341,7 @@ return error.message;
 return '未知同步错误';
 }
 
-function requestTimeoutError(
-message='请求超时'
-){
+function requestTimeoutError(message='请求超时'){
 const error=
 new Error(message);
 
@@ -4662,6 +4351,11 @@ error.status=0;
 return error;
 }
 
+/*
+真正的硬超时：
+即便移动端 AbortController 行为异常，
+Promise.race 仍会在 timeoutMs 后退出等待。
+*/
 async function fetchTextWithTimeout(
 url,
 options={},
@@ -4685,8 +4379,7 @@ url,
 ...(
 controller
 ? {
-signal:
-controller.signal
+signal:controller.signal
 }
 : {}
 )
@@ -4742,9 +4435,12 @@ return await Promise.race([
 request,
 timeout
 ]);
+
 }finally{
 if(timer!==null){
-clearTimeout(timer);
+clearTimeout(
+timer
+);
 }
 }
 }
@@ -4807,8 +4503,11 @@ data?.message ||
 `HTTP ${response.status}`
 );
 
-error.status=response.status;
-error.apiData=data;
+error.status=
+response.status;
+
+error.apiData=
+data;
 
 throw error;
 }
@@ -4835,7 +4534,9 @@ throw new Error(
 
 const parsed=
 JSON.parse(
-fromB64(data.content)
+fromB64(
+data.content
+)
 );
 
 return {
@@ -4897,18 +4598,24 @@ new Error(
 
 function resolveSyncBase(localSnapshot){
 if(syncBaseCache){
-return norm(syncBaseCache);
+return norm(
+syncBaseCache
+);
 }
 
+/*
+没有持久化基线：
+dirty 本机使用空基线做保守合并；
+干净本机可把当前本机状态视为已知基线。
+
+编码字段另有独立保护，不允许因此被清空。
+*/
 return meta.dirty
 ? norm({})
 : norm(localSnapshot);
 }
 
-async function writeRemote(
-snapshot,
-sha
-){
+async function writeRemote(snapshot,sha){
 const raw=
 JSON.stringify(
 norm(snapshot),
@@ -4951,9 +4658,7 @@ null
 );
 }
 
-async function verifyRemoteEquals(
-expectedState
-){
+async function verifyRemoteEquals(expectedState){
 try{
 const checked=
 await readRemoteWithRetry(1);
@@ -4978,9 +4683,7 @@ remote:null
 }
 }
 
-async function syncOnce(
-showResult=true
-){
+async function syncOnce(showResult=true){
 if(!admin()){
 return false;
 }
@@ -5014,17 +4717,12 @@ remote=
 await readRemoteWithRetry();
 
 }catch(error){
-/*
-网络层已经自行重试。
-这里不再再次套一层 GET 重试，
-避免弱网手机产生很长时间的等待。
-*/
 lastError=error;
 throw error;
 }
 
 /*
-一定先取得服务器最新版本，再获取本机快照。
+远端 GET 完成之后才读取当前本机快照。
 */
 const localBefore=
 norm(state);
@@ -5037,6 +4735,10 @@ localBefore
 const mutationVersionBeforeWrite=
 localMutationVersion;
 
+/*
+普通字段使用三方合并。
+编码字段使用独立的保护规则。
+*/
 const mergedResult=
 mergeStates(
 base,
@@ -5045,20 +4747,58 @@ remote.state
 );
 
 /*
-固定顺序：
-GET 服务器
--> 合并
--> 去重
--> 分配缺失编码
--> 必要时 PUT。
+仅给 codeAutoPending=true 的新条目分配编码。
 */
 const allocationResult=
-assignMissingCodesAfterPull(
+assignPendingCodesAfterPull(
 mergedResult.state
 );
 
 const mergedState=
 allocationResult.state;
+
+/*
+两台设备同时把同一条记录改成两个不同的非空编码：
+绝不自动裁决，禁止 PUT。
+*/
+if(
+mergedResult.codeConflicts>0
+){
+const error=
+new Error(
+`检测到 ${mergedResult.codeConflicts} 个编码并发冲突；为保护编码，已停止本次写入`
+);
+
+error.code=
+'code_conflict';
+
+throw error;
+}
+
+/*
+写入前最终编码安全审计。
+
+如果本机或远端任一侧已经有非空编码：
+候选状态不能把它变空，也不能生成第三个编码。
+*/
+const codeAudit=
+auditCodeSafety(
+localBefore,
+remote.state,
+mergedState
+);
+
+if(!codeAudit.ok){
+const error=
+new Error(
+`编码安全检查失败：检测到 ${codeAudit.violations} 个可能被清空或改写的已有编码`
+);
+
+error.code=
+'code_safety';
+
+throw error;
+}
 
 const baseSig=
 stateSignature(base);
@@ -5104,11 +4844,12 @@ wroteRemote=true;
 lastError=error;
 
 if(
-isWriteConflictError(error)
+isWriteConflictError(
+error
+)
 ){
 /*
-另一台设备刚好先提交。
-这里只针对真正的 SHA 并发冲突重新 GET 并重算。
+另一设备先提交，重新 GET 最新 SHA 后再重算。
 */
 await delay(
 180+attempt*120
@@ -5118,11 +4859,13 @@ continue;
 }
 
 if(
-isTransientSyncError(error)
+isTransientSyncError(
+error
+)
 ){
 /*
-PUT 可能已经成功，只是手机网络没有收到响应。
-只确认读取一次，防止同一轮反复 PUT。
+PUT 响应丢失时只确认读取一次。
+不在同一轮中重复无把握的 PUT。
 */
 const verification=
 await verifyRemoteEquals(
@@ -5136,12 +4879,6 @@ verification.remote.sha;
 wroteRemote=true;
 
 }else{
-/*
-无法确认成功就结束当前轮。
-不在本轮继续反复 PUT。
-
-下一次一分钟自动同步会重新从 GET 开始。
-*/
 throw error;
 }
 
@@ -5152,8 +4889,8 @@ throw error;
 }
 
 /*
-如果网络请求期间用户又修改了本机数据，
-不能用同步开始时的旧快照覆盖这些新修改。
+如果网络请求期间本机又发生修改，
+不能用旧快照覆盖这些新内容。
 */
 let finalLocalState=
 mergedState;
@@ -5161,8 +4898,9 @@ mergedState;
 let dirtyAfterSync=false;
 let extraConflicts=0;
 let extraCollectionConflicts=0;
-let extraCodeRepairs=0;
 let extraUnresolvedCodes=0;
+let extraCodeConflicts=0;
+let extraInvalidCodes=0;
 
 if(
 localMutationVersion!==
@@ -5187,11 +4925,36 @@ afterWriteMerge.conflicts;
 extraCollectionConflicts=
 afterWriteMerge.collectionConflicts;
 
-extraCodeRepairs=
-afterWriteMerge.codeRepairs;
-
 extraUnresolvedCodes=
 afterWriteMerge.unresolvedCodeConflicts;
+
+extraCodeConflicts=
+afterWriteMerge.codeConflicts;
+
+extraInvalidCodes=
+afterWriteMerge.invalidCodeCount;
+
+/*
+同步期间发生的新本地修改也要再次通过编码安全审计。
+*/
+const afterWriteAudit=
+auditCodeSafety(
+currentLocal,
+mergedState,
+afterWriteMerge.state
+);
+
+if(!afterWriteAudit.ok){
+const error=
+new Error(
+`编码安全检查失败：检测到 ${afterWriteAudit.violations} 个可能被清空或改写的已有编码`
+);
+
+error.code=
+'code_safety';
+
+throw error;
+}
 
 dirtyAfterSync=
 stateSignature(
@@ -5199,19 +4962,15 @@ finalLocalState
 )!==
 mergedSig;
 
-/*
-这里只有“同步进行期间确实又发生本地修改”
-才允许追加下一轮同步。
-
-定时器调用绝不会走到这里制造无限队列。
-*/
 if(dirtyAfterSync){
 syncRequested=true;
 }
 }
 
 state=
-norm(finalLocalState);
+norm(
+finalLocalState
+);
 
 meta.dirty=
 dirtyAfterSync;
@@ -5219,8 +4978,13 @@ dirtyAfterSync;
 meta.sha=
 finalSha;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
+/*
+服务器成功后，本机持久化采用 best-effort。
+*/
 const baseWrite=
 persistSyncBase(
 mergedState,
@@ -5252,39 +5016,73 @@ mergedResult.collectionConflicts+
 extraConflicts+
 extraCollectionConflicts;
 
-const codeRepairCount=
-mergedResult.codeRepairs+
-extraCodeRepairs;
+const duplicateCodeCountAfterSync=
+Math.max(
+mergedResult.unresolvedCodeConflicts,
+extraUnresolvedCodes
+);
 
-const unresolvedCodeCount=
-mergedResult.unresolvedCodeConflicts+
-extraUnresolvedCodes;
+const invalidCodeCountAfterSync=
+Math.max(
+mergedResult.invalidCodeCount,
+extraInvalidCodes
+);
+
+const codeConflictCount=
+mergedResult.codeConflicts+
+extraCodeConflicts;
 
 const allocatedCodeCount=
 allocationResult.assigned;
 
+const pendingUnassignedCount=
+allocationResult.pendingUnassigned;
+
+if(
+duplicateCodeCountAfterSync ||
+invalidCodeCountAfterSync ||
+codeConflictCount
+){
+status(
+'online',
+'公开阅读 · 管理已连接 · 编码需检查'
+);
+}
+
 if(showResult){
-if(unresolvedCodeCount){
+if(codeConflictCount){
 show(
-`同步完成，但仍有 ${unresolvedCodeCount} 个编码无法自动重新分配，请人工检查`,
+`检测到 ${codeConflictCount} 个编码并发冲突，已停止自动覆盖，请人工检查`,
 'error'
 );
 
-}else if(codeRepairCount){
+}else if(duplicateCodeCountAfterSync){
 show(
-`同步完成；已自动修复 ${codeRepairCount} 个重复编码`,
-'success'
+`同步完成；检测到 ${duplicateCodeCountAfterSync} 个重复编码，已全部保留原值，请人工检查`,
+'error'
+);
+
+}else if(invalidCodeCountAfterSync){
+show(
+`同步完成；检测到 ${invalidCodeCountAfterSync} 个编码与当前规则不一致，已保留原值`,
+'error'
+);
+
+}else if(pendingUnassignedCount){
+show(
+`同步完成；仍有 ${pendingUnassignedCount} 个新条目等待分配编码，已有编码未被改动`,
+'error'
 );
 
 }else if(allocatedCodeCount){
 show(
-`同步完成；基于服务器最新版分配了 ${allocatedCodeCount} 个编码`,
+`同步完成；仅为 ${allocatedCodeCount} 个新建待分配条目生成了编码`,
 'success'
 );
 
 }else if(conflictCount){
 show(
-`双向同步完成；检测到 ${conflictCount} 处并发修改并已合并`,
+`双向同步完成；检测到 ${conflictCount} 处普通字段并发修改并已合并，编码未自动改写`,
 'success'
 );
 
@@ -5294,19 +5092,19 @@ localChanged &&
 remoteChanged
 ){
 show(
-'已合并两台设备的修改并同步 GitHub',
+'已合并两台设备的修改并同步 GitHub；已有编码保持不变',
 'success'
 );
 
 }else if(wroteRemote){
 show(
-'已同步到 GitHub',
+'已同步到 GitHub；已有编码保持不变',
 'success'
 );
 
 }else if(pulledChanges){
 show(
-'已获取另一设备的最新修改',
+'已获取另一设备的最新修改；已有编码保持不变',
 'success'
 );
 
@@ -5329,10 +5127,12 @@ new Error(
 );
 
 }catch(error){
-console.error(error);
+console.error(
+error
+);
 
 /*
-同步失败不能把一个原本干净的本机缓存错误地变成 dirty。
+同步失败本身不能把一个干净副本伪造成新修改。
 */
 meta.dirty=
 Boolean(
@@ -5342,7 +5142,9 @@ localMutationVersion!==
 mutationAtStart
 );
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 await Promise.allSettled([
 workCopyWriteChain,
@@ -5370,16 +5172,12 @@ updateAdmin();
 }
 
 /*
-queueIfBusy 的含义：
+queueIfBusy=true：
+真实本地修改/手动同步允许在当前同步完成后补一轮。
 
-true：
-手动同步或需要确保本机新修改最终提交的场景，
-如果当前已有同步，可请求结束后再补一轮。
-
-false：
-自动定时同步、恢复前台同步。
-如果当前已有同步，直接复用或跳过，
-绝不能把下一轮排入队列。
+queueIfBusy=false：
+定时同步、恢复前台、恢复网络。
+若已有同步正在运行则不排队。
 */
 function sync(
 showResult=true,
@@ -5420,7 +5218,9 @@ syncRequested=false;
 syncShowResult=false;
 
 const ok=
-await syncOnce(announce);
+await syncOnce(
+announce
+);
 
 allOk=
 allOk &&
@@ -5524,11 +5324,15 @@ lastSyncTime.textContent=
 `公开数据 · ${state.entries.length} 条`;
 
 }catch(error){
-console.error(error);
+console.error(
+error
+);
 
 if(publicCacheValue){
 state=
-norm(publicCacheValue);
+norm(
+publicCacheValue
+);
 }
 
 render();
@@ -5564,70 +5368,26 @@ const local=
 loadLocal();
 
 /*
-首次从旧同步引擎升级时保守合并两端数据。
+升级同步逻辑本身绝不做“迁移写回”。
+
+本机没有未同步修改：
+直接以远端为准。
+
+本机明确 dirty：
+才进入普通同步流程。
+
+这可以避免因为升级代码本身再次批量改写编码。
 */
-if(
-syncEngineMigration &&
-local &&
-remote.exists
-){
-const migrated=
-mergeStates(
-norm({}),
-local,
-remote.state
-);
-
-const allocated=
-assignMissingCodesAfterPull(
-migrated.state
-);
-
-state=
-allocated.state;
-
-meta.dirty=
-stateSignature(state)!==
-stateSignature(remote.state);
-
-meta.sha=
-remote.sha;
-
-saveLocal(state);
-
-await Promise.allSettled([
-workCopyWriteChain,
-persistSyncBase(
-remote.state,
-remote.sha
-),
-persistMeta()
-]);
-
-syncEngineMigration=false;
-adminReady=true;
-
-render();
-
-status(
-'online',
-'公开阅读 · 已升级为每分钟服务器优先同步'
-);
-
-if(meta.dirty){
-sync(false);
-}
-
-return;
-}
-
 if(
 meta.dirty &&
 local
 ){
-state=local;
+state=
+local;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 adminReady=true;
 
@@ -5638,17 +5398,23 @@ status(
 '公开阅读 · 管理已连接 · 正在合并未同步修改'
 );
 
-sync(false);
+sync(
+false
+);
 
 return;
 }
 
 if(remote.exists){
-state=remote.state;
+state=
+remote.state;
+
 meta.dirty=false;
 meta.sha=remote.sha;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 await Promise.all([
 workCopyWriteChain,
@@ -5660,7 +5426,9 @@ persistMeta()
 ]);
 
 }else if(local){
-state=local;
+state=
+local;
+
 meta.dirty=true;
 meta.sha=null;
 
@@ -5669,7 +5437,9 @@ norm({});
 
 syncBaseSha=null;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 await Promise.all([
 workCopyWriteChain,
@@ -5687,7 +5457,9 @@ norm({});
 meta.dirty=false;
 meta.sha=null;
 
-saveLocal(state);
+saveLocal(
+state
+);
 
 await Promise.all([
 workCopyWriteChain,
@@ -5708,17 +5480,19 @@ status(
 '公开阅读 · 管理已连接'
 );
 
-if(
-duplicateCodeCount(state)>0
-){
-sync(false);
-
-}else if(meta.dirty){
-sync(false);
+/*
+历史重复编码只报告，不自动修复。
+*/
+if(meta.dirty){
+sync(
+false
+);
 }
 
 }catch(error){
-console.error(error);
+console.error(
+error
+);
 
 state=
 loadLocal() ||
@@ -5752,14 +5526,6 @@ idbGet(WORKCOPY_KEY),
 idbGet(PUBLIC_CACHE_KEY),
 idbGet(SYNC_BASE_KEY)
 ]);
-
-syncEngineMigration=
-Boolean(
-storedMeta &&
-Number(
-storedMeta.syncVersion||0
-)<SYNC_ENGINE_VERSION
-);
 
 if(
 storedConfig &&
@@ -5846,7 +5612,7 @@ async function saveConfig(event){
 event.preventDefault();
 
 /*
-切换配置之前先等待当前同步结束。
+防止同步中途切换仓库。
 */
 if(syncInFlight){
 await syncInFlight;
@@ -5883,6 +5649,7 @@ show(
 '请完整填写仓库和 Token',
 'error'
 );
+
 return;
 }
 
@@ -5913,7 +5680,8 @@ workCopyCache=null;
 syncBaseCache=null;
 syncBaseSha=null;
 
-state=norm({});
+state=
+norm({});
 
 localMutationVersion=0;
 
@@ -5927,12 +5695,9 @@ idbDelete(SYNC_BASE_KEY)
 await idbSet(
 CONFIG_KEY,
 {
-owner:
-config.owner,
-repo:
-config.repo,
-file:
-config.file
+owner:config.owner,
+repo:config.repo,
+file:config.file
 }
 );
 
@@ -5953,7 +5718,9 @@ TOKEN_PERSISTED_KEY
 );
 }
 
-configModal.classList.add('hidden');
+configModal.classList.add(
+'hidden'
+);
 
 await loadAdminState();
 }
@@ -5975,7 +5742,9 @@ state.institutions.length+1
 
 renderManageInstitutionOptions();
 
-manageModal.classList.remove('hidden');
+manageModal.classList.remove(
+'hidden'
+);
 }
 
 function addManagedInstitution(){
@@ -6035,10 +5804,7 @@ render();
 schedule();
 }
 
-function moveManagedInstitution(
-value,
-rawLine
-){
+function moveManagedInstitution(value,rawLine){
 const history=[
 ...state.institutions
 ];
@@ -6068,7 +5834,10 @@ return;
 }
 
 const [item]=
-history.splice(from,1);
+history.splice(
+from,
+1
+);
 
 history.splice(
 line-1,
@@ -6145,8 +5914,7 @@ state.institutions=
 state.institutions
 .filter(
 item=>
-key(item)!==
-key(value)
+key(item)!==key(value)
 );
 
 render();
@@ -6168,24 +5936,33 @@ type:
 );
 
 const url=
-URL.createObjectURL(blob);
+URL.createObjectURL(
+blob
+);
 
 const link=
-document.createElement('a');
+document.createElement(
+'a'
+);
 
 link.href=url;
 
 link.download=
 `press${Math.floor(Date.now()/1000)}.html`;
 
-document.body.appendChild(link);
+document.body
+.appendChild(
+link
+);
 
 link.click();
 link.remove();
 
 setTimeout(
 ()=>{
-URL.revokeObjectURL(url);
+URL.revokeObjectURL(
+url
+);
 },
 1000
 );
@@ -6209,7 +5986,6 @@ setupInstitutionCombo('edit');
 
 setupMultiCombo('tag','add');
 setupMultiCombo('tag','edit');
-
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 
@@ -6279,7 +6055,9 @@ editDelete.addEventListener(
 'click',
 ()=>{
 if(editingId){
-deleteEntry(editingId);
+deleteEntry(
+editingId
+);
 }
 }
 );
@@ -6296,7 +6074,9 @@ category:[],
 tag:[]
 };
 
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 }
 );
 
@@ -6320,7 +6100,8 @@ editModal.addEventListener(
 'pointerdown',
 event=>{
 editOverlayPointerDown=
-event.target===editModal;
+event.target===
+editModal;
 }
 );
 
@@ -6329,7 +6110,8 @@ editModal.addEventListener(
 event=>{
 const genuineOutsideClick=
 editOverlayPointerDown &&
-event.target===editModal;
+event.target===
+editModal;
 
 editOverlayPointerDown=false;
 
@@ -6349,10 +6131,21 @@ category:[],
 tag:[]
 };
 
-editInstitutionPanel.classList.add('hidden');
-editCategoryPanel.classList.add('hidden');
-editTagPanel.classList.add('hidden');
-editModal.classList.add('hidden');
+editInstitutionPanel.classList.add(
+'hidden'
+);
+
+editCategoryPanel.classList.add(
+'hidden'
+);
+
+editTagPanel.classList.add(
+'hidden'
+);
+
+editModal.classList.add(
+'hidden'
+);
 }
 );
 
@@ -6366,22 +6159,35 @@ editOverlayPointerDown=false;
 configBtn.addEventListener(
 'click',
 ()=>{
-cfgOwner.value=config.owner;
-cfg.value=config.repo;
-cfgFile.value=config.file;
-cfgToken.value=config.token;
+cfgOwner.value=
+config.owner;
+
+cfg.value=
+config.repo;
+
+cfgFile.value=
+config.file;
+
+cfgToken.value=
+config.token;
 
 rememberToken.checked=
-Boolean(persistedToken);
+Boolean(
+persistedToken
+);
 
-configModal.classList.remove('hidden');
+configModal.classList.remove(
+'hidden'
+);
 }
 );
 
 configCancel.addEventListener(
 'click',
 ()=>{
-configModal.classList.add('hidden');
+configModal.classList.add(
+'hidden'
+);
 }
 );
 
@@ -6398,7 +6204,9 @@ openManage
 manageClose.addEventListener(
 'click',
 ()=>{
-manageModal.classList.add('hidden');
+manageModal.classList.add(
+'hidden'
+);
 }
 );
 
@@ -6455,7 +6263,9 @@ input.value
 syncBtn.addEventListener(
 'click',
 ()=>{
-sync(true);
+sync(
+true
+);
 }
 );
 
@@ -6510,7 +6320,9 @@ return;
 closePanels();
 
 if(
-!editModal.classList.contains('hidden') &&
+!editModal.classList.contains(
+'hidden'
+) &&
 editIsUnchanged()
 ){
 editingId='';
@@ -6522,11 +6334,18 @@ category:[],
 tag:[]
 };
 
-editModal.classList.add('hidden');
+editModal.classList.add(
+'hidden'
+);
 }
 
-configModal.classList.add('hidden');
-manageModal.classList.add('hidden');
+configModal.classList.add(
+'hidden'
+);
+
+manageModal.classList.add(
+'hidden'
+);
 }
 );
 
@@ -6541,7 +6360,9 @@ editCategory
 ]
 .forEach(
 input=>
-input.removeAttribute('placeholder')
+input.removeAttribute(
+'placeholder'
+)
 );
 
 if(admin()){
@@ -6564,7 +6385,9 @@ await loadPublic();
 initialize()
 .catch(
 error=>{
-console.error(error);
+console.error(
+error
+);
 
 status(
 'offline',
@@ -6576,49 +6399,39 @@ render();
 );
 
 /*
-=====================================================
-每分钟自动同步
-=====================================================
+每分钟自动同步。
 
-这里是这次修改的核心：
-
-1. SYNC_INTERVAL = 60000，也就是 60 秒。
-2. 每一分钟只做一次“空闲检查”。
-3. 如果已有 syncInFlight 或 syncRunning，直接跳过这一分钟。
-4. 不设置 syncRequested。
-5. 因此不会出现：
-   慢请求超过一个周期
-   -> 定时器不断排队
-   -> 同步永远退出不了
-   -> 手机一直显示正在拉取服务器最新版
-   的问题。
+关键：
+只有空闲且没有打开编辑/配置/排序窗口时才启动。
+如果上一轮尚未结束，本轮直接跳过，不排队。
 */
 startOneMinuteServerLoop();
 
 function startOneMinuteServerLoop(){
 if(syncIntervalTimer){
-clearInterval(syncIntervalTimer);
+clearInterval(
+syncIntervalTimer
+);
 }
 
 syncIntervalTimer=
 setInterval(
 ()=>{
-/*
-只有完全空闲时，才启动这一分钟的自动同步。
-*/
 if(
 admin() &&
 adminReady &&
 !syncInFlight &&
-!syncRunning
+!syncRunning &&
+editModal.classList.contains(
+'hidden'
+) &&
+configModal.classList.contains(
+'hidden'
+) &&
+manageModal.classList.contains(
+'hidden'
+)
 ){
-/*
-第二个参数 false 非常重要。
-
-queueIfBusy=false 表示：
-如果状态在调用瞬间发生变化、已有同步开始，
-本次自动轮询也绝不能排队。
-*/
 sync(
 false,
 false
@@ -6630,13 +6443,9 @@ SYNC_INTERVAL
 }
 
 /*
-手机浏览器切到后台时通常会暂停或延迟 setInterval。
-
-恢复前台、浏览器重新获得焦点、
-或者网络从离线恢复在线时，可以主动补拉一次。
-
-同样遵守：
-已有同步就跳过，绝不排队。
+移动端从后台恢复、窗口重新获得焦点、网络恢复时，
+在空闲状态补拉一次。
+已有同步时直接跳过，不排队。
 */
 function passiveSync(){
 if(
@@ -6644,9 +6453,15 @@ if(
 !adminReady ||
 syncRunning ||
 Boolean(syncInFlight) ||
-!editModal.classList.contains('hidden') ||
-!configModal.classList.contains('hidden') ||
-!manageModal.classList.contains('hidden')
+!editModal.classList.contains(
+'hidden'
+) ||
+!configModal.classList.contains(
+'hidden'
+) ||
+!manageModal.classList.contains(
+'hidden'
+)
 ){
 return;
 }
@@ -6654,10 +6469,6 @@ return;
 const now=
 Date.now();
 
-/*
-online、focus、visibilitychange 有时会在很短时间内连续触发，
-用 1 秒去重，防止一次恢复动作触发多次同步。
-*/
 if(
 now-
 lastPassiveSyncAt<
@@ -6666,7 +6477,8 @@ lastPassiveSyncAt<
 return;
 }
 
-lastPassiveSyncAt=now;
+lastPassiveSyncAt=
+now;
 
 sync(
 false,
