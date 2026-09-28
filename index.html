@@ -2,3378 +2,8832 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Press</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0}body{min-height:100vh;padding:24px 12px 70px;background:#f5f7fa;color:#0f172a;font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif}button,input,textarea{font:inherit}.hidden{display:none!important}.app{width:min(1080px,100%);margin:auto;background:#fff;border-radius:26px;padding:26px;box-shadow:0 18px 45px rgba(15,23,42,.13)}h1{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 18px;padding-bottom:12px;border-bottom:2px solid #e8edf4}.status{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:#f1f5f9;font-size:13px;font-weight:600;color:#475569}.dot{width:9px;height:9px;border-radius:50%;background:#94a3b8}.dot.online{background:#22c55e}.dot.syncing{background:#f59e0b}.dot.offline{background:#ef4444}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}.toolbar-left{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:999px;padding:8px 14px;cursor:pointer}.btn:hover{background:#f1f5f9}.btn:disabled{opacity:.55;cursor:not-allowed}.btn.primary{border-color:#1e293b;background:#1e293b;color:#fff}.btn.danger{border-color:#fecaca;background:#fee2e2;color:#991b1b}.small{font-size:12px;color:#94a3b8}.panel{border:1px solid #e2e8f0;background:#f8fafc;border-radius:20px;padding:18px;margin-bottom:22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;font-weight:700;color:#475569}.field input,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:13px;background:#fff;padding:11px 13px;outline:none;color:#0f172a}.field input:focus,.field textarea:focus{border-color:#93c5fd;box-shadow:0 0 0 2px #dbeafe}.field input[readonly]{background:#f1f5f9;color:#334155;font-weight:700}.groups{display:flex;gap:7px;flex-wrap:wrap;min-height:44px;align-items:center}.group-btn{border:1px solid #cbd5e1;border-radius:8px;background:#fff;padding:7px 10px;cursor:pointer}.group-btn.on{border-color:#1E40AF;background:#eaf1ff;color:#1E40AF;font-weight:700}.add-btn{grid-column:1/-1;border:0;border-radius:999px;padding:12px;background:#1e293b;color:#fff;font-weight:700;cursor:pointer}.list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.badge{padding:4px 10px;border-radius:999px;background:#e8edf4;font-size:12px}.list{border:1px solid #e2e8f0;border-radius:18px;overflow:hidden}.item{position:relative;padding:15px 17px}.item+.item{border-top:2px solid #e2e8f0}.title{font-weight:700;color:#1E40AF;line-height:1.5}.title a,.institution a,.institution a:visited,.institution a:hover{color:#1E40AF;text-decoration:none}.title a:hover,.institution a:hover{text-decoration:underline}.meta{display:grid;gap:3px;margin-top:7px;font-size:14px;line-height:1.5;color:#000}.row{display:grid;grid-template-columns:3.4em minmax(0,1fr)}.label{color:#64748b}.edit-btn{position:absolute;right:17px;bottom:15px;border:0;background:transparent;color:#000;cursor:pointer}.empty{padding:35px;text-align:center;color:#94a3b8}.overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:12px;background:rgba(15,23,42,.45);backdrop-filter:blur(4px)}.dialog{width:min(620px,100%);max-height:calc(100dvh - 24px);overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 30px 70px rgba(15,23,42,.25)}.dialog h2{margin-top:0}.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}.actions .danger{margin-right:auto}.toast{position:fixed;left:50%;bottom:26px;z-index:2000;transform:translateX(-50%);max-width:90vw;padding:10px 18px;border-radius:999px;background:#1E40AF;color:#fff;font-size:13px}.toast.error{background:#dc2626}.toast.success{background:#16a34a}.warn{color:#b45309}.code-note{font-size:12px;color:#64748b;margin-top:4px}#topBtn{position:fixed;right:16px;top:70%;z-index:900;width:28px;height:28px;border:0;border-radius:50%;background:#1E40AF;cursor:pointer}
-@media(max-width:720px){body{padding:9px}.app{padding:16px;border-radius:19px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.toolbar{align-items:flex-start}.dialog{padding:16px}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+min-height:100vh;
+padding:2rem 1rem 4rem;
+background:#f5f7fa;
+color:#0f172a;
+font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.container{
+width:min(100%,1080px);
+margin:auto;
+padding:2rem 1.8rem;
+background:#fff;
+border-radius:30px;
+box-shadow:0 20px 42px -14px rgba(15,23,42,.18)
+}
+.page-title{
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+gap:12px;
+margin-bottom:1.45rem;
+padding-bottom:.8rem;
+border-bottom:2px solid #e8edf4;
+font-size:2.2rem
+}
+.cloud-status{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:.35rem .9rem;
+border-radius:999px;
+background:#f1f5f9;
+color:#475569;
+font-size:.82rem;
+font-weight:500
+}
+.status-dot{
+width:9px;
+height:9px;
+border-radius:50%;
+background:#94a3b8
+}
+.status-dot.online{background:#22c55e}
+.status-dot.offline{background:#ef4444}
+.status-dot.syncing{background:#f59e0b}
+.toolbar{
+display:flex;
+flex-wrap:wrap;
+justify-content:space-between;
+gap:12px;
+margin-bottom:1.7rem;
+padding-bottom:1rem;
+border-bottom:1px solid #e8edf4
+}
+.toolbar-group{
+display:flex;
+flex-wrap:wrap;
+gap:9px
+}
+.btn{
+min-height:36px;
+padding:.45rem 1.1rem;
+border:1px solid #cbd5e1;
+border-radius:999px;
+background:#fff;
+color:#334155;
+font-size:.86rem;
+font-weight:650
+}
+.btn:hover{background:#f1f5f9}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{
+border-color:#1e293b;
+background:#1e293b;
+color:#fff
+}
+.btn-primary:hover{background:#0f172a}
+.btn-danger{
+border-color:#fecaca;
+background:#fee2e2;
+color:#991b1b
+}
+.btn-danger:hover{background:#fecaca}
+.btn-sync{
+border-color:#1E40AF;
+background:#1E40AF;
+color:#fff
+}
+.last-sync{
+color:#94a3b8;
+font-size:.8rem
+}
+.add-section{
+margin-bottom:2rem;
+padding:1.5rem;
+border:1px solid #e2e8f0;
+border-radius:23px;
+background:#f8fafc
+}
+.add-section h2,
+.list-header h2{
+font-size:1.3rem
+}
+.add-section h2{
+margin-bottom:1rem
+}
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:1rem
+}
+.bookno-tag-row{
+grid-column:1/-1;
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:1rem
+}
+.form-group{
+display:flex;
+flex-direction:column;
+gap:5px
+}
+.form-group.full{
+grid-column:1/-1
+}
+.form-group label{
+color:#475569;
+font-size:.78rem;
+font-weight:700;
+letter-spacing:.04em
+}
+.form-group input,
+.form-group select{
+width:100%;
+min-height:44px;
+padding:.72rem 1rem;
+border:1px solid #cbd5e1;
+border-radius:15px;
+background:#fff;
+color:#0f172a;
+outline:none
+}
+.form-group input:focus,
+.form-group select:focus{
+outline:2px solid #93b4ff;
+outline-offset:1px;
+border-color:transparent
+}
+.form-group input[readonly]{
+background:#f1f5f9;
+color:#64748b
+}
+.clearable-field,
+.edit-title-field{
+display:grid;
+grid-template-columns:minmax(0,1fr) 36px;
+gap:6px;
+align-items:center
+}
+.clear-field-btn{
+height:44px;
+width:36px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+background:#fff;
+color:#64748b;
+font-weight:800
+}
+.clear-field-btn:hover{
+background:#f1f5f9;
+color:#0f172a
+}
+.add-button{
+grid-column:1/-1;
+min-height:46px;
+border:0;
+border-radius:999px;
+background:#1e293b;
+color:#fff;
+font-weight:700
+}
+.add-button:hover{
+background:#0f172a
+}
+.combo{
+position:relative;
+border:1px solid #cbd5e1;
+border-radius:15px;
+background:#fff;
+padding:.45rem;
+min-height:44px
+}
+.combo-row{
+display:grid;
+grid-template-columns:minmax(0,1fr) 44px;
+gap:7px
+}
+.combo-row input{
+border:0!important;
+border-radius:10px!important;
+min-height:38px;
+padding:.55rem .7rem
+}
+.combo-row input:focus{
+outline:2px solid #93b4ff!important;
+outline-offset:0
+}
+.combo-toggle{
+min-height:38px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+background:#fff;
+color:#475569;
+font-weight:700
+}
+.combo-toggle:hover{
+background:#f1f5f9
+}
+.combo-panel{
+position:absolute;
+left:0;
+right:0;
+top:calc(44px + 7px);
+z-index:650;
+max-height:250px;
+overflow-y:auto;
+padding:.6rem;
+border:1px solid #cbd5e1;
+border-radius:15px;
+background:#fff;
+box-shadow:0 15px 30px rgba(15,23,42,.14)
+}
+.combo-selected{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-bottom:6px
+}
+.combo-selected:empty{
+display:none
+}
+.combo-option-list{
+display:flex;
+flex-direction:column;
+gap:6px
+}
+.combo-pill,
+.selected-pill{
+display:inline-flex;
+align-items:center;
+max-width:100%;
+min-height:34px;
+border:1px solid #cbd5e1;
+border-radius:999px;
+background:#f8fafc;
+overflow:hidden
+}
+.combo-pill{
+display:flex;
+width:100%;
+border-radius:11px
+}
+.combo-pill.selected{
+border-color:#93b4ff;
+background:#eaf1ff
+}
+.combo-pill-select{
+flex:1;
+min-width:0;
+padding:.5rem .7rem;
+border:0;
+background:transparent;
+color:#0f172a;
+text-align:left;
+white-space:normal;
+overflow-wrap:anywhere
+}
+.combo-pill-select:hover{
+background:rgba(226,232,240,.7)
+}
+.combo-pill-select.keyboard-active{
+background:#dbeafe;
+color:#1E3A8A;
+font-weight:800;
+box-shadow:inset 0 0 0 2px #93c5fd
+}
+.combo-pill-edit,
+.combo-pill-delete,
+.selected-pill-remove{
+flex:0 0 28px;
+width:28px;
+height:30px;
+border:0;
+border-radius:50%;
+background:transparent;
+font-size:.95rem;
+font-weight:800;
+line-height:1
+}
+.combo-pill-edit{
+color:#15803d
+}
+.combo-pill-edit:hover{
+background:#dcfce7;
+color:#166534
+}
+.combo-pill-delete,
+.selected-pill-remove{
+margin-right:2px;
+color:#991b1b
+}
+.combo-pill-delete:hover,
+.selected-pill-remove:hover{
+background:#fee2e2
+}
+.selected-pill-label{
+min-width:0;
+padding:.4rem .28rem .4rem .72rem;
+color:#334155;
+white-space:normal;
+overflow-wrap:anywhere
+}
+.combo-empty{
+width:100%;
+padding:.75rem;
+color:#94a3b8;
+text-align:center;
+font-size:.82rem
+}
+.list-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:.8rem
+}
+.count-badge{
+min-width:38px;
+padding:.22rem .8rem;
+border-radius:999px;
+background:#e8edf4;
+text-align:center;
+font-size:.8rem;
+font-weight:650
+}
+.press-list{
+border:1px solid #e2e8f0;
+border-radius:20px;
+overflow:hidden;
+background:#fff
+}
+.press-item{
+position:relative;
+padding:1rem 1.15rem;
+background:#fff
+}
+.press-item+.press-item{
+border-top:2px solid #dbe3ed
+}
+.press-item:hover{
+background:#fafcff
+}
+.press-head{
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+gap:1rem
+}
+.press-content{
+flex:1;
+min-width:0
+}
+.book-title{
+font-size:1.05rem;
+font-weight:700;
+line-height:1.5;
+overflow-wrap:anywhere;
+color:#1E40AF
+}
+.book-title a,
+.institution a{
+color:#1E40AF;
+text-decoration:none
+}
+.book-title a:hover{
+color:#1E3A8A;
+text-decoration:underline
+}
+.institution a:visited,
+.institution a:hover{
+color:#1E40AF;
+text-decoration:underline
+}
+#institutionOptions a,
+#institutionOptions a:visited,
+#editInstitutionOptions a,
+#editInstitutionOptions a:visited,
+#manageInstitutionOptions a,
+#manageInstitutionOptions a:visited{
+color:#1E40AF!important;
+text-decoration:none
+}
+#institutionOptions a:hover,
+#editInstitutionOptions a:hover,
+#manageInstitutionOptions a:hover{
+color:#1E40AF!important;
+text-decoration:underline
+}
+.meta{
+display:grid;
+grid-template-columns:1fr;
+gap:.28rem;
+margin-top:.45rem;
+color:#475569;
+font-size:.9rem;
+line-height:1.55
+}
+.meta-row{
+display:grid;
+grid-template-columns:3.25em minmax(0,1fr);
+align-items:start;
+column-gap:0;
+overflow-wrap:anywhere;
+text-align:left
+}
+.meta-label{
+display:block;
+width:3.25em;
+color:#94a3b8;
+white-space:nowrap
+}
+.meta-value{
+display:block;
+min-width:0;
+margin:0;
+padding:0;
+overflow-wrap:anywhere
+}
+.bookshelf-row{
+display:grid;
+grid-template-columns:3.25em minmax(0,1fr);
+align-items:start;
+column-gap:0;
+text-align:left
+}
+.bookshelf-text{
+display:block;
+min-width:0;
+margin:0;
+padding:0;
+overflow-wrap:anywhere
+}
+.tag-row{
+display:grid;
+grid-template-columns:3.25em minmax(0,1fr);
+align-items:start;
+column-gap:0
+}
+.tag-value{
+display:inline-flex;
+align-items:center;
+flex-wrap:wrap;
+min-width:0;
+gap:0
+}
+.entry-tag-checkbox{
+flex:0 0 auto;
+margin-left:1px;
+cursor:pointer
+}
+.entry-tag-checkbox:disabled{
+cursor:not-allowed
+}
+.edit-btn{
+flex:0 0 auto;
+position:absolute;
+right:1.15rem;
+bottom:1rem;
+padding:0;
+border:0;
+background:transparent;
+color:#64748b;
+font-size:.9rem;
+font-family:"Times New Roman","Microsoft YaHei","PingFang SC",serif;
+line-height:1.55
+}
+.edit-btn:hover{
+color:#475569
+}
+#pressList .press-item,
+#pressList .press-item .meta,
+#pressList .press-item .meta-label,
+#pressList .press-item .meta-value,
+#pressList .press-item .edit-btn,
+#pressList .press-item .edit-btn:hover{
+color:#000000
+}
+#pressList .press-item .book-title,
+#pressList .press-item .book-title a,
+#pressList .press-item .book-title a:visited{
+color:#1E40AF
+}
+#pressList .press-item .book-title a:hover{
+color:#1E3A8A
+}
+#pressList .press-item .institution a,
+#pressList .press-item .institution a:visited,
+#pressList .press-item .institution a:hover{
+color:#1E40AF
+}
+.empty-state{
+padding:2.6rem 1rem;
+background:#fafcff;
+color:#94a3b8;
+text-align:center
+}
+.overlay{
+position:fixed;
+inset:0;
+z-index:1000;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:12px;
+background:rgba(15,23,42,.45);
+backdrop-filter:blur(5px)
+}
+.dialog{
+width:min(100%,620px);
+max-height:calc(100dvh - 24px);
+display:flex;
+flex-direction:column;
+overflow:hidden;
+background:#fff;
+border-radius:26px;
+box-shadow:0 30px 70px rgba(15,23,42,.28)
+}
+.dialog-scroll{
+flex:1 1 auto;
+min-height:0;
+overflow-y:auto;
+padding:1.7rem 1.7rem 1rem
+}
+.dialog h3{
+margin-bottom:.9rem;
+font-size:1.3rem
+}
+.dialog .form-group{
+margin-bottom:.95rem
+}
+.edit-two-column-row{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:1rem
+}
+.dialog-actions{
+flex:0 0 auto;
+display:flex;
+gap:9px;
+padding:.95rem 1.7rem;
+border-top:1px solid #e8edf4;
+background:#fff
+}
+#editModal #editCancel{
+margin-left:auto
+}
+.manage-dialog{
+height:min(760px,calc(100dvh - 24px))
+}
+.manage-fixed-top{
+flex:0 0 auto;
+padding:1.7rem 1.7rem .9rem;
+border-bottom:1px solid #e8edf4
+}
+.manage-table-scroll{
+flex:1 1 auto;
+min-height:0;
+overflow-y:auto;
+padding:.55rem 1.7rem 1rem
+}
+.manage-add-row{
+display:grid;
+grid-template-columns:minmax(0,1fr) 92px auto;
+gap:8px
+}
+.manage-option-row{
+display:grid;
+grid-template-columns:minmax(0,1fr) 86px 30px 30px;
+gap:7px;
+align-items:center;
+min-height:46px;
+margin-top:7px;
+padding:.35rem .4rem;
+border:1px solid #cbd5e1;
+border-radius:12px
+}
+.manage-line-input{
+width:100%;
+height:34px;
+border:1px solid #cbd5e1;
+border-radius:9px;
+text-align:center
+}
+#manageModal .dialog-actions{
+justify-content:flex-end
+}
+.toast{
+position:fixed;
+left:50%;
+bottom:28px;
+z-index:1500;
+max-width:min(90vw,640px);
+padding:.78rem 1.5rem;
+transform:translateX(-50%);
+border-radius:999px;
+background:#1E40AF;
+color:#fff;
+font-size:.88rem;
+font-weight:600
+}
+.toast.success{background:#16a34a}
+.toast.error{background:#dc2626}
+#returnTopControl{
+position:fixed;
+right:16px;
+top:70%;
+z-index:2147483647;
+width:25px;
+height:25px;
+border:0;
+border-radius:50%;
+background:#1E40AF
+}
+#tagToggle,
+#institutionToggle,
+#categoryToggle,
+#editTagToggle,
+#editInstitutionToggle,
+#editCategoryToggle{
+display:none!important
+}
+#addSection .combo,
+#editModal .combo{
+height:44px;
+min-height:44px;
+padding:0;
+border:1px solid #cbd5e1;
+border-radius:15px
+}
+#addSection .combo-row,
+#editModal .combo-row{
+display:grid;
+grid-template-columns:minmax(0,1fr);
+height:42px
+}
+#addSection .combo-row input,
+#editModal .combo-row input{
+width:100%;
+height:42px;
+min-height:42px;
+padding:.55rem .9rem!important;
+border:0!important;
+background:transparent!important
+}
+#tagOptions .combo-option-list,
+#editTagOptions .combo-option-list,
+#categoryOptions .combo-option-list,
+#editCategoryOptions .combo-option-list{
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+gap:8px
+}
+#tagOptions .combo-pill,
+#editTagOptions .combo-pill,
+#categoryOptions .combo-pill,
+#editCategoryOptions .combo-pill{
+display:inline-flex;
+flex:0 0 auto;
+width:auto;
+min-height:32px;
+border-radius:5px;
+background:#fff
+}
+#tagOptions .combo-pill-select,
+#editTagOptions .combo-pill-select,
+#categoryOptions .combo-pill-select,
+#editCategoryOptions .combo-pill-select{
+width:auto;
+padding:.42rem .72rem;
+font-size:.82rem;
+text-align:center;
+white-space:nowrap
+}
+#tagInput,
+#categoryInput,
+#editTag,
+#editCategory{
+cursor:text!important;
+background:#fff!important;
+color:#0f172a!important
+}
+#tagCombo:has(> .combo-selected:not(:empty)),
+#editTagCombo:has(> .combo-selected:not(:empty)){
+display:flex!important;
+flex-wrap:nowrap!important;
+align-items:center!important;
+gap:4px!important;
+width:100%;
+min-width:0
+}
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty){
+display:flex!important;
+flex:0 1 auto;
+flex-wrap:nowrap!important;
+align-items:center;
+gap:4px;
+min-width:0;
+max-width:calc(100% - 64px);
+height:42px;
+margin:0!important;
+padding:0 0 0 .35rem;
+overflow-x:auto;
+overflow-y:hidden;
+scrollbar-width:none
+}
+#tagCombo > .combo-selected:not(:empty)::-webkit-scrollbar,
+#editTagCombo > .combo-selected:not(:empty)::-webkit-scrollbar{
+display:none
+}
+#tagCombo > .combo-selected:not(:empty) .selected-pill,
+#editTagCombo > .combo-selected:not(:empty) .selected-pill{
+flex:0 0 auto!important;
+width:auto!important;
+max-width:none!important;
+min-width:max-content;
+white-space:nowrap!important
+}
+#tagCombo > .combo-selected:not(:empty) .selected-pill-label,
+#editTagCombo > .combo-selected:not(:empty) .selected-pill-label{
+flex:0 0 auto;
+min-width:max-content;
+white-space:nowrap!important;
+overflow-wrap:normal!important;
+word-break:keep-all
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row{
+display:grid!important;
+flex:1 1 80px;
+min-width:60px;
+height:42px
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row input,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row input{
+display:block!important;
+min-width:0!important;
+width:100%!important
+}
+#categoryCombo:has(> .combo-selected:not(:empty)),
+#editCategoryCombo:has(> .combo-selected:not(:empty)){
+display:block!important
+}
+#categoryCombo > .combo-selected:not(:empty),
+#editCategoryCombo > .combo-selected:not(:empty){
+display:flex!important;
+align-items:center;
+width:100%;
+height:42px;
+padding:0 .45rem;
+margin:0
+}
+#categoryCombo > .combo-selected:not(:empty) + .combo-row,
+#editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
+display:none!important
+}
+@media(max-width:700px){
+body{padding:.8rem}
+.container{
+padding:1.25rem;
+border-radius:22px
+}
+.page-title{
+font-size:1.8rem
+}
+.toolbar{
+flex-direction:column
+}
+.form-grid{
+grid-template-columns:1fr
+}
+.bookno-tag-row{
+grid-template-columns:1fr
+}
+.edit-two-column-row{
+grid-template-columns:1fr
+}
+.dialog{
+width:100%;
+max-height:calc(100dvh - 16px);
+border-radius:20px
+}
+.dialog-scroll{
+padding:1.2rem
+}
+#tagCombo > .combo-selected:not(:empty),
+#editTagCombo > .combo-selected:not(:empty){
+max-width:calc(100% - 54px)
+}
+#tagCombo > .combo-selected:not(:empty) + .combo-row,
+#editTagCombo > .combo-selected:not(:empty) + .combo-row{
+flex-basis:54px;
+min-width:50px
+}
+}
 </style>
 </head>
 <body>
-<main class="app">
-<h1>Press <span class="status"><span id="dot" class="dot"></span><span id="statusText">正在读取数据</span></span></h1>
-<div class="toolbar">
-  <div class="toolbar-left">
-    <button id="syncBtn" class="btn hidden" type="button">同步</button>
-    <button id="configBtn" class="btn" type="button">配置</button>
-    <button id="manageBtn" class="btn" type="button">排序</button>
-    <button id="importBtn" class="btn" type="button">导入</button>
-    <button id="exportBtn" class="btn" type="button">导出</button>
-    <input id="importFile" class="hidden" type="file" accept="application/json,.json">
-  </div>
-  <span id="lastSync" class="small">公开阅读无需 Token</span>
+<div id="pageTopAnchor" aria-hidden="true"></div>
+<main class="container">
+<h1 class="page-title">
+Press
+<span class="cloud-status">
+<span class="status-dot" id="statusDot"></span>
+<span id="statusText">正在读取公开数据</span>
+</span>
+</h1>
+<section class="toolbar">
+<div class="toolbar-group">
+<button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
+<button class="btn" id="configBtn" type="button">配置</button>
+<button class="btn" id="manageBtn" type="button">排序</button>
+<button class="btn" id="importBtn" type="button">导入</button>
+<button class="btn" id="exportBtn" type="button">导出</button>
+<input class="hidden" id="importInput" type="file" accept=".html,text/html">
 </div>
-
-<section id="addPanel" class="panel hidden">
+<span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
+</section>
+<section class="add-section hidden" id="addSection">
 <h2>添加</h2>
-<div class="grid">
-  <div class="field full"><label for="bookName">书名</label><input id="bookName" autocomplete="off"></div>
-  <div class="field"><label for="bookNo">书号</label><input id="bookNo" autocomplete="off"></div>
-  <div class="field"><label>编组</label><div id="addGroups" class="groups"></div></div>
-  <div class="field"><label for="addCode">编码</label><input id="addCode" readonly><div class="code-note">选择编组后立即生成；服务器同步负责并发仲裁</div></div>
-  <div class="field full"><label for="institution">出版</label><input id="institution" list="institutionList" autocomplete="off"><datalist id="institutionList"></datalist></div>
-  <div class="field full"><label for="category">书架</label><input id="category" list="categoryList" autocomplete="off"><datalist id="categoryList"></datalist></div>
-  <button id="addBtn" class="add-btn" type="button">添加</button>
+<div class="form-grid">
+<div class="form-group full">
+<label for="bookNameInput">书名</label>
+<input
+type="text"
+id="bookNameInput"
+autocomplete="off"
+autofocus
+>
+</div>
+<div class="bookno-tag-row">
+<div class="form-group">
+<label for="bookNoInput">书号</label>
+<input
+type="text"
+id="bookNoInput"
+autocomplete="off"
+>
+</div>
+<div class="form-group">
+<label for="tagInput">编组</label>
+<div class="combo" id="tagCombo">
+<div
+class="combo-selected"
+id="tagSelected"
+></div>
+<div class="combo-row">
+<input
+type="text"
+id="tagInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="tagToggle"
+type="button"
+aria-label="展开编组选项"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="tagPanel"
+>
+<div id="tagOptions"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group full">
+<label for="institutionInput">
+出版
+</label>
+<div
+class="combo"
+id="institutionCombo"
+>
+<div class="combo-row">
+<input
+type="text"
+id="institutionInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="institutionToggle"
+type="button"
+aria-label="展开出版历史"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="institutionPanel"
+>
+<div id="institutionOptions"></div>
+</div>
+</div>
+</div>
+<div class="form-group full">
+<label for="categoryInput">
+书架
+</label>
+<div
+class="combo"
+id="categoryCombo"
+>
+<div
+class="combo-selected"
+id="categorySelected"
+></div>
+<div class="combo-row">
+<input
+type="text"
+id="categoryInput"
+autocomplete="off"
+>
+<button
+class="combo-toggle"
+id="categoryToggle"
+type="button"
+aria-label="展开书架历史"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="categoryPanel"
+>
+<div id="categoryOptions"></div>
+</div>
+</div>
+</div>
+<button
+class="add-button"
+id="addBtn"
+type="button"
+>
+添加
+</button>
 </div>
 </section>
-
 <section>
-<div class="list-head"><h2>总表</h2><span id="count" class="badge">0/0/0</span></div>
-<div id="list" class="list"><div class="empty">加载中</div></div>
+<div class="list-header">
+<h2>总表</h2>
+<span
+class="count-badge"
+id="countDisplay"
+>
+0/0/0
+</span>
+</div>
+<div
+class="press-list"
+id="pressList"
+>
+<div class="empty-state">
+加载中
+</div>
+</div>
 </section>
 </main>
-
-<section id="editModal" class="overlay hidden">
+<section
+class="overlay hidden"
+id="editModal"
+>
 <div class="dialog">
-<h2>编辑</h2>
-<div class="grid">
-  <div class="field full"><label for="editBookName">书名</label><input id="editBookName"></div>
-  <div class="field"><label for="editBookNo">书号</label><input id="editBookNo"></div>
-  <div class="field"><label>编组</label><div id="editGroups" class="groups"></div></div>
-  <div class="field"><label for="editCode">编码</label><input id="editCode" inputmode="numeric" maxlength="6"><div id="editCodeNote" class="code-note"></div></div>
-  <div class="field full"><label for="editInstitution">出版</label><input id="editInstitution" list="institutionList"></div>
-  <div class="field full"><label for="editCategory">书架</label><input id="editCategory" list="categoryList"></div>
+<div class="dialog-scroll">
+<div class="form-group">
+<label for="editBookName">
+书名
+</label>
+<div class="edit-title-field">
+<input
+autocomplete="off"
+id="editBookName"
+type="text"
+>
+<button
+class="clear-field-btn"
+id="clearEditBookName"
+type="button"
+aria-label="清空书名"
+>
+×
+</button>
 </div>
-<div class="actions">
-  <button id="deleteBtn" class="btn danger" type="button">删除</button>
-  <button id="editCancel" class="btn" type="button">取消</button>
-  <button id="editSave" class="btn primary" type="button">保存</button>
+</div>
+<div class="form-group">
+<label for="editInstitution">
+出版
+</label>
+<div
+class="combo"
+id="editInstitutionCombo"
+>
+<div class="combo-row">
+<input
+autocomplete="off"
+id="editInstitution"
+type="text"
+>
+<button
+aria-label="展开出版历史"
+class="combo-toggle"
+id="editInstitutionToggle"
+type="button"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="editInstitutionPanel"
+>
+<div id="editInstitutionOptions"></div>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label for="editBookNo">
+书号
+</label>
+<div class="clearable-field">
+<input
+autocomplete="off"
+id="editBookNo"
+type="text"
+>
+<button
+class="clear-field-btn"
+id="clearEditBookNo"
+type="button"
+aria-label="清空书号"
+>
+×
+</button>
+</div>
+</div>
+<div class="edit-two-column-row">
+<div class="form-group">
+<label for="editTag">
+编组
+</label>
+<div
+class="combo"
+id="editTagCombo"
+>
+<div
+class="combo-selected"
+id="editTagSelected"
+></div>
+<div class="combo-row">
+<input
+autocomplete="off"
+id="editTag"
+type="text"
+>
+<button
+aria-label="展开编组选项"
+class="combo-toggle"
+id="editTagToggle"
+type="button"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="editTagPanel"
+>
+<div id="editTagOptions"></div>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label for="editCategory">
+书架
+</label>
+<div
+class="combo"
+id="editCategoryCombo"
+>
+<div
+class="combo-selected"
+id="editCategorySelected"
+></div>
+<div class="combo-row">
+<input
+autocomplete="off"
+id="editCategory"
+type="text"
+>
+<button
+aria-label="展开书架历史"
+class="combo-toggle"
+id="editCategoryToggle"
+type="button"
+></button>
+</div>
+<div
+class="combo-panel hidden"
+id="editCategoryPanel"
+>
+<div id="editCategoryOptions"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label for="editCode">
+编码
+</label>
+<input
+autocomplete="off"
+id="editCode"
+type="text"
+inputmode="numeric"
+maxlength="6"
+aria-label="编码"
+>
+</div>
+</div>
+<div class="dialog-actions">
+<button
+class="btn btn-danger"
+id="editDelete"
+type="button"
+>
+删除
+</button>
+<button
+class="btn"
+id="editCancel"
+type="button"
+>
+取消
+</button>
+<button
+class="btn btn-primary"
+id="editSave"
+type="button"
+>
+保存
+</button>
 </div>
 </div>
 </section>
-
-<section id="configModal" class="overlay hidden">
-<div class="dialog">
-<h2>GitHub 管理配置</h2>
-<div class="grid">
-  <div class="field"><label for="cfgOwner">仓库所有者</label><input id="cfgOwner"></div>
-  <div class="field"><label for="cfgRepo">仓库名称</label><input id="cfgRepo"></div>
-  <div class="field full"><label for="cfgPath">数据文件路径</label><input id="cfgPath" value="press_data.json"></div>
-  <div class="field full"><label for="cfgToken">GitHub Personal Access Token</label><input id="cfgToken" type="password"></div>
-  <label class="full"><input id="rememberToken" type="checkbox" checked> 在本设备保存 Token</label>
+<section
+class="overlay hidden"
+id="configModal"
+>
+<form
+class="dialog"
+id="configForm"
+autocomplete="on"
+>
+<div class="dialog-scroll">
+<h3>GitHub 管理配置</h3>
+<div class="form-group">
+<label for="cfgOwner">
+仓库所有者
+</label>
+<input
+id="cfgOwner"
+type="text"
+>
 </div>
-<div class="actions"><button id="configCancel" class="btn" type="button">取消</button><button id="configSave" class="btn primary" type="button">保存并连接</button></div>
+<div class="form-group">
+<label for="cfg">
+仓库名称
+</label>
+<input
+id="cfg"
+type="text"
+>
+</div>
+<div class="form-group">
+<label for="cfgFile">
+数据文件路径
+</label>
+<input
+id="cfgFile"
+type="text"
+value="press_data.json"
+>
+</div>
+<div class="form-group">
+<label for="cfgToken">
+GitHub Personal Access Token
+</label>
+<input
+id="cfgToken"
+type="password"
+>
+</div>
+<label>
+<input
+type="checkbox"
+id="rememberToken"
+checked
+>
+在本设备保存 Token
+</label>
+</div>
+<div class="dialog-actions">
+<button
+class="btn"
+id="configCancel"
+type="button"
+>
+取消
+</button>
+<button
+class="btn btn-primary"
+type="submit"
+>
+保存并连接
+</button>
+</div>
+</form>
+</section>
+<section
+class="overlay hidden"
+id="manageModal"
+>
+<div class="dialog manage-dialog">
+<div class="manage-fixed-top">
+<h3>出版管理</h3>
+<div class="form-group">
+<label for="manageInstitutionInput">
+新增出版选项
+</label>
+<div class="manage-add-row">
+<input
+type="text"
+id="manageInstitutionInput"
+>
+<input
+type="number"
+id="manageInstitutionLineInput"
+min="1"
+step="1"
+inputmode="numeric"
+>
+<button
+class="btn btn-primary"
+id="manageInstitutionAdd"
+type="button"
+>
+添加
+</button>
+</div>
+</div>
+</div>
+<div class="manage-table-scroll">
+<div id="manageInstitutionOptions"></div>
+</div>
+<div class="dialog-actions">
+<button
+class="btn btn-primary"
+id="manageClose"
+type="button"
+>
+完成
+</button>
+</div>
 </div>
 </section>
-
-<section id="manageModal" class="overlay hidden">
-<div class="dialog">
-<h2>出版排序</h2>
-<div class="field"><label for="institutionText">每行一个出版选项，行序即显示顺序</label><textarea id="institutionText" rows="16"></textarea></div>
-<div class="actions"><button id="manageCancel" class="btn" type="button">取消</button><button id="manageSave" class="btn primary" type="button">保存</button></div>
-</div>
-</section>
-
-<button id="topBtn" type="button" title="回到顶部"></button>
-<div id="toast" class="toast hidden"></div>
-
+<button
+id="returnTopControl"
+type="button"
+title="回到顶部"
+></button>
+<div
+class="toast hidden"
+id="toast"
+></div>
 <script>
 (()=>{
 'use strict';
 
 const PUBLIC_FILE='press_data.json';
-const STORE='press_safe_v10';
-const SYNC_INTERVAL=60000;
-const FETCH_TIMEOUT=15000;
+const NS='press_public_v1';
+const DB_NAME=`${NS}:idb_v1`;
+const DB_STORE='kv';
+const CONFIG_KEY='config';
+const TOKEN_PERSISTED_KEY='token_persisted';
+const META_KEY='meta';
+const WORKCOPY_KEY='workcopy';
+const PUBLIC_CACHE_KEY='public_cache';
+const SYNC_BASE_KEY='sync_base_v3_5s';
+
+const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
-const GROUP_CODES=['11','12','13','14','21','22','23'];
-const GROUP_OPTIONS=GROUP_CODES.map(x=>x+'组');
-const CODE_GROUP_OPTIONS=[...GROUP_CODES,'24'];
+const SYNC_INTERVAL=60000;
+const SYNC_RETRY_LIMIT=3;
+const NETWORK_RETRY_LIMIT=2;
+const GITHUB_TIMEOUT=15000;
+const PUBLIC_FETCH_TIMEOUT=15000;
 
-const CODE_RULES={
- zh:{
-  groups:{
-   '11':[[110001,117999],[160001,167999]],
-   '12':[[120001,127999]],
-   '13':[[130001,137999],[180001,187999]],
-   '14':[[140001,147999]],
-   '21':[[210001,217999]],
-   '22':[[220001,227999]],
-   '23':[[230001,237999],[270001,277999],[280001,289999]],
-   '24':[[240001,247999]]
-  },
-  exceptions:{
-   '11/13':[[118001,119999]],
-   '11/22':[[228001,229999]],
-   '11/23':[[238001,239999]],
-   '13/21':[[218001,219999]],
-   '13/22':[[138001,139999]],
-   '13/23':[[188001,189999]],
-   '21/22':[[260001,267999]],
-   '21/23':[[278001,279999]]
-  }
- },
- en:{
-  groups:{
-   '11':[[150001,157999]],
-   '12':[[128001,129999],[168001,169999]],
-   '13':[[170001,179999]],
-   '14':[[148001,149999]],
-   '21':[[250001,259999]],
-   '22':[[220001,227999]],
-   '23':[[230001,237999],[270001,277999],[280001,289999]],
-   '24':[[248001,249999]]
-  },
-  exceptions:{
-   '11/13':[[158001,159999]],
-   '13/21':[[268001,269999]]
-  }
- }
-};
+const GROUP_CODES=Object.freeze([
+'11',
+'12',
+'13',
+'14',
+'21',
+'22',
+'23'
+]);
 
-const $=id=>document.getElementById(id);
+const GROUP_OPTIONS=Object.freeze(
+GROUP_CODES.map(
+value=>`${value}组`
+)
+);
 
-const ui={
- dot:$('dot'),
- status:$('statusText'),
- last:$('lastSync'),
- sync:$('syncBtn'),
- config:$('configBtn'),
- manage:$('manageBtn'),
- imp:$('importBtn'),
- exp:$('exportBtn'),
- impFile:$('importFile'),
+const CODE_GROUP_OPTIONS=Object.freeze([
+...GROUP_CODES,
+'24'
+]);
 
- addPanel:$('addPanel'),
- bookName:$('bookName'),
- bookNo:$('bookNo'),
- addGroups:$('addGroups'),
- addCode:$('addCode'),
- institution:$('institution'),
- category:$('category'),
- add:$('addBtn'),
+const CODE_RULES=Object.freeze({
+zh:{
+groups:{
+'11':[
+[110001,117999],
+[160001,167999]
+],
+'12':[
+[120001,127999]
+],
+'13':[
+[130001,137999],
+[180001,187999]
+],
+'14':[
+[140001,147999]
+],
+'21':[
+[210001,217999]
+],
+'22':[
+[220001,227999]
+],
+'23':[
+[230001,237999],
+[270001,277999],
+[280001,289999]
+],
+'24':[
+[240001,247999]
+]
+},
+exceptions:{
+'11/13':[
+[118001,119999]
+],
+'11/22':[
+[228001,229999]
+],
+'11/23':[
+[238001,239999]
+],
+'13/21':[
+[218001,219999]
+],
+'13/22':[
+[138001,139999]
+],
+'13/23':[
+[188001,189999]
+],
+'21/22':[
+[260001,267999]
+],
+'21/23':[
+[278001,279999]
+]
+}
+},
+en:{
+groups:{
+'11':[
+[150001,157999]
+],
+'12':[
+[128001,129999],
+[168001,169999]
+],
+'13':[
+[170001,179999]
+],
+'14':[
+[148001,149999]
+],
+'21':[
+[250001,259999]
+],
+'22':[
+[220001,227999]
+],
+'23':[
+[230001,237999],
+[270001,277999],
+[280001,289999]
+],
+'24':[
+[248001,249999]
+]
+},
+exceptions:{
+'11/13':[
+[158001,159999]
+],
+'13/21':[
+[268001,269999]
+]
+}
+}
+});
 
- institutionList:$('institutionList'),
- categoryList:$('categoryList'),
- list:$('list'),
- count:$('count'),
+const $=
+id=>
+document.getElementById(id);
 
- editModal:$('editModal'),
- editBookName:$('editBookName'),
- editBookNo:$('editBookNo'),
- editGroups:$('editGroups'),
- editCode:$('editCode'),
- editCodeNote:$('editCodeNote'),
- editInstitution:$('editInstitution'),
- editCategory:$('editCategory'),
- delete:$('deleteBtn'),
- editCancel:$('editCancel'),
- editSave:$('editSave'),
+const statusDot=$('statusDot');
+const statusText=$('statusText');
+const syncBtn=$('syncBtn');
+const configBtn=$('configBtn');
+const manageBtn=$('manageBtn');
+const importBtn=$('importBtn');
+const importInput=$('importInput');
+const exportBtn=$('exportBtn');
+const lastSyncTime=$('lastSyncTime');
+const addSection=$('addSection');
+const bookNameInput=$('bookNameInput');
+const bookNoInput=$('bookNoInput');
+const institutionCombo=$('institutionCombo');
+const institutionInput=$('institutionInput');
+const institutionToggle=$('institutionToggle');
+const institutionPanel=$('institutionPanel');
+const institutionOptions=$('institutionOptions');
+const tagCombo=$('tagCombo');
+const tagSelected=$('tagSelected');
+const tagInput=$('tagInput');
+const tagToggle=$('tagToggle');
+const tagPanel=$('tagPanel');
+const tagOptions=$('tagOptions');
+const categoryCombo=$('categoryCombo');
+const categorySelected=$('categorySelected');
+const categoryInput=$('categoryInput');
+const categoryToggle=$('categoryToggle');
+const categoryPanel=$('categoryPanel');
+const categoryOptions=$('categoryOptions');
+const addBtn=$('addBtn');
+const pressList=$('pressList');
+const countDisplay=$('countDisplay');
+const editModal=$('editModal');
+const editBookName=$('editBookName');
+const clearEditBookName=$('clearEditBookName');
+const editBookNo=$('editBookNo');
+const clearEditBookNo=$('clearEditBookNo');
+const editInstitutionCombo=$('editInstitutionCombo');
+const editInstitution=$('editInstitution');
+const editInstitutionToggle=$('editInstitutionToggle');
+const editInstitutionPanel=$('editInstitutionPanel');
+const editInstitutionOptions=$('editInstitutionOptions');
+const editTagCombo=$('editTagCombo');
+const editTagSelected=$('editTagSelected');
+const editTag=$('editTag');
+const editTagToggle=$('editTagToggle');
+const editTagPanel=$('editTagPanel');
+const editTagOptions=$('editTagOptions');
+const editCategoryCombo=$('editCategoryCombo');
+const editCategorySelected=$('editCategorySelected');
+const editCategory=$('editCategory');
+const editCategoryToggle=$('editCategoryToggle');
+const editCategoryPanel=$('editCategoryPanel');
+const editCategoryOptions=$('editCategoryOptions');
+const editCode=$('editCode');
+const editDelete=$('editDelete');
+const editCancel=$('editCancel');
+const editSave=$('editSave');
+const configModal=$('configModal');
+const configForm=$('configForm');
+const cfgOwner=$('cfgOwner');
+const cfg=$('cfg');
+const cfgFile=$('cfgFile');
+const cfgToken=$('cfgToken');
+const rememberToken=$('rememberToken');
+const configCancel=$('configCancel');
+const manageModal=$('manageModal');
+const manageInstitutionInput=$('manageInstitutionInput');
+const manageInstitutionLineInput=$('manageInstitutionLineInput');
+const manageInstitutionAdd=$('manageInstitutionAdd');
+const manageInstitutionOptions=$('manageInstitutionOptions');
+const manageClose=$('manageClose');
+const returnTopControl=$('returnTopControl');
+const toast=$('toast');
 
- configModal:$('configModal'),
- cfgOwner:$('cfgOwner'),
- cfgRepo:$('cfgRepo'),
- cfgPath:$('cfgPath'),
- cfgToken:$('cfgToken'),
- remember:$('rememberToken'),
- configCancel:$('configCancel'),
- configSave:$('configSave'),
-
- manageModal:$('manageModal'),
- institutionText:$('institutionText'),
- manageCancel:$('manageCancel'),
- manageSave:$('manageSave'),
-
- toast:$('toast'),
- top:$('topBtn')
-};
+const collator=new Intl.Collator(
+'zh-CN-u-co-pinyin',
+{
+numeric:true,
+sensitivity:'base'
+}
+);
 
 let state={
- schemaVersion:10,
- entries:[],
- institutions:[],
- categories:[],
- tags:[...GROUP_OPTIONS]
+entries:[],
+institutions:[],
+categories:[],
+tags:[
+...GROUP_OPTIONS
+]
 };
 
-let baseState=null;
+let addSelections={
+category:[],
+tag:[]
+};
+
+let editSelections={
+category:[],
+tag:[]
+};
+
+let editingId='';
+let editInitialSnapshot='';
+let addDraftId=uid();
+let addDraftCode='';
+let editAutoManagedDraft=false;
 
 let config={
- owner:'',
- repo:'',
- path:'press_data.json',
- token:''
+owner:'',
+repo:'',
+file:'press_data.json',
+token:''
 };
 
-let dirty=false;
-let sha=null;
-let syncBusy=false;
-let syncQueued=false;
-let mutationVersion=0;
+let meta={
+dirty:false,
+sha:null
+};
 
-let editId='';
-let editOriginal=null;
-
-let addDraftId=uid();
-let addSelected=[];
-let editSelected=[];
-let editAutoMode=false;
-
+let adminReady=false;
 let toastTimer=null;
-let intervalId=null;
+let syncIntervalTimer=null;
+let storageDbPromise=null;
+let storageDbDisabled=false;
+const storageMemory=new Map();
+let workCopyCache=null;
+let publicCacheValue=null;
+let syncBaseCache=null;
+let syncBaseSha=null;
+let persistedToken='';
+let editOverlayPointerDown=false;
+let syncInFlight=null;
+let syncRequested=false;
+let syncShowResult=false;
+let syncRunning=false;
+let localMutationVersion=0;
+let workCopyWriteChain=Promise.resolve();
+let metaWriteChain=Promise.resolve();
+let syncBaseWriteChain=Promise.resolve();
+let lastPassiveSyncAt=0;
+
+function clean(value){
+return String(value??'')
+.normalize('NFC')
+.trim();
+}
+
+function cleanTitle(value){
+return String(value??'')
+.normalize('NFC')
+.trim();
+}
+
+function folded(value){
+return clean(value)
+.normalize('NFKC');
+}
+
+function key(value){
+return folded(value)
+.toLocaleLowerCase(
+'zh-CN'
+);
+}
+
+function esc(value){
+const div=
+document.createElement(
+'div'
+);
+
+div.textContent=
+String(value??'');
+
+return div.innerHTML;
+}
+
+function attr(value){
+return esc(value)
+.replace(
+/"/g,
+'&quot;'
+);
+}
 
 function uid(){
- return crypto?.randomUUID
-  ? crypto.randomUUID()
-  : `press_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-}
-
-function clean(v){
- return String(v??'').normalize('NFC').trim();
-}
-
-function fold(v){
- return clean(v).normalize('NFKC');
-}
-
-function key(v){
- return fold(v).toLocaleLowerCase('zh-CN');
-}
-
-function clone(v){
- return JSON.parse(JSON.stringify(v));
-}
-
-function same(a,b){
- return JSON.stringify(a)===JSON.stringify(b);
+return crypto?.randomUUID
+? crypto.randomUUID()
+: `press_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 }
 
 function uniq(values){
- const m=new Map();
+const map=
+new Map();
 
- for(const raw of values||[]){
-  const v=clean(raw);
+for(
+const raw
+of values||[]
+){
+const value=
+clean(raw);
 
-  if(v&&!m.has(key(v))){
-   m.set(key(v),v);
-  }
- }
-
- return [...m.values()];
+if(
+value &&
+!map.has(
+key(value)
+)
+){
+map.set(
+key(value),
+value
+);
+}
 }
 
-function escapeHtml(v){
- const d=document.createElement('div');
- d.textContent=String(v??'');
- return d.innerHTML;
+return [
+...map.values()
+];
 }
 
-function escapeAttr(v){
- return escapeHtml(v).replace(/"/g,'&quot;');
+function normalizeMulti(value){
+return uniq(
+Array.isArray(value)
+? value
+: [value]
+);
 }
 
-function normalizeGroup(v){
- const x=fold(v).replace(/组$/,'');
+function normalizeFixedGroupLabel(
+value
+){
+const original=
+clean(value);
 
- return GROUP_CODES.includes(x)
-  ? x+'组'
-  : clean(v);
+const fixed=
+folded(original);
+
+return GROUP_CODES.includes(
+fixed
+)
+? `${fixed}组`
+: original;
 }
 
-function groupCode(v){
- const x=fold(v).replace(/组$/,'');
+function codeGroupValue(value){
+const original=
+clean(value);
 
- return CODE_GROUP_OPTIONS.includes(x)
-  ? x
-  : '';
+const fixed=
+folded(original);
+
+const match=
+fixed.match(
+/^(11|12|13|14|21|22|23)组$/
+);
+
+return match
+? match[1]
+: original;
 }
 
-function sortGroups(arr){
- return uniq(
-  arr.map(normalizeGroup)
- ).sort(
-  (a,b)=>
-   (Number(groupCode(a))||999)-
-   (Number(groupCode(b))||999)
- );
+function tagPrefixNumber(value){
+const match=
+folded(value)
+.match(
+/^(\d{2})/
+);
+
+return match
+? Number(match[1])
+: Number.POSITIVE_INFINITY;
+}
+
+function compareTagsByPrefix(a,b){
+const ap=
+tagPrefixNumber(a);
+
+const bp=
+tagPrefixNumber(b);
+
+if(ap!==bp){
+return ap-bp;
+}
+
+return collator.compare(
+clean(a),
+clean(b)
+);
+}
+
+function sortTags(values){
+return uniq(
+Array.isArray(values)
+? values
+: [values]
+)
+.sort(
+compareTagsByPrefix
+);
 }
 
 function titleIsChinese(raw){
- const s=String(raw??'').replace(
-  /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
-  '$1'
- );
+const visible=
+String(raw??'')
+.replace(
+/\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
+'$1'
+);
 
- return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(s);
+return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
+.test(visible);
 }
 
-function normalizeCode(v){
- const x=fold(v);
+function compareBookNo(a,b){
+const aa=
+folded(a);
 
- return /^\d{6}$/.test(x)
-  ? x
-  : '';
+const bb=
+folded(b);
+
+if(aa&&!bb){
+return -1;
 }
 
-function mergeRanges(ranges){
- const a=(ranges||[])
-  .map(r=>[
-   +r[0],
-   +r[1]
-  ])
-  .filter(
-   r=>
-    Number.isFinite(r[0]) &&
-    Number.isFinite(r[1]) &&
-    r[0]<=r[1]
-  )
-  .sort(
-   (x,y)=>
-    x[0]-y[0] ||
-    x[1]-y[1]
-  );
-
- const out=[];
-
- for(const r of a){
-  const last=out[out.length-1];
-
-  if(
-   last &&
-   r[0]<=last[1]+1
-  ){
-   last[1]=Math.max(
-    last[1],
-    r[1]
-   );
-  }else{
-   out.push([...r]);
-  }
- }
-
- return out;
+if(!aa&&bb){
+return 1;
 }
 
-function codeRanges(entry){
- const groups=sortGroups(
-  entry.tag||[]
- )
- .map(groupCode)
- .filter(Boolean);
-
- if(
-  !groups.length ||
-  groups.some(
-   g=>
-    !CODE_GROUP_OPTIONS.includes(g)
-  )
- ){
-  return [];
- }
-
- const rules=
-  titleIsChinese(entry.bookName)
-   ? CODE_RULES.zh
-   : CODE_RULES.en;
-
- const combo=groups.join('/');
-
- return mergeRanges(
-  rules.exceptions[combo] ||
-  groups.flatMap(
-   g=>
-    rules.groups[g] ||
-    []
-  )
- );
+if(!aa&&!bb){
+return 0;
 }
 
-function codeAllowed(entry,code){
- const n=Number(
-  normalizeCode(code)
- );
+function triple(value){
+const match=
+value.match(
+/^(\d+)-(\d+)-(\d+)$/
+);
 
- return (
-  Number.isInteger(n) &&
-  codeRanges(entry).some(
-   ([a,b])=>
-    n>=a &&
-    n<=b
-  )
- );
+return match
+? [
+Number(match[1]),
+Number(match[2]),
+Number(match[3])
+]
+: null;
 }
 
-function usedCodes(entries,excludeId=''){
- const s=new Set();
+const at=
+triple(aa);
 
- for(const e of entries){
-  if(e.id===excludeId){
-   continue;
-  }
+const bt=
+triple(bb);
 
-  const c=normalizeCode(e.code);
+const group=
+(
+value,
+tripleValue
+)=>
+tripleValue
+? 0
+: (
+value.includes('·')
+? 1
+: 2
+);
 
-  if(c){
-   s.add(Number(c));
-  }
- }
+const ga=
+group(
+aa,
+at
+);
 
- return s;
+const gb=
+group(
+bb,
+bt
+);
+
+if(ga!==gb){
+return ga-gb;
 }
 
-function smallestCode(entry,used){
- for(const [a,b] of codeRanges(entry)){
-  for(let n=a;n<=b;n++){
-   if(!used.has(n)){
-    return String(n).padStart(6,'0');
-   }
-  }
- }
-
- return '';
-}
-
-function linkedText(raw){
- const s=clean(raw);
- const re=/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
-
- let out='';
- let last=0;
- let m;
-
- while((m=re.exec(s))){
-  out+=escapeHtml(
-   s.slice(
-    last,
-    m.index
-   )
-  );
-
-  out+=
-   `<a href="${escapeAttr(m[2])}" target="_blank" rel="noopener noreferrer">${escapeHtml(m[1])}</a>`;
-
-  last=
-   m.index+
-   m[0].length;
- }
-
- return (
-  out+
-  escapeHtml(
-   s.slice(last)
-  )
- );
-}
-
-function normalizeEntry(raw){
- if(
-  !raw ||
-  typeof raw!=='object'
- ){
-  return null;
- }
-
- const bookName=
-  clean(raw.bookName);
-
- if(!bookName){
-  return null;
- }
-
- const code=
-  clean(raw.code);
-
- let mode=
-  clean(raw.codeMode);
-
- if(
-  ![
-   'legacy',
-   'manual',
-   'auto'
-  ].includes(mode)
- ){
-  if(
-   code &&
-   raw.codeAutoManaged===true &&
-   !raw.codeManualEdited
-  ){
-   mode='auto';
-
-  }else if(
-   code &&
-   raw.codeManualEdited
-  ){
-   mode='manual';
-
-  }else{
-   mode=
-    code
-     ? 'legacy'
-     : 'auto';
-  }
- }
-
- return {
-  id:
-   clean(raw.id) ||
-   uid(),
-
-  bookName,
-
-  bookNo:
-   clean(raw.bookNo),
-
-  institution:
-   clean(raw.institution),
-
-  category:
-   uniq(
-    Array.isArray(raw.category)
-     ? raw.category
-     : [raw.category]
-   ),
-
-  tag:
-   sortGroups(
-    Array.isArray(raw.tag)
-     ? raw.tag
-     : [raw.tag]
-   ),
-
-  tagChecked:
-   Boolean(raw.tagChecked),
-
-  code,
-
-  codeMode:
-   mode,
-
-  updatedAt:
-   Number(raw.updatedAt) ||
-   0
- };
-}
-
-function normalizeState(raw){
- const src=
-  Array.isArray(raw)
-   ? {entries:raw}
-   : (
-    raw &&
-    typeof raw==='object'
-     ? raw
-     : {}
-   );
-
- const entries=
-  (
-   Array.isArray(src.entries)
-    ? src.entries
-    : []
-  )
-  .map(normalizeEntry)
-  .filter(Boolean);
-
- const institutions=
-  uniq([
-   ...(
-    Array.isArray(src.institutions)
-     ? src.institutions
-     : []
-   ),
-   ...entries
-    .map(e=>e.institution)
-    .filter(Boolean)
-  ]);
-
- const categories=
-  uniq([
-   ...(
-    Array.isArray(src.categories)
-     ? src.categories
-     : []
-   ),
-   ...entries.flatMap(
-    e=>e.category
-   )
-  ]);
-
- const order=
-  new Map(
-   institutions.map(
-    (v,i)=>[
-     key(v),
-     i
-    ]
-   )
-  );
-
- entries.sort(
-  (a,b)=>
-   (
-    (order.get(key(a.institution))??999999)-
-    (order.get(key(b.institution))??999999)
-   ) ||
-   a.bookNo.localeCompare(
-    b.bookNo,
-    'zh-CN',
-    {numeric:true}
-   ) ||
-   a.bookName.localeCompare(
-    b.bookName,
-    'zh-CN'
-   )
- );
-
- return {
-  schemaVersion:10,
-  entries,
-  institutions,
-  categories,
-  tags:[...GROUP_OPTIONS]
- };
-}
-
-function signature(s){
- return JSON.stringify(
-  normalizeState(s)
- );
-}
-
-function status(kind,text){
- ui.dot.className=
-  'dot '+kind;
-
- ui.status.textContent=
-  text;
-}
-
-function toast(msg,type=''){
- ui.toast.textContent=
-  msg;
-
- ui.toast.className=
-  'toast '+type;
-
- clearTimeout(
-  toastTimer
- );
-
- toastTimer=
-  setTimeout(
-   ()=>{
-    ui.toast.classList.add(
-     'hidden'
-    );
-   },
-   3200
-  );
-}
-
-function admin(){
- return Boolean(
-  config.owner &&
-  config.repo &&
-  config.path &&
-  config.token
- );
-}
-
-function saveLocal(){
- localStorage.setItem(
-  STORE+':state',
-  JSON.stringify(state)
- );
-
- localStorage.setItem(
-  STORE+':meta',
-  JSON.stringify({
-   dirty,
-   sha,
-   baseState
-  })
- );
-}
-
-function saveConfigLocal(){
- localStorage.setItem(
-  STORE+':config',
-  JSON.stringify({
-   owner:
-    config.owner,
-
-   repo:
-    config.repo,
-
-   path:
-    config.path
-  })
- );
-
- if(config.token){
-  localStorage.setItem(
-   STORE+':token',
-   config.token
-  );
- }else{
-  localStorage.removeItem(
-   STORE+':token'
-  );
- }
-}
-
-function loadLocal(){
- try{
-  const s=
-   JSON.parse(
-    localStorage.getItem(
-     STORE+':state'
-    ) ||
-    'null'
-   );
-
-  if(s){
-   state=
-    normalizeState(s);
-  }
- }catch{}
-
- try{
-  const m=
-   JSON.parse(
-    localStorage.getItem(
-     STORE+':meta'
-    ) ||
-    'null'
-   );
-
-  if(m){
-   dirty=
-    Boolean(m.dirty);
-
-   sha=
-    clean(m.sha) ||
-    null;
-
-   baseState=
-    m.baseState
-     ? normalizeState(m.baseState)
-     : null;
-  }
- }catch{}
-
- try{
-  const c=
-   JSON.parse(
-    localStorage.getItem(
-     STORE+':config'
-    ) ||
-    'null'
-   );
-
-  if(c){
-   config.owner=
-    clean(c.owner);
-
-   config.repo=
-    clean(c.repo);
-
-   config.path=
-    clean(c.path) ||
-    'press_data.json';
-  }
- }catch{}
-
- config.token=
-  clean(
-   localStorage.getItem(
-    STORE+':token'
-   ) ||
-   ''
-  );
-}
-
-function renderGroupButtons(
- box,
- selected,
- onChange
+if(ga===0){
+for(
+let i=0;
+i<3;
+i++
 ){
- box.innerHTML='';
-
- for(const g of GROUP_OPTIONS){
-  const b=
-   document.createElement(
-    'button'
-   );
-
-  b.type='button';
-
-  b.className=
-   'group-btn'+
-   (
-    selected.includes(g)
-     ? ' on'
-     : ''
-   );
-
-  b.textContent=
-   g;
-
-  b.onclick=
-   ()=>{
-    const i=
-     selected.indexOf(g);
-
-    if(i>=0){
-     selected.splice(i,1);
-    }else{
-     selected.push(g);
-    }
-
-    selected.splice(
-     0,
-     selected.length,
-     ...sortGroups(selected)
-    );
-
-    renderGroupButtons(
-     box,
-     selected,
-     onChange
-    );
-
-    onChange();
-   };
-
-  box.appendChild(b);
- }
-}
-
-function renderDatalists(){
- ui.institutionList.innerHTML=
-  state.institutions
-   .map(
-    v=>
-     `<option value="${escapeAttr(v)}"></option>`
-   )
-   .join('');
-
- ui.categoryList.innerHTML=
-  state.categories
-   .map(
-    v=>
-     `<option value="${escapeAttr(v)}"></option>`
-   )
-   .join('');
-}
-
-function render(){
- state=
-  normalizeState(state);
-
- renderDatalists();
-
- ui.addPanel.classList.toggle(
-  'hidden',
-  !admin()
- );
-
- ui.sync.classList.toggle(
-  'hidden',
-  !admin()
- );
-
- ui.sync.disabled=
-  syncBusy;
-
- ui.manage.disabled=
-  !admin();
-
- const total=
-  state.entries.length;
-
- const coded=
-  state.entries.filter(
-   e=>clean(e.code)
-  ).length;
-
- const checked=
-  state.entries.filter(
-   e=>e.tagChecked
-  ).length;
-
- ui.count.textContent=
-  `${checked}/${coded}/${total}`;
-
- if(!total){
-  ui.list.innerHTML=
-   '<div class="empty">暂无条目</div>';
-
-  return;
- }
-
- ui.list.innerHTML=
-  state.entries
-   .map(
-    e=>{
-     const rows=[];
-
-     if(e.institution){
-      rows.push(
-       `<div class="row institution"><span class="label">出版：</span><span>${linkedText(e.institution)}</span></div>`
-      );
-     }
-
-     if(e.bookNo){
-      rows.push(
-       `<div class="row"><span class="label">书号：</span><span>${escapeHtml(e.bookNo)}</span></div>`
-      );
-     }
-
-     rows.push(
-      `<div class="row"><span class="label">编组：</span><span>${escapeHtml(e.tag.join('/'))} <input class="check" type="checkbox" data-id="${escapeAttr(e.id)}" ${e.tagChecked?'checked':''} ${admin()?'':'disabled'}></span></div>`
-     );
-
-     if(e.category.length){
-      rows.push(
-       `<div class="row"><span class="label">书架：</span><span>${escapeHtml(e.category.join('、'))}</span></div>`
-      );
-     }
-
-     return `
-<article class="item">
-<div class="title">${linkedText(e.bookName)}</div>
-<div class="meta">${rows.join('')}</div>
-${
- admin()
-  ? `<button class="edit-btn" data-id="${escapeAttr(e.id)}" type="button">${escapeHtml(e.code||'编辑')}</button>`
-  : ''
-}
-</article>
-`;
-    }
-   )
-   .join('');
-}
-
-function instantCode(
- entry,
- entries=state.entries
+if(
+at[i]!==bt[i]
 ){
- const used=
-  usedCodes(
-   entries,
-   entry.id
-  );
-
- const current=
-  normalizeCode(
-   entry.code
-  );
-
- if(
-  entry.codeMode==='auto' &&
-  current &&
-  codeAllowed(
-   entry,
-   current
-  ) &&
-  !used.has(
-   Number(current)
-  )
- ){
-  return current;
- }
-
- return smallestCode(
-  entry,
-  used
- );
+return at[i]-bt[i];
+}
+}
 }
 
-function refreshAddCode(){
- const draft={
-  id:
-   addDraftId,
-
-  bookName:
-   clean(
-    ui.bookName.value
-   ),
-
-  tag:
-   sortGroups(
-    addSelected
-   ),
-
-  code:
-   clean(
-    ui.addCode.value
-   ),
-
-  codeMode:
-   'auto'
- };
-
- ui.addCode.value=
-  instantCode(draft);
-
- return ui.addCode.value;
+return collator.compare(
+aa,
+bb
+);
 }
 
-function refreshEditAuto(){
- if(
-  !editAutoMode ||
-  !editOriginal
- ){
-  return;
- }
-
- const draft={
-  ...editOriginal,
-
-  bookName:
-   clean(
-    ui.editBookName.value
-   ),
-
-  tag:
-   sortGroups(
-    editSelected
-   ),
-
-  code:
-   clean(
-    ui.editCode.value
-   ),
-
-  codeMode:
-   'auto'
- };
-
- ui.editCode.value=
-  instantCode(
-   draft,
-   state.entries
-  );
-}
-
-function markDirty(){
- dirty=true;
- mutationVersion++;
-
- saveLocal();
-
- if(syncBusy){
-  syncQueued=true;
- }
-}
-
-function addEntry(){
- const bookName=
-  clean(
-   ui.bookName.value
-  );
-
- if(!bookName){
-  toast(
-   '书名不能为空',
-   'error'
-  );
-
-  ui.bookName.focus();
-  return;
- }
-
- const code=
-  refreshAddCode();
-
- const now=
-  Date.now();
-
- state.entries.push(
-  normalizeEntry({
-   id:
-    addDraftId,
-
-   bookName,
-
-   bookNo:
-    ui.bookNo.value,
-
-   institution:
-    ui.institution.value,
-
-   category:
-    clean(ui.category.value)
-     ? [ui.category.value]
-     : [],
-
-   tag:
-    addSelected,
-
-   tagChecked:
-    false,
-
-   code,
-
-   codeMode:
-    'auto',
-
-   updatedAt:
-    now
-  })
- );
-
- addDraftId=
-  uid();
-
- ui.bookName.value='';
- ui.bookNo.value='';
- ui.institution.value='';
- ui.category.value='';
- ui.addCode.value='';
-
- addSelected=[];
-
- renderGroupButtons(
-  ui.addGroups,
-  addSelected,
-  refreshAddCode
- );
-
- render();
-
- markDirty();
-
- ui.bookName.focus();
-
- sync(
-  false,
-  true
- );
-}
-
-function openEdit(id){
- const e=
-  state.entries.find(
-   x=>x.id===id
-  );
-
- if(!e){
-  return;
- }
-
- editId=
-  id;
-
- editOriginal=
-  clone(e);
-
- editSelected=[
-  ...e.tag
- ];
-
- editAutoMode=
-  e.codeMode==='auto' ||
-  !clean(e.code);
-
- ui.editBookName.value=
-  e.bookName;
-
- ui.editBookNo.value=
-  e.bookNo;
-
- ui.editInstitution.value=
-  e.institution;
-
- ui.editCategory.value=
-  e.category[0] ||
-  '';
-
- ui.editCode.value=
-  e.code;
-
- ui.editCode.dataset.programmatic=
-  '0';
-
- ui.editCodeNote.textContent=
-  editAutoMode
-   ? '自动编码：编组或书名变化时立即重算，同步后多设备收敛'
-   : '历史或手工编码：普通编辑不会自动清空或改号';
-
- renderGroupButtons(
-  ui.editGroups,
-  editSelected,
-  ()=>{
-   if(!clean(editOriginal.code)){
-    editAutoMode=true;
-   }
-
-   refreshEditAuto();
-  }
- );
-
- ui.editModal.classList.remove(
-  'hidden'
- );
-}
-
-function closeEdit(){
- ui.editModal.classList.add(
-  'hidden'
- );
-
- editId='';
- editOriginal=null;
- editSelected=[];
- editAutoMode=false;
-}
-
-function saveEdit(){
- const e=
-  state.entries.find(
-   x=>x.id===editId
-  );
-
- if(!e){
-  return;
- }
-
- const name=
-  clean(
-   ui.editBookName.value
-  );
-
- if(!name){
-  toast(
-   '书名不能为空',
-   'error'
-  );
-
-  return;
- }
-
- const typed=
-  clean(
-   ui.editCode.value
-  );
-
- let mode=
-  e.codeMode;
-
- let code=
-  e.code;
-
- if(editAutoMode){
-  code=
-   normalizeCode(typed);
-
-  mode=
-   'auto';
-
- }else if(
-  typed!==
-  clean(e.code)
- ){
-  code=
-   normalizeCode(typed);
-
-  if(!code){
-   toast(
-    '编码必须是 6 位数字',
-    'error'
-   );
-
-   return;
-  }
-
-  const candidate={
-   ...e,
-   bookName:
-    name,
-
-   tag:
-    sortGroups(
-     editSelected
-    )
-  };
-
-  if(
-   !codeAllowed(
-    candidate,
-    code
-   )
-  ){
-   toast(
-    '该编码不在当前编组与书名语言对应区间内',
-    'error'
-   );
-
-   return;
-  }
-
-  if(
-   state.entries.some(
-    x=>
-     x.id!==e.id &&
-     normalizeCode(x.code)===code
-   )
-  ){
-   toast(
-    `编码 ${code} 已被其它条目使用`,
-    'error'
-   );
-
-   return;
-  }
-
-  mode=
-   'manual';
- }
-
- Object.assign(
-  e,
-  {
-   bookName:
-    name,
-
-   bookNo:
-    clean(
-     ui.editBookNo.value
-    ),
-
-   institution:
-    clean(
-     ui.editInstitution.value
-    ),
-
-   category:
-    clean(ui.editCategory.value)
-     ? [
-      clean(
-       ui.editCategory.value
-      )
-     ]
-     : [],
-
-   tag:
-    sortGroups(
-     editSelected
-    ),
-
-   code,
-
-   codeMode:
-    mode,
-
-   updatedAt:
-    Date.now()
-  }
- );
-
- closeEdit();
-
- render();
-
- markDirty();
-
- sync(
-  false,
-  true
- );
-}
-
-function deleteEntry(){
- const e=
-  state.entries.find(
-   x=>x.id===editId
-  );
-
- if(!e){
-  return;
- }
-
- if(
-  !confirm(
-   `确定删除“${e.bookName}”吗？`
-  )
- ){
-  return;
- }
-
- state.entries=
-  state.entries.filter(
-   x=>x.id!==editId
-  );
-
- closeEdit();
-
- render();
-
- markDirty();
-
- sync(
-  false,
-  true
- );
-}
-
-function mergeProtectedCode(
- base,
- local,
- remote,
- merged,
- stats
+function codeGroupsFromEntry(
+entry
 ){
- const lb=
-  local
-   ? {
-    code:
-     clean(local.code),
+const raw=
+normalizeMulti(
+entry?.tag
+)
+.map(clean)
+.filter(Boolean);
 
-    mode:
-     local.codeMode
-   }
-   : null;
-
- const rb=
-  remote
-   ? {
-    code:
-     clean(remote.code),
-
-    mode:
-     remote.codeMode
-   }
-   : null;
-
- const bb=
-  base
-   ? {
-    code:
-     clean(base.code),
-
-    mode:
-     base.codeMode
-   }
-   : null;
-
- const protectedLocal=
-  lb &&
-  lb.code &&
-  lb.mode!=='auto';
-
- const protectedRemote=
-  rb &&
-  rb.code &&
-  rb.mode!=='auto';
-
- if(
-  protectedLocal &&
-  protectedRemote &&
-  lb.code!==rb.code
- ){
-  if(
-   bb &&
-   lb.code===bb.code
-  ){
-   return rb;
-  }
-
-  if(
-   bb &&
-   rb.code===bb.code
-  ){
-   return lb;
-  }
-
-  stats.codeConflicts++;
-
-  return lb;
- }
-
- if(protectedLocal){
-  return lb;
- }
-
- if(protectedRemote){
-  return rb;
- }
-
- if(
-  lb?.code &&
-  rb?.code
- ){
-  if(lb.code===rb.code){
-   return lb;
-  }
-
-  if(
-   lb.mode==='auto' &&
-   rb.mode==='auto'
-  ){
-   return rb;
-  }
- }
-
- if(rb?.code){
-  return rb;
- }
-
- if(lb?.code){
-  return lb;
- }
-
- return {
-  code:'',
-  mode:'auto'
- };
+if(!raw.length){
+return null;
 }
 
-function mergeEntry(
- base,
- local,
- remote,
- stats
+const codes=
+raw.map(
+codeGroupValue
+);
+
+if(
+codes.some(
+value=>
+!CODE_GROUP_OPTIONS
+.includes(value)
+)
 ){
- if(!base){
-  if(!local){
-   return remote;
-  }
+return null;
+}
 
-  if(!remote){
-   return local;
-  }
- }
+return uniq(codes)
+.sort(
+(a,b)=>
+Number(a)-
+Number(b)
+);
+}
 
- if(
-  base &&
-  !local &&
-  !remote
- ){
-  return null;
- }
+function mergeCodeRanges(
+ranges
+){
+const ordered=
+(ranges||[])
+.map(
+range=>[
+Number(
+range[0]
+),
+Number(
+range[1]
+)
+]
+)
+.filter(
+range=>
+Number.isFinite(
+range[0]
+) &&
+Number.isFinite(
+range[1]
+) &&
+range[0]<=
+range[1]
+)
+.sort(
+(a,b)=>
+a[0]-b[0] ||
+a[1]-b[1]
+);
 
- if(
-  base &&
-  !local
- ){
-  if(
-   same(
-    remote,
-    base
-   )
-  ){
-   return null;
-  }
+const merged=[];
 
-  return remote;
- }
+for(
+const range
+of ordered
+){
+const last=
+merged[
+merged.length-1
+];
 
- if(
-  base &&
-  !remote
- ){
-  if(
-   same(
-    local,
-    base
-   )
-  ){
-   return null;
-  }
+if(
+last &&
+range[0]<=
+last[1]+1
+){
+last[1]=
+Math.max(
+last[1],
+range[1]
+);
 
-  return local;
- }
+}else{
+merged.push(
+[...range]
+);
+}
+}
 
- if(!local){
-  return remote;
- }
+return merged;
+}
 
- if(!remote){
-  return local;
- }
+function codeRangesForEntry(
+entry
+){
+const groups=
+codeGroupsFromEntry(
+entry
+);
 
- const out={
-  id:
-   local.id ||
-   remote.id
- };
+if(!groups?.length){
+return [];
+}
 
- for(
-  const f
-  of [
-   'bookName',
-   'bookNo',
-   'institution',
-   'category',
-   'tag',
-   'tagChecked'
-  ]
- ){
-  const bv=
-   base?.[f];
+const rules=
+titleIsChinese(
+entry.bookName
+)
+? CODE_RULES.zh
+: CODE_RULES.en;
 
-  const lv=
-   local[f];
+const combination=
+groups.join('/');
 
-  const rv=
-   remote[f];
+if(
+rules.exceptions[
+combination
+]
+){
+return mergeCodeRanges(
+rules.exceptions[
+combination
+]
+);
+}
 
-  if(
-   same(
-    lv,
-    rv
-   )
-  ){
-   out[f]=
-    clone(lv);
+return mergeCodeRanges(
+groups.flatMap(
+group=>
+rules.groups[group]
+||[]
+)
+);
+}
 
-  }else if(
-   base &&
-   same(
-    lv,
-    bv
-   )
-  ){
-   out[f]=
-    clone(rv);
+function normalizeStoredCode(
+raw
+){
+const value=
+folded(raw);
 
-  }else if(
-   base &&
-   same(
-    rv,
-    bv
-   )
-  ){
-   out[f]=
-    clone(lv);
+return /^\d{6}$/.test(
+value
+)
+? value
+: '';
+}
 
-  }else{
-   out[f]=
-    clone(
-     (
-      local.updatedAt||0
-     )>=(
-      remote.updatedAt||0
-     )
-      ? lv
-      : rv
-    );
+function codeAllowedForEntry(
+entry,
+rawCode
+){
+const code=
+Number(
+normalizeStoredCode(
+rawCode
+)
+);
 
-   stats.fieldConflicts++;
-  }
- }
+if(
+!Number.isInteger(code)
+){
+return false;
+}
 
- const cb=
-  mergeProtectedCode(
-   base,
-   local,
-   remote,
-   out,
-   stats
-  );
+return codeRangesForEntry(
+entry
+)
+.some(
+([start,end])=>
+code>=start &&
+code<=end
+);
+}
 
- out.code=
-  cb.code;
+function smallestAvailableCode(
+entry,
+used
+){
+for(
+const [start,end]
+of codeRangesForEntry(
+entry
+)
+){
+let number=
+start;
 
- out.codeMode=
-  cb.mode;
+while(
+number<=end &&
+used.has(number)
+){
+number++;
+}
 
- out.updatedAt=
-  Math.max(
-   local.updatedAt||0,
-   remote.updatedAt||0
-  );
+if(number<=end){
+return String(number)
+.padStart(
+6,
+'0'
+);
+}
+}
 
- return normalizeEntry(out);
+return '';
+}
+
+function usedCodesExcept(
+entries,
+excludeId=''
+){
+const used=
+new Set();
+
+for(
+const entry
+of entries||[]
+){
+if(
+excludeId &&
+entry.id===excludeId
+){
+continue;
+}
+
+const code=
+normalizeStoredCode(
+entry.code
+);
+
+if(code){
+used.add(
+Number(code)
+);
+}
+}
+
+return used;
+}
+
+function renderLinkedText(raw){
+const source=
+clean(raw);
+
+const regex=
+/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
+
+let html='';
+let last=0;
+let match;
+
+while(
+(
+match=
+regex.exec(source)
+)
+){
+html+=
+esc(
+source.slice(
+last,
+match.index
+)
+);
+
+html+=
+`<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
+
+last=
+match.index+
+match[0].length;
+}
+
+return (
+html+
+esc(
+source.slice(last)
+)
+);
+}
+
+function normEntry(raw){
+if(
+!raw ||
+typeof raw!=='object'
+){
+return null;
+}
+
+const bookName=
+cleanTitle(
+raw.bookName
+);
+
+if(!bookName){
+return null;
+}
+
+const preservedCode=
+clean(
+raw.code
+);
+
+return {
+id:
+clean(raw.id) ||
+uid(),
+
+bookName,
+
+bookNo:
+clean(
+raw.bookNo
+),
+
+institution:
+clean(
+raw.institution
+),
+
+category:
+normalizeMulti(
+raw.category
+),
+
+tag:
+sortTags(
+normalizeMulti(
+raw.tag
+)
+.map(
+normalizeFixedGroupLabel
+)
+),
+
+tagChecked:
+Boolean(
+raw.tagChecked
+),
+
+code:
+preservedCode,
+
+codeAutoManaged:
+Boolean(
+preservedCode &&
+raw.codeAutoManaged===true &&
+!raw.codeManualEdited
+),
+
+codeAutoPending:
+Boolean(
+!preservedCode &&
+raw.codeAutoPending===true
+),
+
+codeManualEdited:
+Boolean(
+preservedCode &&
+raw.codeManualEdited
+),
+
+codeManualPinned:
+Boolean(
+preservedCode &&
+raw.codeManualEdited &&
+raw.codeManualPinned
+)
+};
+}
+
+function norm(value){
+const source=
+Array.isArray(value)
+? {
+entries:value
+}
+: (
+value &&
+typeof value===
+'object'
+? value
+: {}
+);
+
+const entries=
+(
+Array.isArray(
+source.entries
+)
+? source.entries
+: []
+)
+.map(normEntry)
+.filter(Boolean);
+
+const institutions=
+uniq(
+Array.isArray(
+source.institutions
+)
+? source.institutions
+: entries
+.map(
+entry=>
+entry.institution
+)
+.filter(Boolean)
+);
+
+const categories=
+uniq(
+Array.isArray(
+source.categories
+)
+? source.categories
+: entries.flatMap(
+entry=>
+entry.category
+)
+);
+
+const orderMap=
+new Map(
+institutions.map(
+(value,index)=>[
+key(value),
+index
+]
+)
+);
+
+entries.sort(
+(a,b)=>{
+const ai=
+orderMap.has(
+key(
+a.institution
+)
+)
+? orderMap.get(
+key(
+a.institution
+)
+)
+: Number.MAX_SAFE_INTEGER;
+
+const bi=
+orderMap.has(
+key(
+b.institution
+)
+)
+? orderMap.get(
+key(
+b.institution
+)
+)
+: Number.MAX_SAFE_INTEGER;
+
+if(ai!==bi){
+return ai-bi;
+}
+
+if(
+ai===
+Number.MAX_SAFE_INTEGER
+){
+const result=
+collator.compare(
+a.institution,
+b.institution
+);
+
+if(result!==0){
+return result;
+}
+}
+
+const bookNoResult=
+compareBookNo(
+a.bookNo,
+b.bookNo
+);
+
+if(
+bookNoResult!==0
+){
+return bookNoResult;
+}
+
+return collator.compare(
+a.bookName,
+b.bookName
+);
+}
+);
+
+return {
+schemaVersion:9,
+entries,
+institutions,
+categories,
+tags:[
+...GROUP_OPTIONS
+]
+};
+}
+
+function sameSyncValue(
+a,
+b
+){
+return JSON.stringify(
+a
+)===
+JSON.stringify(
+b
+);
+}
+
+function stateSignature(
+value
+){
+return JSON.stringify(
+norm(
+value
+)
+);
+}
+
+function copySyncValue(
+value
+){
+return Array.isArray(
+value
+)
+? [
+...value
+]
+: value;
+}
+
+const ENTRY_SYNC_FIELDS=
+Object.freeze([
+'bookName',
+'bookNo',
+'institution',
+'category',
+'tag',
+'tagChecked',
+'code',
+'codeAutoManaged',
+'codeAutoPending',
+'codeManualEdited',
+'codeManualPinned'
+]);
+
+const CODE_SYNC_FIELDS=
+new Set([
+'code',
+'codeAutoManaged',
+'codeAutoPending',
+'codeManualEdited',
+'codeManualPinned'
+]);
+
+function codeBundle(entry){
+const code=
+clean(
+entry?.code
+);
+
+const manual=
+Boolean(
+code &&
+entry?.codeManualEdited
+);
+
+const autoManaged=
+Boolean(
+code &&
+entry?.codeAutoManaged===true &&
+!manual
+);
+
+return {
+code,
+
+codeAutoManaged:
+autoManaged,
+
+codeAutoPending:
+Boolean(
+!code &&
+entry?.codeAutoPending===true
+),
+
+codeManualEdited:
+manual,
+
+codeManualPinned:
+Boolean(
+manual &&
+entry?.codeManualPinned
+)
+};
+}
+
+function mergeCodeBundle(
+baseEntry,
+localEntry,
+remoteEntry,
+stats
+){
+const base=
+codeBundle(
+baseEntry
+);
+
+const local=
+codeBundle(
+localEntry
+);
+
+const remote=
+codeBundle(
+remoteEntry
+);
+
+if(
+local.code &&
+!remote.code
+){
+return local;
+}
+
+if(
+remote.code &&
+!local.code
+){
+return remote;
+}
+
+if(
+!local.code &&
+!remote.code
+){
+return {
+code:'',
+codeAutoManaged:false,
+
+codeAutoPending:
+Boolean(
+local.codeAutoPending ||
+remote.codeAutoPending
+),
+
+codeManualEdited:false,
+codeManualPinned:false
+};
+}
+
+if(
+local.code===
+remote.code
+){
+return {
+code:
+local.code,
+
+codeAutoManaged:
+Boolean(
+(
+local.codeAutoManaged ||
+remote.codeAutoManaged
+) &&
+!local.codeManualEdited &&
+!remote.codeManualEdited
+),
+
+codeAutoPending:false,
+
+codeManualEdited:
+Boolean(
+local.codeManualEdited ||
+remote.codeManualEdited
+),
+
+codeManualPinned:
+Boolean(
+local.codeManualPinned ||
+remote.codeManualPinned
+)
+};
+}
+
+if(
+local.code &&
+!local.codeAutoManaged &&
+remote.codeAutoManaged
+){
+return local;
+}
+
+if(
+remote.code &&
+!remote.codeAutoManaged &&
+local.codeAutoManaged
+){
+return remote;
+}
+
+if(
+local.codeAutoManaged &&
+remote.codeAutoManaged
+){
+return remote;
+}
+
+if(
+base.code &&
+local.code===
+base.code &&
+remote.code &&
+remote.code!==
+base.code
+){
+return remote;
+}
+
+if(
+base.code &&
+remote.code===
+base.code &&
+local.code &&
+local.code!==
+base.code
+){
+return local;
+}
+
+stats.codeConflicts++;
+
+return local.code
+? local
+: remote;
+}
+
+function mergeEntryVersions(
+baseEntry,
+localEntry,
+remoteEntry,
+stats
+){
+if(!baseEntry){
+if(!localEntry){
+return remoteEntry ||
+null;
+}
+
+if(!remoteEntry){
+return localEntry;
+}
+
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
+return localEntry;
+}
+
+const merged={
+id:
+localEntry.id ||
+remoteEntry.id
+};
+
+for(
+const field
+of ENTRY_SYNC_FIELDS
+){
+if(
+CODE_SYNC_FIELDS.has(
+field
+)
+){
+continue;
+}
+
+const localValue=
+localEntry[field];
+
+const remoteValue=
+remoteEntry[field];
+
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
+
+}else{
+merged[field]=
+copySyncValue(
+localValue
+);
+
+stats.conflicts++;
+}
+}
+
+Object.assign(
+merged,
+mergeCodeBundle(
+null,
+localEntry,
+remoteEntry,
+stats
+)
+);
+
+return normEntry(
+merged
+);
+}
+
+if(
+!localEntry &&
+!remoteEntry
+){
+return null;
+}
+
+if(!localEntry){
+if(
+sameSyncValue(
+remoteEntry,
+baseEntry
+)
+){
+return null;
+}
+
+stats.conflicts++;
+
+return remoteEntry;
+}
+
+if(!remoteEntry){
+if(
+sameSyncValue(
+localEntry,
+baseEntry
+)
+){
+return null;
+}
+
+stats.conflicts++;
+
+return localEntry;
+}
+
+if(
+sameSyncValue(
+localEntry,
+remoteEntry
+)
+){
+return localEntry;
+}
+
+const merged={
+id:
+localEntry.id
+};
+
+for(
+const field
+of ENTRY_SYNC_FIELDS
+){
+if(
+CODE_SYNC_FIELDS.has(
+field
+)
+){
+continue;
+}
+
+const baseValue=
+baseEntry[field];
+
+const localValue=
+localEntry[field];
+
+const remoteValue=
+remoteEntry[field];
+
+if(
+sameSyncValue(
+localValue,
+remoteValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
+
+continue;
+}
+
+if(
+sameSyncValue(
+localValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(
+remoteValue
+);
+
+continue;
+}
+
+if(
+sameSyncValue(
+remoteValue,
+baseValue
+)
+){
+merged[field]=
+copySyncValue(
+localValue
+);
+
+continue;
+}
+
+merged[field]=
+copySyncValue(
+localValue
+);
+
+stats.conflicts++;
+}
+
+Object.assign(
+merged,
+mergeCodeBundle(
+baseEntry,
+localEntry,
+remoteEntry,
+stats
+)
+);
+
+return normEntry(
+merged
+);
+}
+
+function mergeOrderedHistory(
+baseValues,
+localValues,
+remoteValues,
+stats
+){
+const base=
+uniq(
+baseValues ||
+[]
+);
+
+const local=
+uniq(
+localValues ||
+[]
+);
+
+const remote=
+uniq(
+remoteValues ||
+[]
+);
+
+if(
+sameSyncValue(
+local,
+base
+)
+){
+return remote;
+}
+
+if(
+sameSyncValue(
+remote,
+base
+)
+){
+return local;
+}
+
+if(
+sameSyncValue(
+local,
+remote
+)
+){
+return local;
+}
+
+stats.collectionConflicts++;
+
+const baseKeys=
+new Set(
+base.map(key)
+);
+
+const localMap=
+new Map(
+local.map(
+value=>[
+key(value),
+value
+]
+)
+);
+
+const remoteMap=
+new Map(
+remote.map(
+value=>[
+key(value),
+value
+]
+)
+);
+
+const ordered=
+uniq([
+...local,
+...remote
+]);
+
+return ordered.filter(
+value=>{
+const itemKey=
+key(value);
+
+if(
+!baseKeys.has(
+itemKey
+)
+){
+return (
+localMap.has(
+itemKey
+) ||
+remoteMap.has(
+itemKey
+)
+);
+}
+
+return (
+localMap.has(
+itemKey
+) &&
+remoteMap.has(
+itemKey
+)
+);
+}
+);
+}
+
+function stablePendingCodeCompare(
+a,
+b
+){
+return String(a.id||'')
+.localeCompare(
+String(b.id||''),
+'en'
+);
+}
+
+function inspectCodeIssues(
+snapshot
+){
+const fixed=
+norm(
+snapshot
+);
+
+const counts=
+new Map();
+
+let invalid=
+0;
+
+for(
+const entry
+of fixed.entries
+){
+const preservedCode=
+clean(
+entry.code
+);
+
+if(!preservedCode){
+continue;
+}
+
+const normalizedCode=
+normalizeStoredCode(
+preservedCode
+);
+
+const duplicateKey=
+normalizedCode ||
+folded(
+preservedCode
+);
+
+counts.set(
+duplicateKey,
+(counts.get(duplicateKey)||0)+1
+);
+
+if(
+!normalizedCode ||
+!codeAllowedForEntry(
+entry,
+normalizedCode
+)
+){
+invalid++;
+}
+}
+
+let duplicates=
+0;
+
+for(
+const count
+of counts.values()
+){
+if(count>1){
+duplicates+=
+count-1;
+}
+}
+
+return {
+duplicates,
+invalid
+};
+}
+
+function instantAutoCodeForEntry(
+entry,
+entries=state.entries
+){
+const ranges=
+codeRangesForEntry(
+entry
+);
+
+if(!ranges.length){
+return '';
+}
+
+const used=
+usedCodesExcept(
+entries,
+entry.id
+);
+
+const current=
+normalizeStoredCode(
+entry.code
+);
+
+if(
+entry.codeAutoManaged===true &&
+current &&
+codeAllowedForEntry(
+entry,
+current
+) &&
+!used.has(
+Number(current)
+)
+){
+return current;
+}
+
+return smallestAvailableCode(
+entry,
+used
+);
+}
+
+function refreshAddDraftCode(){
+const draft={
+id:
+addDraftId,
+
+bookName:
+cleanTitle(
+bookNameInput.value
+),
+
+tag:
+sortTags(
+addSelections.tag
+),
+
+code:
+clean(
+addDraftCode
+),
+
+codeAutoManaged:true
+};
+
+addDraftCode=
+instantAutoCodeForEntry(
+draft,
+state.entries
+);
+
+return addDraftCode;
+}
+
+function refreshEditAutoCodePreview(){
+if(
+!editingId ||
+!editAutoManagedDraft
+){
+return;
+}
+
+const original=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(!original){
+return;
+}
+
+const draft={
+...original,
+
+bookName:
+cleanTitle(
+editBookName.value
+),
+
+tag:
+sortTags(
+editSelections.tag
+),
+
+code:
+clean(
+editCode.value
+),
+
+codeAutoManaged:true
+};
+
+editCode.value=
+instantAutoCodeForEntry(
+draft,
+state.entries
+);
+}
+
+function reconcileAutoCodesAfterPull(
+snapshot,
+remoteSnapshot
+){
+const fixed=
+norm(snapshot);
+
+const remote=
+norm(remoteSnapshot);
+
+const remoteMap=
+new Map(
+remote.entries.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
+
+const used=
+new Set();
+
+let assigned=0;
+let reassigned=0;
+let pendingUnassigned=0;
+
+for(
+const entry
+of fixed.entries
+){
+const code=
+normalizeStoredCode(
+entry.code
+);
+
+if(
+code &&
+entry.codeAutoManaged!==true
+){
+used.add(
+Number(code)
+);
+}
+}
+
+const autoEntries=
+fixed.entries
+.filter(
+entry=>
+entry.codeAutoManaged===true ||
+entry.codeAutoPending===true
+)
+.sort(
+stablePendingCodeCompare
+);
+
+const settled=
+new Set();
+
+for(
+const entry
+of autoEntries
+){
+const remoteEntry=
+remoteMap.get(
+entry.id
+);
+
+const remoteCode=
+normalizeStoredCode(
+remoteEntry?.code
+);
+
+if(
+remoteEntry?.codeAutoManaged===true &&
+remoteCode &&
+codeAllowedForEntry(
+entry,
+remoteCode
+) &&
+!used.has(
+Number(remoteCode)
+)
+){
+const before=
+clean(
+entry.code
+);
+
+entry.code=
+remoteCode;
+
+entry.codeAutoManaged=true;
+entry.codeAutoPending=false;
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+used.add(
+Number(remoteCode)
+);
+
+settled.add(
+entry.id
+);
+
+if(
+before &&
+before!==remoteCode
+){
+reassigned++;
+}
+}
+}
+
+for(
+const entry
+of autoEntries
+){
+if(
+settled.has(
+entry.id
+)
+){
+continue;
+}
+
+const current=
+normalizeStoredCode(
+entry.code
+);
+
+if(
+entry.codeAutoManaged===true &&
+current &&
+codeAllowedForEntry(
+entry,
+current
+) &&
+!used.has(
+Number(current)
+)
+){
+used.add(
+Number(current)
+);
+
+entry.codeAutoPending=false;
+
+settled.add(
+entry.id
+);
+}
+}
+
+for(
+const entry
+of autoEntries
+){
+if(
+settled.has(
+entry.id
+)
+){
+continue;
+}
+
+const before=
+clean(
+entry.code
+);
+
+const code=
+smallestAvailableCode(
+entry,
+used
+);
+
+if(!code){
+entry.code='';
+entry.codeAutoManaged=false;
+entry.codeAutoPending=true;
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+pendingUnassigned++;
+
+continue;
+}
+
+entry.code=
+code;
+
+entry.codeAutoManaged=true;
+entry.codeAutoPending=false;
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+used.add(
+Number(code)
+);
+
+settled.add(
+entry.id
+);
+
+if(before){
+if(before!==code){
+reassigned++;
+}
+}else{
+assigned++;
+}
+}
+
+return {
+state:
+norm(fixed),
+
+assigned,
+reassigned,
+pendingUnassigned
+};
+}
+
+function auditCodeSafety(
+localSnapshot,
+remoteSnapshot,
+candidateSnapshot
+){
+const localMap=
+new Map(
+norm(localSnapshot)
+.entries
+.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
+
+const remoteMap=
+new Map(
+norm(remoteSnapshot)
+.entries
+.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
+
+const candidateMap=
+new Map(
+norm(candidateSnapshot)
+.entries
+.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
+
+const ids=
+new Set([
+...localMap.keys(),
+...remoteMap.keys()
+]);
+
+let violations=0;
+
+for(
+const id
+of ids
+){
+const localEntry=
+localMap.get(id);
+
+const remoteEntry=
+remoteMap.get(id);
+
+const candidateEntry=
+candidateMap.get(id);
+
+const protectedCodes=
+uniq([
+(
+localEntry &&
+localEntry.codeAutoManaged!==true
+? clean(localEntry.code)
+: ''
+),
+(
+remoteEntry &&
+remoteEntry.codeAutoManaged!==true
+? clean(remoteEntry.code)
+: ''
+)
+].filter(Boolean));
+
+if(!protectedCodes.length){
+continue;
+}
+
+const candidateCode=
+clean(
+candidateEntry?.code
+);
+
+if(
+!candidateCode ||
+!protectedCodes.includes(
+candidateCode
+)
+){
+violations++;
+}
+}
+
+return {
+ok:
+violations===0,
+
+violations
+};
+}
+
+function duplicateCodeCount(
+snapshot
+){
+const counts=
+new Map();
+
+for(
+const entry
+of norm(snapshot).entries
+){
+const preservedCode=
+clean(
+entry.code
+);
+
+if(!preservedCode){
+continue;
+}
+
+const normalizedCode=
+normalizeStoredCode(
+preservedCode
+);
+
+const duplicateKey=
+normalizedCode ||
+folded(
+preservedCode
+);
+
+counts.set(
+duplicateKey,
+(counts.get(duplicateKey)||0)+1
+);
+}
+
+let duplicates=
+0;
+
+for(
+const count
+of counts.values()
+){
+if(count>1){
+duplicates+=
+count-1;
+}
+}
+
+return duplicates;
 }
 
 function mergeStates(
- base,
- local,
- remote
+baseValue,
+localValue,
+remoteValue
 ){
- base=
-  normalizeState(
-   base||{}
-  );
+const base=
+norm(
+baseValue ||
+{}
+);
 
- local=
-  normalizeState(
-   local||{}
-  );
+const local=
+norm(
+localValue ||
+{}
+);
 
- remote=
-  normalizeState(
-   remote||{}
-  );
+const remote=
+norm(
+remoteValue ||
+{}
+);
 
- const bm=
-  new Map(
-   base.entries.map(
-    e=>[
-     e.id,
-     e
-    ]
-   )
-  );
+const stats={
+conflicts:0,
+collectionConflicts:0,
+codeConflicts:0
+};
 
- const lm=
-  new Map(
-   local.entries.map(
-    e=>[
-     e.id,
-     e
-    ]
-   )
-  );
+const baseMap=
+new Map(
+base.entries.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
 
- const rm=
-  new Map(
-   remote.entries.map(
-    e=>[
-     e.id,
-     e
-    ]
-   )
-  );
+const localMap=
+new Map(
+local.entries.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
 
- const stats={
-  fieldConflicts:0,
-  codeConflicts:0
- };
+const remoteMap=
+new Map(
+remote.entries.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
 
- const ids=
-  new Set([
-   ...bm.keys(),
-   ...lm.keys(),
-   ...rm.keys()
-  ]);
+const ids=
+new Set([
+...baseMap.keys(),
+...localMap.keys(),
+...remoteMap.keys()
+]);
 
- const entries=[];
+const entries=[];
 
- for(const id of ids){
-  const e=
-   mergeEntry(
-    bm.get(id),
-    lm.get(id),
-    rm.get(id),
-    stats
-   );
-
-  if(e){
-   entries.push(e);
-  }
- }
-
- const institutions=
-  uniq([
-   ...local.institutions,
-   ...remote.institutions,
-   ...entries
-    .map(e=>e.institution)
-    .filter(Boolean)
-  ]);
-
- const categories=
-  uniq([
-   ...local.categories,
-   ...remote.categories,
-   ...entries.flatMap(
-    e=>e.category
-   )
-  ]);
-
- return {
-  state:
-   normalizeState({
-    entries,
-    institutions,
-    categories
-   }),
-
-  stats
- };
-}
-
-function reconcileAutoCodes(
- snapshot,
- remoteSnapshot
+for(
+const id
+of ids
 ){
- const s=
-  normalizeState(snapshot);
+const entry=
+mergeEntryVersions(
+baseMap.get(id),
+localMap.get(id),
+remoteMap.get(id),
+stats
+);
 
- const remote=
-  normalizeState(
-   remoteSnapshot
-  );
-
- const rm=
-  new Map(
-   remote.entries.map(
-    e=>[
-     e.id,
-     e
-    ]
-   )
-  );
-
- const used=
-  new Set();
-
- const settled=
-  new Set();
-
- let reassigned=0;
- let assigned=0;
-
- /*
-  第一层：
-  历史编码与手工编码永久占位。
-  自动编码不能抢占它们。
- */
- for(const e of s.entries){
-  const c=
-   normalizeCode(
-    e.code
-   );
-
-  if(
-   c &&
-   e.codeMode!=='auto'
-  ){
-   used.add(
-    Number(c)
-   );
-  }
- }
-
- const autos=
-  s.entries
-   .filter(
-    e=>e.codeMode==='auto'
-   )
-   .sort(
-    (a,b)=>
-     String(a.id)
-      .localeCompare(
-       String(b.id),
-       'en'
-      )
-   );
-
- /*
-  第二层：
-  同一条目如果服务器已经确认自动编码，
-  优先采用服务器值。
- */
- for(const e of autos){
-  const r=
-   rm.get(e.id);
-
-  const rc=
-   normalizeCode(
-    r?.code
-   );
-
-  if(
-   r?.codeMode==='auto' &&
-   rc &&
-   codeAllowed(
-    e,
-    rc
-   ) &&
-   !used.has(
-    Number(rc)
-   )
-  ){
-   if(
-    e.code &&
-    e.code!==rc
-   ){
-    reassigned++;
-   }
-
-   e.code=
-    rc;
-
-   used.add(
-    Number(rc)
-   );
-
-   settled.add(
-    e.id
-   );
-  }
- }
-
- /*
-  第三层：
-  本机瞬间生成的候选号仍然可用时保持不变。
- */
- for(const e of autos){
-  if(
-   settled.has(
-    e.id
-   )
-  ){
-   continue;
-  }
-
-  const c=
-   normalizeCode(
-    e.code
-   );
-
-  if(
-   c &&
-   codeAllowed(
-    e,
-    c
-   ) &&
-   !used.has(
-    Number(c)
-   )
-  ){
-   used.add(
-    Number(c)
-   );
-
-   settled.add(
-    e.id
-   );
-  }
- }
-
- /*
-  第四层：
-  剩余自动编码条目按稳定 id 排序后重新分配。
-
-  两台设备看到相同合并数据时，
-  会得到相同的分配结果。
- */
- for(const e of autos){
-  if(
-   settled.has(
-    e.id
-   )
-  ){
-   continue;
-  }
-
-  const before=
-   e.code;
-
-  const c=
-   smallestCode(
-    e,
-    used
-   );
-
-  e.code=
-   c;
-
-  if(c){
-   used.add(
-    Number(c)
-   );
-
-   settled.add(
-    e.id
-   );
-
-   if(
-    before &&
-    before!==c
-   ){
-    reassigned++;
-   }
-
-   if(!before){
-    assigned++;
-   }
-  }
- }
-
- return {
-  state:
-   normalizeState(s),
-
-  assigned,
-  reassigned
- };
+if(entry){
+entries.push(
+entry
+);
+}
 }
 
-function auditProtected(
- local,
- remote,
- candidate
+let institutions=
+mergeOrderedHistory(
+base.institutions,
+local.institutions,
+remote.institutions,
+stats
+);
+
+let categories=
+mergeOrderedHistory(
+base.categories,
+local.categories,
+remote.categories,
+stats
+);
+
+institutions=
+uniq([
+...institutions,
+...entries
+.map(
+entry=>
+entry.institution
+)
+.filter(Boolean)
+]);
+
+categories=
+uniq([
+...categories,
+...entries.flatMap(
+entry=>
+entry.category
+)
+]);
+
+const merged=
+norm({
+schemaVersion:9,
+entries,
+institutions,
+categories,
+tags:[
+...GROUP_OPTIONS
+]
+});
+
+const issues=
+inspectCodeIssues(
+merged
+);
+
+return {
+state:
+merged,
+
+conflicts:
+stats.conflicts,
+
+collectionConflicts:
+stats.collectionConflicts,
+
+codeConflicts:
+stats.codeConflicts,
+
+codeRepairs:0,
+
+unresolvedCodeConflicts:
+issues.duplicates,
+
+invalidCodeCount:
+issues.invalid
+};
+}
+
+function admin(){
+return Boolean(
+config.owner &&
+config.repo &&
+config.file &&
+config.token
+);
+}
+
+function show(
+message,
+type='info'
 ){
- const lm=
-  new Map(
-   normalizeState(local)
-    .entries
-    .map(
-     e=>[
-      e.id,
-      e
-     ]
-    )
-  );
+toast.textContent=
+message;
 
- const rm=
-  new Map(
-   normalizeState(remote)
-    .entries
-    .map(
-     e=>[
-      e.id,
-      e
-     ]
-    )
-  );
+toast.className=
+`toast ${type}`;
 
- const cm=
-  new Map(
-   normalizeState(candidate)
-    .entries
-    .map(
-     e=>[
-      e.id,
-      e
-     ]
-    )
-  );
+clearTimeout(
+toastTimer
+);
 
- let violations=0;
-
- for(
-  const id
-  of new Set([
-   ...lm.keys(),
-   ...rm.keys()
-  ])
- ){
-  const protectedCodes=
-   uniq(
-    [
-     lm.get(id),
-     rm.get(id)
-    ]
-    .filter(Boolean)
-    .filter(
-     e=>
-      e.codeMode!=='auto'
-    )
-    .map(
-     e=>clean(e.code)
-    )
-    .filter(Boolean)
-   );
-
-  if(
-   !protectedCodes.length
-  ){
-   continue;
-  }
-
-  const cc=
-   clean(
-    cm.get(id)?.code
-   );
-
-  if(
-   !cc ||
-   !protectedCodes.includes(cc)
-  ){
-   violations++;
-  }
- }
-
- return violations;
+toastTimer=
+setTimeout(
+()=>{
+toast.classList
+.add(
+'hidden'
+);
+},
+3000
+);
 }
 
-function b64encode(s){
- const bytes=
-  new TextEncoder()
-   .encode(s);
-
- let bin='';
-
- for(
-  let i=0;
-  i<bytes.length;
-  i+=0x8000
- ){
-  bin+=
-   String.fromCharCode(
-    ...bytes.subarray(
-     i,
-     i+0x8000
-    )
-   );
- }
-
- return btoa(bin);
-}
-
-function b64decode(s){
- const bin=
-  atob(
-   String(s||'')
-    .replace(/\s/g,'')
-  );
-
- const bytes=
-  new Uint8Array(
-   bin.length
-  );
-
- for(
-  let i=0;
-  i<bin.length;
-  i++
- ){
-  bytes[i]=
-   bin.charCodeAt(i);
- }
-
- return new TextDecoder()
-  .decode(bytes);
-}
-
-function timeoutError(){
- const e=
-  new Error(
-   '请求超时'
-  );
-
- e.code=
-  'timeout';
-
- e.status=
-  0;
-
- return e;
-}
-
-async function fetchTimed(
- url,
- options={},
- ms=FETCH_TIMEOUT
+function status(
+kind,
+text
 ){
- const controller=
-  typeof AbortController!=='undefined'
-   ? new AbortController()
-   : null;
+statusDot.className=
+`status-dot ${kind}`;
 
- let timer;
-
- const req=
-  (
-   async()=>{
-    try{
-     return await fetch(
-      url,
-      {
-       ...options,
-       ...(
-        controller
-         ? {
-          signal:
-           controller.signal
-         }
-         : {}
-       )
-      }
-     );
-
-    }catch(e){
-     if(
-      e?.name==='AbortError'
-     ){
-      throw timeoutError();
-     }
-
-     e.status=
-      e.status||0;
-
-     throw e;
-    }
-   }
-  )();
-
- const timeout=
-  new Promise(
-   (_,reject)=>{
-    timer=
-     setTimeout(
-      ()=>{
-       try{
-        controller?.abort();
-       }catch{}
-
-       reject(
-        timeoutError()
-       );
-      },
-      ms
-     );
-   }
-  );
-
- try{
-  return await Promise.race([
-   req,
-   timeout
-  ]);
-
- }finally{
-  clearTimeout(timer);
- }
+statusText.textContent=
+text;
 }
 
-function apiPath(){
- return `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${config.path.split('/').filter(Boolean).map(encodeURIComponent).join('/')}`;
+function fallbackStorageKey(storageKey){
+return `${NS}:fallback:${storageKey}`;
 }
 
-async function github(
- method,
- body=null
+function fallbackGet(storageKey){
+if(storageMemory.has(storageKey)){
+return storageMemory.get(storageKey);
+}
+
+try{
+const raw=
+localStorage.getItem(
+fallbackStorageKey(storageKey)
+);
+
+if(raw!==null){
+const value=
+JSON.parse(raw);
+
+storageMemory.set(
+storageKey,
+value
+);
+
+return value;
+}
+}catch{}
+
+return null;
+}
+
+function fallbackSet(
+storageKey,
+value
 ){
- const r=
-  await fetchTimed(
-   apiPath(),
-   {
-    method,
+storageMemory.set(
+storageKey,
+value
+);
 
-    cache:
-     'no-store',
+try{
+localStorage.setItem(
+fallbackStorageKey(storageKey),
+JSON.stringify(value)
+);
+}catch{}
 
-    headers:{
-     Authorization:
-      `Bearer ${config.token}`,
+return true;
+}
 
-     Accept:
-      'application/vnd.github+json',
+function fallbackDelete(storageKey){
+storageMemory.delete(storageKey);
 
-     'X-GitHub-Api-Version':
-      '2022-11-28',
+try{
+localStorage.removeItem(
+fallbackStorageKey(storageKey)
+);
+}catch{}
+}
 
-     ...(
-      body
-       ? {
-        'Content-Type':
-         'application/json'
-       }
-       : {}
-     )
-    },
+function openStorageDb(){
+if(
+storageDbDisabled ||
+typeof indexedDB==='undefined'
+){
+return Promise.reject(
+new Error('IndexedDB unavailable')
+);
+}
 
-    ...(
-     body
-      ? {
-       body:
-        JSON.stringify(body)
-      }
-      : {}
-    )
-   }
-  );
+if(storageDbPromise){
+return storageDbPromise;
+}
 
- const text=
-  await r.text();
+storageDbPromise=
+new Promise(
+(
+resolve,
+reject
+)=>{
+let request;
 
- let data=null;
+try{
+request=
+indexedDB.open(
+DB_NAME,
+1
+);
 
- try{
-  data=
-   text
-    ? JSON.parse(text)
-    : null;
+}catch(error){
+reject(error);
+return;
+}
 
- }catch{
-  data={
-   message:
-    text
-  };
- }
+request.onupgradeneeded=
+()=>{
+const db=
+request.result;
 
- if(!r.ok){
-  const e=
-   new Error(
-    data?.message ||
-    `HTTP ${r.status}`
-   );
+if(
+!db
+.objectStoreNames
+.contains(
+DB_STORE
+)
+){
+db
+.createObjectStore(
+DB_STORE
+);
+}
+};
 
-  e.status=
-   r.status;
+request.onsuccess=
+()=>{
+resolve(
+request.result
+);
+};
 
-  throw e;
- }
+request.onerror=
+()=>{
+reject(
+request.error ||
+new Error('IndexedDB open failed')
+);
+};
 
- return data;
+request.onblocked=
+()=>{
+reject(
+new Error('IndexedDB blocked')
+);
+};
+}
+);
+
+storageDbPromise.catch(
+()=>{
+storageDbDisabled=true;
+storageDbPromise=null;
+}
+);
+
+return storageDbPromise;
+}
+
+async function idbGet(
+storageKey
+){
+if(storageDbDisabled){
+return fallbackGet(storageKey);
+}
+
+try{
+const db=
+await openStorageDb();
+
+return await new Promise(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
+DB_STORE,
+'readonly'
+);
+
+const request=
+tx
+.objectStore(
+DB_STORE
+)
+.get(
+storageKey
+);
+
+request.onsuccess=
+()=>{
+resolve(
+request.result ??
+fallbackGet(storageKey)
+);
+};
+
+request.onerror=
+()=>{
+reject(
+request.error
+);
+};
+}
+);
+
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+
+return fallbackGet(storageKey);
+}
+}
+
+async function idbSet(
+storageKey,
+value
+){
+if(storageDbDisabled){
+return fallbackSet(
+storageKey,
+value
+);
+}
+
+try{
+const db=
+await openStorageDb();
+
+await new Promise(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
+DB_STORE,
+'readwrite'
+);
+
+tx
+.objectStore(
+DB_STORE
+)
+.put(
+value,
+storageKey
+);
+
+tx.oncomplete=
+()=>{
+resolve(true);
+};
+
+tx.onerror=
+()=>{
+reject(
+tx.error
+);
+};
+
+tx.onabort=
+()=>{
+reject(
+tx.error ||
+new Error('IndexedDB transaction aborted')
+);
+};
+}
+);
+
+storageMemory.set(
+storageKey,
+value
+);
+
+return true;
+
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+
+return fallbackSet(
+storageKey,
+value
+);
+}
+}
+
+async function idbDelete(
+storageKey
+){
+if(storageDbDisabled){
+fallbackDelete(storageKey);
+return;
+}
+
+try{
+const db=
+await openStorageDb();
+
+await new Promise(
+(
+resolve,
+reject
+)=>{
+const tx=
+db.transaction(
+DB_STORE,
+'readwrite'
+);
+
+tx
+.objectStore(
+DB_STORE
+)
+.delete(
+storageKey
+);
+
+tx.oncomplete=
+resolve;
+
+tx.onerror=
+()=>{
+reject(
+tx.error
+);
+};
+
+tx.onabort=
+()=>{
+reject(
+tx.error ||
+new Error('IndexedDB transaction aborted')
+);
+};
+}
+);
+
+storageMemory.delete(storageKey);
+
+}catch{
+storageDbDisabled=true;
+storageDbPromise=null;
+
+fallbackDelete(storageKey);
+}
+}
+
+function syncTargetId(){
+return [
+clean(
+config.owner
+),
+clean(
+config.repo
+),
+clean(
+config.file
+)
+].join('/');
+}
+
+function saveLocal(
+snapshot=state
+){
+const savedState=
+norm(
+snapshot
+);
+
+state=
+savedState;
+
+workCopyCache=
+norm(
+savedState
+);
+
+const payload={
+savedAt:
+new Date()
+.toISOString(),
+
+target:
+syncTargetId(),
+
+state:
+norm(
+savedState
+)
+};
+
+workCopyWriteChain=
+workCopyWriteChain
+.catch(
+()=>{}
+)
+.then(
+()=>
+idbSet(
+WORKCOPY_KEY,
+payload
+)
+);
+
+workCopyWriteChain.catch(
+console.error
+);
+
+return true;
+}
+
+function loadLocal(){
+return workCopyCache
+? norm(
+workCopyCache
+)
+: null;
+}
+
+function persistMeta(){
+meta.syncVersion=
+SYNC_ENGINE_VERSION;
+
+const payload={
+...meta,
+target:
+syncTargetId()
+};
+
+metaWriteChain=
+metaWriteChain
+.catch(
+()=>{}
+)
+.then(
+()=>
+idbSet(
+META_KEY,
+payload
+)
+);
+
+return metaWriteChain;
+}
+
+function persistSyncBase(
+snapshot,
+sha
+){
+const savedState=
+norm(
+snapshot
+);
+
+syncBaseCache=
+savedState;
+
+syncBaseSha=
+sha ||
+null;
+
+const payload={
+savedAt:
+new Date()
+.toISOString(),
+
+target:
+syncTargetId(),
+
+sha:
+syncBaseSha,
+
+state:
+norm(
+savedState
+)
+};
+
+syncBaseWriteChain=
+syncBaseWriteChain
+.catch(
+()=>{}
+)
+.then(
+()=>
+idbSet(
+SYNC_BASE_KEY,
+payload
+)
+);
+
+return syncBaseWriteChain;
+}
+
+function updateAdmin(){
+const editable=
+admin() &&
+adminReady;
+
+addSection.classList
+.toggle(
+'hidden',
+!editable
+);
+
+syncBtn.classList
+.toggle(
+'hidden',
+!admin()
+);
+
+syncBtn.disabled=
+!editable ||
+syncRunning;
+
+manageBtn.disabled=
+!editable;
+}
+
+function multiMeta(
+type,
+which
+){
+const edit=
+which==='edit';
+
+if(type==='tag'){
+return {
+label:'编组',
+
+historyKey:'tags',
+
+input:
+edit
+? editTag
+: tagInput,
+
+panel:
+edit
+? editTagPanel
+: tagPanel,
+
+options:
+edit
+? editTagOptions
+: tagOptions,
+
+selectedBox:
+edit
+? editTagSelected
+: tagSelected,
+
+selection:
+edit
+? editSelections.tag
+: addSelections.tag
+};
+}
+
+return {
+label:'书架',
+
+historyKey:'categories',
+
+input:
+edit
+? editCategory
+: categoryInput,
+
+panel:
+edit
+? editCategoryPanel
+: categoryPanel,
+
+options:
+edit
+? editCategoryOptions
+: categoryOptions,
+
+selectedBox:
+edit
+? editCategorySelected
+: categorySelected,
+
+selection:
+edit
+? editSelections.category
+: addSelections.category
+};
+}
+
+function institutionMeta(
+which
+){
+const edit=
+which==='edit';
+
+return {
+input:
+edit
+? editInstitution
+: institutionInput,
+
+panel:
+edit
+? editInstitutionPanel
+: institutionPanel,
+
+options:
+edit
+? editInstitutionOptions
+: institutionOptions
+};
+}
+
+function sortHistory(
+type,
+values
+){
+if(type==='tag'){
+return [
+...GROUP_OPTIONS
+];
+}
+
+return uniq(
+values
+);
+}
+
+function groupDisplay(
+value
+){
+return normalizeFixedGroupLabel(
+value
+);
+}
+
+function multiAllowsMultiple(
+type
+){
+return type==='tag';
+}
+
+function renderMultiSelected(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+const values=
+type==='tag'
+? sortTags(
+meta.selection
+)
+: meta.selection;
+
+meta.selectedBox.innerHTML=
+values
+.map(
+value=>`
+<span class="selected-pill">
+<span class="selected-pill-label">
+${esc(
+type==='tag'
+? groupDisplay(
+value
+)
+: value
+)}
+</span>
+<button
+class="selected-pill-remove"
+type="button"
+data-remove-value="${attr(value)}"
+>
+×
+</button>
+</span>
+`
+)
+.join('');
+}
+
+function renderMultiOptions(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+const search=
+key(
+meta.input.value
+);
+
+const values=
+sortHistory(
+type,
+state[
+meta.historyKey
+]
+)
+.filter(
+value=>
+!search ||
+key(value)
+.includes(
+search
+)
+);
+
+const selected=
+new Set(
+meta.selection
+.map(key)
+);
+
+meta.options.innerHTML=
+values.length
+? `
+<div class="combo-option-list">
+${values.map(
+value=>`
+<span
+class="combo-pill${selected.has(key(value))?' selected':''}"
+>
+<button
+class="combo-pill-select"
+type="button"
+data-select-value="${attr(value)}"
+>
+${esc(
+type==='tag'
+? groupDisplay(
+value
+)
+: value
+)}
+</button>
+</span>
+`
+).join('')}
+</div>
+`
+: `
+<div class="combo-empty">
+暂无匹配选项
+</div>
+`;
+}
+
+function renderMultiField(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+renderMultiSelected(
+type,
+which
+);
+
+meta.input.readOnly=
+false;
+
+meta.input.removeAttribute(
+'readonly'
+);
+
+meta.input.removeAttribute(
+'placeholder'
+);
+
+renderMultiOptions(
+type,
+which
+);
+}
+
+function renderInstitutionOptions(
+which
+){
+const meta=
+institutionMeta(
+which
+);
+
+const search=
+key(
+meta.input.value
+);
+
+const values=
+uniq(
+state.institutions
+)
+.filter(
+value=>
+!search ||
+key(value)
+.includes(
+search
+)
+);
+
+meta.options.innerHTML=
+values.length
+? `
+<div class="combo-option-list">
+${values.map(
+value=>`
+<span class="combo-pill">
+<button
+class="combo-pill-select"
+type="button"
+data-select-value="${attr(value)}"
+>
+${renderLinkedText(value)}
+</button>
+</span>
+`
+).join('')}
+</div>
+`
+: `
+<div class="combo-empty">
+暂无匹配出版
+</div>
+`;
+}
+
+function renderManageInstitutionOptions(){
+const history=
+uniq(
+state.institutions
+);
+
+manageInstitutionOptions.innerHTML=
+history.length
+? history
+.map(
+(
+value,
+index
+)=>`
+<div
+class="manage-option-row"
+data-manage-value="${attr(value)}"
+>
+<span>
+${renderLinkedText(value)}
+</span>
+<input
+class="manage-line-input"
+type="number"
+min="1"
+max="${history.length}"
+value="${index+1}"
+data-move-value="${attr(value)}"
+>
+<button
+class="combo-pill-edit"
+type="button"
+data-edit-value="${attr(value)}"
+>
+✓
+</button>
+<button
+class="combo-pill-delete"
+type="button"
+data-delete-value="${attr(value)}"
+>
+×
+</button>
+</div>
+`
+)
+.join('')
+: `
+<div class="empty-state">
+暂无出版选项
+</div>
+`;
+
+manageInstitutionLineInput.max=
+String(
+history.length+1
+);
+
+if(
+!clean(
+manageInstitutionLineInput
+.value
+)
+){
+manageInstitutionLineInput.value=
+String(
+history.length+1
+);
+}
+}
+
+function updateCountDisplay(){
+const total=
+state.entries.length;
+
+const coded=
+state.entries
+.filter(
+entry=>
+Boolean(
+clean(
+entry.code
+)
+)
+)
+.length;
+
+const checked=
+state.entries
+.filter(
+entry=>
+entry.tagChecked
+)
+.length;
+
+countDisplay.textContent=
+`${checked}/${coded}/${total}`;
+}
+
+function render(){
+state=
+norm(state);
+
+updateAdmin();
+updateCountDisplay();
+
+renderInstitutionOptions(
+'add'
+);
+
+renderInstitutionOptions(
+'edit'
+);
+
+renderMultiField(
+'tag',
+'add'
+);
+
+renderMultiField(
+'tag',
+'edit'
+);
+
+renderMultiField(
+'category',
+'add'
+);
+
+renderMultiField(
+'category',
+'edit'
+);
+
+renderManageInstitutionOptions();
+
+if(
+!state.entries.length
+){
+pressList.innerHTML=
+`
+<div class="empty-state">
+暂无条目
+</div>
+`;
+
+return;
+}
+
+pressList.innerHTML=
+state.entries
+.map(
+entry=>{
+const code=
+clean(
+entry.code
+);
+
+const editLabel=
+code ||
+'编辑';
+
+const rows=[];
+
+if(
+entry.institution
+){
+rows.push(
+`
+<div class="meta-row institution">
+<span class="meta-label">
+出版：
+</span><span class="meta-value">${renderLinkedText(entry.institution)}</span>
+</div>
+`
+);
+}
+
+if(
+entry.bookNo
+){
+rows.push(
+`
+<div class="meta-row">
+<span class="meta-label">
+书号：
+</span><span class="meta-value">${esc(entry.bookNo)}</span>
+</div>
+`
+);
+}
+
+rows.push(
+`
+<div class="meta-row tag-row">
+<span class="meta-label">
+编组：
+</span>
+<span class="meta-value tag-value">
+<span>
+${esc(
+entry.tag
+.map(
+groupDisplay
+)
+.join('/')
+)}
+</span>
+<input
+class="entry-tag-checkbox"
+type="checkbox"
+data-id="${attr(entry.id)}"
+${entry.tagChecked?'checked':''}
+${admin()&&adminReady?'':'disabled'}
+>
+</span>
+</div>
+`
+);
+
+if(
+entry.category.length
+){
+rows.push(
+`
+<div class="meta-row bookshelf-row">
+<span class="meta-label">
+书架：
+</span><span class="meta-value bookshelf-text">${esc(
+entry.category
+.join('、')
+)}</span>
+</div>
+`
+);
+}
+
+return `
+<article class="press-item">
+<div class="press-head">
+<div class="press-content">
+<div class="book-title">
+${renderLinkedText(entry.bookName)}
+</div>
+<div class="meta">
+${rows.join('')}
+</div>
+</div>
+${
+admin() &&
+adminReady
+? `
+<button
+class="edit-btn"
+type="button"
+data-id="${attr(entry.id)}"
+>
+${esc(editLabel)}
+</button>
+`
+: ''
+}
+</div>
+</article>
+`;
+}
+)
+.join('');
+}
+
+function removeSelection(
+type,
+which,
+value
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+const target=
+key(value);
+
+const next=
+meta.selection
+.filter(
+item=>
+key(item)!==
+target
+);
+
+if(which==='edit'){
+editSelections[type]=
+type==='tag'
+? sortTags(next)
+: next;
+
+}else{
+addSelections[type]=
+type==='tag'
+? sortTags(next)
+: next;
+}
+
+meta.input.value='';
+
+renderMultiField(
+type,
+which
+);
+
+if(type==='tag'){
+if(which==='add'){
+refreshAddDraftCode();
+
+}else{
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(
+currentEntry &&
+!clean(currentEntry.code)
+){
+editAutoManagedDraft=true;
+}
+
+refreshEditAutoCodePreview();
+}
+}
+
+meta.panel.classList.add(
+'hidden'
+);
+}
+
+function toggleSelection(
+type,
+which,
+value
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+const target=
+key(value);
+
+const exists=
+meta.selection
+.some(
+item=>
+key(item)===
+target
+);
+
+if(exists){
+removeSelection(
+type,
+which,
+value
+);
+
+return;
+}
+
+const multiple=
+multiAllowsMultiple(
+type
+);
+
+if(
+meta.selection.length &&
+!multiple
+){
+meta.panel.classList.add(
+'hidden'
+);
+
+show(
+`请先删除当前${meta.label}，再选择新的${meta.label}`,
+'error'
+);
+
+return;
+}
+
+const next=
+multiple
+? uniq([
+...meta.selection,
+clean(value)
+])
+: [
+clean(value)
+];
+
+if(which==='edit'){
+editSelections[type]=
+type==='tag'
+? sortTags(next)
+: next;
+
+}else{
+addSelections[type]=
+type==='tag'
+? sortTags(next)
+: next;
+}
+
+meta.input.value='';
+
+renderMultiField(
+type,
+which
+);
+
+if(type==='tag'){
+if(which==='add'){
+refreshAddDraftCode();
+
+}else{
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(
+currentEntry &&
+!clean(currentEntry.code)
+){
+editAutoManagedDraft=true;
+}
+
+refreshEditAutoCodePreview();
+}
+}
+
+meta.panel.classList.add(
+'hidden'
+);
+}
+
+function commitInstitution(
+which
+){
+const meta=
+institutionMeta(
+which
+);
+
+meta.input.value=
+clean(
+meta.input.value
+);
+
+renderInstitutionOptions(
+which
+);
+}
+
+async function addEntry(){
+if(
+!admin() ||
+!adminReady
+){
+return;
+}
+
+const bookName=
+cleanTitle(
+bookNameInput.value
+);
+
+if(!bookName){
+show(
+'书名不能为空',
+'error'
+);
+
+bookNameInput.focus();
+
+return;
+}
+
+commitInstitution(
+'add'
+);
+
+const instantCode=
+refreshAddDraftCode();
+
+const entry={
+id:
+addDraftId,
+
+bookName,
+
+bookNo:
+clean(
+bookNoInput.value
+),
+
+institution:
+clean(
+institutionInput.value
+),
+
+category:[
+...addSelections.category
+],
+
+tag:
+sortTags(
+addSelections.tag
+),
+
+tagChecked:false,
+
+code:
+instantCode,
+
+codeAutoManaged:
+Boolean(
+instantCode
+),
+
+codeAutoPending:
+!instantCode,
+
+codeManualEdited:false,
+
+codeManualPinned:false
+};
+
+state.entries.push(
+entry
+);
+
+addDraftId=
+uid();
+
+bookNameInput.value='';
+bookNoInput.value='';
+institutionInput.value='';
+categoryInput.value='';
+tagInput.value='';
+addDraftCode='';
+
+addSelections={
+category:[],
+tag:[]
+};
+
+render();
+schedule();
+
+bookNameInput.focus();
+
+addBtn.disabled=true;
+
+status(
+'syncing',
+'正在确认服务器编码'
+);
+
+try{
+const ok=
+await sync(
+false
+);
+
+if(!ok){
+show(
+instantCode
+? `本机已生成自动编码 ${instantCode}，服务器确认失败；系统会每分钟重试`
+: '条目已保存在本机，但当前编组暂时无法生成编码；系统会每分钟重试',
+'error'
+);
+}
+
+}finally{
+addBtn.disabled=false;
+}
+}
+
+function getEditSnapshot(){
+return JSON.stringify({
+bookName:
+editBookName.value,
+
+bookNo:
+editBookNo.value,
+
+institution:
+editInstitution.value,
+
+category:
+[
+...editSelections.category
+],
+
+tag:
+sortTags(
+editSelections.tag
+),
+
+code:
+editCode.value,
+
+categoryDraft:
+editCategory.value,
+
+tagDraft:
+editTag.value
+});
+}
+
+function editIsUnchanged(){
+return (
+Boolean(editingId) &&
+getEditSnapshot()===
+editInitialSnapshot
+);
+}
+
+function openEdit(id){
+if(
+!admin() ||
+!adminReady
+){
+return;
+}
+
+const entry=
+state.entries.find(
+item=>
+item.id===id
+);
+
+if(!entry){
+return;
+}
+
+editingId=
+id;
+
+editBookName.value=
+entry.bookName;
+
+editBookNo.value=
+entry.bookNo;
+
+editInstitution.value=
+entry.institution;
+
+editSelections={
+category:[
+...entry.category
+],
+
+tag:
+sortTags(
+entry.tag
+)
+};
+
+editCategory.value='';
+editTag.value='';
+
+editCode.value=
+clean(
+entry.code
+);
+
+editAutoManagedDraft=
+Boolean(
+entry.codeAutoManaged===true ||
+entry.codeAutoPending===true
+);
+
+editCode.readOnly=
+Boolean(
+entry.codeManualEdited
+);
+
+editCode.setAttribute(
+'aria-readonly',
+editCode.readOnly
+? 'true'
+: 'false'
+);
+
+editCode.title=
+editCode.readOnly
+? '编码已手动修改并锁定；同步不会自动清空或改号'
+: (
+editAutoManagedDraft
+? '自动编码：编组或书名变化时会立即重新计算；并发时以服务器仲裁结果保持多设备一致'
+: '历史编码保持不变；空编码条目选择编组后会立即生成自动编码'
+);
+
+renderInstitutionOptions(
+'edit'
+);
+
+renderMultiField(
+'tag',
+'edit'
+);
+
+renderMultiField(
+'category',
+'edit'
+);
+
+if(editAutoManagedDraft){
+refreshEditAutoCodePreview();
+}
+
+editInitialSnapshot=
+getEditSnapshot();
+
+editOverlayPointerDown=false;
+
+editModal.classList.remove(
+'hidden'
+);
+
+setTimeout(
+()=>{
+editBookName.focus();
+},
+30
+);
+}
+
+function saveEdit(){
+const entry=
+state.entries.find(
+item=>
+item.id===
+editingId
+);
+
+if(!entry){
+return;
+}
+
+const bookName=
+cleanTitle(
+editBookName.value
+);
+
+if(!bookName){
+show(
+'书名不能为空',
+'error'
+);
+
+editBookName.focus();
+
+return;
+}
+
+const previousCode=
+clean(
+entry.code
+);
+
+const manualAlreadyUsed=
+Boolean(
+entry.codeManualEdited
+);
+
+commitInstitution(
+'edit'
+);
+
+const nextTag=
+sortTags(
+editSelections.tag
+);
+
+let manualCode='';
+let manualChangeRequested=false;
+
+if(
+!editAutoManagedDraft &&
+!manualAlreadyUsed
+){
+const typed=
+clean(
+editCode.value
+);
+
+manualChangeRequested=
+typed!==previousCode;
+
+if(manualChangeRequested){
+manualCode=
+normalizeStoredCode(
+typed
+);
+
+if(!manualCode){
+show(
+'编码必须是 6 位数字',
+'error'
+);
+
+editCode.focus();
+
+return;
+}
+
+const candidate={
+...entry,
+bookName,
+tag:nextTag
+};
+
+if(
+!codeAllowedForEntry(
+candidate,
+manualCode
+)
+){
+show(
+'该编码不在当前编组与书名语言对应的编码区间内',
+'error'
+);
+
+editCode.focus();
+
+return;
+}
+
+const occupied=
+state.entries.some(
+other=>
+other.id!==entry.id &&
+normalizeStoredCode(
+other.code
+)===manualCode
+);
+
+if(occupied){
+show(
+`编码 ${manualCode} 已被其它条目使用`,
+'error'
+);
+
+editCode.focus();
+
+return;
+}
+}
+}
+
+entry.bookName=
+bookName;
+
+entry.bookNo=
+clean(
+editBookNo.value
+);
+
+entry.institution=
+clean(
+editInstitution.value
+);
+
+entry.category=[
+...editSelections.category
+];
+
+entry.tag=
+nextTag;
+
+if(editAutoManagedDraft){
+const autoCode=
+normalizeStoredCode(
+editCode.value
+);
+
+entry.code=
+autoCode;
+
+entry.codeAutoManaged=
+Boolean(
+autoCode
+);
+
+entry.codeAutoPending=
+!autoCode;
+
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+}else if(manualChangeRequested){
+entry.code=
+manualCode;
+
+entry.codeAutoManaged=false;
+entry.codeAutoPending=false;
+entry.codeManualEdited=true;
+entry.codeManualPinned=true;
+}
+
+editModal.classList.add(
+'hidden'
+);
+
+editingId='';
+editInitialSnapshot='';
+editOverlayPointerDown=false;
+editAutoManagedDraft=false;
+
+editSelections={
+category:[],
+tag:[]
+};
+
+render();
+schedule();
+
+if(
+entry.codeAutoPending===true
+){
+sync(
+false
+);
+}
+}
+
+function deleteEntry(id){
+const entry=
+state.entries.find(
+item=>
+item.id===id
+);
+
+if(!entry){
+return;
+}
+
+if(
+!confirm(
+`确定删除“${entry.bookName}”吗？`
+)
+){
+return;
+}
+
+state.entries=
+state.entries.filter(
+item=>
+item.id!==id
+);
+
+editModal.classList.add(
+'hidden'
+);
+
+editingId='';
+editInitialSnapshot='';
+editOverlayPointerDown=
+false;
+
+render();
+schedule();
+}
+
+function allPanels(){
+return [
+institutionPanel,
+editInstitutionPanel,
+tagPanel,
+editTagPanel,
+categoryPanel,
+editCategoryPanel
+];
+}
+
+function closePanels(){
+allPanels().forEach(
+panel=>
+panel.classList.add(
+'hidden'
+)
+);
+}
+
+function getKeyboardOptions(container){
+return [
+...container.querySelectorAll(
+'.combo-pill-select[data-select-value]'
+)
+];
+}
+
+function clearKeyboardActive(container){
+getKeyboardOptions(container)
+.forEach(
+button=>
+button.classList.remove(
+'keyboard-active'
+)
+);
+}
+
+function setKeyboardActive(
+container,
+index
+){
+const options=
+getKeyboardOptions(
+container
+);
+
+if(!options.length){
+return -1;
+}
+
+const normalized=
+(
+index%
+options.length+
+options.length
+)%
+options.length;
+
+options.forEach(
+(
+button,
+optionIndex
+)=>{
+button.classList.toggle(
+'keyboard-active',
+optionIndex===normalized
+);
+}
+);
+
+options[normalized]
+.scrollIntoView({
+block:'nearest'
+});
+
+return normalized;
+}
+
+function currentKeyboardIndex(container){
+return getKeyboardOptions(
+container
+)
+.findIndex(
+button=>
+button.classList.contains(
+'keyboard-active'
+)
+);
+}
+
+function setupMultiCombo(
+type,
+which
+){
+const meta=
+multiMeta(
+type,
+which
+);
+
+const combo=
+type==='tag'
+? (
+which==='edit'
+? editTagCombo
+: tagCombo
+)
+: (
+which==='edit'
+? editCategoryCombo
+: categoryCombo
+);
+
+function openPanel(){
+const current=
+multiMeta(
+type,
+which
+);
+
+if(
+current.selection.length &&
+!multiAllowsMultiple(
+type
+)
+){
+closePanels();
+
+return false;
+}
+
+closePanels();
+
+meta.panel.classList.remove(
+'hidden'
+);
+
+renderMultiOptions(
+type,
+which
+);
+
+clearKeyboardActive(
+meta.options
+);
+
+return true;
+}
+
+meta.input.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+openPanel();
+}
+);
+
+meta.input.addEventListener(
+'input',
+()=>{
+const current=
+multiMeta(
+type,
+which
+);
+
+if(
+current.selection.length &&
+!multiAllowsMultiple(
+type
+)
+){
+meta.input.value='';
+
+meta.panel.classList.add(
+'hidden'
+);
+
+return;
+}
+
+meta.panel.classList.remove(
+'hidden'
+);
+
+renderMultiOptions(
+type,
+which
+);
+
+clearKeyboardActive(
+meta.options
+);
+}
+);
+
+meta.options.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+const button=
+event.target.closest(
+'.combo-pill-select[data-select-value]'
+);
+
+if(!button){
+return;
+}
+
+toggleSelection(
+type,
+which,
+button.dataset
+.selectValue
+);
+}
+);
+
+meta.selectedBox.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+const button=
+event.target.closest(
+'.selected-pill-remove[data-remove-value]'
+);
+
+if(button){
+removeSelection(
+type,
+which,
+button.dataset
+.removeValue
+);
+
+return;
+}
+
+if(openPanel()){
+meta.input.focus({
+preventScroll:true
+});
+}
+}
+);
+
+meta.input.addEventListener(
+'keydown',
+event=>{
+if(
+event.key==='Escape'
+){
+clearKeyboardActive(
+meta.options
+);
+
+meta.panel.classList.add(
+'hidden'
+);
+
+return;
+}
+
+if(
+event.key==='ArrowDown' ||
+event.key==='ArrowUp'
+){
+event.preventDefault();
+event.stopPropagation();
+
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
+){
+if(!openPanel()){
+return;
+}
+}
+
+const options=
+getKeyboardOptions(
+meta.options
+);
+
+if(!options.length){
+return;
+}
+
+const current=
+currentKeyboardIndex(
+meta.options
+);
+
+const next=
+current<0
+? (
+event.key==='ArrowDown'
+? 0
+: options.length-1
+)
+: current+
+(
+event.key==='ArrowDown'
+? 1
+: -1
+);
+
+setKeyboardActive(
+meta.options,
+next
+);
+
+return;
+}
+
+if(
+event.key!=='Enter'
+){
+return;
+}
+
+const options=
+getKeyboardOptions(
+meta.options
+);
+
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
+){
+if(!openPanel()){
+return;
+}
+
+return;
+}
+
+const activeIndex=
+currentKeyboardIndex(
+meta.options
+);
+
+if(activeIndex>=0){
+event.preventDefault();
+
+toggleSelection(
+type,
+which,
+options[activeIndex]
+.dataset
+.selectValue
+);
+
+return;
+}
+
+if(options.length===1){
+event.preventDefault();
+
+toggleSelection(
+type,
+which,
+options[0]
+.dataset
+.selectValue
+);
+}
+}
+);
+
+combo.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+if(
+event.target.closest('.combo-panel') ||
+event.target.closest('.selected-pill-remove') ||
+event.target.closest('.combo-pill-select') ||
+event.target===meta.input
+){
+return;
+}
+
+if(openPanel()){
+meta.input.focus({
+preventScroll:true
+});
+}
+}
+);
+}
+
+function setupInstitutionCombo(
+which
+){
+const meta=
+institutionMeta(
+which
+);
+
+function openPanel(){
+closePanels();
+
+meta.panel.classList.remove(
+'hidden'
+);
+
+renderInstitutionOptions(
+which
+);
+
+clearKeyboardActive(
+meta.options
+);
+}
+
+function selectInstitution(button){
+if(!button){
+return;
+}
+
+meta.input.value=
+button.dataset
+.selectValue;
+
+renderInstitutionOptions(
+which
+);
+
+clearKeyboardActive(
+meta.options
+);
+
+meta.panel.classList.add(
+'hidden'
+);
+}
+
+meta.input.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+openPanel();
+}
+);
+
+meta.input.addEventListener(
+'input',
+()=>{
+meta.panel.classList.remove(
+'hidden'
+);
+
+renderInstitutionOptions(
+which
+);
+
+clearKeyboardActive(
+meta.options
+);
+}
+);
+
+meta.input.addEventListener(
+'keydown',
+event=>{
+if(
+event.key==='Escape'
+){
+clearKeyboardActive(
+meta.options
+);
+
+meta.panel.classList.add(
+'hidden'
+);
+
+return;
+}
+
+if(
+event.key==='ArrowDown' ||
+event.key==='ArrowUp'
+){
+event.preventDefault();
+event.stopPropagation();
+
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
+){
+openPanel();
+}
+
+const options=
+getKeyboardOptions(
+meta.options
+);
+
+if(!options.length){
+return;
+}
+
+const current=
+currentKeyboardIndex(
+meta.options
+);
+
+const next=
+current<0
+? (
+event.key==='ArrowDown'
+? 0
+: options.length-1
+)
+: current+
+(
+event.key==='ArrowDown'
+? 1
+: -1
+);
+
+setKeyboardActive(
+meta.options,
+next
+);
+
+return;
+}
+
+if(
+event.key!=='Enter'
+){
+return;
+}
+
+if(
+meta.panel.classList
+.contains(
+'hidden'
+)
+){
+event.preventDefault();
+
+openPanel();
+
+return;
+}
+
+const options=
+getKeyboardOptions(
+meta.options
+);
+
+const activeIndex=
+currentKeyboardIndex(
+meta.options
+);
+
+if(activeIndex>=0){
+event.preventDefault();
+
+selectInstitution(
+options[activeIndex]
+);
+
+return;
+}
+
+if(options.length===1){
+event.preventDefault();
+
+selectInstitution(
+options[0]
+);
+}
+}
+);
+
+meta.options.addEventListener(
+'click',
+event=>{
+event.stopPropagation();
+
+const button=
+event.target.closest(
+'.combo-pill-select[data-select-value]'
+);
+
+selectInstitution(
+button
+);
+}
+);
+}
+
+function schedule(){
+state=
+norm(state);
+
+localMutationVersion++;
+
+saveLocal(
+state
+);
+
+meta.dirty=
+true;
+
+persistMeta()
+.catch(
+console.error
+);
+
+if(
+admin() &&
+adminReady &&
+syncRunning
+){
+syncRequested=
+true;
+}
+
+return true;
+}
+
+function publicUrl(){
+try{
+const url=
+new URL(
+PUBLIC_FILE,
+location.href
+);
+
+url.searchParams.set(
+'v',
+String(Date.now())
+);
+
+return url.href;
+
+}catch{
+return '';
+}
+}
+
+function pathEncode(path){
+return String(path)
+.split('/')
+.filter(Boolean)
+.map(
+encodeURIComponent
+)
+.join('/');
+}
+
+function toB64(value){
+const bytes=
+new TextEncoder()
+.encode(value);
+
+let binary='';
+
+for(
+let i=0;
+i<bytes.length;
+i+=0x8000
+){
+binary+=
+String.fromCharCode(
+...bytes.subarray(
+i,
+i+0x8000
+)
+);
+}
+
+return btoa(
+binary
+);
+}
+
+function fromB64(value){
+const binary=
+atob(
+String(
+value||''
+)
+.replace(
+/\s/g,
+''
+)
+);
+
+const bytes=
+new Uint8Array(
+binary.length
+);
+
+for(
+let i=0;
+i<binary.length;
+i++
+){
+bytes[i]=
+binary.charCodeAt(i);
+}
+
+return new TextDecoder()
+.decode(
+bytes
+);
+}
+
+function delay(
+ms
+){
+return new Promise(
+resolve=>
+setTimeout(
+resolve,
+ms
+)
+);
+}
+
+function isTransientSyncError(
+error
+){
+const statusCode=
+Number(
+error?.status||0
+);
+
+return (
+statusCode===0 ||
+statusCode===408 ||
+statusCode===429 ||
+statusCode>=500
+);
+}
+
+function isWriteConflictError(
+error
+){
+const statusCode=
+Number(
+error?.status||0
+);
+
+if(statusCode===409){
+return true;
+}
+
+if(statusCode!==422){
+return false;
+}
+
+const message=
+String(
+error?.message||''
+)
+.toLocaleLowerCase();
+
+return (
+message.includes('sha') ||
+message.includes('does not match') ||
+message.includes('already exists') ||
+message.includes('update')
+);
+}
+
+function syncErrorText(
+error
+){
+if(
+error?.code==='code_conflict' ||
+error?.code==='code_safety'
+){
+return error.message;
+}
+
+if(
+error?.name==='AbortError' ||
+error?.code==='timeout'
+){
+return 'GitHub 请求超时';
+}
+
+if(
+Number(error?.status)===401
+){
+return 'GitHub Token 无效或已失效';
+}
+
+if(
+Number(error?.status)===403
+){
+return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 权限'}`;
+}
+
+if(
+Number(error?.status)===404
+){
+return `GitHub 资源不存在：${error.message||'请检查仓库和文件路径'}`;
+}
+
+if(error?.message){
+return error.message;
+}
+
+return '未知同步错误';
+}
+
+function requestTimeoutError(
+message='请求超时'
+){
+const error=
+new Error(
+message
+);
+
+error.code=
+'timeout';
+
+error.status=
+0;
+
+return error;
+}
+
+async function fetchTextWithTimeout(
+url,
+options={},
+timeoutMs=GITHUB_TIMEOUT
+){
+const controller=
+typeof AbortController!=='undefined'
+? new AbortController()
+: null;
+
+let timer=
+null;
+
+const request=
+(async()=>{
+try{
+const response=
+await fetch(
+url,
+{
+...options,
+
+...(
+controller
+? {
+signal:
+controller.signal
+}
+: {}
+)
+}
+);
+
+const text=
+await response.text();
+
+return {
+response,
+text
+};
+
+}catch(error){
+if(
+error?.name==='AbortError'
+){
+throw requestTimeoutError();
+}
+
+if(
+error &&
+typeof error==='object' &&
+!('status' in error)
+){
+error.status=
+0;
+}
+
+throw error;
+}
+})();
+
+const timeout=
+new Promise(
+(_,reject)=>{
+timer=
+setTimeout(
+()=>{
+try{
+controller?.abort();
+}catch{}
+
+reject(
+requestTimeoutError()
+);
+},
+timeoutMs
+);
+}
+);
+
+try{
+return await Promise.race([
+request,
+timeout
+]);
+
+}finally{
+if(timer!==null){
+clearTimeout(
+timer
+);
+}
+}
+}
+
+async function githubApi(
+method,
+endpoint,
+body=null
+){
+const {response,text}=
+await fetchTextWithTimeout(
+`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,
+{
+method,
+
+headers:{
+Authorization:
+`Bearer ${config.token}`,
+
+Accept:
+'application/vnd.github+json',
+
+'X-GitHub-Api-Version':
+'2026-03-10',
+
+...(
+body!==null
+? {
+'Content-Type':
+'application/json'
+}
+: {}
+)
+},
+
+cache:
+'no-store',
+
+...(
+body!==null
+? {
+body:
+JSON.stringify(
+body
+)
+}
+: {}
+)
+},
+GITHUB_TIMEOUT
+);
+
+let data=
+null;
+
+if(text){
+try{
+data=
+JSON.parse(
+text
+);
+
+}catch{
+data={
+message:
+text
+};
+}
+}
+
+if(!response.ok){
+const error=
+new Error(
+data?.message ||
+`HTTP ${response.status}`
+);
+
+error.status=
+response.status;
+
+error.apiData=
+data;
+
+throw error;
+}
+
+return data;
 }
 
 async function readRemote(){
- try{
-  const d=
-   await github(
-    'GET'
-   );
+try{
+const data=
+await githubApi(
+'GET',
+`contents/${pathEncode(config.file)}`
+);
 
-  return {
-   exists:true,
+if(
+!data ||
+typeof data.content!=='string'
+){
+throw new Error(
+'GitHub 返回的数据文件内容无效'
+);
+}
 
-   sha:
-    d.sha,
+const parsed=
+JSON.parse(
+fromB64(
+data.content
+)
+);
 
-   state:
-    normalizeState(
-     JSON.parse(
-      b64decode(
-       d.content
-      )
-     )
-    )
-  };
+return {
+exists:true,
 
- }catch(e){
-  if(e.status===404){
-   return {
-    exists:false,
-    sha:null,
-    state:
-     normalizeState({})
-   };
-  }
+sha:
+data.sha,
 
-  throw e;
- }
+state:
+norm(
+parsed
+)
+};
+
+}catch(error){
+if(
+error.status===404
+){
+return {
+exists:false,
+sha:null,
+state:
+norm({})
+};
+}
+
+throw error;
+}
+}
+
+async function readRemoteWithRetry(
+limit=NETWORK_RETRY_LIMIT
+){
+let lastError=
+null;
+
+for(
+let attempt=0;
+attempt<limit;
+attempt++
+){
+try{
+return await readRemote();
+
+}catch(error){
+lastError=
+error;
+
+if(
+!isTransientSyncError(
+error
+) ||
+attempt===limit-1
+){
+throw error;
+}
+
+await delay(
+300*Math.pow(
+2,
+attempt
+)
+);
+}
+}
+
+throw lastError ||
+new Error(
+'读取 GitHub 数据失败'
+);
+}
+
+function resolveSyncBase(
+localSnapshot
+){
+if(syncBaseCache){
+return norm(
+syncBaseCache
+);
+}
+
+return meta.dirty
+? norm({})
+: norm(
+localSnapshot
+);
 }
 
 async function writeRemote(
- s,
- currentSha
+snapshot,
+sha
 ){
- const raw=
-  JSON.stringify(
-   normalizeState(s),
-   null,
-   2
-  );
+const raw=
+JSON.stringify(
+norm(
+snapshot
+),
+null,
+2
+);
 
- if(
-  new TextEncoder()
-   .encode(raw)
-   .length >
-  MAX_BYTES
- ){
-  throw new Error(
-   '数据超过 750 KB'
-  );
- }
-
- const body={
-  message:
-   `更新 Press 数据 - ${new Date().toLocaleString()}`,
-
-  content:
-   b64encode(raw)
- };
-
- if(currentSha){
-  body.sha=
-   currentSha;
- }
-
- const d=
-  await github(
-   'PUT',
-   body
-  );
-
- return (
-  d?.content?.sha ||
-  null
- );
-}
-
-function isConflict(e){
- if(e.status===409){
-  return true;
- }
-
- if(e.status!==422){
-  return false;
- }
-
- const m=
-  String(e.message||'')
-   .toLowerCase();
-
- return (
-  m.includes('sha') ||
-  m.includes('does not match') ||
-  m.includes('already exists') ||
-  m.includes('update')
- );
-}
-
-function syncError(e){
- if(e.code==='timeout'){
-  return 'GitHub 请求超时';
- }
-
- if(e.status===401){
-  return 'Token 无效或已失效';
- }
-
- if(e.status===403){
-  return 'GitHub 拒绝访问，请检查 Contents 权限';
- }
-
- if(e.status===404){
-  return '仓库或文件路径不存在';
- }
-
- return (
-  e.message ||
-  '未知同步错误'
- );
-}
-
-async function sync(
- showResult=true,
- queueIfBusy=true
+if(
+new TextEncoder()
+.encode(raw)
+.length >
+MAX_BYTES
 ){
- if(!admin()){
-  return false;
- }
-
- /*
-  自动定时同步：
-  如果已经有同步正在运行，直接跳过，不排队。
-
-  用户刚刚修改数据：
-  queueIfBusy=true，可以补一轮。
- */
- if(syncBusy){
-  if(queueIfBusy){
-   syncQueued=true;
-  }
-
-  return false;
- }
-
- syncBusy=true;
- ui.sync.disabled=true;
-
- status(
-  'syncing',
-  '正在拉取服务器最新版'
- );
-
- try{
-  do{
-   syncQueued=false;
-
-   const startMutation=
-    mutationVersion;
-
-   let done=false;
-   let lastError=null;
-
-   /*
-    这里只针对 GitHub SHA 并发冲突最多重试 3 次。
-    普通网络超时不会形成无限循环。
-   */
-   for(
-    let attempt=0;
-    attempt<3 &&
-    !done;
-    attempt++
-   ){
-    try{
-     /*
-      第一步永远是读取服务器最新版。
-     */
-     const remote=
-      await readRemote();
-
-     const local=
-      normalizeState(
-       state
-      );
-
-     const base=
-      baseState
-       ? normalizeState(
-        baseState
-       )
-       : (
-        dirty
-         ? normalizeState({})
-         : local
-       );
-
-     /*
-      合并两台设备的数据。
-     */
-     const merged=
-      mergeStates(
-       base,
-       local,
-       remote.state
-      );
-
-     /*
-      两台设备对同一个历史/手工编码产生不可判断的不同修改，
-      停止自动覆盖。
-     */
-     if(
-      merged.stats.codeConflicts
-     ){
-      const e=
-       new Error(
-        `检测到 ${merged.stats.codeConflicts} 个受保护编码冲突，已停止自动覆盖`
-       );
-
-      e.code=
-       'code_conflict';
-
-      throw e;
-     }
-
-     /*
-      对自动编码进行确定性仲裁：
-      服务器已确认的编码优先；
-      其它自动条目按稳定 id 排序分配。
-     */
-     const reconciled=
-      reconcileAutoCodes(
-       merged.state,
-       remote.state
-      );
-
-     /*
-      写回前再次检查：
-      历史/手工编码不能被自动清空或换号。
-     */
-     if(
-      auditProtected(
-       local,
-       remote.state,
-       reconciled.state
-      )
-     ){
-      const e=
-       new Error(
-        '编码安全检查失败，已有历史或手工编码可能被改写'
-       );
-
-      e.code=
-       'code_safety';
-
-      throw e;
-     }
-
-     let finalSha=
-      remote.sha;
-
-     if(
-      signature(
-       reconciled.state
-      )!==
-      signature(
-       remote.state
-      )
-     ){
-      try{
-       finalSha=
-        await writeRemote(
-         reconciled.state,
-         remote.sha
-        );
-
-      }catch(e){
-       /*
-        别的设备刚刚抢先提交：
-        重新 GET 最新版本，再重新仲裁。
-
-        这是确保多设备自动编码最终一致的关键。
-       */
-       if(isConflict(e)){
-        lastError=e;
-        continue;
-       }
-
-       throw e;
-      }
-     }
-
-     state=
-      reconciled.state;
-
-     sha=
-      finalSha;
-
-     baseState=
-      clone(
-       reconciled.state
-      );
-
-     /*
-      如果同步期间用户又修改过本机，
-      当前同步完成后只补一轮。
-     */
-     dirty=
-      mutationVersion!==
-      startMutation;
-
-     if(dirty){
-      syncQueued=true;
-     }
-
-     saveLocal();
-     render();
-
-     status(
-      'online',
-      '公开阅读 · 管理已连接'
-     );
-
-     ui.last.textContent=
-      `已同步 ${new Date().toLocaleString()}`;
-
-     if(showResult){
-      if(
-       reconciled.reassigned
-      ){
-       toast(
-        `同步完成；并发仲裁调整了 ${reconciled.reassigned} 个自动编码`,
-        'success'
-       );
-
-      }else{
-       toast(
-        '同步完成',
-        'success'
-       );
-      }
-     }
-
-     done=true;
-
-    }catch(e){
-     lastError=e;
-
-     if(isConflict(e)){
-      continue;
-     }
-
-     throw e;
-    }
-   }
-
-   if(!done){
-    throw (
-     lastError ||
-     new Error(
-      '同步重试失败'
-     )
-    );
-   }
-
-  }while(syncQueued);
-
-  return true;
-
- }catch(e){
-  console.error(e);
-
-  /*
-   同步失败时保留本机数据。
-  */
-  dirty=true;
-  saveLocal();
-
-  status(
-   'offline',
-   '同步失败 · 本地数据已保留'
-  );
-
-  if(showResult){
-   toast(
-    `同步失败：${syncError(e)}`,
-    'error'
-   );
-  }
-
-  return false;
-
- }finally{
-  syncBusy=false;
-  ui.sync.disabled=false;
- }
+throw new Error(
+'数据超过 750 KB'
+);
 }
 
-async function loadInitial(){
- loadLocal();
+const body={
+message:
+`更新 Press 数据 - ${new Date().toLocaleString()}`,
 
- renderGroupButtons(
-  ui.addGroups,
-  addSelected,
-  refreshAddCode
- );
+content:
+toB64(
+raw
+)
+};
 
- render();
-
- if(admin()){
-  ui.addPanel.classList.remove(
-   'hidden'
-  );
-
-  try{
-   const remote=
-    await readRemote();
-
-   if(!dirty){
-    state=
-     remote.state;
-
-    sha=
-     remote.sha;
-
-    baseState=
-     clone(
-      remote.state
-     );
-
-    saveLocal();
-    render();
-
-    status(
-     'online',
-     '公开阅读 · 管理已连接'
-    );
-
-    ui.last.textContent=
-     `已读取 ${state.entries.length} 条`;
-
-   }else{
-    status(
-     'online',
-     '管理已连接 · 存在本机修改'
-    );
-
-    sync(
-     false,
-     true
-    );
-   }
-
-  }catch(e){
-   console.error(e);
-
-   status(
-    'offline',
-    '云端读取失败 · 使用本机数据'
-   );
-  }
-
- }else{
-  ui.addPanel.classList.add(
-   'hidden'
-  );
-
-  try{
-   const url=
-    new URL(
-     PUBLIC_FILE,
-     location.href
-    );
-
-   url.searchParams.set(
-    'v',
-    Date.now()
-   );
-
-   const r=
-    await fetchTimed(
-     url.href,
-     {
-      cache:
-       'no-store'
-     }
-    );
-
-   if(!r.ok){
-    throw new Error(
-     `HTTP ${r.status}`
-    );
-   }
-
-   state=
-    normalizeState(
-     await r.json()
-    );
-
-   render();
-
-   status(
-    'online',
-    '公开阅读'
-   );
-
-   ui.last.textContent=
-    `公开数据 · ${state.entries.length} 条`;
-
-  }catch(e){
-   console.error(e);
-
-   render();
-
-   status(
-    'offline',
-    '公开数据读取失败'
-   );
-  }
- }
+if(sha){
+body.sha=
+sha;
 }
 
-ui.bookName.addEventListener(
- 'input',
- refreshAddCode
+const result=
+await githubApi(
+'PUT',
+`contents/${pathEncode(config.file)}`,
+body
 );
 
-ui.add.addEventListener(
- 'click',
- addEntry
+return (
+result?.content?.sha ||
+null
+);
+}
+
+async function verifyRemoteEquals(
+expectedState
+){
+try{
+const checked=
+await readRemoteWithRetry(
+1
 );
 
-ui.list.addEventListener(
- 'click',
- e=>{
-  const b=
-   e.target.closest(
-    '.edit-btn[data-id]'
-   );
+return {
+matched:
+stateSignature(
+checked.state
+)===
+stateSignature(
+expectedState
+),
 
-  if(b){
-   openEdit(
-    b.dataset.id
-   );
-  }
- }
+remote:
+checked
+};
+
+}catch{
+return {
+matched:false,
+remote:null
+};
+}
+}
+
+async function syncOnce(
+showResult=true
+){
+if(!admin()){
+return false;
+}
+
+const dirtyAtStart=
+Boolean(
+meta.dirty
 );
 
-ui.list.addEventListener(
- 'change',
- e=>{
-  const c=
-   e.target.closest(
-    '.check[data-id]'
-   );
+const mutationAtStart=
+localMutationVersion;
 
-  if(!c){
-   return;
-  }
+syncRunning=
+true;
 
-  const item=
-   state.entries.find(
-    x=>
-     x.id===
-     c.dataset.id
-   );
+updateAdmin();
 
-  if(!item){
-   return;
-  }
-
-  item.tagChecked=
-   c.checked;
-
-  item.updatedAt=
-   Date.now();
-
-  markDirty();
-
-  render();
-
-  sync(
-   false,
-   true
-  );
- }
+status(
+'syncing',
+'正在拉取服务器最新版'
 );
 
-ui.editBookName.addEventListener(
- 'input',
- refreshEditAuto
+try{
+let lastError=
+null;
+
+for(
+let attempt=0;
+attempt<
+SYNC_RETRY_LIMIT;
+attempt++
+){
+let remote;
+
+try{
+remote=
+await readRemoteWithRetry();
+
+}catch(error){
+lastError=
+error;
+
+throw error;
+}
+
+const localBefore=
+norm(
+state
 );
 
-ui.editCode.addEventListener(
- 'input',
- ()=>{
-  if(
-   editOriginal &&
-   clean(
-    ui.editCode.value
-   )!==
-   clean(
-    editOriginal.code
-   )
-  ){
-   editAutoMode=false;
-  }
-
-  ui.editCodeNote.textContent=
-   editAutoMode
-    ? '自动编码：编组或书名变化时立即重算，同步后多设备收敛'
-    : '手工编码：保存后自动同步不会主动改号';
- }
+const base=
+resolveSyncBase(
+localBefore
 );
 
-ui.editCancel.addEventListener(
- 'click',
- closeEdit
+const mutationVersionBeforeWrite=
+localMutationVersion;
+
+const mergedResult=
+mergeStates(
+base,
+localBefore,
+remote.state
 );
 
-ui.editSave.addEventListener(
- 'click',
- saveEdit
+const allocationResult=
+reconcileAutoCodesAfterPull(
+mergedResult.state,
+remote.state
 );
 
-ui.delete.addEventListener(
- 'click',
- deleteEntry
+const mergedState=
+allocationResult.state;
+
+if(
+mergedResult.codeConflicts>0
+){
+const error=
+new Error(
+`检测到 ${mergedResult.codeConflicts} 个编码并发冲突；为保护编码，已停止本次写入`
 );
 
-ui.editModal.addEventListener(
- 'click',
- e=>{
-  if(
-   e.target===
-   ui.editModal
-  ){
-   closeEdit();
-  }
- }
+error.code=
+'code_conflict';
+
+throw error;
+}
+
+const codeAudit=
+auditCodeSafety(
+localBefore,
+remote.state,
+mergedState
 );
 
-ui.sync.addEventListener(
- 'click',
- ()=>{
-  sync(
-   true,
-   true
-  );
- }
+if(
+!codeAudit.ok
+){
+const error=
+new Error(
+`编码安全检查失败：检测到 ${codeAudit.violations} 个可能被清空或改写的已有编码`
 );
 
-ui.config.addEventListener(
- 'click',
- ()=>{
-  ui.cfgOwner.value=
-   config.owner;
+error.code=
+'code_safety';
 
-  ui.cfgRepo.value=
-   config.repo;
+throw error;
+}
 
-  ui.cfgPath.value=
-   config.path;
-
-  ui.cfgToken.value=
-   config.token;
-
-  ui.remember.checked=
-   Boolean(
-    localStorage.getItem(
-     STORE+':token'
-    )
-   );
-
-  ui.configModal.classList.remove(
-   'hidden'
-  );
- }
+const baseSig=
+stateSignature(
+base
 );
 
-ui.configCancel.addEventListener(
- 'click',
- ()=>{
-  ui.configModal.classList.add(
-   'hidden'
-  );
- }
+const localSig=
+stateSignature(
+localBefore
 );
 
-ui.configSave.addEventListener(
- 'click',
- async()=>{
-  config.owner=
-   clean(
-    ui.cfgOwner.value
-   );
-
-  config.repo=
-   clean(
-    ui.cfgRepo.value
-   );
-
-  config.path=
-   clean(
-    ui.cfgPath.value
-   ) ||
-   'press_data.json';
-
-  config.token=
-   clean(
-    ui.cfgToken.value
-   );
-
-  if(
-   !config.owner ||
-   !config.repo ||
-   !config.token
-  ){
-   toast(
-    '请完整填写仓库和 Token',
-    'error'
-   );
-
-   return;
-  }
-
-  localStorage.setItem(
-   STORE+':config',
-   JSON.stringify({
-    owner:
-     config.owner,
-
-    repo:
-     config.repo,
-
-    path:
-     config.path
-   })
-  );
-
-  if(ui.remember.checked){
-   localStorage.setItem(
-    STORE+':token',
-    config.token
-   );
-  }else{
-   localStorage.removeItem(
-    STORE+':token'
-   );
-  }
-
-  ui.configModal.classList.add(
-   'hidden'
-  );
-
-  dirty=false;
-  baseState=null;
-  sha=null;
-
-  await loadInitial();
- }
+const remoteSig=
+stateSignature(
+remote.state
 );
 
-ui.manage.addEventListener(
- 'click',
- ()=>{
-  ui.institutionText.value=
-   state.institutions.join(
-    '\n'
-   );
-
-  ui.manageModal.classList.remove(
-   'hidden'
-  );
- }
+const mergedSig=
+stateSignature(
+mergedState
 );
 
-ui.manageCancel.addEventListener(
- 'click',
- ()=>{
-  ui.manageModal.classList.add(
-   'hidden'
-  );
- }
+const localChanged=
+localSig!==
+baseSig;
+
+const remoteChanged=
+remoteSig!==
+baseSig;
+
+const pulledChanges=
+localSig!==
+mergedSig;
+
+let wroteRemote=
+false;
+
+let finalSha=
+remote.sha;
+
+if(
+remoteSig!==
+mergedSig
+){
+try{
+finalSha=
+await writeRemote(
+mergedState,
+remote.sha
 );
 
-ui.manageSave.addEventListener(
- 'click',
- ()=>{
-  state.institutions=
-   uniq(
-    ui.institutionText.value.split(
-     /\r?\n/
-    )
-   );
+wroteRemote=
+true;
 
-  for(const e of state.entries){
-   if(
-    e.institution &&
-    !state.institutions.some(
-     x=>
-      key(x)===
-      key(e.institution)
-    )
-   ){
-    state.institutions.push(
-     e.institution
-    );
-   }
-  }
+}catch(error){
+lastError=
+error;
 
-  ui.manageModal.classList.add(
-   'hidden'
-  );
-
-  render();
-
-  markDirty();
-
-  sync(
-   false,
-   true
-  );
- }
+if(
+isWriteConflictError(
+error
+)
+){
+await delay(
+180+attempt*120
 );
 
-ui.exp.addEventListener(
- 'click',
- ()=>{
-  const blob=
-   new Blob(
-    [
-     JSON.stringify(
-      state,
-      null,
-      2
-     )
-    ],
-    {
-     type:
-      'application/json'
-    }
-   );
+continue;
+}
 
-  const url=
-   URL.createObjectURL(
-    blob
-   );
-
-  const a=
-   document.createElement(
-    'a'
-   );
-
-  a.href=
-   url;
-
-  a.download=
-   `press_data_${Date.now()}.json`;
-
-  a.click();
-
-  setTimeout(
-   ()=>{
-    URL.revokeObjectURL(
-     url
-    );
-   },
-   1000
-  );
- }
+if(
+isTransientSyncError(
+error
+)
+){
+const verification=
+await verifyRemoteEquals(
+mergedState
 );
 
-ui.imp.addEventListener(
- 'click',
- ()=>{
-  ui.impFile.click();
- }
+if(
+verification.matched
+){
+finalSha=
+verification.remote.sha;
+
+wroteRemote=
+true;
+
+}else{
+throw error;
+}
+
+}else{
+throw error;
+}
+}
+}
+
+let finalLocalState=
+mergedState;
+
+let dirtyAfterSync=
+false;
+
+let extraConflicts=
+0;
+let extraCollectionConflicts=
+0;
+let extraUnresolvedCodes=
+0;
+let extraCodeConflicts=
+0;
+let extraInvalidCodes=
+0;
+
+if(
+localMutationVersion!==
+mutationVersionBeforeWrite
+){
+const currentLocal=
+norm(
+state
 );
 
-ui.impFile.addEventListener(
- 'change',
- async()=>{
-  const f=
-   ui.impFile.files?.[0];
-
-  ui.impFile.value='';
-
-  if(!f){
-   return;
-  }
-
-  try{
-   const parsed=
-    JSON.parse(
-     await f.text()
-    );
-
-   state=
-    normalizeState(
-     parsed
-    );
-
-   render();
-
-   markDirty();
-
-   toast(
-    '导入成功，本机已保存',
-    'success'
-   );
-
-   sync(
-    false,
-    true
-   );
-
-  }catch{
-   toast(
-    '导入失败：JSON 格式无效',
-    'error'
-   );
-  }
- }
+const afterWriteMerge=
+mergeStates(
+localBefore,
+currentLocal,
+mergedState
 );
 
-ui.top.addEventListener(
- 'click',
- ()=>{
-  window.scrollTo({
-   top:0,
-   behavior:'auto'
-  });
- }
+finalLocalState=
+afterWriteMerge.state;
+
+extraConflicts=
+afterWriteMerge.conflicts;
+
+extraCollectionConflicts=
+afterWriteMerge.collectionConflicts;
+
+extraUnresolvedCodes=
+afterWriteMerge.unresolvedCodeConflicts;
+
+extraCodeConflicts=
+afterWriteMerge.codeConflicts;
+
+extraInvalidCodes=
+afterWriteMerge.invalidCodeCount;
+
+const afterWriteAudit=
+auditCodeSafety(
+currentLocal,
+mergedState,
+afterWriteMerge.state
 );
 
-/*
-手机恢复联网：
-已有同步运行时直接跳过。
-*/
-window.addEventListener(
- 'online',
- ()=>{
-  if(
-   admin() &&
-   !syncBusy &&
-   !document.querySelector(
-    '.overlay:not(.hidden)'
-   )
-  ){
-   sync(
-    false,
-    false
-   );
-  }
- }
+if(
+!afterWriteAudit.ok
+){
+const error=
+new Error(
+`编码安全检查失败：检测到 ${afterWriteAudit.violations} 个可能被清空或改写的已有编码`
 );
 
-/*
-手机从后台回到前台：
-空闲时补拉一次。
-*/
-window.addEventListener(
- 'focus',
- ()=>{
-  if(
-   admin() &&
-   !syncBusy &&
-   !document.querySelector(
-    '.overlay:not(.hidden)'
-   )
-  ){
-   sync(
-    false,
-    false
-   );
-  }
- }
+error.code=
+'code_safety';
+
+throw error;
+}
+
+dirtyAfterSync=
+stateSignature(
+finalLocalState
+)!==
+mergedSig;
+
+if(dirtyAfterSync){
+syncRequested=
+true;
+}
+}
+
+state=
+norm(
+finalLocalState
+);
+
+meta.dirty=
+dirtyAfterSync;
+
+meta.sha=
+finalSha;
+
+saveLocal(
+state
+);
+
+const baseWrite=
+persistSyncBase(
+mergedState,
+finalSha
+);
+
+const metaWrite=
+persistMeta();
+
+await Promise.allSettled([
+workCopyWriteChain,
+baseWrite,
+metaWrite
+]);
+
+render();
+
+status(
+'online',
+'公开阅读 · 管理已连接'
+);
+
+lastSyncTime.textContent=
+`已同步 ${new Date().toLocaleString()}`;
+
+const conflictCount=
+mergedResult.conflicts+
+mergedResult.collectionConflicts+
+extraConflicts+
+extraCollectionConflicts;
+
+const duplicateCodeCountAfterSync=
+Math.max(
+mergedResult.unresolvedCodeConflicts,
+extraUnresolvedCodes
+);
+
+const invalidCodeCountAfterSync=
+Math.max(
+mergedResult.invalidCodeCount,
+extraInvalidCodes
+);
+
+const codeConflictCount=
+mergedResult.codeConflicts+
+extraCodeConflicts;
+
+const allocatedCodeCount=
+allocationResult.assigned;
+
+const reassignedCodeCount=
+allocationResult.reassigned;
+
+const pendingUnassignedCount=
+allocationResult.pendingUnassigned;
+
+if(
+duplicateCodeCountAfterSync ||
+invalidCodeCountAfterSync ||
+codeConflictCount
+){
+status(
+'online',
+'公开阅读 · 管理已连接 · 编码需检查'
+);
+}
+
+if(showResult){
+if(
+codeConflictCount
+){
+show(
+`检测到 ${codeConflictCount} 个编码并发冲突，已停止自动覆盖，请人工检查`,
+'error'
+);
+
+}else if(
+duplicateCodeCountAfterSync
+){
+show(
+`同步完成；检测到 ${duplicateCodeCountAfterSync} 个重复编码，已全部保留原值，请人工检查`,
+'error'
+);
+
+}else if(
+invalidCodeCountAfterSync
+){
+show(
+`同步完成；检测到 ${invalidCodeCountAfterSync} 个编码与当前规则不一致，已保留原值`,
+'error'
+);
+
+}else if(
+pendingUnassignedCount
+){
+show(
+`同步完成；仍有 ${pendingUnassignedCount} 个新条目等待分配编码，已有编码未被改动`,
+'error'
+);
+
+}else if(
+reassignedCodeCount
+){
+show(
+`同步完成；并发仲裁调整了 ${reassignedCodeCount} 个自动编码，多设备已收敛到同一结果`,
+'success'
+);
+
+}else if(
+allocatedCodeCount
+){
+show(
+`同步完成；为 ${allocatedCodeCount} 个自动编码条目确认了编码`,
+'success'
+);
+
+}else if(
+conflictCount
+){
+show(
+`双向同步完成；检测到 ${conflictCount} 处普通字段并发修改并已合并，编码未自动改写`,
+'success'
+);
+
+}else if(
+wroteRemote &&
+localChanged &&
+remoteChanged
+){
+show(
+'已合并两台设备的修改并同步 GitHub；已有编码保持不变',
+'success'
+);
+
+}else if(wroteRemote){
+show(
+'已同步到 GitHub；已有编码保持不变',
+'success'
+);
+
+}else if(pulledChanges){
+show(
+'已获取另一设备的最新修改；已有编码保持不变',
+'success'
+);
+
+}else{
+show(
+'本机与 GitHub 已是最新',
+'success'
+);
+}
+}
+
+return true;
+}
+
+throw (
+lastError ||
+new Error(
+'多次重试后仍无法完成同步'
+)
+);
+
+}catch(error){
+console.error(
+error
+);
+
+meta.dirty=
+Boolean(
+meta.dirty ||
+dirtyAtStart ||
+localMutationVersion!==
+mutationAtStart
+);
+
+saveLocal(
+state
+);
+
+await Promise.allSettled([
+workCopyWriteChain,
+persistMeta()
+]);
+
+status(
+'offline',
+'同步失败 · 本地数据已保留'
+);
+
+if(showResult){
+show(
+`同步失败：${syncErrorText(error)}`,
+'error'
+);
+}
+
+return false;
+
+}finally{
+syncRunning=
+false;
+
+updateAdmin();
+}
+}
+
+function sync(
+showResult=true,
+queueIfBusy=true
+){
+if(!admin()){
+return Promise.resolve(
+false
+);
+}
+
+if(syncInFlight){
+if(showResult){
+syncShowResult=
+true;
+}
+
+if(queueIfBusy){
+syncRequested=
+true;
+}
+
+return syncInFlight;
+}
+
+syncRequested=
+true;
+
+if(showResult){
+syncShowResult=
+true;
+}
+
+syncInFlight=
+(
+async()=>{
+let allOk=
+true;
+
+while(syncRequested){
+const announce=
+syncShowResult;
+
+syncRequested=
+false;
+syncShowResult=
+false;
+
+const ok=
+await syncOnce(
+announce
+);
+
+allOk=
+allOk &&
+ok;
+
+if(!ok){
+syncRequested=
+false;
+
+break;
+}
+}
+
+return allOk;
+}
+)()
+.finally(
+()=>{
+syncInFlight=
+null;
+}
+);
+
+return syncInFlight;
+}
+
+async function loadPublic(){
+status(
+'syncing',
+'正在读取公开数据'
+);
+
+const url=
+publicUrl();
+
+const canFetchPublic=
+Boolean(url) &&
+/^https?:/i.test(url);
+
+if(!canFetchPublic){
+state=
+publicCacheValue
+? norm(publicCacheValue)
+: norm({});
+
+render();
+
+status(
+'online',
+publicCacheValue
+? '本地预览 · 使用缓存'
+: '本地预览 · 未读取公开数据文件'
+);
+
+lastSyncTime.textContent=
+publicCacheValue
+? `缓存数据 · ${state.entries.length} 条`
+: '本地预览模式';
+
+return;
+}
+
+try{
+const {response,text}=
+await fetchTextWithTimeout(
+url,
+{
+cache:
+'no-store'
+},
+PUBLIC_FETCH_TIMEOUT
+);
+
+if(!response.ok){
+throw new Error(
+`HTTP ${response.status}`
+);
+}
+
+state=
+norm(
+JSON.parse(
+text
+)
+);
+
+publicCacheValue=
+state;
+
+await idbSet(
+PUBLIC_CACHE_KEY,
+{
+savedAt:
+new Date()
+.toISOString(),
+
+state
+}
+);
+
+render();
+
+status(
+'online',
+'公开阅读'
+);
+
+lastSyncTime.textContent=
+`公开数据 · ${state.entries.length} 条`;
+
+}catch(error){
+console.error(
+error
+);
+
+if(
+publicCacheValue
+){
+state=
+norm(
+publicCacheValue
+);
+}
+
+render();
+
+status(
+'offline',
+publicCacheValue
+? '公开数据读取失败 · 使用缓存'
+: '公开数据读取失败'
+);
+
+lastSyncTime.textContent=
+publicCacheValue
+? `缓存数据 · ${state.entries.length} 条`
+: '请确认 press_data.json 与本页同目录';
+}
+}
+
+async function loadAdminState(){
+adminReady=
+false;
+
+updateAdmin();
+
+status(
+'syncing',
+'正在读取管理数据'
+);
+
+try{
+const remote=
+await readRemoteWithRetry();
+
+const local=
+loadLocal();
+
+if(
+meta.dirty &&
+local
+){
+state=
+local;
+
+saveLocal(
+state
+);
+
+adminReady=
+true;
+
+render();
+
+status(
+'online',
+'公开阅读 · 管理已连接 · 正在合并未同步修改'
+);
+
+sync(
+false
+);
+
+return;
+}
+
+if(remote.exists){
+state=
+remote.state;
+
+meta.dirty=
+false;
+
+meta.sha=
+remote.sha;
+
+saveLocal(
+state
+);
+
+await Promise.all([
+workCopyWriteChain,
+
+persistSyncBase(
+state,
+remote.sha
+),
+
+persistMeta()
+]);
+
+}else if(local){
+state=
+local;
+
+meta.dirty=
+true;
+
+meta.sha=
+null;
+
+syncBaseCache=
+norm({});
+
+syncBaseSha=
+null;
+
+saveLocal(
+state
+);
+
+await Promise.all([
+workCopyWriteChain,
+
+persistSyncBase(
+syncBaseCache,
+null
+),
+
+persistMeta()
+]);
+
+}else{
+state=
+norm({});
+
+meta.dirty=
+false;
+
+meta.sha=
+null;
+
+saveLocal(
+state
+);
+
+await Promise.all([
+workCopyWriteChain,
+
+persistSyncBase(
+state,
+null
+),
+
+persistMeta()
+]);
+}
+
+adminReady=
+true;
+
+render();
+
+status(
+'online',
+'公开阅读 · 管理已连接'
+);
+
+if(meta.dirty){
+sync(
+false
+);
+}
+
+}catch(error){
+console.error(
+error
+);
+
+state=
+loadLocal() ||
+norm({});
+
+adminReady=
+true;
+
+render();
+
+status(
+'offline',
+'云端读取失败 · 使用本机数据'
+);
+}
+}
+
+async function bootstrapStorage(){
+const [
+storedConfig,
+storedToken,
+storedMeta,
+work,
+cache,
+base
+]=
+await Promise.all([
+idbGet(
+CONFIG_KEY
+),
+
+idbGet(
+TOKEN_PERSISTED_KEY
+),
+
+idbGet(
+META_KEY
+),
+
+idbGet(
+WORKCOPY_KEY
+),
+
+idbGet(
+PUBLIC_CACHE_KEY
+),
+
+idbGet(
+SYNC_BASE_KEY
+)
+]);
+
+if(
+storedConfig &&
+typeof storedConfig===
+'object'
+){
+config.owner=
+clean(
+storedConfig.owner
+);
+
+config.repo=
+clean(
+storedConfig.repo
+);
+
+config.file=
+clean(
+storedConfig.file
+) ||
+'press_data.json';
+}
+
+persistedToken=
+typeof storedToken===
+'string'
+? storedToken
+: '';
+
+config.token=
+persistedToken;
+
+const currentTarget=
+syncTargetId();
+
+if(
+storedMeta &&
+typeof storedMeta===
+'object' &&
+(
+!storedMeta.target ||
+storedMeta.target===
+currentTarget
+)
+){
+meta={
+...meta,
+...storedMeta
+};
+}
+
+if(
+work?.state &&
+(
+!work.target ||
+work.target===
+currentTarget
+)
+){
+workCopyCache=
+norm(
+work.state
+);
+}
+
+if(
+base?.state &&
+(
+!base.target ||
+base.target===
+currentTarget
+)
+){
+syncBaseCache=
+norm(
+base.state
+);
+
+syncBaseSha=
+clean(
+base.sha
+) ||
+null;
+
+if(
+!meta.sha &&
+!meta.dirty &&
+syncBaseSha
+){
+meta.sha=
+syncBaseSha;
+}
+}
+
+if(
+cache?.state
+){
+publicCacheValue=
+norm(
+cache.state
+);
+}
+}
+
+async function saveConfig(
+event
+){
+event.preventDefault();
+
+if(syncInFlight){
+await syncInFlight;
+}
+
+const hadPreviousTarget=
+Boolean(
+config.owner &&
+config.repo &&
+config.file
+);
+
+const previousTarget=
+syncTargetId();
+
+const nextConfig={
+owner:
+clean(
+cfgOwner.value
+),
+
+repo:
+clean(
+cfg.value
+),
+
+file:
+clean(
+cfgFile.value
+) ||
+'press_data.json',
+
+token:
+clean(
+cfgToken.value
+)
+};
+
+if(
+!nextConfig.owner ||
+!nextConfig.repo ||
+!nextConfig.token
+){
+show(
+'请完整填写仓库和 Token',
+'error'
+);
+
+return;
+}
+
+config=
+nextConfig;
+
+const targetChanged=
+hadPreviousTarget &&
+previousTarget!==
+syncTargetId();
+
+if(targetChanged){
+await Promise.allSettled([
+workCopyWriteChain,
+metaWriteChain,
+syncBaseWriteChain
+]);
+
+syncRequested=
+false;
+
+syncShowResult=
+false;
+
+meta={
+dirty:false,
+sha:null
+};
+
+workCopyCache=
+null;
+
+syncBaseCache=
+null;
+
+syncBaseSha=
+null;
+
+state=
+norm({});
+
+localMutationVersion=
+0;
+
+await Promise.all([
+idbDelete(
+META_KEY
+),
+
+idbDelete(
+WORKCOPY_KEY
+),
+
+idbDelete(
+SYNC_BASE_KEY
+)
+]);
+}
+
+await idbSet(
+CONFIG_KEY,
+{
+owner:
+config.owner,
+
+repo:
+config.repo,
+
+file:
+config.file
+}
+);
+
+if(
+rememberToken.checked
+){
+persistedToken=
+config.token;
+
+await idbSet(
+TOKEN_PERSISTED_KEY,
+config.token
+);
+
+}else{
+persistedToken='';
+
+await idbDelete(
+TOKEN_PERSISTED_KEY
+);
+}
+
+configModal.classList.add(
+'hidden'
+);
+
+await loadAdminState();
+}
+
+function openManage(){
+if(
+!admin() ||
+!adminReady
+){
+return;
+}
+
+manageInstitutionInput.value='';
+
+manageInstitutionLineInput.value=
+String(
+state
+.institutions
+.length+
+1
+);
+
+renderManageInstitutionOptions();
+
+manageModal.classList.remove(
+'hidden'
+);
+}
+
+function addManagedInstitution(){
+const value=
+clean(
+manageInstitutionInput.value
+);
+
+if(!value){
+return;
+}
+
+if(
+state.institutions
+.some(
+item=>
+key(item)===
+key(value)
+)
+){
+show(
+'出版选项已经存在',
+'error'
+);
+
+return;
+}
+
+let line=
+Number(
+folded(
+manageInstitutionLineInput
+.value
+)
+);
+
+if(
+!Number.isInteger(
+line
+)
+){
+line=
+state
+.institutions
+.length+
+1;
+}
+
+line=
+Math.max(
+1,
+Math.min(
+line,
+state
+.institutions
+.length+
+1
+)
+);
+
+state.institutions.splice(
+line-1,
+0,
+value
+);
+
+manageInstitutionInput.value='';
+
+render();
+
+schedule();
+}
+
+function moveManagedInstitution(
+value,
+rawLine
+){
+const history=[
+...state.institutions
+];
+
+const from=
+history.findIndex(
+item=>
+key(item)===
+key(value)
+);
+
+if(from<0){
+return;
+}
+
+let line=
+Number(
+folded(
+rawLine
+)
+);
+
+if(
+!Number.isInteger(
+line
+) ||
+line<1 ||
+line>
+history.length
+){
+renderManageInstitutionOptions();
+
+return;
+}
+
+const [item]=
+history.splice(
+from,
+1
+);
+
+history.splice(
+line-1,
+0,
+item
+);
+
+state.institutions=
+history;
+
+render();
+
+schedule();
+}
+
+function renameManagedInstitution(
+value
+){
+const index=
+state.institutions
+.findIndex(
+item=>
+key(item)===
+key(value)
+);
+
+if(index<0){
+return;
+}
+
+const next=
+prompt(
+'修改出版选项：',
+state.institutions[
+index
+]
+);
+
+if(next===null){
+return;
+}
+
+const cleaned=
+clean(
+next
+);
+
+if(!cleaned){
+return;
+}
+
+const oldKey=
+key(value);
+
+state.institutions[
+index
+]=
+cleaned;
+
+for(
+const entry
+of state.entries
+){
+if(
+key(
+entry.institution
+)===
+oldKey
+){
+entry.institution=
+cleaned;
+}
+}
+
+render();
+
+schedule();
+}
+
+function deleteManagedInstitution(
+value
+){
+if(
+!confirm(
+`确定从出版菜单删除“${value}”吗？`
+)
+){
+return;
+}
+
+state.institutions=
+state.institutions
+.filter(
+item=>
+key(item)!==
+key(value)
+);
+
+render();
+
+schedule();
+}
+
+function exportHtml(){
+const source=
+'<!DOCTYPE html>\n'+
+document
+.documentElement
+.outerHTML;
+
+const blob=
+new Blob(
+[source],
+{
+type:
+'text/html;charset=utf-8'
+}
+);
+
+const url=
+URL.createObjectURL(
+blob
+);
+
+const link=
+document.createElement(
+'a'
+);
+
+link.href=
+url;
+
+link.download=
+`press${Math.floor(Date.now()/1000)}.html`;
+
+document.body
+.appendChild(
+link
+);
+
+link.click();
+
+link.remove();
+
+setTimeout(
+()=>{
+URL.revokeObjectURL(
+url
+);
+},
+1000
+);
+}
+
+function importHtml(
+file
+){
+if(!file){
+return;
+}
+
+show(
+'HTML 导入功能保留',
+'success'
+);
+
+importInput.value='';
+}
+
+setupInstitutionCombo(
+'add'
+);
+
+setupInstitutionCombo(
+'edit'
+);
+
+setupMultiCombo(
+'tag',
+'add'
+);
+
+setupMultiCombo(
+'tag',
+'edit'
+);
+
+setupMultiCombo(
+'category',
+'add'
+);
+
+setupMultiCombo(
+'category',
+'edit'
+);
+
+bookNameInput.addEventListener(
+'input',
+refreshAddDraftCode
+);
+
+editBookName.addEventListener(
+'input',
+()=>{
+refreshEditAutoCodePreview();
+}
+);
+
+editCode.addEventListener(
+'input',
+()=>{
+if(
+!editCode.readOnly
+){
+editAutoManagedDraft=false;
+}
+}
 );
 
 document.addEventListener(
- 'visibilitychange',
- ()=>{
-  if(
-   !document.hidden &&
-   admin() &&
-   !syncBusy &&
-   !document.querySelector(
-    '.overlay:not(.hidden)'
-   )
-  ){
-   sync(
-    false,
-    false
-   );
-  }
- }
+'click',
+closePanels
 );
 
-/*
-每分钟自动同步一次。
+addBtn.addEventListener(
+'click',
+addEntry
+);
 
-如果上一轮同步尚未结束：
-这一轮直接跳过，
-不会排队，
-不会重新设置 syncQueued，
-因此不会再次出现手机一直停留在
-“正在拉取服务器最新版”的同步链。
-*/
-intervalId=
- setInterval(
-  ()=>{
-   if(
-    admin() &&
-    !syncBusy &&
-    !document.querySelector(
-     '.overlay:not(.hidden)'
-    )
-   ){
-    sync(
-     false,
-     false
-    );
-   }
-  },
-  SYNC_INTERVAL
- );
+pressList.addEventListener(
+'click',
+event=>{
+const button=
+event.target.closest(
+'.edit-btn[data-id]'
+);
 
-loadInitial()
- .catch(
-  e=>{
-   console.error(e);
+if(button){
+openEdit(
+button.dataset.id
+);
+}
+}
+);
 
-   status(
-    'offline',
-    '初始化失败'
-   );
+pressList.addEventListener(
+'change',
+event=>{
+const checkbox=
+event.target.closest(
+'.entry-tag-checkbox[data-id]'
+);
 
-   render();
-  }
- );
+if(!checkbox){
+return;
+}
+
+const entry=
+state.entries.find(
+item=>
+item.id===
+checkbox.dataset.id
+);
+
+if(!entry){
+return;
+}
+
+entry.tagChecked=
+checkbox.checked;
+
+updateCountDisplay();
+
+schedule();
+}
+);
+
+editSave.addEventListener(
+'click',
+saveEdit
+);
+
+editDelete.addEventListener(
+'click',
+()=>{
+if(editingId){
+deleteEntry(
+editingId
+);
+}
+}
+);
+
+editCancel.addEventListener(
+'click',
+()=>{
+editingId='';
+editInitialSnapshot='';
+editOverlayPointerDown=
+false;
+editAutoManagedDraft=
+false;
+
+editSelections={
+category:[],
+tag:[]
+};
+
+editModal.classList.add(
+'hidden'
+);
+}
+);
+
+clearEditBookName.addEventListener(
+'click',
+()=>{
+editBookName.value='';
+
+editBookName.focus();
+}
+);
+
+clearEditBookNo.addEventListener(
+'click',
+()=>{
+editBookNo.value='';
+
+editBookNo.focus();
+}
+);
+
+editModal.addEventListener(
+'pointerdown',
+event=>{
+editOverlayPointerDown=
+event.target===
+editModal;
+}
+);
+
+editModal.addEventListener(
+'pointerup',
+event=>{
+const genuineOutsideClick=
+editOverlayPointerDown &&
+event.target===
+editModal;
+
+editOverlayPointerDown=
+false;
+
+if(
+!genuineOutsideClick
+){
+return;
+}
+
+if(
+!editIsUnchanged()
+){
+return;
+}
+
+editingId='';
+editInitialSnapshot='';
+editAutoManagedDraft=
+false;
+
+editSelections={
+category:[],
+tag:[]
+};
+
+editInstitutionPanel
+.classList
+.add('hidden');
+
+editCategoryPanel
+.classList
+.add('hidden');
+
+editTagPanel
+.classList
+.add('hidden');
+
+editModal
+.classList
+.add('hidden');
+}
+);
+
+editModal.addEventListener(
+'pointercancel',
+()=>{
+editOverlayPointerDown=
+false;
+}
+);
+
+configBtn.addEventListener(
+'click',
+()=>{
+cfgOwner.value=
+config.owner;
+
+cfg.value=
+config.repo;
+
+cfgFile.value=
+config.file;
+
+cfgToken.value=
+config.token;
+
+rememberToken.checked=
+Boolean(
+persistedToken
+);
+
+configModal.classList.remove(
+'hidden'
+);
+}
+);
+
+configCancel.addEventListener(
+'click',
+()=>{
+configModal.classList.add(
+'hidden'
+);
+}
+);
+
+configForm.addEventListener(
+'submit',
+saveConfig
+);
+
+manageBtn.addEventListener(
+'click',
+openManage
+);
+
+manageClose.addEventListener(
+'click',
+()=>{
+manageModal.classList.add(
+'hidden'
+);
+}
+);
+
+manageInstitutionAdd.addEventListener(
+'click',
+addManagedInstitution
+);
+
+manageInstitutionOptions.addEventListener(
+'click',
+event=>{
+const edit=
+event.target.closest(
+'[data-edit-value]'
+);
+
+if(edit){
+renameManagedInstitution(
+edit.dataset
+.editValue
+);
+
+return;
+}
+
+const remove=
+event.target.closest(
+'[data-delete-value]'
+);
+
+if(remove){
+deleteManagedInstitution(
+remove.dataset
+.deleteValue
+);
+}
+}
+);
+
+manageInstitutionOptions.addEventListener(
+'change',
+event=>{
+const input=
+event.target.closest(
+'.manage-line-input[data-move-value]'
+);
+
+if(input){
+moveManagedInstitution(
+input.dataset
+.moveValue,
+input.value
+);
+}
+}
+);
+
+syncBtn.addEventListener(
+'click',
+()=>{
+sync(
+true
+);
+}
+);
+
+exportBtn.addEventListener(
+'click',
+exportHtml
+);
+
+importBtn.addEventListener(
+'click',
+()=>{
+importInput.click();
+}
+);
+
+importInput.addEventListener(
+'change',
+()=>{
+importHtml(
+importInput
+.files?.[0]
+);
+}
+);
+
+returnTopControl.addEventListener(
+'click',
+()=>{
+window.scrollTo({
+top:0,
+left:0,
+behavior:'auto'
+});
+
+const scroll=
+document.querySelector(
+'#editModal:not(.hidden) .dialog-scroll'
+);
+
+if(scroll){
+scroll.scrollTop=
+0;
+}
+}
+);
+
+document.addEventListener(
+'keydown',
+event=>{
+if(
+event.key!==
+'Escape'
+){
+return;
+}
+
+closePanels();
+
+if(
+!editModal.classList
+.contains(
+'hidden'
+) &&
+editIsUnchanged()
+){
+editingId='';
+editInitialSnapshot='';
+editOverlayPointerDown=
+false;
+editAutoManagedDraft=
+false;
+
+editSelections={
+category:[],
+tag:[]
+};
+
+editModal.classList.add(
+'hidden'
+);
+}
+
+configModal.classList.add(
+'hidden'
+);
+
+manageModal.classList.add(
+'hidden'
+);
+}
+);
+
+async function initialize(){
+await bootstrapStorage();
+
+[
+tagInput,
+categoryInput,
+editTag,
+editCategory
+]
+.forEach(
+input=>
+input.removeAttribute(
+'placeholder'
+)
+);
+
+if(admin()){
+const local=
+loadLocal();
+
+if(local){
+state=
+local;
+}
+
+await loadAdminState();
+
+}else{
+updateAdmin();
+
+render();
+
+await loadPublic();
+}
+}
+
+initialize()
+.catch(
+error=>{
+console.error(
+error
+);
+
+status(
+'offline',
+'初始化失败'
+);
+
+render();
+}
+);
+
+startOneMinuteServerLoop();
+
+function startOneMinuteServerLoop(){
+if(syncIntervalTimer){
+clearInterval(
+syncIntervalTimer
+);
+}
+
+syncIntervalTimer=
+setInterval(
+()=>{
+if(
+admin() &&
+adminReady &&
+!syncInFlight &&
+!syncRunning &&
+editModal.classList.contains(
+'hidden'
+) &&
+configModal.classList.contains(
+'hidden'
+) &&
+manageModal.classList.contains(
+'hidden'
+)
+){
+sync(
+false,
+false
+);
+}
+},
+SYNC_INTERVAL
+);
+}
+
+function passiveSync(){
+if(
+!admin() ||
+!adminReady ||
+syncRunning ||
+Boolean(syncInFlight) ||
+!editModal.classList.contains(
+'hidden'
+) ||
+!configModal.classList.contains(
+'hidden'
+) ||
+!manageModal.classList.contains(
+'hidden'
+)
+){
+return;
+}
+
+const now=
+Date.now();
+
+if(
+now-
+lastPassiveSyncAt<
+1000
+){
+return;
+}
+
+lastPassiveSyncAt=
+now;
+
+sync(
+false,
+false
+);
+}
+
+window.addEventListener(
+'online',
+passiveSync
+);
+
+window.addEventListener(
+'focus',
+passiveSync
+);
+
+document.addEventListener(
+'visibilitychange',
+()=>{
+if(!document.hidden){
+passiveSync();
+}
+}
+);
 
 })();
 </script>
