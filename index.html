@@ -798,18 +798,33 @@ display:none!important
 }
 @media(max-width:700px){
 body{padding:.8rem}
-.container{padding:1.25rem;border-radius:22px}
-.page-title{font-size:1.8rem}
-.toolbar{flex-direction:column}
-.form-grid{grid-template-columns:1fr}
-.bookno-tag-row{grid-template-columns:1fr}
-.edit-two-column-row{grid-template-columns:1fr}
+.container{
+padding:1.25rem;
+border-radius:22px
+}
+.page-title{
+font-size:1.8rem
+}
+.toolbar{
+flex-direction:column
+}
+.form-grid{
+grid-template-columns:1fr
+}
+.bookno-tag-row{
+grid-template-columns:1fr
+}
+.edit-two-column-row{
+grid-template-columns:1fr
+}
 .dialog{
 width:100%;
 max-height:calc(100dvh - 16px);
 border-radius:20px
 }
-.dialog-scroll{padding:1.2rem}
+.dialog-scroll{
+padding:1.2rem
+}
 #tagCombo > .combo-selected:not(:empty),
 #editTagCombo > .combo-selected:not(:empty){
 max-width:calc(100% - 54px)
@@ -1052,9 +1067,10 @@ const TOKEN_PERSISTED_KEY='token_persisted';
 const META_KEY='meta';
 const WORKCOPY_KEY='workcopy';
 const PUBLIC_CACHE_KEY='public_cache';
-const SYNC_BASE_KEY='sync_base_v2';
+const SYNC_BASE_KEY='sync_base_v3_5s';
+const SYNC_ENGINE_VERSION=3;
 const MAX_BYTES=750*1024;
-const AUTO_DELAY=1800;
+const SYNC_INTERVAL=5000;
 const SYNC_RETRY_LIMIT=6;
 const NETWORK_RETRY_LIMIT=3;
 const GITHUB_TIMEOUT=25000;
@@ -1292,7 +1308,7 @@ sha:null
 
 let adminReady=false;
 let toastTimer=null;
-let autoTimer=null;
+let syncIntervalTimer=null;
 let storageDbPromise=null;
 let storageDbDisabled=false;
 const storageMemory=new Map();
@@ -1315,6 +1331,7 @@ let metaWriteChain=Promise.resolve();
 let syncBaseWriteChain=Promise.resolve();
 
 let lastPassiveSyncAt=0;
+let syncEngineMigration=false;
 
 function clean(value){
 return String(value??'')
@@ -1345,8 +1362,7 @@ return div.innerHTML;
 }
 
 function attr(value){
-return esc(value)
-.replace(/"/g,'&quot;');
+return esc(value).replace(/"/g,'&quot;');
 }
 
 function uid(){
@@ -1357,21 +1373,15 @@ return crypto?.randomUUID
 
 function uniq(values){
 const map=new Map();
-
 for(const raw of values||[]){
 const value=clean(raw);
-
 if(
 value &&
 !map.has(key(value))
 ){
-map.set(
-key(value),
-value
-);
+map.set(key(value),value);
 }
 }
-
 return [...map.values()];
 }
 
@@ -1386,7 +1396,6 @@ Array.isArray(value)
 function normalizeFixedGroupLabel(value){
 const original=clean(value);
 const fixed=folded(original);
-
 return GROUP_CODES.includes(fixed)
 ? `${fixed}组`
 : original;
@@ -1395,20 +1404,16 @@ return GROUP_CODES.includes(fixed)
 function codeGroupValue(value){
 const original=clean(value);
 const fixed=folded(original);
-
 const match=fixed.match(
 /^(11|12|13|14|21|22|23)组$/
 );
-
 return match
 ? match[1]
 : original;
 }
 
 function tagPrefixNumber(value){
-const match=folded(value)
-.match(/^(\d{2})/);
-
+const match=folded(value).match(/^(\d{2})/);
 return match
 ? Number(match[1])
 : Number.POSITIVE_INFINITY;
@@ -1417,11 +1422,9 @@ return match
 function compareTagsByPrefix(a,b){
 const ap=tagPrefixNumber(a);
 const bp=tagPrefixNumber(b);
-
 if(ap!==bp){
 return ap-bp;
 }
-
 return collator.compare(
 clean(a),
 clean(b)
@@ -1443,7 +1446,6 @@ const visible=String(raw??'')
 /\[([^\]]+)\]\((?:https?:\/\/)?[^)]+\)/gi,
 '$1'
 );
-
 return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
 .test(visible);
 }
@@ -1558,10 +1560,7 @@ if(
 last &&
 range[0]<=last[1]+1
 ){
-last[1]=Math.max(
-last[1],
-range[1]
-);
+last[1]=Math.max(last[1],range[1]);
 }else{
 merged.push([...range]);
 }
@@ -1629,10 +1628,7 @@ function smallestAvailableCode(
 entry,
 used
 ){
-for(
-const [start,end]
-of codeRangesForEntry(entry)
-){
+for(const [start,end] of codeRangesForEntry(entry)){
 let number=start;
 
 while(
@@ -1643,8 +1639,7 @@ number++;
 }
 
 if(number<=end){
-return String(number)
-.padStart(6,'0');
+return String(number).padStart(6,'0');
 }
 }
 
@@ -1665,9 +1660,7 @@ entry.id===excludeId
 continue;
 }
 
-const code=normalizeStoredCode(
-entry.code
-);
+const code=normalizeStoredCode(entry.code);
 
 if(code){
 used.add(Number(code));
@@ -1677,21 +1670,10 @@ used.add(Number(code));
 return used;
 }
 
-function assignCodeForEntry(
-entry,
-entries,
-excludeId=''
-){
-const used=usedCodesExcept(
-entries,
-excludeId
-);
-
-return smallestAvailableCode(
-entry,
-used
-);
-}
+/*
+自动编码不再提供“基于当前本机 state 直接分配”的入口。
+所有自动分配统一由 assignMissingCodesAfterPull() 在服务器 GET 完成后执行。
+*/
 
 function renderLinkedText(raw){
 const source=clean(raw);
@@ -1703,18 +1685,13 @@ let match;
 
 while((match=regex.exec(source))){
 html+=esc(
-source.slice(
-last,
-match.index
-)
+source.slice(last,match.index)
 );
 
 html+=
 `<a href="${attr(match[2])}" target="_blank" rel="noopener noreferrer">${esc(match[1])}</a>`;
 
-last=
-match.index+
-match[0].length;
+last=match.index+match[0].length;
 }
 
 return html+esc(source.slice(last));
@@ -1735,38 +1712,19 @@ return null;
 }
 
 return {
-id:
-clean(raw.id)||
-uid(),
-
+id:clean(raw.id)||uid(),
 bookName,
-
-bookNo:
-clean(raw.bookNo),
-
-institution:
-clean(raw.institution),
-
-category:
-normalizeMulti(raw.category),
-
-tag:
-sortTags(
+bookNo:clean(raw.bookNo),
+institution:clean(raw.institution),
+category:normalizeMulti(raw.category),
+tag:sortTags(
 normalizeMulti(raw.tag)
 .map(normalizeFixedGroupLabel)
 ),
-
-tagChecked:
-Boolean(raw.tagChecked),
-
-code:
-normalizeStoredCode(raw.code),
-
-codeManualEdited:
-Boolean(raw.codeManualEdited),
-
-codeManualPinned:
-Boolean(
+tagChecked:Boolean(raw.tagChecked),
+code:normalizeStoredCode(raw.code),
+codeManualEdited:Boolean(raw.codeManualEdited),
+codeManualPinned:Boolean(
 raw.codeManualEdited &&
 raw.codeManualPinned
 )
@@ -1803,9 +1761,7 @@ Array.isArray(source.institutions)
 const categories=uniq(
 Array.isArray(source.categories)
 ? source.categories
-: entries.flatMap(
-entry=>entry.category
-)
+: entries.flatMap(entry=>entry.category)
 );
 
 const orderMap=new Map(
@@ -1833,10 +1789,7 @@ if(ai!==bi){
 return ai-bi;
 }
 
-if(
-ai===
-Number.MAX_SAFE_INTEGER
-){
+if(ai===Number.MAX_SAFE_INTEGER){
 const result=collator.compare(
 a.institution,
 b.institution
@@ -1873,8 +1826,7 @@ tags:[...GROUP_OPTIONS]
 }
 
 function sameSyncValue(a,b){
-return JSON.stringify(a)===
-JSON.stringify(b);
+return JSON.stringify(a)===JSON.stringify(b);
 }
 
 function stateSignature(value){
@@ -1914,37 +1866,22 @@ if(!remoteEntry){
 return localEntry;
 }
 
-if(
-sameSyncValue(
-localEntry,
-remoteEntry
-)
-){
+if(sameSyncValue(localEntry,remoteEntry)){
 return localEntry;
 }
 
 const merged={
-id:
-localEntry.id||
-remoteEntry.id
+id:localEntry.id||remoteEntry.id
 };
 
 for(const field of ENTRY_SYNC_FIELDS){
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(
-sameSyncValue(
-localValue,
-remoteValue
-)
-){
-merged[field]=
-copySyncValue(localValue);
+if(sameSyncValue(localValue,remoteValue)){
+merged[field]=copySyncValue(localValue);
 }else{
-merged[field]=
-copySyncValue(localValue);
-
+merged[field]=copySyncValue(localValue);
 stats.conflicts++;
 }
 }
@@ -1952,20 +1889,12 @@ stats.conflicts++;
 return normEntry(merged);
 }
 
-if(
-!localEntry &&
-!remoteEntry
-){
+if(!localEntry&&!remoteEntry){
 return null;
 }
 
 if(!localEntry){
-if(
-sameSyncValue(
-remoteEntry,
-baseEntry
-)
-){
+if(sameSyncValue(remoteEntry,baseEntry)){
 return null;
 }
 
@@ -1974,12 +1903,7 @@ return remoteEntry;
 }
 
 if(!remoteEntry){
-if(
-sameSyncValue(
-localEntry,
-baseEntry
-)
-){
+if(sameSyncValue(localEntry,baseEntry)){
 return null;
 }
 
@@ -1987,30 +1911,15 @@ stats.conflicts++;
 return localEntry;
 }
 
-if(
-sameSyncValue(
-localEntry,
-baseEntry
-)
-){
+if(sameSyncValue(localEntry,baseEntry)){
 return remoteEntry;
 }
 
-if(
-sameSyncValue(
-remoteEntry,
-baseEntry
-)
-){
+if(sameSyncValue(remoteEntry,baseEntry)){
 return localEntry;
 }
 
-if(
-sameSyncValue(
-localEntry,
-remoteEntry
-)
-){
+if(sameSyncValue(localEntry,remoteEntry)){
 return localEntry;
 }
 
@@ -2023,42 +1932,22 @@ const baseValue=baseEntry[field];
 const localValue=localEntry[field];
 const remoteValue=remoteEntry[field];
 
-if(
-sameSyncValue(
-localValue,
-remoteValue
-)
-){
-merged[field]=
-copySyncValue(localValue);
+if(sameSyncValue(localValue,remoteValue)){
+merged[field]=copySyncValue(localValue);
 continue;
 }
 
-if(
-sameSyncValue(
-localValue,
-baseValue
-)
-){
-merged[field]=
-copySyncValue(remoteValue);
+if(sameSyncValue(localValue,baseValue)){
+merged[field]=copySyncValue(remoteValue);
 continue;
 }
 
-if(
-sameSyncValue(
-remoteValue,
-baseValue
-)
-){
-merged[field]=
-copySyncValue(localValue);
+if(sameSyncValue(remoteValue,baseValue)){
+merged[field]=copySyncValue(localValue);
 continue;
 }
 
-merged[field]=
-copySyncValue(localValue);
-
+merged[field]=copySyncValue(localValue);
 stats.conflicts++;
 }
 
@@ -2075,38 +1964,21 @@ const base=uniq(baseValues||[]);
 const local=uniq(localValues||[]);
 const remote=uniq(remoteValues||[]);
 
-if(
-sameSyncValue(
-local,
-base
-)
-){
+if(sameSyncValue(local,base)){
 return remote;
 }
 
-if(
-sameSyncValue(
-remote,
-base
-)
-){
+if(sameSyncValue(remote,base)){
 return local;
 }
 
-if(
-sameSyncValue(
-local,
-remote
-)
-){
+if(sameSyncValue(local,remote)){
 return local;
 }
 
 stats.collectionConflicts++;
 
-const baseKeys=new Set(
-base.map(key)
-);
+const baseKeys=new Set(base.map(key));
 
 const localMap=new Map(
 local.map(
@@ -2150,10 +2022,7 @@ remoteMap.has(itemKey)
 );
 }
 
-function stableEntryCodeCompare(
-a,
-b
-){
+function stableEntryCodeCompare(a,b){
 const ap=
 a.codeManualPinned
 ? 0
@@ -2183,16 +2052,12 @@ String(b.id||''),
 );
 }
 
-function repairMergedCodeCollisions(
-snapshot
-){
+function repairMergedCodeCollisions(snapshot){
 const fixed=norm(snapshot);
 const byCode=new Map();
 
 for(const entry of fixed.entries){
-const code=normalizeStoredCode(
-entry.code
-);
+const code=normalizeStoredCode(entry.code);
 
 if(!code){
 continue;
@@ -2207,9 +2072,7 @@ byCode.set(number,[]);
 byCode.get(number).push(entry);
 }
 
-const used=new Set(
-byCode.keys()
-);
+const used=new Set(byCode.keys());
 
 let repaired=0;
 let unresolved=0;
@@ -2224,15 +2087,10 @@ const ordered=[
 ]
 .sort(stableEntryCodeCompare);
 
-for(
-let i=1;
-i<ordered.length;
-i++
-){
+for(let i=1;i<ordered.length;i++){
 const entry=ordered[i];
 
-const replacement=
-smallestAvailableCode(
+const replacement=smallestAvailableCode(
 entry,
 used
 );
@@ -2242,10 +2100,7 @@ entry.code=replacement;
 entry.codeManualEdited=false;
 entry.codeManualPinned=false;
 
-used.add(
-Number(replacement)
-);
-
+used.add(Number(replacement));
 repaired++;
 }else{
 unresolved++;
@@ -2260,13 +2115,79 @@ unresolved
 };
 }
 
+function assignMissingCodesAfterPull(snapshot){
+const fixed=norm(snapshot);
+const used=new Set();
+
+let assigned=0;
+let clearedInvalid=0;
+
+/*
+这里只接受刚完成远端 GET 并合并后的状态。
+先登记所有仍符合当前编组/语言规则的已占用编码；
+不合法的旧编码清空，稍后重新分配。
+*/
+for(const entry of fixed.entries){
+const code=normalizeStoredCode(entry.code);
+
+if(!code){
+continue;
+}
+
+if(!codeAllowedForEntry(entry,code)){
+entry.code='';
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+clearedInvalid++;
+continue;
+}
+
+used.add(Number(code));
+}
+
+/*
+再给所有无编码条目分配最小可用号。
+因为 used 来自“服务器最新版 + 本机待提交修改”，
+所以不会基于某一台设备的陈旧本地列表计算。
+*/
+const waiting=fixed.entries
+.filter(
+entry=>
+!normalizeStoredCode(entry.code) &&
+codeRangesForEntry(entry).length
+)
+.sort(stableEntryCodeCompare);
+
+for(const entry of waiting){
+const code=smallestAvailableCode(
+entry,
+used
+);
+
+if(!code){
+continue;
+}
+
+entry.code=code;
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+used.add(Number(code));
+assigned++;
+}
+
+return {
+state:norm(fixed),
+assigned,
+clearedInvalid
+};
+}
+
 function duplicateCodeCount(snapshot){
 const counts=new Map();
 
 for(const entry of norm(snapshot).entries){
-const code=normalizeStoredCode(
-entry.code
-);
+const code=normalizeStoredCode(entry.code);
 
 if(!code){
 continue;
@@ -2318,28 +2239,19 @@ merged=local;
 }else{
 const baseMap=new Map(
 base.entries.map(
-entry=>[
-entry.id,
-entry
-]
+entry=>[entry.id,entry]
 )
 );
 
 const localMap=new Map(
 local.entries.map(
-entry=>[
-entry.id,
-entry
-]
+entry=>[entry.id,entry]
 )
 );
 
 const remoteMap=new Map(
 remote.entries.map(
-entry=>[
-entry.id,
-entry
-]
+entry=>[entry.id,entry]
 )
 );
 
@@ -2364,16 +2276,14 @@ entries.push(entry);
 }
 }
 
-let institutions=
-mergeOrderedHistory(
+let institutions=mergeOrderedHistory(
 base.institutions,
 local.institutions,
 remote.institutions,
 stats
 );
 
-let categories=
-mergeOrderedHistory(
+let categories=mergeOrderedHistory(
 base.categories,
 local.categories,
 remote.categories,
@@ -2389,9 +2299,7 @@ institutions=uniq([
 
 categories=uniq([
 ...categories,
-...entries.flatMap(
-entry=>entry.category
-)
+...entries.flatMap(entry=>entry.category)
 ]);
 
 merged=norm({
@@ -2403,18 +2311,14 @@ tags:[...GROUP_OPTIONS]
 });
 }
 
-const repaired=
-repairMergedCodeCollisions(merged);
+const repaired=repairMergedCodeCollisions(merged);
 
 return {
 state:repaired.state,
 conflicts:stats.conflicts,
-collectionConflicts:
-stats.collectionConflicts,
-codeRepairs:
-repaired.repaired,
-unresolvedCodeConflicts:
-repaired.unresolved
+collectionConflicts:stats.collectionConflicts,
+codeRepairs:repaired.repaired,
+unresolvedCodeConflicts:repaired.unresolved
 };
 }
 
@@ -2427,13 +2331,9 @@ config.token
 );
 }
 
-function show(
-message,
-type='info'
-){
+function show(message,type='info'){
 toast.textContent=message;
-toast.className=
-`toast ${type}`;
+toast.className=`toast ${type}`;
 
 clearTimeout(toastTimer);
 
@@ -2446,8 +2346,7 @@ toast.classList.add('hidden');
 }
 
 function status(kind,text){
-statusDot.className=
-`status-dot ${kind}`;
+statusDot.className=`status-dot ${kind}`;
 statusText.textContent=text;
 }
 
@@ -2467,12 +2366,7 @@ fallbackStorageKey(storageKey)
 
 if(raw!==null){
 const value=JSON.parse(raw);
-
-storageMemory.set(
-storageKey,
-value
-);
-
+storageMemory.set(storageKey,value);
 return value;
 }
 }catch{}
@@ -2480,14 +2374,8 @@ return value;
 return null;
 }
 
-function fallbackSet(
-storageKey,
-value
-){
-storageMemory.set(
-storageKey,
-value
-);
+function fallbackSet(storageKey,value){
+storageMemory.set(storageKey,value);
 
 try{
 localStorage.setItem(
@@ -2540,11 +2428,7 @@ return;
 request.onupgradeneeded=()=>{
 const db=request.result;
 
-if(
-!db
-.objectStoreNames
-.contains(DB_STORE)
-){
+if(!db.objectStoreNames.contains(DB_STORE)){
 db.createObjectStore(DB_STORE);
 }
 };
@@ -2555,7 +2439,7 @@ resolve(request.result);
 
 request.onerror=()=>{
 reject(
-request.error||
+request.error ||
 new Error('IndexedDB open failed')
 );
 };
@@ -2599,7 +2483,7 @@ const request=tx
 
 request.onsuccess=()=>{
 resolve(
-request.result??
+request.result ??
 fallbackGet(storageKey)
 );
 };
@@ -2612,15 +2496,11 @@ reject(request.error);
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
-
 return fallbackGet(storageKey);
 }
 }
 
-async function idbSet(
-storageKey,
-value
-){
+async function idbSet(storageKey,value){
 if(storageDbDisabled){
 return fallbackSet(
 storageKey,
@@ -2638,8 +2518,7 @@ DB_STORE,
 'readwrite'
 );
 
-tx
-.objectStore(DB_STORE)
+tx.objectStore(DB_STORE)
 .put(
 value,
 storageKey
@@ -2655,21 +2534,16 @@ reject(tx.error);
 
 tx.onabort=()=>{
 reject(
-tx.error||
-new Error(
-'IndexedDB transaction aborted'
-)
+tx.error ||
+new Error('IndexedDB transaction aborted')
 );
 };
 }
 );
 
-storageMemory.set(
-storageKey,
-value
-);
-
+storageMemory.set(storageKey,value);
 return true;
+
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
@@ -2697,8 +2571,7 @@ DB_STORE,
 'readwrite'
 );
 
-tx
-.objectStore(DB_STORE)
+tx.objectStore(DB_STORE)
 .delete(storageKey);
 
 tx.oncomplete=resolve;
@@ -2709,16 +2582,15 @@ reject(tx.error);
 
 tx.onabort=()=>{
 reject(
-tx.error||
-new Error(
-'IndexedDB transaction aborted'
-)
+tx.error ||
+new Error('IndexedDB transaction aborted')
 );
 };
 }
 );
 
 storageMemory.delete(storageKey);
+
 }catch{
 storageDbDisabled=true;
 storageDbPromise=null;
@@ -2734,17 +2606,14 @@ clean(config.file)
 ].join('/');
 }
 
-function saveLocal(
-snapshot=state
-){
+function saveLocal(snapshot=state){
 const savedState=norm(snapshot);
 
 state=savedState;
 workCopyCache=norm(savedState);
 
 const payload={
-savedAt:
-new Date().toISOString(),
+savedAt:new Date().toISOString(),
 target:syncTargetId(),
 state:norm(savedState)
 };
@@ -2759,9 +2628,7 @@ payload
 )
 );
 
-workCopyWriteChain.catch(
-console.error
-);
+workCopyWriteChain.catch(console.error);
 
 return true;
 }
@@ -2773,7 +2640,7 @@ return workCopyCache
 }
 
 function persistMeta(){
-meta.syncVersion=2;
+meta.syncVersion=SYNC_ENGINE_VERSION;
 
 const payload={
 ...meta,
@@ -2793,18 +2660,14 @@ payload
 return metaWriteChain;
 }
 
-function persistSyncBase(
-snapshot,
-sha
-){
+function persistSyncBase(snapshot,sha){
 const savedState=norm(snapshot);
 
 syncBaseCache=savedState;
 syncBaseSha=sha||null;
 
 const payload={
-savedAt:
-new Date().toISOString(),
+savedAt:new Date().toISOString(),
 target:syncTargetId(),
 sha:syncBaseSha,
 state:norm(savedState)
@@ -2825,7 +2688,7 @@ return syncBaseWriteChain;
 
 function updateAdmin(){
 const editable=
-admin()&&
+admin() &&
 adminReady;
 
 addSection.classList.toggle(
@@ -2839,7 +2702,7 @@ syncBtn.classList.toggle(
 );
 
 syncBtn.disabled=
-!editable||
+!editable ||
 syncRunning;
 
 manageBtn.disabled=
@@ -2931,14 +2794,13 @@ function renderMultiOptions(type,which){
 const metaInfo=multiMeta(type,which);
 const search=key(metaInfo.input.value);
 
-const values=
-sortHistory(
+const values=sortHistory(
 type,
 state[metaInfo.historyKey]
 )
 .filter(
 value=>
-!search||
+!search ||
 key(value).includes(search)
 );
 
@@ -2992,10 +2854,12 @@ function renderInstitutionOptions(which){
 const metaInfo=institutionMeta(which);
 const search=key(metaInfo.input.value);
 
-const values=uniq(state.institutions)
+const values=uniq(
+state.institutions
+)
 .filter(
 value=>
-!search||
+!search ||
 key(value).includes(search)
 );
 
@@ -3026,9 +2890,7 @@ ${renderLinkedText(value)}
 }
 
 function renderManageInstitutionOptions(){
-const history=uniq(
-state.institutions
-);
+const history=uniq(state.institutions);
 
 manageInstitutionOptions.innerHTML=
 history.length
@@ -3038,7 +2900,9 @@ history.length
 class="manage-option-row"
 data-manage-value="${attr(value)}"
 >
-<span>${renderLinkedText(value)}</span>
+<span>
+${renderLinkedText(value)}
+</span>
 <input
 class="manage-line-input"
 type="number"
@@ -3069,11 +2933,7 @@ data-delete-value="${attr(value)}"
 manageInstitutionLineInput.max=
 String(history.length+1);
 
-if(
-!clean(
-manageInstitutionLineInput.value
-)
-){
+if(!clean(manageInstitutionLineInput.value)){
 manageInstitutionLineInput.value=
 String(history.length+1);
 }
@@ -3084,9 +2944,7 @@ const total=state.entries.length;
 
 const coded=state.entries
 .filter(
-entry=>normalizeStoredCode(
-entry.code
-)
+entry=>normalizeStoredCode(entry.code)
 )
 .length;
 
@@ -3108,10 +2966,13 @@ updateCountDisplay();
 
 renderInstitutionOptions('add');
 renderInstitutionOptions('edit');
+
 renderMultiField('tag','add');
 renderMultiField('tag','edit');
+
 renderMultiField('category','add');
 renderMultiField('category','edit');
+
 renderManageInstitutionOptions();
 
 if(!state.entries.length){
@@ -3126,21 +2987,17 @@ return;
 pressList.innerHTML=
 state.entries.map(
 entry=>{
-const code=normalizeStoredCode(
-entry.code
-);
-
-const editLabel=
-code||
-'编辑';
-
+const code=normalizeStoredCode(entry.code);
+const editLabel=code||'编辑';
 const rows=[];
 
 if(entry.institution){
 rows.push(
 `
 <div class="meta-row institution">
-<span class="meta-label">出版：</span><span class="meta-value">${renderLinkedText(entry.institution)}</span>
+<span class="meta-label">
+出版：
+</span><span class="meta-value">${renderLinkedText(entry.institution)}</span>
 </div>
 `
 );
@@ -3150,7 +3007,9 @@ if(entry.bookNo){
 rows.push(
 `
 <div class="meta-row">
-<span class="meta-label">书号：</span><span class="meta-value">${esc(entry.bookNo)}</span>
+<span class="meta-label">
+书号：
+</span><span class="meta-value">${esc(entry.bookNo)}</span>
 </div>
 `
 );
@@ -3159,13 +3018,17 @@ rows.push(
 rows.push(
 `
 <div class="meta-row tag-row">
-<span class="meta-label">编组：</span>
+<span class="meta-label">
+编组：
+</span>
 <span class="meta-value tag-value">
-<span>${esc(
+<span>
+${esc(
 entry.tag
 .map(groupDisplay)
 .join('/')
-)}</span>
+)}
+</span>
 <input
 class="entry-tag-checkbox"
 type="checkbox"
@@ -3182,7 +3045,9 @@ if(entry.category.length){
 rows.push(
 `
 <div class="meta-row bookshelf-row">
-<span class="meta-label">书架：</span><span class="meta-value bookshelf-text">${esc(
+<span class="meta-label">
+书架：
+</span><span class="meta-value bookshelf-text">${esc(
 entry.category.join('、')
 )}</span>
 </div>
@@ -3202,7 +3067,7 @@ ${rows.join('')}
 </div>
 </div>
 ${
-admin()&&
+admin() &&
 adminReady
 ? `
 <button
@@ -3279,8 +3144,7 @@ value
 return;
 }
 
-const multiple=
-multiAllowsMultiple(type);
+const multiple=multiAllowsMultiple(type);
 
 if(
 metaInfo.selection.length &&
@@ -3335,9 +3199,9 @@ clean(metaInfo.input.value);
 renderInstitutionOptions(which);
 }
 
-function addEntry(){
+async function addEntry(){
 if(
-!admin()||
+!admin() ||
 !adminReady
 ){
 return;
@@ -3372,10 +3236,11 @@ codeManualEdited:false,
 codeManualPinned:false
 };
 
-entry.code=assignCodeForEntry(
-entry,
-state.entries
-);
+/*
+新增时绝不在本机直接分配编码。
+先保存为无编码待同步条目；真正编码只允许在服务器最新版拉取完成后产生。
+*/
+entry.code='';
 
 state.entries.push(entry);
 
@@ -3393,6 +3258,31 @@ tag:[]
 render();
 schedule();
 bookNameInput.focus();
+
+/*
+新增条目需要编码，因此立即触发一轮服务器优先同步：
+GET 最新数据 -> 合并 -> 分配编码 -> 用当前 SHA 提交。
+如果服务器暂时不可达，条目仍保留，但保持无编码，5 秒循环会继续重试。
+*/
+addBtn.disabled=true;
+
+status(
+'syncing',
+'正在拉取服务器最新版并分配编码…'
+);
+
+try{
+const ok=await sync(false);
+
+if(!ok){
+show(
+'条目已保存在本机，但尚未取得服务器最新版，因此暂不分配编码；系统会每 5 秒重试',
+'error'
+);
+}
+}finally{
+addBtn.disabled=false;
+}
 }
 
 function getEditSnapshot(){
@@ -3411,15 +3301,14 @@ tagDraft:editTag.value
 
 function editIsUnchanged(){
 return (
-Boolean(editingId)&&
-getEditSnapshot()===
-editInitialSnapshot
+Boolean(editingId) &&
+getEditSnapshot()===editInitialSnapshot
 );
 }
 
 function openEdit(id){
 if(
-!admin()||
+!admin() ||
 !adminReady
 ){
 return;
@@ -3434,6 +3323,7 @@ return;
 }
 
 editingId=id;
+
 editBookName.value=entry.bookName;
 editBookNo.value=entry.bookNo;
 editInstitution.value=entry.institution;
@@ -3471,9 +3361,7 @@ renderInstitutionOptions('edit');
 renderMultiField('tag','edit');
 renderMultiField('category','edit');
 
-editInitialSnapshot=
-getEditSnapshot();
-
+editInitialSnapshot=getEditSnapshot();
 editOverlayPointerDown=false;
 
 editModal.classList.remove('hidden');
@@ -3584,8 +3472,7 @@ const occupied=state.entries
 .some(
 other=>
 other.id!==entry.id &&
-normalizeStoredCode(other.code)===
-manualCode
+normalizeStoredCode(other.code)===manualCode
 );
 
 if(occupied){
@@ -3611,21 +3498,18 @@ if(manualChangeRequested){
 entry.code=manualCode;
 entry.codeManualEdited=true;
 entry.codeManualPinned=true;
+
 }else if(
-groupsChanged||
+groupsChanged ||
 languageChanged
 ){
+/*
+编组或书名语言变化后，不再用本机旧数据重算编码。
+先清空，下一轮同步在 GET 服务器最新版之后重新分配。
+*/
 entry.codeManualPinned=false;
-
-if(groupsChanged){
 entry.codeManualEdited=false;
-}
-
-entry.code=assignCodeForEntry(
-entry,
-state.entries,
-entry.id
-);
+entry.code='';
 }
 
 editModal.classList.add('hidden');
@@ -3641,6 +3525,11 @@ tag:[]
 
 render();
 schedule();
+
+if(!normalizeStoredCode(entry.code)){
+/* 自动重算编码的场景立即进行一次服务器优先同步。 */
+sync(false);
+}
 }
 
 function deleteEntry(id){
@@ -3688,8 +3577,7 @@ editCategoryPanel
 
 function closePanels(){
 allPanels().forEach(
-panel=>
-panel.classList.add('hidden')
+panel=>panel.classList.add('hidden')
 );
 }
 
@@ -3705,9 +3593,7 @@ function clearKeyboardActive(container){
 getKeyboardOptions(container)
 .forEach(
 button=>
-button.classList.remove(
-'keyboard-active'
-)
+button.classList.remove('keyboard-active')
 );
 }
 
@@ -3715,8 +3601,7 @@ function setKeyboardActive(
 container,
 index
 ){
-const options=
-getKeyboardOptions(container);
+const options=getKeyboardOptions(container);
 
 if(!options.length){
 return -1;
@@ -3748,9 +3633,7 @@ function currentKeyboardIndex(container){
 return getKeyboardOptions(container)
 .findIndex(
 button=>
-button.classList.contains(
-'keyboard-active'
-)
+button.classList.contains('keyboard-active')
 );
 }
 
@@ -3790,9 +3673,7 @@ type,
 which
 );
 
-clearKeyboardActive(
-metaInfo.options
-);
+clearKeyboardActive(metaInfo.options);
 
 return true;
 }
@@ -3826,9 +3707,7 @@ type,
 which
 );
 
-clearKeyboardActive(
-metaInfo.options
-);
+clearKeyboardActive(metaInfo.options);
 }
 );
 
@@ -3868,7 +3747,6 @@ type,
 which,
 button.dataset.removeValue
 );
-
 return;
 }
 
@@ -3890,7 +3768,7 @@ return;
 }
 
 if(
-event.key==='ArrowDown'||
+event.key==='ArrowDown' ||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
@@ -3905,15 +3783,15 @@ return;
 }
 }
 
-const options=
-getKeyboardOptions(metaInfo.options);
+const options=getKeyboardOptions(metaInfo.options);
 
 if(!options.length){
 return;
 }
 
-const current=
-currentKeyboardIndex(metaInfo.options);
+const current=currentKeyboardIndex(
+metaInfo.options
+);
 
 const next=
 current<0
@@ -3941,8 +3819,7 @@ if(event.key!=='Enter'){
 return;
 }
 
-const options=
-getKeyboardOptions(metaInfo.options);
+const options=getKeyboardOptions(metaInfo.options);
 
 if(
 metaInfo.panel.classList
@@ -3954,8 +3831,9 @@ return;
 return;
 }
 
-const activeIndex=
-currentKeyboardIndex(metaInfo.options);
+const activeIndex=currentKeyboardIndex(
+metaInfo.options
+);
 
 if(activeIndex>=0){
 event.preventDefault();
@@ -3989,9 +3867,9 @@ event=>{
 event.stopPropagation();
 
 if(
-event.target.closest('.combo-panel')||
-event.target.closest('.selected-pill-remove')||
-event.target.closest('.combo-pill-select')||
+event.target.closest('.combo-panel') ||
+event.target.closest('.selected-pill-remove') ||
+event.target.closest('.combo-pill-select') ||
 event.target===metaInfo.input
 ){
 return;
@@ -4056,7 +3934,7 @@ return;
 }
 
 if(
-event.key==='ArrowDown'||
+event.key==='ArrowDown' ||
 event.key==='ArrowUp'
 ){
 event.preventDefault();
@@ -4069,15 +3947,15 @@ metaInfo.panel.classList
 openPanel();
 }
 
-const options=
-getKeyboardOptions(metaInfo.options);
+const options=getKeyboardOptions(metaInfo.options);
 
 if(!options.length){
 return;
 }
 
-const current=
-currentKeyboardIndex(metaInfo.options);
+const current=currentKeyboardIndex(
+metaInfo.options
+);
 
 const next=
 current<0
@@ -4114,11 +3992,10 @@ openPanel();
 return;
 }
 
-const options=
-getKeyboardOptions(metaInfo.options);
-
-const activeIndex=
-currentKeyboardIndex(metaInfo.options);
+const options=getKeyboardOptions(metaInfo.options);
+const activeIndex=currentKeyboardIndex(
+metaInfo.options
+);
 
 if(activeIndex>=0){
 event.preventDefault();
@@ -4162,22 +4039,18 @@ meta.dirty=true;
 persistMeta()
 .catch(console.error);
 
+/*
+所有普通修改只标记为待同步。
+固定的 5 秒服务器循环负责“先拉取，再合并，再上传”。
+如果修改恰好发生在同步进行期间，则当前轮结束后立即补跑一轮，
+避免刚发生的修改再等完整 5 秒。
+*/
 if(
-admin()&&
-adminReady
+admin() &&
+adminReady &&
+syncRunning
 ){
-if(syncRunning){
 syncRequested=true;
-}
-
-clearTimeout(autoTimer);
-
-autoTimer=setTimeout(
-()=>{
-sync(false);
-},
-AUTO_DELAY
-);
 }
 
 return true;
@@ -4210,9 +4083,7 @@ return String(path)
 }
 
 function toB64(value){
-const bytes=
-new TextEncoder().encode(value);
-
+const bytes=new TextEncoder().encode(value);
 let binary='';
 
 for(
@@ -4221,10 +4092,7 @@ i<bytes.length;
 i+=0x8000
 ){
 binary+=String.fromCharCode(
-...bytes.subarray(
-i,
-i+0x8000
-)
+...bytes.subarray(i,i+0x8000)
 );
 }
 
@@ -4241,11 +4109,7 @@ const bytes=new Uint8Array(
 binary.length
 );
 
-for(
-let i=0;
-i<binary.length;
-i++
-){
+for(let i=0;i<binary.length;i++){
 bytes[i]=binary.charCodeAt(i);
 }
 
@@ -4260,20 +4124,22 @@ resolve=>setTimeout(resolve,ms)
 }
 
 function isTransientSyncError(error){
-const statusCode=
-Number(error?.status||0);
+const statusCode=Number(
+error?.status||0
+);
 
 return (
-statusCode===0||
-statusCode===408||
-statusCode===429||
+statusCode===0 ||
+statusCode===408 ||
+statusCode===429 ||
 statusCode>=500
 );
 }
 
 function isWriteConflictError(error){
-const statusCode=
-Number(error?.status||0);
+const statusCode=Number(
+error?.status||0
+);
 
 if(statusCode===409){
 return true;
@@ -4283,21 +4149,22 @@ if(statusCode!==422){
 return false;
 }
 
-const message=
-String(error?.message||'')
+const message=String(
+error?.message||''
+)
 .toLocaleLowerCase();
 
 return (
-message.includes('sha')||
-message.includes('does not match')||
-message.includes('already exists')||
+message.includes('sha') ||
+message.includes('does not match') ||
+message.includes('already exists') ||
 message.includes('update')
 );
 }
 
 function syncErrorText(error){
 if(
-error?.name==='AbortError'||
+error?.name==='AbortError' ||
 error?.code==='timeout'
 ){
 return 'GitHub 请求超时';
@@ -4353,12 +4220,9 @@ response=await fetch(
 {
 method,
 headers:{
-Authorization:
-`Bearer ${config.token}`,
-Accept:
-'application/vnd.github+json',
-'X-GitHub-Api-Version':
-'2026-03-10',
+Authorization:`Bearer ${config.token}`,
+Accept:'application/vnd.github+json',
+'X-GitHub-Api-Version':'2026-03-10',
 ...(
 body!==null
 ? {'Content-Type':'application/json'}
@@ -4378,6 +4242,7 @@ body!==null
 )
 }
 );
+
 }catch(error){
 if(error?.name==='AbortError'){
 error.code='timeout';
@@ -4408,7 +4273,7 @@ data={message:text};
 
 if(!response.ok){
 const error=new Error(
-data?.message||
+data?.message ||
 `HTTP ${response.status}`
 );
 
@@ -4435,7 +4300,7 @@ const data=await githubApi(
 );
 
 if(
-!data||
+!data ||
 typeof data.content!=='string'
 ){
 throw new Error(
@@ -4471,11 +4336,7 @@ limit=NETWORK_RETRY_LIMIT
 ){
 let lastError=null;
 
-for(
-let attempt=0;
-attempt<limit;
-attempt++
-){
+for(let attempt=0;attempt<limit;attempt++){
 try{
 return await readRemote();
 
@@ -4483,7 +4344,7 @@ return await readRemote();
 lastError=error;
 
 if(
-!isTransientSyncError(error)||
+!isTransientSyncError(error) ||
 attempt===limit-1
 ){
 throw error;
@@ -4495,10 +4356,8 @@ await delay(
 }
 }
 
-throw lastError||
-new Error(
-'读取 GitHub 数据失败'
-);
+throw lastError ||
+new Error('读取 GitHub 数据失败');
 }
 
 function resolveSyncBase(localSnapshot){
@@ -4506,15 +4365,19 @@ if(syncBaseCache){
 return norm(syncBaseCache);
 }
 
+/*
+不再在手动同步链路中额外调用 git/blobs 历史接口。
+
+没有持久化基线时：
+- 本机没有未同步修改：本机当前状态就是上次看到的版本；
+- 本机存在旧版本遗留的未同步修改：使用空基线保守合并。
+*/
 return meta.dirty
 ? norm({})
 : norm(localSnapshot);
 }
 
-async function writeRemote(
-snapshot,
-sha
-){
+async function writeRemote(snapshot,sha){
 const raw=JSON.stringify(
 norm(snapshot),
 null,
@@ -4550,12 +4413,9 @@ body
 return result?.content?.sha||null;
 }
 
-async function verifyRemoteEquals(
-expectedState
-){
+async function verifyRemoteEquals(expectedState){
 try{
-const checked=
-await readRemoteWithRetry(2);
+const checked=await readRemoteWithRetry(2);
 
 return {
 matched:
@@ -4572,25 +4432,20 @@ remote:null
 }
 }
 
-async function syncOnce(
-showResult=true
-){
+async function syncOnce(showResult=true){
 if(!admin()){
 return false;
 }
 
-const dirtyAtStart=
-Boolean(meta.dirty);
-
-const mutationAtStart=
-localMutationVersion;
+const dirtyAtStart=Boolean(meta.dirty);
+const mutationAtStart=localMutationVersion;
 
 syncRunning=true;
 updateAdmin();
 
 status(
 'syncing',
-'双向同步中…'
+'正在拉取服务器最新版…'
 );
 
 try{
@@ -4604,14 +4459,17 @@ attempt++
 let remote;
 
 try{
-remote=
-await readRemoteWithRetry();
+/*
+每一轮同步的第一步必须是服务器 GET。
+编码分配函数在这一步之前不会被调用。
+*/
+remote=await readRemoteWithRetry();
 
 }catch(error){
 lastError=error;
 
 if(
-isTransientSyncError(error)&&
+isTransientSyncError(error) &&
 attempt<SYNC_RETRY_LIMIT-1
 ){
 await delay(
@@ -4620,40 +4478,48 @@ await delay(
 Math.min(attempt,3)
 )
 );
+
 continue;
 }
 
 throw error;
 }
 
+/*
+远端读取完成后才抓本机快照。
+*/
 const localBefore=norm(state);
-const base=
-resolveSyncBase(localBefore);
+const base=resolveSyncBase(localBefore);
 
 const mutationVersionBeforeWrite=
 localMutationVersion;
 
-const mergedResult=
-mergeStates(
+const mergedResult=mergeStates(
 base,
 localBefore,
 remote.state
 );
 
+/*
+关键顺序：
+GET 服务器
+→ 与本机待同步数据合并
+→ 修复历史重复编码
+→ 给无编码条目分配号码
+→ PUT。
+*/
+const allocationResult=
+assignMissingCodesAfterPull(
+mergedResult.state
+);
+
 const mergedState=
-mergedResult.state;
+allocationResult.state;
 
-const baseSig=
-stateSignature(base);
-
-const localSig=
-stateSignature(localBefore);
-
-const remoteSig=
-stateSignature(remote.state);
-
-const mergedSig=
-stateSignature(mergedState);
+const baseSig=stateSignature(base);
+const localSig=stateSignature(localBefore);
+const remoteSig=stateSignature(remote.state);
+const mergedSig=stateSignature(mergedState);
 
 const localChanged=
 localSig!==baseSig;
@@ -4669,6 +4535,11 @@ let finalSha=remote.sha;
 
 if(remoteSig!==mergedSig){
 try{
+/*
+必须使用刚刚 GET 得到的 SHA。
+另一台设备若已经先写入，这个 SHA 会失效，
+下面捕获冲突后整轮重新 GET、重新分配编码。
+*/
 finalSha=await writeRemote(
 mergedState,
 remote.sha
@@ -4683,10 +4554,20 @@ if(isWriteConflictError(error)){
 await delay(
 180+attempt*120
 );
+
+/*
+绝不沿用这一轮已经计算出来的编码。
+continue 回到循环顶部重新 GET。
+*/
 continue;
 }
 
 if(isTransientSyncError(error)){
+/*
+手机网络可能出现服务器已经写入，
+但客户端没有收到成功响应的情况。
+先重新 GET 验证。
+*/
 const verification=
 await verifyRemoteEquals(
 mergedState
@@ -4699,8 +4580,7 @@ verification.remote.sha;
 wroteRemote=true;
 
 }else if(
-attempt<
-SYNC_RETRY_LIMIT-1
+attempt<SYNC_RETRY_LIMIT-1
 ){
 await delay(
 350*Math.pow(
@@ -4708,6 +4588,7 @@ await delay(
 Math.min(attempt,3)
 )
 );
+
 continue;
 
 }else{
@@ -4720,10 +4601,13 @@ throw error;
 }
 }
 
-let finalLocalState=
-mergedState;
-
+/*
+如果网络请求过程中用户又修改了本机，
+不能用旧快照覆盖这些新修改。
+*/
+let finalLocalState=mergedState;
 let dirtyAfterSync=false;
+
 let extraConflicts=0;
 let extraCollectionConflicts=0;
 let extraCodeRepairs=0;
@@ -4735,8 +4619,7 @@ mutationVersionBeforeWrite
 ){
 const currentLocal=norm(state);
 
-const afterWriteMerge=
-mergeStates(
+const afterWriteMerge=mergeStates(
 localBefore,
 currentLocal,
 mergedState
@@ -4773,14 +4656,12 @@ meta.sha=finalSha;
 
 saveLocal(state);
 
-const baseWrite=
-persistSyncBase(
+const baseWrite=persistSyncBase(
 mergedState,
 finalSha
 );
 
-const metaWrite=
-persistMeta();
+const metaWrite=persistMeta();
 
 await Promise.allSettled([
 workCopyWriteChain,
@@ -4812,6 +4693,9 @@ const unresolvedCodeCount=
 mergedResult.unresolvedCodeConflicts+
 extraUnresolvedCodes;
 
+const allocatedCodeCount=
+allocationResult.assigned;
+
 if(showResult){
 if(unresolvedCodeCount){
 show(
@@ -4825,6 +4709,12 @@ show(
 'success'
 );
 
+}else if(allocatedCodeCount){
+show(
+`同步完成；基于服务器最新版分配了 ${allocatedCodeCount} 个编码`,
+'success'
+);
+
 }else if(conflictCount){
 show(
 `双向同步完成；检测到 ${conflictCount} 处并发修改并已合并`,
@@ -4832,8 +4722,8 @@ show(
 );
 
 }else if(
-wroteRemote&&
-localChanged&&
+wroteRemote &&
+localChanged &&
 remoteChanged
 ){
 show(
@@ -4865,7 +4755,7 @@ return true;
 }
 
 throw (
-lastError||
+lastError ||
 new Error(
 '多次重试后仍无法完成同步'
 )
@@ -4874,12 +4764,14 @@ new Error(
 }catch(error){
 console.error(error);
 
+/*
+同步失败本身绝不能把原本干净的副本伪装为本机修改。
+*/
 meta.dirty=
 Boolean(
-meta.dirty||
-dirtyAtStart||
-localMutationVersion!==
-mutationAtStart
+meta.dirty ||
+dirtyAtStart ||
+localMutationVersion!==mutationAtStart
 );
 
 saveLocal(state);
@@ -4914,6 +4806,9 @@ if(!admin()){
 return Promise.resolve(false);
 }
 
+/*
+手动同步、5 秒同步、联网恢复同步全部串行化。
+*/
 syncRequested=true;
 
 if(showResult){
@@ -4928,18 +4823,14 @@ syncInFlight=(async()=>{
 let allOk=true;
 
 while(syncRequested){
-const announce=
-syncShowResult;
+const announce=syncShowResult;
 
 syncRequested=false;
 syncShowResult=false;
 
-const ok=await syncOnce(
-announce
-);
+const ok=await syncOnce(announce);
 
-allOk=
-allOk&&ok;
+allOk=allOk&&ok;
 
 if(!ok){
 syncRequested=false;
@@ -4967,7 +4858,7 @@ status(
 const url=publicUrl();
 
 const canFetchPublic=
-Boolean(url)&&
+Boolean(url) &&
 /^https?:/i.test(url);
 
 if(!canFetchPublic){
@@ -5016,8 +4907,7 @@ publicCacheValue=state;
 await idbSet(
 PUBLIC_CACHE_KEY,
 {
-savedAt:
-new Date().toISOString(),
+savedAt:new Date().toISOString(),
 state
 }
 );
@@ -5068,11 +4958,68 @@ try{
 const remote=
 await readRemoteWithRetry();
 
-const local=
-loadLocal();
+const local=loadLocal();
+
+/*
+从旧同步引擎第一次升级时：
+旧 dirty 和旧同步基线可能已经不可信。
+因此先把本机工作副本与服务器最新版保守合并，
+以免其中一个设备上的未上传条目消失。
+*/
+if(
+syncEngineMigration &&
+local &&
+remote.exists
+){
+const migrated=mergeStates(
+norm({}),
+local,
+remote.state
+);
+
+const allocated=
+assignMissingCodesAfterPull(
+migrated.state
+);
+
+state=allocated.state;
+
+meta.dirty=
+stateSignature(state)!==
+stateSignature(remote.state);
+
+meta.sha=remote.sha;
+
+saveLocal(state);
+
+await Promise.allSettled([
+workCopyWriteChain,
+persistSyncBase(
+remote.state,
+remote.sha
+),
+persistMeta()
+]);
+
+syncEngineMigration=false;
+adminReady=true;
+
+render();
+
+status(
+'online',
+'公开阅读 · 已升级为 5 秒服务器优先同步'
+);
+
+if(meta.dirty){
+sync(false);
+}
+
+return;
+}
 
 if(
-meta.dirty&&
+meta.dirty &&
 local
 ){
 state=local;
@@ -5157,6 +5104,7 @@ if(
 duplicateCodeCount(state)>0
 ){
 sync(false);
+
 }else if(meta.dirty){
 sync(false);
 }
@@ -5165,7 +5113,7 @@ sync(false);
 console.error(error);
 
 state=
-loadLocal()||
+loadLocal() ||
 norm({});
 
 adminReady=true;
@@ -5196,18 +5144,22 @@ idbGet(PUBLIC_CACHE_KEY),
 idbGet(SYNC_BASE_KEY)
 ]);
 
+syncEngineMigration=
+Boolean(
+storedMeta &&
+Number(storedMeta.syncVersion||0)
+<SYNC_ENGINE_VERSION
+);
+
 if(
-storedConfig&&
+storedConfig &&
 typeof storedConfig==='object'
 ){
-config.owner=
-clean(storedConfig.owner);
-
-config.repo=
-clean(storedConfig.repo);
+config.owner=clean(storedConfig.owner);
+config.repo=clean(storedConfig.repo);
 
 config.file=
-clean(storedConfig.file)||
+clean(storedConfig.file) ||
 'press_data.json';
 }
 
@@ -5222,10 +5174,10 @@ const currentTarget=
 syncTargetId();
 
 if(
-storedMeta&&
-typeof storedMeta==='object'&&
+storedMeta &&
+typeof storedMeta==='object' &&
 (
-!storedMeta.target||
+!storedMeta.target ||
 storedMeta.target===currentTarget
 )
 ){
@@ -5236,32 +5188,31 @@ meta={
 }
 
 if(
-work?.state&&
+work?.state &&
 (
-!work.target||
+!work.target ||
 work.target===currentTarget
 )
 ){
-workCopyCache=
-norm(work.state);
+workCopyCache=norm(work.state);
 }
 
 if(
-base?.state&&
+base?.state &&
 (
-!base.target||
+!base.target ||
 base.target===currentTarget
 )
 ){
-syncBaseCache=
-norm(base.state);
+syncBaseCache=norm(base.state);
 
 syncBaseSha=
-clean(base.sha)||null;
+clean(base.sha) ||
+null;
 
 if(
-!meta.sha&&
-!meta.dirty&&
+!meta.sha &&
+!meta.dirty &&
 syncBaseSha
 ){
 meta.sha=syncBaseSha;
@@ -5269,8 +5220,7 @@ meta.sha=syncBaseSha;
 }
 
 if(cache?.state){
-publicCacheValue=
-norm(cache.state);
+publicCacheValue=norm(cache.state);
 }
 }
 
@@ -5283,8 +5233,8 @@ await syncInFlight;
 
 const hadPreviousTarget=
 Boolean(
-config.owner&&
-config.repo&&
+config.owner &&
+config.repo &&
 config.file
 );
 
@@ -5295,14 +5245,14 @@ const nextConfig={
 owner:clean(cfgOwner.value),
 repo:clean(cfg.value),
 file:
-clean(cfgFile.value)||
+clean(cfgFile.value) ||
 'press_data.json',
 token:clean(cfgToken.value)
 };
 
 if(
-!nextConfig.owner||
-!nextConfig.repo||
+!nextConfig.owner ||
+!nextConfig.repo ||
 !nextConfig.token
 ){
 show(
@@ -5316,9 +5266,8 @@ return;
 config=nextConfig;
 
 const targetChanged=
-hadPreviousTarget&&
-previousTarget!==
-syncTargetId();
+hadPreviousTarget &&
+previousTarget!==syncTargetId();
 
 if(targetChanged){
 await Promise.allSettled([
@@ -5326,8 +5275,6 @@ workCopyWriteChain,
 metaWriteChain,
 syncBaseWriteChain
 ]);
-
-clearTimeout(autoTimer);
 
 syncRequested=false;
 syncShowResult=false;
@@ -5340,9 +5287,7 @@ sha:null
 workCopyCache=null;
 syncBaseCache=null;
 syncBaseSha=null;
-
 state=norm({});
-
 localMutationVersion=0;
 
 await Promise.all([
@@ -5384,7 +5329,7 @@ await loadAdminState();
 
 function openManage(){
 if(
-!admin()||
+!admin() ||
 !adminReady
 ){
 return;
@@ -5412,7 +5357,8 @@ return;
 }
 
 if(
-state.institutions.some(
+state.institutions
+.some(
 item=>key(item)===key(value)
 )
 ){
@@ -5476,8 +5422,8 @@ folded(rawLine)
 );
 
 if(
-!Number.isInteger(line)||
-line<1||
+!Number.isInteger(line) ||
+line<1 ||
 line>history.length
 ){
 renderManageInstitutionOptions();
@@ -5531,10 +5477,7 @@ const oldKey=key(value);
 state.institutions[index]=cleaned;
 
 for(const entry of state.entries){
-if(
-key(entry.institution)===
-oldKey
-){
+if(key(entry.institution)===oldKey){
 entry.institution=cleaned;
 }
 }
@@ -5611,6 +5554,7 @@ setupInstitutionCombo('edit');
 
 setupMultiCombo('tag','add');
 setupMultiCombo('tag','edit');
+
 setupMultiCombo('category','add');
 setupMultiCombo('category','edit');
 
@@ -5651,16 +5595,14 @@ return;
 }
 
 const entry=state.entries.find(
-item=>
-item.id===checkbox.dataset.id
+item=>item.id===checkbox.dataset.id
 );
 
 if(!entry){
 return;
 }
 
-entry.tagChecked=
-checkbox.checked;
+entry.tagChecked=checkbox.checked;
 
 updateCountDisplay();
 schedule();
@@ -5725,7 +5667,7 @@ editModal.addEventListener(
 'pointerup',
 event=>{
 const genuineOutsideClick=
-editOverlayPointerDown&&
+editOverlayPointerDown &&
 event.target===editModal;
 
 editOverlayPointerDown=false;
@@ -5903,7 +5845,7 @@ return;
 closePanels();
 
 if(
-!editModal.classList.contains('hidden')&&
+!editModal.classList.contains('hidden') &&
 editIsUnchanged()
 ){
 editingId='';
@@ -5933,8 +5875,7 @@ editTag,
 editCategory
 ]
 .forEach(
-input=>
-input.removeAttribute('placeholder')
+input=>input.removeAttribute('placeholder')
 );
 
 if(admin()){
@@ -5967,13 +5908,43 @@ render();
 }
 );
 
+/*
+前台固定 5 秒轮询。
+*/
+startFiveSecondServerLoop();
+
+function startFiveSecondServerLoop(){
+if(syncIntervalTimer){
+clearInterval(syncIntervalTimer);
+}
+
+syncIntervalTimer=setInterval(
+()=>{
+/*
+每台已连接管理设备每 5 秒都执行一次 sync(false)。
+
+syncOnce() 第一件事永远是 GET，所以：
+- 有本机修改：先拉取最新版，再合并并上传；
+- 没有本机修改：照样拉取服务器，接收另一设备的修改。
+*/
+if(
+admin() &&
+adminReady
+){
+sync(false);
+}
+},
+SYNC_INTERVAL
+);
+}
+
 function passiveSync(){
 if(
-!admin()||
-!adminReady||
-syncRunning||
-!editModal.classList.contains('hidden')||
-!configModal.classList.contains('hidden')||
+!admin() ||
+!adminReady ||
+syncRunning ||
+!editModal.classList.contains('hidden') ||
+!configModal.classList.contains('hidden') ||
 !manageModal.classList.contains('hidden')
 ){
 return;
@@ -5982,14 +5953,18 @@ return;
 const now=Date.now();
 
 if(
-now-lastPassiveSyncAt<
-15000
+now-lastPassiveSyncAt<1000
 ){
 return;
 }
 
 lastPassiveSyncAt=now;
 
+/*
+手机浏览器进入后台时系统可能暂停 JavaScript。
+恢复前台、重新获得焦点或网络恢复时立即补拉一次，
+不继续依赖后台期间的旧本地副本。
+*/
 sync(false);
 }
 
