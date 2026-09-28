@@ -898,7 +898,8 @@ id="tagPanel"
 </div>
 </div>
 </div>
-<div class="form-group full">
+<div class="bookno-tag-row">
+<div class="form-group">
 <label for="institutionInput">
 出版
 </label>
@@ -927,7 +928,7 @@ id="institutionPanel"
 </div>
 </div>
 </div>
-<div class="form-group full">
+<div class="form-group">
 <label for="categoryInput">
 书架
 </label>
@@ -957,6 +958,7 @@ class="combo-panel hidden"
 id="categoryPanel"
 >
 <div id="categoryOptions"></div>
+</div>
 </div>
 </div>
 </div>
@@ -1044,6 +1046,7 @@ id="editInstitutionPanel"
 </div>
 </div>
 </div>
+<div class="edit-two-column-row">
 <div class="form-group">
 <label for="editBookNo">
 书号
@@ -1062,6 +1065,20 @@ aria-label="清空书号"
 >
 ×
 </button>
+</div>
+</div>
+<div class="form-group">
+<label for="editCode">
+编码
+</label>
+<input
+autocomplete="off"
+id="editCode"
+type="text"
+inputmode="numeric"
+maxlength="6"
+aria-label="编码"
+>
 </div>
 </div>
 <div class="edit-two-column-row">
@@ -1131,19 +1148,6 @@ id="editCategoryPanel"
 </div>
 </div>
 </div>
-</div>
-<div class="form-group">
-<label for="editCode">
-编码
-</label>
-<input
-autocomplete="off"
-id="editCode"
-type="text"
-inputmode="numeric"
-maxlength="6"
-aria-label="编码"
->
 </div>
 </div>
 <div class="dialog-actions">
@@ -1318,7 +1322,6 @@ const SYNC_BASE_KEY='sync_base_v3_5s';
 
 const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
-const SYNC_INTERVAL=60000;
 const SYNC_RETRY_LIMIT=3;
 const NETWORK_RETRY_LIMIT=2;
 const GITHUB_TIMEOUT=15000;
@@ -1571,7 +1574,6 @@ sha:null
 
 let adminReady=false;
 let toastTimer=null;
-let syncIntervalTimer=null;
 let storageDbPromise=null;
 let storageDbDisabled=false;
 const storageMemory=new Map();
@@ -3106,52 +3108,6 @@ state.entries
 );
 
 return addDraftCode;
-}
-
-function refreshEditAutoCodePreview(){
-if(
-!editingId ||
-!editAutoManagedDraft
-){
-return;
-}
-
-const original=
-state.entries.find(
-item=>
-item.id===editingId
-);
-
-if(!original){
-return;
-}
-
-const draft={
-...original,
-
-bookName:
-cleanTitle(
-editBookName.value
-),
-
-tag:
-sortTags(
-editSelections.tag
-),
-
-code:
-clean(
-editCode.value
-),
-
-codeAutoManaged:true
-};
-
-editCode.value=
-instantAutoCodeForEntry(
-draft,
-state.entries
-);
 }
 
 function reconcileAutoCodesAfterPull(
@@ -4908,8 +4864,6 @@ currentEntry &&
 ){
 editAutoManagedDraft=true;
 }
-
-refreshEditAutoCodePreview();
 }
 }
 
@@ -5018,8 +4972,6 @@ currentEntry &&
 ){
 editAutoManagedDraft=true;
 }
-
-refreshEditAutoCodePreview();
 }
 }
 
@@ -5160,8 +5112,8 @@ false
 if(!ok){
 show(
 instantCode
-? `本机已生成自动编码 ${instantCode}，服务器确认失败；系统会每分钟重试`
-: '条目已保存在本机，但当前编组暂时无法生成编码；系统会每分钟重试',
+? `本机已生成自动编码 ${instantCode}，服务器确认失败；将在下次页面激活或手动同步时重试`
+: '条目已保存在本机，但当前编组暂时无法生成编码；将在下次页面激活或手动同步时重试',
 'error'
 );
 }
@@ -5283,8 +5235,8 @@ editCode.readOnly
 ? '编码已手动修改并锁定；同步不会自动清空或改号'
 : (
 editAutoManagedDraft
-? '自动编码：编组或书名变化时会立即重新计算；并发时以服务器仲裁结果保持多设备一致'
-: '历史编码保持不变；空编码条目选择编组后会立即生成自动编码'
+? '自动编码：保存后按编组与书名语言校验并在同步时处理；并发时以服务器仲裁结果保持多设备一致'
+: '历史编码保持不变；空编码条目保存后在同步时生成自动编码'
 );
 
 renderInstitutionOptions(
@@ -5300,10 +5252,6 @@ renderMultiField(
 'category',
 'edit'
 );
-
-if(editAutoManagedDraft){
-refreshEditAutoCodePreview();
-}
 
 editInitialSnapshot=
 getEditSnapshot();
@@ -5465,6 +5413,9 @@ entry.category=[
 entry.tag=
 nextTag;
 
+const shouldSyncAutoCode=
+editAutoManagedDraft;
+
 if(editAutoManagedDraft){
 const autoCode=
 normalizeStoredCode(
@@ -5513,6 +5464,7 @@ render();
 schedule();
 
 if(
+shouldSyncAutoCode ||
 entry.codeAutoPending===true
 ){
 sync(
@@ -6822,6 +6774,13 @@ error;
 throw error;
 }
 
+const cloudUpdateDetected=
+Boolean(
+meta.sha &&
+remote.sha &&
+remote.sha!==meta.sha
+);
+
 const localBefore=
 norm(
 state
@@ -7234,6 +7193,15 @@ show(
 'success'
 );
 }
+}
+
+if(
+cloudUpdateDetected
+){
+show(
+'检测到其他终端的云端更新，当前页面已自动刷新',
+'success'
+);
 }
 
 return true;
@@ -8277,13 +8245,6 @@ bookNameInput.addEventListener(
 refreshAddDraftCode
 );
 
-editBookName.addEventListener(
-'input',
-()=>{
-refreshEditAutoCodePreview();
-}
-);
-
 editCode.addEventListener(
 'input',
 ()=>{
@@ -8733,43 +8694,6 @@ status(
 render();
 }
 );
-
-startOneMinuteServerLoop();
-
-function startOneMinuteServerLoop(){
-if(syncIntervalTimer){
-clearInterval(
-syncIntervalTimer
-);
-}
-
-syncIntervalTimer=
-setInterval(
-()=>{
-if(
-admin() &&
-adminReady &&
-!syncInFlight &&
-!syncRunning &&
-editModal.classList.contains(
-'hidden'
-) &&
-configModal.classList.contains(
-'hidden'
-) &&
-manageModal.classList.contains(
-'hidden'
-)
-){
-sync(
-false,
-false
-);
-}
-},
-SYNC_INTERVAL
-);
-}
 
 function passiveSync(){
 if(
