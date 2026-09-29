@@ -638,11 +638,11 @@
       "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120023",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -686,11 +686,11 @@
       "institution": "[科学出版社](https://book.douban.com/press/2633/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220034",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -862,15 +862,17 @@
       "codeManualPinned": false
     },
     {
-      "id": "a8936f0b-bf43-46d4-9f70-f607410bdf05",
+      "id": "d87660e6-1f45-4d74-84b4-e6e898188170",
       "bookName": "新马克思主义城市理论",
       "bookNo": "7-100-04445",
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "228001",
-      "codeAutoManaged": false,
+      "code": "130033",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -1381,11 +1383,11 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220035",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -1653,11 +1655,11 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230119",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -6233,11 +6235,11 @@
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230120",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -6297,11 +6299,11 @@
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120022",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7006,11 +7008,11 @@
       "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230123",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7198,11 +7200,11 @@
       "institution": "[浙江大学出版社](https://book.douban.com/press/2574/?order=time)",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "130034",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7374,11 +7376,11 @@
       "institution": "[浙江大学出版社](https://book.douban.com/press/2574/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230124",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7406,11 +7408,11 @@
       "institution": "[复旦大学出版社](https://book.douban.com/press/2736/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220036",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14929,11 +14931,11 @@
       "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
       "category": [],
       "tag": [
-        "12组"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "120006",
-      "codeAutoManaged": false,
+      "code": "110011",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14945,11 +14947,11 @@
       "institution": "[河南美术出版社](https://book.douban.com/press/2835/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120006",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -15073,11 +15075,11 @@
       "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230121",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -15441,11 +15443,11 @@
       "institution": "[山西教育出版社](https://book.douban.com/press/2804/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230122",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -17646,6 +17648,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "cddae7d6-2a4e-434d-ae8b-1f82a4bf2ed2",
+      "bookName": "货币之手",
+      "bookNo": "7-5742-2963",
+      "institution": "[天津科学技术出版社](https://book.douban.com/press/2619/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230118",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
