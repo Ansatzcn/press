@@ -1432,11 +1432,11 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120044",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
