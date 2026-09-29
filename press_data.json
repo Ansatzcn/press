@@ -19073,6 +19073,20 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "8ab8ff65-8d2a-4365-9ffd-337023a88532",
+      "bookName": "挑战主流：悉尼大学政治经济学40年斗争史",
+      "bookNo": "",
+      "institution": "",
+      "category": [],
+      "tag": [],
+      "tagChecked": false,
+      "code": "",
+      "codeAutoManaged": false,
+      "codeAutoPending": true,
+      "codeManualEdited": false,
+      "codeManualPinned": false
     }
   ],
   "institutions": [
