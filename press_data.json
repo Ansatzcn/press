@@ -6458,6 +6458,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "8ab8ff65-8d2a-4365-9ffd-337023a88532",
+      "bookName": "挑战主流：悉尼大学政治经济学40年斗争史",
+      "bookNo": "",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "12组"
+      ],
+      "tagChecked": false,
+      "code": "120039",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "9d5b6aaa-4f2f-437a-be0a-911cfbdaaab7",
       "bookName": "大国地方：中国中央与地方关系宪政研究",
       "bookNo": "7-301-09349",
@@ -19071,20 +19087,6 @@
       "code": "170001",
       "codeAutoManaged": true,
       "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "8ab8ff65-8d2a-4365-9ffd-337023a88532",
-      "bookName": "挑战主流：悉尼大学政治经济学40年斗争史",
-      "bookNo": "",
-      "institution": "",
-      "category": [],
-      "tag": [],
-      "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
-      "codeAutoPending": true,
       "codeManualEdited": false,
       "codeManualPinned": false
     }
