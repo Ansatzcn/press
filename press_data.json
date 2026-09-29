@@ -15475,6 +15475,24 @@
       "codeManualPinned": false
     },
     {
+      "id": "53588b73-ea2d-4a05-85a0-e84a9bdc9ef0",
+      "bookName": "如何撰写并发表英文经济学论文",
+      "bookNo": "7-5432-2187",
+      "institution": "[格致出版社](https://book.douban.com/press/2366/?order=time)",
+      "category": [
+        "十号"
+      ],
+      "tag": [
+        "11组"
+      ],
+      "tagChecked": false,
+      "code": "110015",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "8772cc7d-a6ed-49ea-9e14-5c8c842bb947",
       "bookName": "止损：如何克服贪婪和恐惧",
       "bookNo": "7-5432-2483",
