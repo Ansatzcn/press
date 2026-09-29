@@ -552,6 +552,10 @@ min-height:0;
 overflow-y:auto;
 padding:1.7rem 1.7rem 1rem
 }
+#editModal .dialog{
+height:calc(100dvh - 24px);
+max-height:calc(100dvh - 24px)
+}
 .dialog h3{
 margin-bottom:.9rem;
 font-size:1.3rem
@@ -811,6 +815,10 @@ grid-template-columns:1fr
 width:100%;
 max-height:calc(100dvh - 16px);
 border-radius:20px
+}
+#editModal .dialog{
+height:calc(100dvh - 16px);
+max-height:calc(100dvh - 16px)
 }
 .dialog-scroll{
 padding:1.2rem
@@ -3578,8 +3586,7 @@ duplicateKey,
 );
 }
 
-let duplicates=
-0;
+let duplicates=0;
 
 for(
 const count
