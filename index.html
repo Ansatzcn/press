@@ -786,6 +786,28 @@ margin:0
 #editCategoryCombo > .combo-selected:not(:empty) + .combo-row{
 display:none!important
 }
+#editTagOptions .combo-option-list,
+#editCategoryOptions .combo-option-list{
+display:grid;
+grid-template-columns:repeat(5,minmax(0,1fr));
+gap:6px
+}
+#editTagOptions .combo-pill,
+#editCategoryOptions .combo-pill{
+display:flex;
+width:100%;
+min-width:0
+}
+#editTagOptions .combo-pill-select,
+#editCategoryOptions .combo-pill-select{
+width:100%;
+min-width:0;
+padding:.36rem .18rem;
+font-size:.7rem;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
 @media(max-width:700px){
 body{padding:.8rem}
 .container{
@@ -5876,6 +5898,7 @@ false
 );
 }
 }
+
 function deleteEntry(id){
 const entry=
 state.entries.find(
@@ -7360,6 +7383,7 @@ let extraUnresolvedCodes=
 0;
 let extraCodeConflicts=
 0;
+let extraCodeConflictItems=[];
 let extraInvalidCodes=
 0;
 
