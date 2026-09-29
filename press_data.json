@@ -8712,11 +8712,11 @@
         "十号"
       ],
       "tag": [
-        "11图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "110017",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
