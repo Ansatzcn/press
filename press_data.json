@@ -5391,13 +5391,15 @@
       "bookName": "[丰碑：襄渝铁路建设纪实](https://book.douban.com/subject/36769020/)",
       "bookNo": "7-224-13930",
       "institution": "[陕西人民出版社](https://book.douban.com/press/2749/?order=time)",
-      "category": [],
+      "category": [
+        "九号"
+      ],
       "tag": [
-        "12图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "110013",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
