@@ -552,10 +552,6 @@ min-height:0;
 overflow-y:auto;
 padding:1.7rem 1.7rem 1rem
 }
-#editModal .dialog{
-height:calc(100dvh - 24px);
-max-height:calc(100dvh - 24px)
-}
 .dialog h3{
 margin-bottom:.9rem;
 font-size:1.3rem
@@ -816,10 +812,6 @@ width:100%;
 max-height:calc(100dvh - 16px);
 border-radius:20px
 }
-#editModal .dialog{
-height:calc(100dvh - 16px);
-max-height:calc(100dvh - 16px)
-}
 .dialog-scroll{
 padding:1.2rem
 }
@@ -837,6 +829,7 @@ min-width:50px
 </head>
 <body>
 <div id="pageTopAnchor" aria-hidden="true"></div>
+
 <main class="container">
 <h1 class="page-title">
 Press
@@ -845,6 +838,7 @@ Press
 <span id="statusText">正在读取公开数据</span>
 </span>
 </h1>
+
 <section class="toolbar">
 <div class="toolbar-group">
 <button class="btn btn-sync hidden" id="syncBtn" type="button">同步</button>
@@ -856,9 +850,11 @@ Press
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
 </section>
+
 <section class="add-section hidden" id="addSection">
 <h2>添加</h2>
 <div class="form-grid">
+
 <div class="form-group full">
 <label for="bookNameInput">书名</label>
 <input
@@ -868,6 +864,7 @@ autocomplete="off"
 autofocus
 >
 </div>
+
 <div class="bookno-tag-row">
 <div class="form-group">
 <label for="bookNoInput">书号</label>
@@ -877,14 +874,10 @@ id="bookNoInput"
 autocomplete="off"
 >
 </div>
+
 <div class="form-group">
-<label for="institutionInput">
-出版
-</label>
-<div
-class="combo"
-id="institutionCombo"
->
+<label for="institutionInput">出版</label>
+<div class="combo" id="institutionCombo">
 <div class="combo-row">
 <input
 type="text"
@@ -898,23 +891,18 @@ type="button"
 aria-label="展开出版历史"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="institutionPanel"
->
+<div class="combo-panel hidden" id="institutionPanel">
 <div id="institutionOptions"></div>
 </div>
 </div>
 </div>
 </div>
+
 <div class="bookno-tag-row">
 <div class="form-group">
 <label for="tagInput">编组</label>
 <div class="combo" id="tagCombo">
-<div
-class="combo-selected"
-id="tagSelected"
-></div>
+<div class="combo-selected" id="tagSelected"></div>
 <div class="combo-row">
 <input
 type="text"
@@ -928,26 +916,16 @@ type="button"
 aria-label="展开编组选项"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="tagPanel"
->
+<div class="combo-panel hidden" id="tagPanel">
 <div id="tagOptions"></div>
 </div>
 </div>
 </div>
+
 <div class="form-group">
-<label for="categoryInput">
-书架
-</label>
-<div
-class="combo"
-id="categoryCombo"
->
-<div
-class="combo-selected"
-id="categorySelected"
-></div>
+<label for="categoryInput">书架</label>
+<div class="combo" id="categoryCombo">
+<div class="combo-selected" id="categorySelected"></div>
 <div class="combo-row">
 <input
 type="text"
@@ -961,15 +939,13 @@ type="button"
 aria-label="展开书架历史"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="categoryPanel"
->
+<div class="combo-panel hidden" id="categoryPanel">
 <div id="categoryOptions"></div>
 </div>
 </div>
 </div>
 </div>
+
 <button
 class="add-button"
 id="addBtn"
@@ -979,36 +955,25 @@ type="button"
 </button>
 </div>
 </section>
+
 <section>
 <div class="list-header">
 <h2>总表</h2>
-<span
-class="count-badge"
-id="countDisplay"
->
-0/0/0
-</span>
+<span class="count-badge" id="countDisplay">0/0/0</span>
 </div>
-<div
-class="press-list"
-id="pressList"
->
-<div class="empty-state">
-加载中
-</div>
+
+<div class="press-list" id="pressList">
+<div class="empty-state">加载中</div>
 </div>
 </section>
 </main>
-<section
-class="overlay hidden"
-id="editModal"
->
+
+<section class="overlay hidden" id="editModal">
 <div class="dialog">
 <div class="dialog-scroll">
+
 <div class="form-group">
-<label for="editBookName">
-书名
-</label>
+<label for="editBookName">书名</label>
 <div class="edit-title-field">
 <input
 autocomplete="off"
@@ -1025,14 +990,10 @@ aria-label="清空书名"
 </button>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editInstitution">
-出版
-</label>
-<div
-class="combo"
-id="editInstitutionCombo"
->
+<label for="editInstitution">出版</label>
+<div class="combo" id="editInstitutionCombo">
 <div class="combo-row">
 <input
 autocomplete="off"
@@ -1046,19 +1007,15 @@ id="editInstitutionToggle"
 type="button"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="editInstitutionPanel"
->
+<div class="combo-panel hidden" id="editInstitutionPanel">
 <div id="editInstitutionOptions"></div>
 </div>
 </div>
 </div>
+
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editBookNo">
-书号
-</label>
+<label for="editBookNo">书号</label>
 <div class="clearable-field">
 <input
 autocomplete="off"
@@ -1075,10 +1032,9 @@ aria-label="清空书号"
 </button>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editCode">
-编码
-</label>
+<label for="editCode">编码</label>
 <input
 autocomplete="off"
 id="editCode"
@@ -1089,19 +1045,12 @@ aria-label="编码"
 >
 </div>
 </div>
+
 <div class="edit-two-column-row">
 <div class="form-group">
-<label for="editTag">
-编组
-</label>
-<div
-class="combo"
-id="editTagCombo"
->
-<div
-class="combo-selected"
-id="editTagSelected"
-></div>
+<label for="editTag">编组</label>
+<div class="combo" id="editTagCombo">
+<div class="combo-selected" id="editTagSelected"></div>
 <div class="combo-row">
 <input
 autocomplete="off"
@@ -1115,26 +1064,16 @@ id="editTagToggle"
 type="button"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="editTagPanel"
->
+<div class="combo-panel hidden" id="editTagPanel">
 <div id="editTagOptions"></div>
 </div>
 </div>
 </div>
+
 <div class="form-group">
-<label for="editCategory">
-书架
-</label>
-<div
-class="combo"
-id="editCategoryCombo"
->
-<div
-class="combo-selected"
-id="editCategorySelected"
-></div>
+<label for="editCategory">书架</label>
+<div class="combo" id="editCategoryCombo">
+<div class="combo-selected" id="editCategorySelected"></div>
 <div class="combo-row">
 <input
 autocomplete="off"
@@ -1148,10 +1087,7 @@ id="editCategoryToggle"
 type="button"
 ></button>
 </div>
-<div
-class="combo-panel hidden"
-id="editCategoryPanel"
->
+<div class="combo-panel hidden" id="editCategoryPanel">
 <div id="editCategoryOptions"></div>
 </div>
 </div>
@@ -1159,121 +1095,62 @@ id="editCategoryPanel"
 </div>
 
 </div>
+
 <div class="dialog-actions">
-<button
-class="btn btn-danger"
-id="editDelete"
-type="button"
->
-删除
-</button>
-<button
-class="btn"
-id="editCancel"
-type="button"
->
-取消
-</button>
-<button
-class="btn btn-primary"
-id="editSave"
-type="button"
->
-保存
-</button>
+<button class="btn btn-danger" id="editDelete" type="button">删除</button>
+<button class="btn" id="editCancel" type="button">取消</button>
+<button class="btn btn-primary" id="editSave" type="button">保存</button>
 </div>
 </div>
 </section>
-<section
-class="overlay hidden"
-id="configModal"
->
-<form
-class="dialog"
-id="configForm"
-autocomplete="on"
->
+
+<section class="overlay hidden" id="configModal">
+<form class="dialog" id="configForm" autocomplete="on">
 <div class="dialog-scroll">
 <h3>GitHub 管理配置</h3>
+
 <div class="form-group">
-<label for="cfgOwner">
-仓库所有者
-</label>
-<input
-id="cfgOwner"
-type="text"
->
+<label for="cfgOwner">仓库所有者</label>
+<input id="cfgOwner" type="text">
 </div>
+
 <div class="form-group">
-<label for="cfg">
-仓库名称
-</label>
-<input
-id="cfg"
-type="text"
->
+<label for="cfg">仓库名称</label>
+<input id="cfg" type="text">
 </div>
+
 <div class="form-group">
-<label for="cfgFile">
-数据文件路径
-</label>
-<input
-id="cfgFile"
-type="text"
-value="press_data.json"
->
+<label for="cfgFile">数据文件路径</label>
+<input id="cfgFile" type="text" value="press_data.json">
 </div>
+
 <div class="form-group">
-<label for="cfgToken">
-GitHub Personal Access Token
-</label>
-<input
-id="cfgToken"
-type="password"
->
+<label for="cfgToken">GitHub Personal Access Token</label>
+<input id="cfgToken" type="password">
 </div>
+
 <label>
-<input
-type="checkbox"
-id="rememberToken"
-checked
->
+<input type="checkbox" id="rememberToken" checked>
 在本设备保存 Token
 </label>
 </div>
+
 <div class="dialog-actions">
-<button
-class="btn"
-id="configCancel"
-type="button"
->
-取消
-</button>
-<button
-class="btn btn-primary"
-type="submit"
->
-保存并连接
-</button>
+<button class="btn" id="configCancel" type="button">取消</button>
+<button class="btn btn-primary" type="submit">保存并连接</button>
 </div>
 </form>
 </section>
-<section
-class="overlay hidden"
-id="manageModal"
->
+
+<section class="overlay hidden" id="manageModal">
 <div class="dialog manage-dialog">
 <div class="manage-fixed-top">
 <h3>出版管理</h3>
+
 <div class="form-group">
-<label for="manageInstitutionInput">
-新增出版选项
-</label>
+<label for="manageInstitutionInput">新增出版选项</label>
 <div class="manage-add-row">
-<input
-type="text"
-id="manageInstitutionInput"
->
+<input type="text" id="manageInstitutionInput">
 <input
 type="number"
 id="manageInstitutionLineInput"
@@ -1291,29 +1168,25 @@ type="button"
 </div>
 </div>
 </div>
+
 <div class="manage-table-scroll">
 <div id="manageInstitutionOptions"></div>
 </div>
+
 <div class="dialog-actions">
-<button
-class="btn btn-primary"
-id="manageClose"
-type="button"
->
-完成
-</button>
+<button class="btn btn-primary" id="manageClose" type="button">完成</button>
 </div>
 </div>
 </section>
+
 <button
 id="returnTopControl"
 type="button"
 title="回到顶部"
 ></button>
-<div
-class="toast hidden"
-id="toast"
-></div>
+
+<div class="toast hidden" id="toast"></div>
+
 <script>
 (()=>{
 'use strict';
@@ -1900,24 +1773,15 @@ const ordered=
 (ranges||[])
 .map(
 range=>[
-Number(
-range[0]
-),
-Number(
-range[1]
-)
+Number(range[0]),
+Number(range[1])
 ]
 )
 .filter(
 range=>
-Number.isFinite(
-range[0]
-) &&
-Number.isFinite(
-range[1]
-) &&
-range[0]<=
-range[1]
+Number.isFinite(range[0]) &&
+Number.isFinite(range[1]) &&
+range[0]<=range[1]
 )
 .sort(
 (a,b)=>
@@ -2496,6 +2360,34 @@ remoteEntry
 );
 
 if(
+baseEntry &&
+sameSyncValue(
+local,
+base
+) &&
+!sameSyncValue(
+remote,
+base
+)
+){
+return remote;
+}
+
+if(
+baseEntry &&
+sameSyncValue(
+remote,
+base
+) &&
+!sameSyncValue(
+local,
+base
+)
+){
+return local;
+}
+
+if(
 !local.code &&
 local.codeAutoPending===true &&
 remote.code
@@ -2601,29 +2493,45 @@ remote.codeAutoManaged
 return remote;
 }
 
-if(
-base.code &&
-local.code===
-base.code &&
-remote.code &&
-remote.code!==
-base.code
-){
-return remote;
-}
-
-if(
-base.code &&
-remote.code===
-base.code &&
-local.code &&
-local.code!==
-base.code
-){
-return local;
-}
-
 stats.codeConflicts++;
+
+stats.codeConflictItems.push({
+id:
+localEntry?.id ||
+remoteEntry?.id ||
+baseEntry?.id ||
+'',
+
+bookName:
+localEntry?.bookName ||
+remoteEntry?.bookName ||
+baseEntry?.bookName ||
+'未命名条目',
+
+tag:[
+...(
+localEntry?.tag ||
+remoteEntry?.tag ||
+baseEntry?.tag ||
+[]
+)
+],
+
+baseCode:
+clean(
+baseEntry?.code
+),
+
+localCode:
+clean(
+localEntry?.code
+),
+
+remoteCode:
+clean(
+remoteEntry?.code
+)
+});
 
 return local.code
 ? local
@@ -3430,10 +3338,23 @@ pendingUnassigned
 }
 
 function auditCodeSafety(
+baseSnapshot,
 localSnapshot,
 remoteSnapshot,
 candidateSnapshot
 ){
+const baseMap=
+new Map(
+norm(baseSnapshot)
+.entries
+.map(
+entry=>[
+entry.id,
+entry
+]
+)
+);
+
 const localMap=
 new Map(
 norm(localSnapshot)
@@ -3472,42 +3393,81 @@ entry
 
 const ids=
 new Set([
+...baseMap.keys(),
 ...localMap.keys(),
 ...remoteMap.keys()
 ]);
 
-let violations=0;
+const items=[];
 
 for(
 const id
 of ids
 ){
+const baseEntry=
+baseMap.get(id) ||
+null;
+
 const localEntry=
-localMap.get(id);
+localMap.get(id) ||
+null;
 
 const remoteEntry=
-remoteMap.get(id);
+remoteMap.get(id) ||
+null;
 
 const candidateEntry=
-candidateMap.get(id);
+candidateMap.get(id) ||
+null;
 
-const protectedCodes=
-uniq([
+if(!baseEntry){
+continue;
+}
+
+const baseCode=
+clean(
+baseEntry.code
+);
+
+if(
+!baseCode ||
+baseEntry.codeAutoManaged===true
+){
+continue;
+}
+
+const baseBundle=
+codeBundle(
+baseEntry
+);
+
+const localDeleted=
+!localEntry;
+
+const remoteDeleted=
+!remoteEntry;
+
+const localChanged=
+localDeleted ||
+!sameSyncValue(
+codeBundle(localEntry),
+baseBundle
+);
+
+const remoteChanged=
+remoteDeleted ||
+!sameSyncValue(
+codeBundle(remoteEntry),
+baseBundle
+);
+
+if(
+!candidateEntry &&
 (
-localEntry &&
-localEntry.codeAutoManaged!==true
-? clean(localEntry.code)
-: ''
-),
-(
-remoteEntry &&
-remoteEntry.codeAutoManaged!==true
-? clean(remoteEntry.code)
-: ''
+localDeleted ||
+remoteDeleted
 )
-].filter(Boolean));
-
-if(!protectedCodes.length){
+){
 continue;
 }
 
@@ -3516,38 +3476,145 @@ clean(
 candidateEntry?.code
 );
 
-const explicitPendingReset=
+if(
+localChanged ||
+remoteChanged
+){
+const matchesLocal=
 Boolean(
-(
-localEntry?.codeAutoPending===true &&
-!clean(localEntry?.code)
-) ||
-(
-remoteEntry?.codeAutoPending===true &&
-!clean(remoteEntry?.code)
+localEntry &&
+candidateEntry &&
+sameSyncValue(
+codeBundle(candidateEntry),
+codeBundle(localEntry)
 )
 );
 
-if(explicitPendingReset){
+const matchesRemote=
+Boolean(
+remoteEntry &&
+candidateEntry &&
+sameSyncValue(
+codeBundle(candidateEntry),
+codeBundle(remoteEntry)
+)
+);
+
+if(
+matchesLocal ||
+matchesRemote
+){
 continue;
 }
 
 if(
-!candidateCode ||
-!protectedCodes.includes(
-candidateCode
+!candidateEntry &&
+(
+localDeleted ||
+remoteDeleted
 )
 ){
-violations++;
+continue;
+}
+
+items.push({
+id,
+bookName:
+candidateEntry?.bookName ||
+localEntry?.bookName ||
+remoteEntry?.bookName ||
+baseEntry.bookName ||
+'未命名条目',
+
+tag:[
+...(
+candidateEntry?.tag ||
+localEntry?.tag ||
+remoteEntry?.tag ||
+baseEntry.tag ||
+[]
+)
+],
+
+baseCode,
+
+localCode:
+clean(
+localEntry?.code
+),
+
+remoteCode:
+clean(
+remoteEntry?.code
+),
+
+candidateCode,
+
+reason:'本机或云端已经明确修改编码，但合并结果既不等于本机结果，也不等于云端结果'
+});
+
+continue;
+}
+
+if(
+candidateCode!==
+baseCode
+){
+items.push({
+id,
+
+bookName:
+candidateEntry?.bookName ||
+baseEntry.bookName ||
+'未命名条目',
+
+tag:[
+...(
+candidateEntry?.tag ||
+baseEntry.tag ||
+[]
+)
+],
+
+baseCode,
+
+localCode:
+clean(
+localEntry?.code
+),
+
+remoteCode:
+clean(
+remoteEntry?.code
+),
+
+candidateCode,
+
+reason:'本机和云端都没有主动修改该编码，但合并结果改变了已有编码'
+});
 }
 }
 
 return {
 ok:
-violations===0,
+items.length===0,
 
-violations
+violations:
+items.length,
+
+items
 };
+}
+
+function formatCodeSafetyItems(
+items
+){
+return (items||[])
+.map(
+item=>
+`《${item.bookName}》｜编组：${(item.tag||[]).map(groupDisplay).join('/')||'无'}｜原编码：${item.baseCode||'空'}｜本机：${item.localCode||'空'}｜云端：${item.remoteCode||'空'}｜合并候选：${item.candidateCode||'空'}｜原因：${item.reason}`
+)
+.join('；');
 }
 
 function duplicateCodeCount(
@@ -3627,7 +3694,8 @@ remoteValue ||
 const stats={
 conflicts:0,
 collectionConflicts:0,
-codeConflicts:0
+codeConflicts:0,
+codeConflictItems:[]
 };
 
 const baseMap=
@@ -3753,6 +3821,10 @@ stats.collectionConflicts,
 codeConflicts:
 stats.codeConflicts,
 
+codeConflictItems:[
+...stats.codeConflictItems
+],
+
 codeRepairs:0,
 
 unresolvedCodeConflicts:
@@ -3767,6 +3839,17 @@ issues.invalid,
 invalidCodeItems:
 issues.invalidItems
 };
+}
+
+function formatCodeConflictItems(
+items
+){
+return (items||[])
+.map(
+item=>
+`《${item.bookName||'未命名条目'}》｜编组：${(item.tag||[]).map(groupDisplay).join('/')||'无'}｜基准编码：${item.baseCode||'空'}｜本机编码：${item.localCode||'空'}｜云端编码：${item.remoteCode||'空'}`
+)
+.join('；');
 }
 
 function admin(){
@@ -3795,8 +3878,7 @@ toastTimer
 toastTimer=
 setTimeout(
 ()=>{
-toast.classList
-.add(
+toast.classList.add(
 'hidden'
 );
 },
@@ -3921,8 +4003,7 @@ if(
 DB_STORE
 )
 ){
-db
-.createObjectStore(
+db.createObjectStore(
 DB_STORE
 );
 }
@@ -4306,14 +4387,12 @@ const editable=
 admin() &&
 adminReady;
 
-addSection.classList
-.toggle(
+addSection.classList.toggle(
 'hidden',
 !editable
 );
 
-syncBtn.classList
-.toggle(
+syncBtn.classList.toggle(
 'hidden',
 !admin()
 );
@@ -4974,7 +5053,8 @@ editCode.setAttribute(
 'aria-readonly',
 'false'
 );
-editCode.title='编组已删除；编码将在保存后立即按当前编组重新分配';
+editCode.title=
+'编组已删除；编码将在保存后立即按当前编组重新分配';
 }
 }
 
@@ -5079,7 +5159,9 @@ item.id===editingId
 
 if(
 currentEntry &&
-!clean(currentEntry.code)
+!clean(
+currentEntry.code
+)
 ){
 editAutoManagedDraft=true;
 }
@@ -5245,8 +5327,7 @@ editBookNo.value,
 institution:
 editInstitution.value,
 
-category:
-[
+category:[
 ...editSelections.category
 ],
 
@@ -5272,6 +5353,60 @@ Boolean(editingId) &&
 getEditSnapshot()===
 editInitialSnapshot
 );
+}
+
+function setEditDialogHeight(){
+const dialog=
+editModal.querySelector(
+'.dialog'
+);
+
+if(!dialog){
+return;
+}
+
+dialog.style.height='auto';
+dialog.style.maxHeight='none';
+
+const naturalHeight=
+dialog.getBoundingClientRect()
+.height;
+
+const viewportHeight=
+Math.max(
+0,
+Math.floor(
+window.visualViewport?.height ||
+window.innerHeight ||
+document.documentElement.clientHeight ||
+0
+)
+);
+
+const edgeGap=
+window.matchMedia(
+'(max-width:700px)'
+).matches
+? 16
+: 24;
+
+const maxHeight=
+Math.max(
+0,
+viewportHeight-edgeGap
+);
+
+const targetHeight=
+Math.min(
+naturalHeight*1.5,
+maxHeight
+);
+
+dialog.style.maxHeight=
+`${maxHeight}px`;
+
+dialog.style.height=
+`${targetHeight}px`;
 }
 
 function openEdit(id){
@@ -5373,11 +5508,11 @@ editModal.classList.remove(
 'hidden'
 );
 
-setTimeout(
+requestAnimationFrame(
 ()=>{
+setEditDialogHeight();
 editBookName.focus();
-},
-30
+}
 );
 }
 
@@ -5628,8 +5763,7 @@ editModal.classList.add(
 
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=
-false;
+editOverlayPointerDown=false;
 
 render();
 schedule();
@@ -5850,8 +5984,7 @@ return;
 toggleSelection(
 type,
 which,
-button.dataset
-.selectValue
+button.dataset.selectValue
 );
 }
 );
@@ -5870,8 +6003,7 @@ if(button){
 removeSelection(
 type,
 which,
-button.dataset
-.removeValue
+button.dataset.removeValue
 );
 
 return;
@@ -5910,8 +6042,7 @@ event.preventDefault();
 event.stopPropagation();
 
 if(
-meta.panel.classList
-.contains(
+meta.panel.classList.contains(
 'hidden'
 )
 ){
@@ -5968,8 +6099,7 @@ meta.options
 );
 
 if(
-meta.panel.classList
-.contains(
+meta.panel.classList.contains(
 'hidden'
 )
 ){
@@ -6133,8 +6263,7 @@ event.preventDefault();
 event.stopPropagation();
 
 if(
-meta.panel.classList
-.contains(
+meta.panel.classList.contains(
 'hidden'
 )
 ){
@@ -6184,8 +6313,7 @@ return;
 }
 
 if(
-meta.panel.classList
-.contains(
+meta.panel.classList.contains(
 'hidden'
 )
 ){
@@ -6865,8 +6993,7 @@ meta.dirty
 const mutationAtStart=
 localMutationVersion;
 
-syncRunning=
-true;
+syncRunning=true;
 
 updateAdmin();
 
@@ -6939,7 +7066,7 @@ mergedResult.codeConflicts>0
 ){
 const error=
 new Error(
-`检测到 ${mergedResult.codeConflicts} 个编码并发冲突；为保护编码，已停止本次写入`
+`检测到编码并发冲突；为保护编码，已停止本次写入：${formatCodeConflictItems(mergedResult.codeConflictItems)}`
 );
 
 error.code=
@@ -6950,6 +7077,7 @@ throw error;
 
 const codeAudit=
 auditCodeSafety(
+base,
 localBefore,
 remote.state,
 mergedState
@@ -6960,7 +7088,7 @@ if(
 ){
 const error=
 new Error(
-`编码安全检查失败：检测到 ${codeAudit.violations} 个可能被清空或改写的已有编码`
+`编码安全检查失败：${formatCodeSafetyItems(codeAudit.items)}`
 );
 
 error.code=
@@ -7001,8 +7129,7 @@ const pulledChanges=
 localSig!==
 mergedSig;
 
-let wroteRemote=
-false;
+let wroteRemote=false;
 
 let finalSha=
 remote.sha;
@@ -7018,8 +7145,7 @@ mergedState,
 remote.sha
 );
 
-wroteRemote=
-true;
+wroteRemote=true;
 
 }catch(error){
 lastError=
@@ -7053,8 +7179,7 @@ verification.matched
 finalSha=
 verification.remote.sha;
 
-wroteRemote=
-true;
+wroteRemote=true;
 
 }else{
 throw error;
@@ -7069,19 +7194,14 @@ throw error;
 let finalLocalState=
 mergedState;
 
-let dirtyAfterSync=
-false;
+let dirtyAfterSync=false;
 
-let extraConflicts=
-0;
-let extraCollectionConflicts=
-0;
-let extraUnresolvedCodes=
-0;
-let extraCodeConflicts=
-0;
-let extraInvalidCodes=
-0;
+let extraConflicts=0;
+let extraCollectionConflicts=0;
+let extraUnresolvedCodes=0;
+let extraCodeConflicts=0;
+let extraCodeConflictItems=[];
+let extraInvalidCodes=0;
 
 if(
 localMutationVersion!==
@@ -7114,11 +7234,16 @@ afterWriteMerge.unresolvedCodeConflicts;
 extraCodeConflicts=
 afterWriteMerge.codeConflicts;
 
+extraCodeConflictItems=[
+...afterWriteMerge.codeConflictItems
+];
+
 extraInvalidCodes=
 afterWriteMerge.invalidCodeCount;
 
 const afterWriteAudit=
 auditCodeSafety(
+localBefore,
 currentLocal,
 mergedState,
 afterWriteMerge.state
@@ -7129,7 +7254,7 @@ if(
 ){
 const error=
 new Error(
-`编码安全检查失败：检测到 ${afterWriteAudit.violations} 个可能被清空或改写的已有编码`
+`编码安全检查失败：${formatCodeSafetyItems(afterWriteAudit.items)}`
 );
 
 error.code=
@@ -7145,8 +7270,7 @@ finalLocalState
 mergedSig;
 
 if(dirtyAfterSync){
-syncRequested=
-true;
+syncRequested=true;
 }
 }
 
@@ -7211,6 +7335,11 @@ const codeConflictCount=
 mergedResult.codeConflicts+
 extraCodeConflicts;
 
+const codeConflictItems=[
+...mergedResult.codeConflictItems,
+...extraCodeConflictItems
+];
+
 const allocatedCodeCount=
 allocationResult.assigned;
 
@@ -7236,7 +7365,7 @@ if(
 codeConflictCount
 ){
 show(
-`检测到 ${codeConflictCount} 个编码并发冲突，已停止自动覆盖，请人工检查`,
+`检测到编码并发冲突，请人工检查：${formatCodeConflictItems(codeConflictItems)}`,
 'error'
 );
 
@@ -7374,8 +7503,7 @@ show(
 return false;
 
 }finally{
-syncRunning=
-false;
+syncRunning=false;
 
 updateAdmin();
 }
@@ -7393,40 +7521,33 @@ false
 
 if(syncInFlight){
 if(showResult){
-syncShowResult=
-true;
+syncShowResult=true;
 }
 
 if(queueIfBusy){
-syncRequested=
-true;
+syncRequested=true;
 }
 
 return syncInFlight;
 }
 
-syncRequested=
-true;
+syncRequested=true;
 
 if(showResult){
-syncShowResult=
-true;
+syncShowResult=true;
 }
 
 syncInFlight=
 (
 async()=>{
-let allOk=
-true;
+let allOk=true;
 
 while(syncRequested){
 const announce=
 syncShowResult;
 
-syncRequested=
-false;
-syncShowResult=
-false;
+syncRequested=false;
+syncShowResult=false;
 
 const ok=
 await syncOnce(
@@ -7438,8 +7559,7 @@ allOk &&
 ok;
 
 if(!ok){
-syncRequested=
-false;
+syncRequested=false;
 
 break;
 }
@@ -7450,8 +7570,7 @@ return allOk;
 )()
 .finally(
 ()=>{
-syncInFlight=
-null;
+syncInFlight=null;
 }
 );
 
@@ -7573,8 +7692,7 @@ publicCacheValue
 }
 
 async function loadAdminState(){
-adminReady=
-false;
+adminReady=false;
 
 updateAdmin();
 
@@ -7601,8 +7719,7 @@ saveLocal(
 state
 );
 
-adminReady=
-true;
+adminReady=true;
 
 render();
 
@@ -7622,8 +7739,7 @@ if(remote.exists){
 state=
 remote.state;
 
-meta.dirty=
-false;
+meta.dirty=false;
 
 meta.sha=
 remote.sha;
@@ -7647,17 +7763,14 @@ persistMeta()
 state=
 local;
 
-meta.dirty=
-true;
+meta.dirty=true;
 
-meta.sha=
-null;
+meta.sha=null;
 
 syncBaseCache=
 norm({});
 
-syncBaseSha=
-null;
+syncBaseSha=null;
 
 saveLocal(
 state
@@ -7678,11 +7791,9 @@ persistMeta()
 state=
 norm({});
 
-meta.dirty=
-false;
+meta.dirty=false;
 
-meta.sha=
-null;
+meta.sha=null;
 
 saveLocal(
 state
@@ -7700,8 +7811,7 @@ persistMeta()
 ]);
 }
 
-adminReady=
-true;
+adminReady=true;
 
 render();
 
@@ -7725,8 +7835,7 @@ state=
 loadLocal() ||
 norm({});
 
-adminReady=
-true;
+adminReady=true;
 
 render();
 
@@ -7945,31 +8054,25 @@ metaWriteChain,
 syncBaseWriteChain
 ]);
 
-syncRequested=
-false;
+syncRequested=false;
 
-syncShowResult=
-false;
+syncShowResult=false;
 
 meta={
 dirty:false,
 sha:null
 };
 
-workCopyCache=
-null;
+workCopyCache=null;
 
-syncBaseCache=
-null;
+syncBaseCache=null;
 
-syncBaseSha=
-null;
+syncBaseSha=null;
 
 state=
 norm({});
 
-localMutationVersion=
-0;
+localMutationVersion=0;
 
 await Promise.all([
 idbDelete(
@@ -8458,10 +8561,8 @@ editCancel.addEventListener(
 ()=>{
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=
-false;
-editAutoManagedDraft=
-false;
+editOverlayPointerDown=false;
+editAutoManagedDraft=false;
 
 editSelections={
 category:[],
@@ -8509,8 +8610,7 @@ editOverlayPointerDown &&
 event.target===
 editModal;
 
-editOverlayPointerDown=
-false;
+editOverlayPointerDown=false;
 
 if(
 !genuineOutsideClick
@@ -8526,8 +8626,7 @@ return;
 
 editingId='';
 editInitialSnapshot='';
-editAutoManagedDraft=
-false;
+editAutoManagedDraft=false;
 
 editSelections={
 category:[],
@@ -8555,8 +8654,7 @@ editModal
 editModal.addEventListener(
 'pointercancel',
 ()=>{
-editOverlayPointerDown=
-false;
+editOverlayPointerDown=false;
 }
 );
 
@@ -8629,8 +8727,7 @@ event.target.closest(
 
 if(edit){
 renameManagedInstitution(
-edit.dataset
-.editValue
+edit.dataset.editValue
 );
 
 return;
@@ -8643,8 +8740,7 @@ event.target.closest(
 
 if(remove){
 deleteManagedInstitution(
-remove.dataset
-.deleteValue
+remove.dataset.deleteValue
 );
 }
 }
@@ -8660,8 +8756,7 @@ event.target.closest(
 
 if(input){
 moveManagedInstitution(
-input.dataset
-.moveValue,
+input.dataset.moveValue,
 input.value
 );
 }
@@ -8714,8 +8809,7 @@ document.querySelector(
 );
 
 if(scroll){
-scroll.scrollTop=
-0;
+scroll.scrollTop=0;
 }
 }
 );
@@ -8733,18 +8827,15 @@ return;
 closePanels();
 
 if(
-!editModal.classList
-.contains(
+!editModal.classList.contains(
 'hidden'
 ) &&
 editIsUnchanged()
 ){
 editingId='';
 editInitialSnapshot='';
-editOverlayPointerDown=
-false;
-editAutoManagedDraft=
-false;
+editOverlayPointerDown=false;
+editAutoManagedDraft=false;
 
 editSelections={
 category:[],
@@ -8854,6 +8945,34 @@ now;
 sync(
 false,
 false
+);
+}
+
+window.addEventListener(
+'resize',
+()=>{
+if(
+!editModal.classList.contains(
+'hidden'
+)
+){
+setEditDialogHeight();
+}
+}
+);
+
+if(window.visualViewport){
+window.visualViewport.addEventListener(
+'resize',
+()=>{
+if(
+!editModal.classList.contains(
+'hidden'
+)
+){
+setEditDialogHeight();
+}
+}
 );
 }
 
