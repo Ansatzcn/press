@@ -482,14 +482,6 @@ flex-wrap:wrap;
 min-width:0;
 gap:0
 }
-.entry-tag-checkbox{
-flex:0 0 auto;
-margin-left:1px;
-cursor:pointer
-}
-.entry-tag-checkbox:disabled{
-cursor:not-allowed
-}
 .edit-btn{
 flex:0 0 auto;
 position:absolute;
@@ -1030,7 +1022,7 @@ type="button"
 <section>
 <div class="list-header">
 <h2>总表</h2>
-<span class="count-badge" id="countDisplay">0/0/0</span>
+<span class="count-badge" id="countDisplay">0/0</span>
 </div>
 
 <div class="press-list" id="pressList">
@@ -4896,16 +4888,8 @@ entry.code
 )
 .length;
 
-const checked=
-state.entries
-.filter(
-entry=>
-entry.tagChecked
-)
-.length;
-
 countDisplay.textContent=
-`${checked}/${coded}/${total}`;
+`${coded}/${total}`;
 }
 
 function render(){
@@ -5017,13 +5001,6 @@ groupDisplay
 .join('/')
 )}
 </span>
-<input
-class="entry-tag-checkbox"
-type="checkbox"
-data-id="${attr(entry.id)}"
-${entry.tagChecked?'checked':''}
-${admin()&&adminReady?'':'disabled'}
->
 </span>
 </div>
 `
@@ -8617,38 +8594,6 @@ openEdit(
 button.dataset.id
 );
 }
-}
-);
-
-pressList.addEventListener(
-'change',
-event=>{
-const checkbox=
-event.target.closest(
-'.entry-tag-checkbox[data-id]'
-);
-
-if(!checkbox){
-return;
-}
-
-const entry=
-state.entries.find(
-item=>
-item.id===
-checkbox.dataset.id
-);
-
-if(!entry){
-return;
-}
-
-entry.tagChecked=
-checkbox.checked;
-
-updateCountDisplay();
-
-schedule();
 }
 );
 
