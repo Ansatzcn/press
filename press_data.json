@@ -13865,11 +13865,11 @@
       "institution": "[民主与建设出版社](https://book.douban.com/press/2806/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230211",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -17691,6 +17691,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "38e44cf3-a508-4d7c-acdb-37d4c82d6013",
+      "bookName": "衰世与西法",
+      "bookNo": "7-5598-3205",
+      "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230212",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
