@@ -5284,10 +5284,12 @@
       "bookNo": "7-220-01855",
       "institution": "[四川人民出版社](https://book.douban.com/press/2449/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "130055",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
