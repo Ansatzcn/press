@@ -3120,6 +3120,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "7679b065-ff60-4be0-9f4c-57c403a49d58",
+      "bookName": "中国的现代化",
+      "bookNo": "7-208-00245",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "130050",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "5aeeead7-e7f0-4e46-a0f2-34a4f9a5b8e8",
       "bookName": "中产阶级文化的起源",
       "bookNo": "7-208-06027",
