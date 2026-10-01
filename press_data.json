@@ -7991,6 +7991,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "d1f42589-17fa-4296-b1c8-c0b3f40c8c4f",
+      "bookName": "文学与商人",
+      "bookNo": "7-309-14576",
+      "institution": "[复旦大学出版社](https://book.douban.com/press/2736/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230233",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "d5920a32-b2a0-4318-91d1-24173a28dab4",
       "bookName": "近代中国的资本市场：生成与演变",
       "bookNo": "7-309-15686",
