@@ -1055,6 +1055,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "838813e7-b0bb-47e8-8252-93a9318140bf",
+      "bookName": "论美国的文化：在本土与全球之间双向运行的文化体制",
+      "bookNo": "7-100-09650",
+      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220058",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "b73f5788-268e-4155-87aa-d0b89a79f328",
       "bookName": "亚洲的戏剧",
       "bookNo": "7-100-09795",
@@ -3156,6 +3172,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "4c6e30ac-1419-4781-a39e-40f4d78481ee",
+      "bookName": "马克思主义逻辑学入门",
+      "bookNo": "7-203-12931",
+      "institution": "[山西人民出版社](https://book.douban.com/press/2803/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220059",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "4d2c1554-7805-44f6-8adc-f43b0180442f",
       "bookName": "六至九世纪中国政治史",
       "bookNo": "7-203-13311",
@@ -3404,11 +3436,11 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220057",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -10845,11 +10877,11 @@
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220060",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14136,6 +14168,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "9e5b20c8-5a63-49a7-8488-fc9d29f22573",
+      "bookName": "港口城市与入侵者：现代社会早期斯瓦希里海岸、印度和葡萄牙",
+      "bookNo": "7-5139-0336",
+      "institution": "[民主与建设出版社](https://book.douban.com/press/2806/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220055",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "d1eeaeec-d57d-44a9-9349-6ec7aa47bc28",
       "bookName": "冲击与回应",
       "bookNo": "7-5139-2247",
@@ -14462,11 +14510,11 @@
       "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220056",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19002,17 +19050,17 @@
       "codeManualPinned": false
     },
     {
-      "id": "df9f32f0-df1a-4180-a1ef-45f5c5538ca9",
+      "id": "bb3582b0-ade5-4bc7-8578-0b10bae4d64b",
       "bookName": "十年巨变：乡村振兴的李寨实践",
       "bookNo": "7-5559-1638",
       "institution": "[河南文艺出版社](https://book.douban.com/press/2443/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230243",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19184,11 +19232,11 @@
       "institution": "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120058",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19555,11 +19603,11 @@
       "institution": "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120059",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19587,11 +19635,11 @@
       "institution": "[中国政法大学出版社](https://book.douban.com/press/2364/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230244",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19667,11 +19715,11 @@
       "institution": "[南京师范大学出版社](https://book.douban.com/press/2685/?order=time)",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "130063",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19747,11 +19795,11 @@
       "institution": "[中央民族大学出版社](https://book.douban.com/press/2815/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220054",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
