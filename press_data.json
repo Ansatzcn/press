@@ -3972,11 +3972,11 @@
       "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230227",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -13355,11 +13355,11 @@
       "institution": "[中国长安出版社](https://book.douban.com/press/2519/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220053",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14098,6 +14098,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "de05a6fc-f5e9-4e53-9c0a-a59288c069cf",
+      "bookName": "欧洲告急：丘吉尔、奥威尔与自由之战",
+      "bookNo": "7-5139-5027",
+      "institution": "[民主与建设出版社](https://book.douban.com/press/2806/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230226",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
