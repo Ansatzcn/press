@@ -10661,6 +10661,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "4715e864-4dea-451b-9150-f644922d0fc2",
+      "bookName": "诸葛亮和他的时代",
+      "bookNo": "7-5207-2331",
+      "institution": "[东方出版社](https://book.douban.com/press/2731/?order=time)",
+      "category": [],
+      "tag": [
+        "12组"
+      ],
+      "tagChecked": false,
+      "code": "120062",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "5f5a181e-4f77-4176-843d-d6e8f07b7888",
       "bookName": "地球气候简史",
       "bookNo": "7-5207-3350",
