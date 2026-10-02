@@ -20397,6 +20397,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "3d50485c-7268-4b1f-8391-ccfdc672d8db",
+      "bookName": "满洲国的实相与幻象",
+      "bookNo": "986-5842-86",
+      "institution": "八旗文化",
+      "category": [],
+      "tag": [
+        "14组"
+      ],
+      "tagChecked": false,
+      "code": "140004",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "6f11de7f-aee7-43f0-8e47-eaf6ce90ddd0",
       "bookName": "中国现代国家的起源",
       "bookNo": "962-996-603",
@@ -20471,22 +20487,6 @@
       ],
       "tagChecked": true,
       "code": "170001",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "3d50485c-7268-4b1f-8391-ccfdc672d8db",
-      "bookName": "满洲国的实相与幻象",
-      "bookNo": "986-5842-86",
-      "institution": "八旗文化",
-      "category": [],
-      "tag": [
-        "14组"
-      ],
-      "tagChecked": false,
-      "code": "140004",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -20798,12 +20798,12 @@
     "[生活书店](https://book.douban.com/press/2919/?order=time)",
     "[大有书局](https://book.douban.com/press/2926/?order=time)",
     "马可孛罗文化事业公司",
+    "八旗文化",
     "香港中文大学出版社",
     "现代文艺出版社",
     "State University of New York Press",
     "Cambridge University Press",
-    "Routledge",
-    "八旗文化"
+    "Routledge"
   ],
   "categories": [
     "一号",
