@@ -20507,6 +20507,23 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "2f31ab30-0e0a-42c1-b5b9-480d7c2c8170",
+      "bookName": "光变：一个企业及其工业史",
+      "bookNo": "7-5154-0666",
+      "institution": "",
+      "category": [],
+      "tag": [
+        "13组",
+        "14组"
+      ],
+      "tagChecked": false,
+      "code": "130074",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
     }
   ],
   "institutions": [
