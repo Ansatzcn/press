@@ -1196,6 +1196,7 @@ type="button"
 <input type="checkbox" id="rememberToken" checked>
 在本设备保存 Token
 </label>
+<p id="runtimeHint" style="margin-top:.7rem;color:#64748b;font-size:.78rem;line-height:1.5"></p>
 </div>
 
 <div class="dialog-actions">
@@ -1268,14 +1269,15 @@ const SYNC_BASE_KEY='sync_base_v3_5s';
 const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
 const SYNC_RETRY_LIMIT=3;
-const NETWORK_RETRY_LIMIT=3;
-const GITHUB_TIMEOUT=30000;
-const PUBLIC_FETCH_TIMEOUT=30000;
+const NETWORK_RETRY_LIMIT=2;
+const GITHUB_READ_TIMEOUT=8000;
+const GITHUB_WRITE_TIMEOUT=20000;
+const PUBLIC_FETCH_TIMEOUT=15000;
 const STORAGE_OPEN_TIMEOUT=6000;
 const PASSIVE_SYNC_RETRY_DELAYS=Object.freeze([
-2500,
-8000,
-20000,
+3000,
+10000,
+30000,
 60000
 ]);
 
@@ -1462,6 +1464,7 @@ const cfg=$('cfg');
 const cfgFile=$('cfgFile');
 const cfgToken=$('cfgToken');
 const rememberToken=$('rememberToken');
+const runtimeHint=$('runtimeHint');
 const configCancel=$('configCancel');
 const manageModal=$('manageModal');
 const manageInstitutionInput=$('manageInstitutionInput');
@@ -6727,25 +6730,51 @@ if(
 error?.name==='AbortError' ||
 error?.code==='timeout'
 ){
+if(
+error?.githubPhase==='anonymous_read' ||
+error?.githubPhase==='probe'
+){
+return '手机无法在限定时间内连接 api.github.com；请检查手机网络、DNS/VPN、内容过滤器或 App 内置浏览器限制';
+}
+
 return 'GitHub 请求超时';
 }
 
 if(
 Number(error?.status)===401
 ){
-return 'GitHub Token 无效或已失效';
+return 'GitHub Token 无效、已过期，或手机保存的仍是旧 Token；请在手机端重新保存当前 Token';
 }
 
 if(
 Number(error?.status)===403
 ){
-return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 权限'}`;
+return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 读写权限、仓库授权和 API 访问限制'}`;
 }
 
 if(
 Number(error?.status)===404
 ){
-return `GitHub 资源不存在：${error.message||'请检查仓库和文件路径'}`;
+return `GitHub 仓库或数据文件不可访问：${error.message||'请检查仓库、文件路径以及 Token 是否获准访问该仓库'}`;
+}
+
+if(
+Number(error?.status)===0
+){
+if(
+error?.githubAnonymousReached===true &&
+error?.githubPhase==='authenticated_read'
+){
+return 'GitHub 公共 API 可以访问，但带 Token 的认证请求被浏览器或网络层拦截；请避免 App 内置浏览器，并确认页面通过 HTTPS 打开';
+}
+
+if(
+location.protocol==='file:'
+){
+return '当前页面通过 file:// 本地文件打开，手机浏览器可能禁止本地页面跨域访问 api.github.com；请把本页部署到 HTTPS（例如 GitHub Pages）后再打开';
+}
+
+return '手机当前无法访问 api.github.com；这通常是手机网络/DNS/VPN/内容过滤器或浏览器跨域限制，不是数据合并逻辑错误';
 }
 
 if(error?.message){
@@ -6775,7 +6804,7 @@ return error;
 async function fetchTextWithTimeout(
 url,
 options={},
-timeoutMs=GITHUB_TIMEOUT
+timeoutMs=GITHUB_READ_TIMEOUT
 ){
 const controller=
 typeof AbortController!=='undefined'
@@ -6870,37 +6899,67 @@ timer
 async function githubApi(
 method,
 endpoint,
-body=null
+body=null,
+options={}
 ){
-const {response,text}=
+const auth=
+options.auth!==false;
+
+const timeoutMs=
+Number(options.timeoutMs) ||
+(
+method==='GET'
+? GITHUB_READ_TIMEOUT
+: GITHUB_WRITE_TIMEOUT
+);
+
+const phase=
+clean(options.phase) ||
+(
+auth
+? 'authenticated_request'
+: 'anonymous_request'
+);
+
+const baseUrl=
+`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}`;
+
+const url=
+endpoint
+? `${baseUrl}/${endpoint}`
+: baseUrl;
+
+const headers={};
+
+/*
+Do not send X-GitHub-Api-Version from browser JavaScript.
+GitHub's documented CORS preflight allow-list contains Authorization and
+Content-Type, but does not list X-GitHub-Api-Version. Requests without that
+header use GitHub's default REST API version.
+*/
+if(auth){
+headers.Authorization=
+`Bearer ${config.token}`;
+}
+
+if(body!==null){
+headers['Content-Type']=
+'application/json';
+}
+
+let response;
+let text;
+
+try{
+({response,text}=
 await fetchTextWithTimeout(
-`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`,
+url,
 {
 method,
-
-headers:{
-Authorization:
-`Bearer ${config.token}`,
-
-Accept:
-'application/vnd.github+json',
-
-'X-GitHub-Api-Version':
-'2026-03-10',
-
-...(
-body!==null
-? {
-'Content-Type':
-'application/json'
-}
-: {}
-)
-},
-
-cache:
-'no-store',
-
+headers,
+cache:'no-store',
+mode:'cors',
+redirect:'follow',
 ...(
 body!==null
 ? {
@@ -6912,8 +6971,32 @@ body
 : {}
 )
 },
-GITHUB_TIMEOUT
-);
+timeoutMs
+));
+
+}catch(error){
+if(
+error &&
+typeof error==='object'
+){
+error.githubPhase=
+phase;
+
+error.githubUrl=
+url;
+
+error.githubAuth=
+auth;
+
+if(
+!('status' in error)
+){
+error.status=0;
+}
+}
+
+throw error;
+}
 
 let data=
 null;
@@ -6946,20 +7029,26 @@ response.status;
 error.apiData=
 data;
 
+error.githubPhase=
+phase;
+
+error.githubUrl=
+url;
+
+error.githubAuth=
+auth;
+
+error.githubHttpReached=true;
+
 throw error;
 }
 
 return data;
 }
 
-async function readRemote(){
-try{
-const data=
-await githubApi(
-'GET',
-`contents/${pathEncode(config.file)}`
-);
-
+function parseRemoteContent(
+data
+){
 if(
 !data ||
 typeof data.content!=='string'
@@ -6978,25 +7067,150 @@ data.content
 
 return {
 exists:true,
-
-sha:
-data.sha,
-
-state:
-norm(
-parsed
-)
+sha:data.sha,
+state:norm(parsed)
 };
+}
+
+async function confirmRepositoryAccessible(){
+try{
+await githubApi(
+'GET',
+'',
+null,
+{
+auth:true,
+phase:'authenticated_repo_check',
+timeoutMs:GITHUB_READ_TIMEOUT
+}
+);
+
+return true;
 
 }catch(error){
 if(
-error.status===404
+Number(error?.status)===404
 ){
+const wrapped=
+new Error(
+'仓库不存在，或当前 Token 没有访问该仓库的权限'
+);
+
+wrapped.status=404;
+wrapped.githubPhase='authenticated_repo_check';
+wrapped.githubAuth=true;
+
+throw wrapped;
+}
+
+throw error;
+}
+}
+
+async function readRemote(){
+const endpoint=
+`contents/${pathEncode(config.file)}`;
+
+let anonymousError=null;
+let anonymousReached=false;
+
+/*
+For a public repository, read without Authorization first. This turns the
+common mobile read path into a simple CORS GET with no preflight at all.
+Only private repositories / rate-limit cases fall back to an authenticated
+request.
+*/
+try{
+const publicData=
+await githubApi(
+'GET',
+endpoint,
+null,
+{
+auth:false,
+phase:'anonymous_read',
+timeoutMs:GITHUB_READ_TIMEOUT
+}
+);
+
+return parseRemoteContent(
+publicData
+);
+
+}catch(error){
+anonymousError=
+error;
+
+anonymousReached=
+Boolean(
+error?.githubHttpReached
+);
+
+const statusCode=
+Number(
+error?.status||0
+);
+
+if(
+statusCode===0 ||
+statusCode===408 ||
+statusCode===429 ||
+statusCode>=500
+){
+throw error;
+}
+
+if(
+![401,403,404].includes(
+statusCode
+)
+){
+throw error;
+}
+}
+
+try{
+const privateData=
+await githubApi(
+'GET',
+endpoint,
+null,
+{
+auth:true,
+phase:'authenticated_read',
+timeoutMs:GITHUB_READ_TIMEOUT
+}
+);
+
+return parseRemoteContent(
+privateData
+);
+
+}catch(error){
+if(
+error &&
+typeof error==='object'
+){
+error.githubAnonymousReached=
+anonymousReached ||
+Boolean(
+anonymousError?.githubHttpReached
+);
+}
+
+if(
+Number(error?.status)===404
+){
+/*
+Distinguish "file does not exist" from "private repo / token cannot see repo".
+Only create a new data file when the repository itself is known to be accessible.
+*/
+await confirmRepositoryAccessible();
+
 return {
 exists:false,
 sha:null,
-state:
-norm({})
+state:norm({})
 };
 }
 
@@ -7031,8 +7245,13 @@ attempt===limit-1
 throw error;
 }
 
+status(
+'syncing',
+`GitHub 连接重试 ${attempt+2}/${limit}`
+);
+
 await delay(
-300*Math.pow(
+350*Math.pow(
 2,
 attempt
 )
@@ -7105,7 +7324,12 @@ const result=
 await githubApi(
 'PUT',
 `contents/${pathEncode(config.file)}`,
-body
+body,
+{
+auth:true,
+phase:'write',
+timeoutMs:GITHUB_WRITE_TIMEOUT
+}
 );
 
 return (
@@ -7656,7 +7880,7 @@ persistMeta()
 
 status(
 'offline',
-'同步失败 · 本地数据已保留'
+`同步失败 · ${syncErrorText(error)}`
 );
 
 if(showResult){
@@ -8017,18 +8241,30 @@ adminReady=true;
 
 render();
 
-status(
-'offline',
-'云端读取失败 · 使用本机数据'
+const detail=
+syncErrorText(
+error
 );
 
+status(
+'offline',
+`云端数据读取失败：${detail} · 使用本机数据`
+);
+
+lastSyncTime.textContent=
+`管理连接失败 · ${detail}`;
+
 /*
-On phones the first request after opening/resuming a page can happen
-before the radio/Wi-Fi route is actually ready even though the browser
-is already visible. Queue a delayed retry instead of remaining offline
-until another focus/online event happens.
+Retry only failures that can plausibly recover by themselves. 401/403/404
+require a configuration/permission change and should not keep hammering GitHub.
 */
+if(
+isTransientSyncError(
+error
+)
+){
 schedulePassiveSyncRetry();
+}
 }
 }
 
@@ -8831,6 +9067,11 @@ rememberToken.checked=
 Boolean(
 persistedToken
 );
+
+runtimeHint.textContent=
+location.protocol==='file:'
+? '当前运行环境：本地 file://。部分手机浏览器会禁止本地 HTML 直接访问 GitHub API，建议通过 HTTPS/GitHub Pages 打开。'
+: `当前运行环境：${location.protocol}//${location.host || '本地环境'}。GitHub 管理连接使用 api.github.com。`;
 
 configModal.classList.remove(
 'hidden'
