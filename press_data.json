@@ -20475,6 +20475,22 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "3d50485c-7268-4b1f-8391-ccfdc672d8db",
+      "bookName": "满洲国的实相与幻象",
+      "bookNo": "986-5842-86",
+      "institution": "八旗文化",
+      "category": [],
+      "tag": [
+        "14组"
+      ],
+      "tagChecked": false,
+      "code": "140004",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
     }
   ],
   "institutions": [
@@ -20786,7 +20802,8 @@
     "现代文艺出版社",
     "State University of New York Press",
     "Cambridge University Press",
-    "Routledge"
+    "Routledge",
+    "八旗文化"
   ],
   "categories": [
     "一号",
