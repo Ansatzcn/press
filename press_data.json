@@ -9106,22 +9106,6 @@
       "codeManualPinned": false
     },
     {
-      "id": "47487178-0ce4-487c-86cd-c7ce5d79f87a",
-      "bookName": "美国20世纪非殖民化政策研究：以东南亚为个案",
-      "bookNo": "7-5203-5629",
-      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
-      "category": [],
-      "tag": [
-        "23读书"
-      ],
-      "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
       "id": "d9d687c1-9237-414b-b24e-499d4f49ba80",
       "bookName": "美国20世纪非殖民化政策研究：以东南亚为个案",
       "bookNo": "7-5203-5629",
@@ -9352,11 +9336,11 @@
       "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220076",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
