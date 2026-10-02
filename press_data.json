@@ -3178,6 +3178,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "380fe08c-5571-4c70-9e31-64ea78a485ae",
+      "bookName": "山河故人",
+      "bookNo": "7-201-12716",
+      "institution": "[天津人民出版社](https://book.douban.com/press/2765/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230265",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "58a730dd-33fc-4362-83cc-35a3484ab8d6",
       "bookName": "重新发现意大利：意大利何以成为意大利",
       "bookNo": "7-201-16333",
