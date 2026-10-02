@@ -14887,6 +14887,23 @@
       "codeManualPinned": false
     },
     {
+      "id": "2f31ab30-0e0a-42c1-b5b9-480d7c2c8170",
+      "bookName": "光变：一个企业及其工业史",
+      "bookNo": "7-5154-0666",
+      "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
+      "category": [],
+      "tag": [
+        "13组",
+        "14组"
+      ],
+      "tagChecked": false,
+      "code": "130074",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "cd569869-cf7c-49b7-955f-1ea698323b4b",
       "bookName": "县中：中国县域教育田野透视",
       "bookNo": "7-5154-1339",
@@ -20503,23 +20520,6 @@
       ],
       "tagChecked": true,
       "code": "170001",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "2f31ab30-0e0a-42c1-b5b9-480d7c2c8170",
-      "bookName": "光变：一个企业及其工业史",
-      "bookNo": "7-5154-0666",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "13组",
-        "14组"
-      ],
-      "tagChecked": false,
-      "code": "130074",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
