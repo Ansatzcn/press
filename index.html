@@ -1268,9 +1268,16 @@ const SYNC_BASE_KEY='sync_base_v3_5s';
 const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
 const SYNC_RETRY_LIMIT=3;
-const NETWORK_RETRY_LIMIT=2;
-const GITHUB_TIMEOUT=15000;
-const PUBLIC_FETCH_TIMEOUT=15000;
+const NETWORK_RETRY_LIMIT=3;
+const GITHUB_TIMEOUT=30000;
+const PUBLIC_FETCH_TIMEOUT=30000;
+const STORAGE_OPEN_TIMEOUT=6000;
+const PASSIVE_SYNC_RETRY_DELAYS=Object.freeze([
+2500,
+8000,
+20000,
+60000
+]);
 
 const GROUP_CODES=Object.freeze([
 '11',
@@ -1530,6 +1537,8 @@ let workCopyWriteChain=Promise.resolve();
 let metaWriteChain=Promise.resolve();
 let syncBaseWriteChain=Promise.resolve();
 let lastPassiveSyncAt=0;
+let passiveSyncRetryTimer=null;
+let passiveSyncRetryIndex=0;
 
 function clean(value){
 return String(value??'')
@@ -4050,6 +4059,47 @@ resolve,
 reject
 )=>{
 let request;
+let settled=false;
+
+const finishResolve=
+db=>{
+if(settled){
+try{
+db?.close();
+}catch{}
+
+return;
+}
+
+settled=true;
+clearTimeout(
+openTimer
+);
+resolve(db);
+};
+
+const finishReject=
+error=>{
+if(settled){
+return;
+}
+
+settled=true;
+clearTimeout(
+openTimer
+);
+reject(error);
+};
+
+const openTimer=
+setTimeout(
+()=>{
+finishReject(
+new Error('IndexedDB open timeout')
+);
+},
+STORAGE_OPEN_TIMEOUT
+);
 
 try{
 request=
@@ -4059,7 +4109,7 @@ DB_NAME,
 );
 
 }catch(error){
-reject(error);
+finishReject(error);
 return;
 }
 
@@ -4083,14 +4133,24 @@ DB_STORE
 
 request.onsuccess=
 ()=>{
-resolve(
-request.result
-);
+const db=
+request.result;
+
+if(db){
+db.onversionchange=
+()=>{
+try{
+db.close();
+}catch{}
+};
+}
+
+finishResolve(db);
 };
 
 request.onerror=
 ()=>{
-reject(
+finishReject(
 request.error ||
 new Error('IndexedDB open failed')
 );
@@ -4098,7 +4158,7 @@ new Error('IndexedDB open failed')
 
 request.onblocked=
 ()=>{
-reject(
+finishReject(
 new Error('IndexedDB blocked')
 );
 };
@@ -4233,6 +4293,20 @@ storageKey,
 value
 );
 
+/*
+Keep a best-effort localStorage mirror. Mobile Safari/WebView can
+occasionally make an existing IndexedDB database temporarily
+unavailable after background suspension. The mirror lets the app
+recover configuration, token and unsynced work without waiting for
+IndexedDB to become usable again. fallbackSet() already swallows
+localStorage quota/privacy errors, so IndexedDB remains the primary
+store.
+*/
+fallbackSet(
+storageKey,
+value
+);
+
 return true;
 
 }catch{
@@ -4298,6 +4372,9 @@ new Error('IndexedDB transaction aborted')
 );
 
 storageMemory.delete(storageKey);
+
+/* Do not leave a stale mirrored value that could be restored later. */
+fallbackDelete(storageKey);
 
 }catch{
 storageDbDisabled=true;
@@ -7657,6 +7734,18 @@ break;
 return allOk;
 }
 )()
+.then(
+allOk=>{
+if(allOk){
+clearPassiveSyncRetry();
+
+}else{
+schedulePassiveSyncRetry();
+}
+
+return allOk;
+}
+)
 .finally(
 ()=>{
 syncInFlight=null;
@@ -7932,6 +8021,14 @@ status(
 'offline',
 '云端读取失败 · 使用本机数据'
 );
+
+/*
+On phones the first request after opening/resuming a page can happen
+before the radio/Wi-Fi route is actually ready even though the browser
+is already visible. Queue a delayed retry instead of remaining offline
+until another focus/online event happens.
+*/
+schedulePassiveSyncRetry();
 }
 }
 
@@ -8966,12 +9063,72 @@ render();
 }
 );
 
-function passiveSync(){
+function clearPassiveSyncRetry(
+resetIndex=true
+){
+if(passiveSyncRetryTimer!==null){
+clearTimeout(
+passiveSyncRetryTimer
+);
+
+passiveSyncRetryTimer=null;
+}
+
+if(resetIndex){
+passiveSyncRetryIndex=0;
+}
+}
+
+function schedulePassiveSyncRetry(
+resetIndex=false
+){
+if(
+!admin() ||
+!adminReady
+){
+return;
+}
+
+if(resetIndex){
+passiveSyncRetryIndex=0;
+}
+
+if(passiveSyncRetryTimer!==null){
+return;
+}
+
+const delayMs=
+PASSIVE_SYNC_RETRY_DELAYS[
+Math.min(
+passiveSyncRetryIndex,
+PASSIVE_SYNC_RETRY_DELAYS.length-1
+)
+];
+
+passiveSyncRetryIndex=
+Math.min(
+passiveSyncRetryIndex+1,
+PASSIVE_SYNC_RETRY_DELAYS.length-1
+);
+
+passiveSyncRetryTimer=
+setTimeout(
+()=>{
+passiveSyncRetryTimer=null;
+
+passiveSync();
+},
+delayMs
+);
+}
+
+async function passiveSync(){
 if(
 !admin() ||
 !adminReady ||
 syncRunning ||
 Boolean(syncInFlight) ||
+document.hidden ||
 !editModal.classList.contains(
 'hidden'
 ) ||
@@ -8982,7 +9139,7 @@ Boolean(syncInFlight) ||
 'hidden'
 )
 ){
-return;
+return false;
 }
 
 const now=
@@ -8993,15 +9150,49 @@ now-
 lastPassiveSyncAt<
 1000
 ){
-return;
+return false;
 }
 
 lastPassiveSyncAt=
 now;
 
-sync(
+const ok=
+await sync(
 false,
 false
+);
+
+if(ok){
+clearPassiveSyncRetry();
+
+}else{
+schedulePassiveSyncRetry();
+}
+
+return ok;
+}
+
+function wakePassiveSync(){
+if(
+!admin() ||
+!adminReady
+){
+return;
+}
+
+/*
+A small delay is intentional. iOS Safari and embedded WebViews can fire
+focus/visibility/pageshow before network routing has fully recovered.
+*/
+clearPassiveSyncRetry();
+
+passiveSyncRetryTimer=
+setTimeout(
+()=>{
+passiveSyncRetryTimer=null;
+passiveSync();
+},
+700
 );
 }
 
@@ -9035,23 +9226,31 @@ setEditDialogHeight();
 
 window.addEventListener(
 'online',
-passiveSync
+wakePassiveSync
 );
 
 window.addEventListener(
 'focus',
-passiveSync
+wakePassiveSync
+);
+
+/*
+pageshow is important on mobile Safari because a page restored from the
+back-forward cache may not receive a fresh load or a useful online event.
+*/
+window.addEventListener(
+'pageshow',
+wakePassiveSync
 );
 
 document.addEventListener(
 'visibilitychange',
 ()=>{
 if(!document.hidden){
-passiveSync();
+wakePassiveSync();
 }
 }
 );
-
 })();
 </script>
 </body>
