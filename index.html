@@ -1269,9 +1269,6 @@ const SYNC_BASE_KEY='sync_base_v3_5s';
 const SYNC_ENGINE_VERSION=4;
 const MAX_BYTES=750*1024;
 const SYNC_RETRY_LIMIT=3;
-const NETWORK_RETRY_LIMIT=2;
-const GITHUB_READ_TIMEOUT=8000;
-const GITHUB_WRITE_TIMEOUT=20000;
 const PUBLIC_FETCH_TIMEOUT=15000;
 const STORAGE_OPEN_TIMEOUT=6000;
 const PASSIVE_SYNC_RETRY_DELAYS=Object.freeze([
@@ -4296,15 +4293,6 @@ storageKey,
 value
 );
 
-/*
-Keep a best-effort localStorage mirror. Mobile Safari/WebView can
-occasionally make an existing IndexedDB database temporarily
-unavailable after background suspension. The mirror lets the app
-recover configuration, token and unsynced work without waiting for
-IndexedDB to become usable again. fallbackSet() already swallows
-localStorage quota/privacy errors, so IndexedDB remains the primary
-store.
-*/
 fallbackSet(
 storageKey,
 value
@@ -4375,8 +4363,6 @@ new Error('IndexedDB transaction aborted')
 );
 
 storageMemory.delete(storageKey);
-
-/* Do not leave a stale mirrored value that could be restored later. */
 fallbackDelete(storageKey);
 
 }catch{
@@ -6726,55 +6712,29 @@ error?.code==='code_safety'
 return error.message;
 }
 
-if(
-error?.name==='AbortError' ||
-error?.code==='timeout'
-){
-if(
-error?.githubPhase==='anonymous_read' ||
-error?.githubPhase==='probe'
-){
-return '手机无法在限定时间内连接 api.github.com；请检查手机网络、DNS/VPN、内容过滤器或 App 内置浏览器限制';
+const statusCode=
+Number(
+error?.status||0
+);
+
+if(statusCode===401){
+return 'GitHub Token 无效或已失效；请在 Press 的“配置”中重新填写与 Pages 相同的有效 Token';
 }
 
-return 'GitHub 请求超时';
+if(statusCode===403){
+return `GitHub 拒绝访问：${error.message||'请确认 Token 具有仓库 Contents 读写权限'}`;
 }
 
-if(
-Number(error?.status)===401
-){
-return 'GitHub Token 无效、已过期，或手机保存的仍是旧 Token；请在手机端重新保存当前 Token';
+if(statusCode===404){
+return `GitHub 仓库或数据文件不存在/不可访问：${error.message||'请检查仓库所有者、仓库名称和 press_data.json 路径'}`;
 }
 
-if(
-Number(error?.status)===403
-){
-return `GitHub 拒绝访问：${error.message||'请检查 Token 的 Contents 读写权限、仓库授权和 API 访问限制'}`;
+if(statusCode===409 || statusCode===422){
+return `GitHub 写入冲突：${error.message||`HTTP ${statusCode}`}`;
 }
 
-if(
-Number(error?.status)===404
-){
-return `GitHub 仓库或数据文件不可访问：${error.message||'请检查仓库、文件路径以及 Token 是否获准访问该仓库'}`;
-}
-
-if(
-Number(error?.status)===0
-){
-if(
-error?.githubAnonymousReached===true &&
-error?.githubPhase==='authenticated_read'
-){
-return 'GitHub 公共 API 可以访问，但带 Token 的认证请求被浏览器或网络层拦截；请避免 App 内置浏览器，并确认页面通过 HTTPS 打开';
-}
-
-if(
-location.protocol==='file:'
-){
-return '当前页面通过 file:// 本地文件打开，手机浏览器可能禁止本地页面跨域访问 api.github.com；请把本页部署到 HTTPS（例如 GitHub Pages）后再打开';
-}
-
-return '手机当前无法访问 api.github.com；这通常是手机网络/DNS/VPN/内容过滤器或浏览器跨域限制，不是数据合并逻辑错误';
+if(statusCode===0){
+return `GitHub 网络请求失败：${error?.message||'Failed to fetch'}；Press 已改为与 Pages 相同的 GitHub fetch 请求方式`;
 }
 
 if(error?.message){
@@ -6794,9 +6754,7 @@ message
 
 error.code=
 'timeout';
-
-error.status=
-0;
+error.status=0;
 
 return error;
 }
@@ -6804,7 +6762,7 @@ return error;
 async function fetchTextWithTimeout(
 url,
 options={},
-timeoutMs=GITHUB_READ_TIMEOUT
+timeoutMs=PUBLIC_FETCH_TIMEOUT
 ){
 const controller=
 typeof AbortController!=='undefined'
@@ -6822,13 +6780,9 @@ await fetch(
 url,
 {
 ...options,
-
 ...(
 controller
-? {
-signal:
-controller.signal
-}
+? {signal:controller.signal}
 : {}
 )
 }
@@ -6854,8 +6808,7 @@ error &&
 typeof error==='object' &&
 !('status' in error)
 ){
-error.status=
-0;
+error.status=0;
 }
 
 throw error;
@@ -6889,131 +6842,79 @@ timeout
 
 }finally{
 if(timer!==null){
-clearTimeout(
-timer
-);
+clearTimeout(timer);
 }
 }
 }
 
+/*
+GitHub 传输层严格参照手机端已经成功的 Pages：
+- Authorization 使用 "token <PAT>"
+- Accept 使用 application/vnd.github.v3+json
+- GET/PUT 都使用普通 fetch
+- 不设置 AbortController
+- 不设置 mode/cache/redirect
+- 不发送 X-GitHub-Api-Version
+- 不先进行匿名 GitHub API 探测
+*/
 async function githubApi(
 method,
 endpoint,
-body=null,
-options={}
+body=null
 ){
-const auth=
-options.auth!==false;
-
-const timeoutMs=
-Number(options.timeoutMs) ||
-(
-method==='GET'
-? GITHUB_READ_TIMEOUT
-: GITHUB_WRITE_TIMEOUT
-);
-
-const phase=
-clean(options.phase) ||
-(
-auth
-? 'authenticated_request'
-: 'anonymous_request'
-);
-
-const baseUrl=
-`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}`;
-
 const url=
-endpoint
-? `${baseUrl}/${endpoint}`
-: baseUrl;
+`https://api.github.com/repos/${config.owner}/${config.repo}/${endpoint}`;
 
-const headers={};
+const headers={
+'Authorization':
+`token ${config.token}`,
 
-/*
-Do not send X-GitHub-Api-Version from browser JavaScript.
-GitHub's documented CORS preflight allow-list contains Authorization and
-Content-Type, but does not list X-GitHub-Api-Version. Requests without that
-header use GitHub's default REST API version.
-*/
-if(auth){
-headers.Authorization=
-`Bearer ${config.token}`;
-}
+'Accept':
+'application/vnd.github.v3+json',
+
+'Content-Type':
+'application/json'
+};
+
+const options={
+method,
+headers
+};
 
 if(body!==null){
-headers['Content-Type']=
-'application/json';
+options.body=
+JSON.stringify(body);
 }
 
 let response;
-let text;
 
 try{
-({response,text}=
-await fetchTextWithTimeout(
+response=
+await fetch(
 url,
-{
-method,
-headers,
-cache:'no-store',
-mode:'cors',
-redirect:'follow',
-...(
-body!==null
-? {
-body:
-JSON.stringify(
-body
-)
-}
-: {}
-)
-},
-timeoutMs
-));
+options
+);
 
 }catch(error){
 if(
 error &&
 typeof error==='object'
 ){
-error.githubPhase=
-phase;
-
-error.githubUrl=
-url;
-
-error.githubAuth=
-auth;
-
-if(
-!('status' in error)
-){
 error.status=0;
-}
+error.githubUrl=url;
 }
 
 throw error;
 }
 
-let data=
-null;
+let data=null;
 
-if(text){
 try{
 data=
-JSON.parse(
-text
-);
+await response.json();
 
 }catch{
-data={
-message:
-text
-};
-}
+data=null;
 }
 
 if(!response.ok){
@@ -7028,17 +6929,7 @@ response.status;
 
 error.apiData=
 data;
-
-error.githubPhase=
-phase;
-
-error.githubUrl=
-url;
-
-error.githubAuth=
-auth;
-
-error.githubHttpReached=true;
+error.githubUrl=url;
 
 throw error;
 }
@@ -7072,141 +6963,22 @@ state:norm(parsed)
 };
 }
 
-async function confirmRepositoryAccessible(){
-try{
-await githubApi(
-'GET',
-'',
-null,
-{
-auth:true,
-phase:'authenticated_repo_check',
-timeoutMs:GITHUB_READ_TIMEOUT
-}
-);
-
-return true;
-
-}catch(error){
-if(
-Number(error?.status)===404
-){
-const wrapped=
-new Error(
-'仓库不存在，或当前 Token 没有访问该仓库的权限'
-);
-
-wrapped.status=404;
-wrapped.githubPhase='authenticated_repo_check';
-wrapped.githubAuth=true;
-
-throw wrapped;
-}
-
-throw error;
-}
-}
-
 async function readRemote(){
-const endpoint=
-`contents/${pathEncode(config.file)}`;
-
-let anonymousError=null;
-let anonymousReached=false;
-
-/*
-For a public repository, read without Authorization first. This turns the
-common mobile read path into a simple CORS GET with no preflight at all.
-Only private repositories / rate-limit cases fall back to an authenticated
-request.
-*/
 try{
-const publicData=
+const data=
 await githubApi(
 'GET',
-endpoint,
-null,
-{
-auth:false,
-phase:'anonymous_read',
-timeoutMs:GITHUB_READ_TIMEOUT
-}
+`contents/${pathEncode(config.file)}`
 );
 
 return parseRemoteContent(
-publicData
+data
 );
 
 }catch(error){
-anonymousError=
-error;
-
-anonymousReached=
-Boolean(
-error?.githubHttpReached
-);
-
-const statusCode=
-Number(
-error?.status||0
-);
-
-if(
-statusCode===0 ||
-statusCode===408 ||
-statusCode===429 ||
-statusCode>=500
-){
-throw error;
-}
-
-if(
-![401,403,404].includes(
-statusCode
-)
-){
-throw error;
-}
-}
-
-try{
-const privateData=
-await githubApi(
-'GET',
-endpoint,
-null,
-{
-auth:true,
-phase:'authenticated_read',
-timeoutMs:GITHUB_READ_TIMEOUT
-}
-);
-
-return parseRemoteContent(
-privateData
-);
-
-}catch(error){
-if(
-error &&
-typeof error==='object'
-){
-error.githubAnonymousReached=
-anonymousReached ||
-Boolean(
-anonymousError?.githubHttpReached
-);
-}
-
 if(
 Number(error?.status)===404
 ){
-/*
-Distinguish "file does not exist" from "private repo / token cannot see repo".
-Only create a new data file when the repository itself is known to be accessible.
-*/
-await confirmRepositoryAccessible();
-
 return {
 exists:false,
 sha:null,
@@ -7218,51 +6990,13 @@ throw error;
 }
 }
 
-async function readRemoteWithRetry(
-limit=NETWORK_RETRY_LIMIT
-){
-let lastError=
-null;
-
-for(
-let attempt=0;
-attempt<limit;
-attempt++
-){
-try{
-return await readRemote();
-
-}catch(error){
-lastError=
-error;
-
-if(
-!isTransientSyncError(
-error
-) ||
-attempt===limit-1
-){
-throw error;
-}
-
-status(
-'syncing',
-`GitHub 连接重试 ${attempt+2}/${limit}`
-);
-
-await delay(
-350*Math.pow(
-2,
-attempt
-)
-);
-}
-}
-
-throw lastError ||
-new Error(
-'读取 GitHub 数据失败'
-);
+/*
+Pages 的加载路径没有额外网络层重试。Press 也采用同样策略，避免一次
+手机端请求被重复放大成几十秒的“正在读取管理数据”。写入 SHA 冲突仍由
+SYNC_RETRY_LIMIT 在 syncOnce() 内处理，不影响多设备合并安全性。
+*/
+async function readRemoteWithRetry(){
+return readRemote();
 }
 
 function resolveSyncBase(
@@ -7324,12 +7058,7 @@ const result=
 await githubApi(
 'PUT',
 `contents/${pathEncode(config.file)}`,
-body,
-{
-auth:true,
-phase:'write',
-timeoutMs:GITHUB_WRITE_TIMEOUT
-}
+body
 );
 
 return (
@@ -7962,9 +7691,6 @@ return allOk;
 allOk=>{
 if(allOk){
 clearPassiveSyncRetry();
-
-}else{
-schedulePassiveSyncRetry();
 }
 
 return allOk;
@@ -8253,18 +7979,6 @@ status(
 
 lastSyncTime.textContent=
 `管理连接失败 · ${detail}`;
-
-/*
-Retry only failures that can plausibly recover by themselves. 401/403/404
-require a configuration/permission change and should not keep hammering GitHub.
-*/
-if(
-isTransientSyncError(
-error
-)
-){
-schedulePassiveSyncRetry();
-}
 }
 }
 
@@ -9069,9 +8783,7 @@ persistedToken
 );
 
 runtimeHint.textContent=
-location.protocol==='file:'
-? '当前运行环境：本地 file://。部分手机浏览器会禁止本地 HTML 直接访问 GitHub API，建议通过 HTTPS/GitHub Pages 打开。'
-: `当前运行环境：${location.protocol}//${location.host || '本地环境'}。GitHub 管理连接使用 api.github.com。`;
+`Press 的 GitHub 请求方式已与 Pages 对齐：Authorization: token、GitHub v3 Accept、普通 fetch。当前页面：${location.protocol}//${location.host || '本地环境'}`;
 
 configModal.classList.remove(
 'hidden'
@@ -9405,9 +9117,6 @@ false
 
 if(ok){
 clearPassiveSyncRetry();
-
-}else{
-schedulePassiveSyncRetry();
 }
 
 return ok;
@@ -9421,10 +9130,6 @@ if(
 return;
 }
 
-/*
-A small delay is intentional. iOS Safari and embedded WebViews can fire
-focus/visibility/pageshow before network routing has fully recovered.
-*/
 clearPassiveSyncRetry();
 
 passiveSyncRetryTimer=
@@ -9475,10 +9180,6 @@ window.addEventListener(
 wakePassiveSync
 );
 
-/*
-pageshow is important on mobile Safari because a page restored from the
-back-forward cache may not receive a fresh load or a useful online event.
-*/
 window.addEventListener(
 'pageshow',
 wakePassiveSync
