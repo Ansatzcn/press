@@ -7180,13 +7180,15 @@
       "bookName": "美国式“高考”：标准化考试与美国社会的贤能政治",
       "bookNo": "7-301-29275",
       "institution": "[北京大学出版社](https://book.douban.com/press/2690/?order=time)★",
-      "category": [],
+      "category": [
+        "九号"
+      ],
       "tag": [
-        "11图书"
+        "11组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "110023",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
