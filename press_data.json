@@ -456,6 +456,24 @@
       "codeManualPinned": false
     },
     {
+      "id": "28f01328-4ca0-4104-b959-067612652e6d",
+      "bookName": "张太雷与共产国际",
+      "bookNo": "7-01-026158",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [
+        "七号"
+      ],
+      "tag": [
+        "11组"
+      ],
+      "tagChecked": false,
+      "code": "110024",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "f1acd3da-4b46-42e6-bb28-1d80c47fb674",
       "bookName": "延安时期中国共产党局部执政史",
       "bookNo": "7-01-026577",
