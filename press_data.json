@@ -1943,6 +1943,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "8ed90d2f-cb60-4e66-9f88-b2f002ee1d29",
+      "bookName": "妩媚的忠臣——隋唐变局中的魏徵",
+      "bookNo": "7-101-17842",
+      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230300",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "0196c2f7-59e8-427c-9c10-f11d2eb4f9f6",
       "bookName": "一个侵华日军的日记——《森冈周治日记》实录",
       "bookNo": "7-102-09788",
@@ -16156,6 +16172,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "ce0bdc4c-12a6-4a84-b2b7-5d98d5d01af2",
+      "bookName": "刀锋",
+      "bookNo": "7-5539-4655",
+      "institution": "[浙江文艺出版社](https://book.douban.com/press/2384/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230299",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "25036cec-7784-4bdb-b74c-ac943bdde751",
       "bookName": "激活孩子的四大奥数基因",
       "bookNo": "7-5739-2194",
@@ -17433,6 +17465,22 @@
       ],
       "tagChecked": false,
       "code": "230199",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "0dc9879e-a074-4b56-9be6-4764be89721f",
+      "bookName": "百年孤独",
+      "bookNo": "7-5735-1092",
+      "institution": "[南海出版公司](https://book.douban.com/press/2413/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230301",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
