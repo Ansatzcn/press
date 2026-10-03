@@ -1709,11 +1709,11 @@
       "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230294",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -1762,6 +1762,22 @@
       "tagChecked": false,
       "code": "230006",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "3968d0de-966e-4616-b9b5-b45480d84cbb",
+      "bookName": "农政与财政：明清社会经济",
+      "bookNo": "7-101-16324",
+      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230295",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -4594,6 +4610,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "903dfb76-6e12-4ebf-a1cb-8832b7c52eb1",
+      "bookName": "孩子如何学习",
+      "bookNo": "7-213-09307",
+      "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230296",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
