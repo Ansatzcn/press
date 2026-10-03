@@ -1337,11 +1337,11 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230290",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14978,6 +14978,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "61e8ab74-7856-4200-bc4c-f95587c698c5",
+      "bookName": "家国商脉：民营经济百年破局逻辑",
+      "bookNo": "7-5142-4965",
+      "institution": "[文化发展出版社](https://book.douban.com/press/2401/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230291",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
