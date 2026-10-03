@@ -4669,11 +4669,11 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230297",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -16503,6 +16503,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "3d592dd0-765e-4870-8257-bb08629573ac",
+      "bookName": "荣毅仁的前半生",
+      "bookNo": "7-5594-1298",
+      "institution": "[江苏凤凰文艺出版社](https://book.douban.com/press/2720/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220074",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
