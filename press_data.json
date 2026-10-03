@@ -1203,6 +1203,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "a9bea310-2a92-4b34-adb0-d4a2ec6e871a",
+      "bookName": "如何阅读一本书",
+      "bookNo": "7-100-10618",
+      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230305",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "866a4eee-3ebb-400c-b4a7-741404ac39d1",
       "bookName": "最优化规划论文集",
       "bookNo": "7-100-11048",
@@ -3316,6 +3332,22 @@
       ],
       "tagChecked": false,
       "code": "230265",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "318c38a1-b3d4-4c68-aa83-4a62c8f30d92",
+      "bookName": "蛤蟆先生去看心理医生",
+      "bookNo": "7-201-16169",
+      "institution": "[天津人民出版社](https://book.douban.com/press/2765/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230308",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -11395,6 +11427,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "2ee2e71a-2011-405f-80fc-6c605f937ca7",
+      "bookName": "反脆弱：从不确定性中获益",
+      "bookNo": "7-5086-4333",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230303",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "8db0f9d5-6bbb-48ea-a67b-75760859b3af",
       "bookName": "论欧洲",
       "bookNo": "7-5086-4659",
@@ -15721,6 +15769,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "0a637820-b648-4f5a-9021-1c19692f169e",
+      "bookName": "夏洛的网",
+      "bookNo": "7-5327-6737",
+      "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230307",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "7cf380e9-da8f-46ad-a9f3-595f1d1bc33e",
       "bookName": "单词的历史：英语词源漫谈",
       "bookNo": "7-5327-6929",
@@ -16860,6 +16924,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "5cd5099a-3ff9-4b7d-94dc-10dfef094790",
+      "bookName": "白马山庄谜案",
+      "bookNo": "7-5726-2140",
+      "institution": "[湖南文艺出版社](https://book.douban.com/press/2146/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230304",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "12cd8f9b-71a9-499b-8d53-3ef17fcd4630",
       "bookName": "已经很好啦",
       "bookNo": "7-5726-2904",
@@ -17434,6 +17514,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "a90f21cb-2628-4d80-ac09-d186d8a7d1c4",
+      "bookName": "霍乱时期的爱情",
+      "bookNo": "7-5442-9705",
+      "institution": "[南海出版公司](https://book.douban.com/press/2413/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230306",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
