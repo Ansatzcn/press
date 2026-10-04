@@ -18956,12 +18956,10 @@
       "bookNo": "7-5495-3348",
       "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
       "category": [],
-      "tag": [
-        "23组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "230374",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
