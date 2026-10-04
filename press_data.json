@@ -293,6 +293,24 @@
       "codeManualPinned": false
     },
     {
+      "id": "7971ced5-42f2-41ec-9916-7e393ed3f6e1",
+      "bookName": "抉择：共和国重大思想决策论争纪实",
+      "bookNo": "7-01-008880",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [
+        "一号"
+      ],
+      "tag": [
+        "11组"
+      ],
+      "tagChecked": false,
+      "code": "110030",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "777e3ef1-0f6f-4534-9a85-87b02f558624",
       "bookName": "马克思恩格斯文集资料汇编",
       "bookNo": "7-01-009749",
