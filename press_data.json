@@ -2590,7 +2590,9 @@
       "bookName": "大庆：为了石油的建设",
       "bookNo": "7-108-07737",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
-      "category": [],
+      "category": [
+        "一号"
+      ],
       "tag": [
         "11组",
         "22组"
