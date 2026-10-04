@@ -3042,6 +3042,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "ef24d664-ae44-49f0-bb53-a52e44ad4094",
+      "bookName": "神奇的数学",
+      "bookNo": "7-115-30241",
+      "institution": "[人民邮电出版社](https://book.douban.com/press/2609/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220080",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "4df50a59-1365-43a5-a8ef-1c444eeacb7a",
       "bookName": "无穷的开始：世界进步的本源",
       "bookNo": "7-115-36538",
