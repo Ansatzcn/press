@@ -1451,7 +1451,9 @@
       "bookName": "走过兴都库什山：深入阿富汗内陆",
       "bookNo": "7-100-19694",
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
-      "category": [],
+      "category": [
+        "十号"
+      ],
       "tag": [
         "11组",
         "22组"
