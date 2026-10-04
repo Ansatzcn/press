@@ -633,14 +633,15 @@ font-weight:600
 .toast.error{background:#dc2626}
 #returnTopControl{
 position:fixed;
-right:16px;
+left:0;
 top:70%;
 z-index:2147483647;
 width:25px;
 height:25px;
 border:0;
-border-radius:50%;
-background:#1E40AF
+border-radius:0;
+background:#1E40AF;
+clip-path:polygon(50% 0,100% 86.6025%,0 86.6025%)
 }
 #tagToggle,
 #institutionToggle,
@@ -1346,6 +1347,9 @@ exceptions:{
 '13/23':[
 [188001,189999]
 ],
+'14/22':[
+[148001,149999]
+],
 '21/22':[
 [260001,267999]
 ],
@@ -1367,7 +1371,7 @@ groups:{
 [170001,179999]
 ],
 '14':[
-[148001,149999]
+[140001,147999]
 ],
 '21':[
 [250001,259999]
@@ -1387,6 +1391,9 @@ exceptions:{
 ],
 '13/21':[
 [268001,269999]
+],
+'14/22':[
+[148001,149999]
 ]
 }
 }
@@ -1471,6 +1478,16 @@ const manageInstitutionOptions=$('manageInstitutionOptions');
 const manageClose=$('manageClose');
 const returnTopControl=$('returnTopControl');
 const toast=$('toast');
+
+function positionReturnTopControl(){
+const rect=
+pressList.getBoundingClientRect();
+
+returnTopControl.style.left=
+`${rect.right+30}px`;
+}
+
+positionReturnTopControl();
 
 const collator=new Intl.Collator(
 'zh-CN-u-co-pinyin',
@@ -9145,6 +9162,8 @@ passiveSync();
 window.addEventListener(
 'resize',
 ()=>{
+positionReturnTopControl();
+
 if(
 !editModal.classList.contains(
 'hidden'
