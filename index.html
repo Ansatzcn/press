@@ -2457,6 +2457,108 @@ codeBundle(
 remoteEntry
 );
 
+if(base.code){
+const localCodeChanged=
+local.code!==
+base.code;
+
+const remoteCodeChanged=
+remote.code!==
+base.code;
+
+const localManualChange=
+localCodeChanged &&
+(
+local.codeManualEdited ||
+(
+!local.code &&
+!local.codeAutoPending
+)
+);
+
+const remoteManualChange=
+remoteCodeChanged &&
+(
+remote.codeManualEdited ||
+(
+!remote.code &&
+!remote.codeAutoPending
+)
+);
+
+if(
+!localManualChange &&
+!remoteManualChange
+){
+return base;
+}
+
+if(
+localManualChange &&
+!remoteManualChange
+){
+return local;
+}
+
+if(
+remoteManualChange &&
+!localManualChange
+){
+return remote;
+}
+
+if(
+sameSyncValue(
+local,
+remote
+)
+){
+return local;
+}
+
+stats.codeConflicts++;
+
+stats.codeConflictItems.push({
+id:
+localEntry?.id ||
+remoteEntry?.id ||
+baseEntry?.id ||
+'',
+
+bookName:
+localEntry?.bookName ||
+remoteEntry?.bookName ||
+baseEntry?.bookName ||
+'未命名条目',
+
+tag:[
+...(
+localEntry?.tag ||
+remoteEntry?.tag ||
+baseEntry?.tag ||
+[]
+)
+],
+
+baseCode:
+clean(
+baseEntry?.code
+),
+
+localCode:
+clean(
+localEntry?.code
+),
+
+remoteCode:
+clean(
+remoteEntry?.code
+)
+});
+
+return local;
+}
+
 if(
 baseEntry &&
 sameSyncValue(
@@ -2580,13 +2682,6 @@ if(
 remote.code &&
 !remote.codeAutoManaged &&
 local.codeAutoManaged
-){
-return remote;
-}
-
-if(
-local.codeAutoManaged &&
-remote.codeAutoManaged
 ){
 return remote;
 }
@@ -3217,24 +3312,10 @@ remoteSnapshot
 const fixed=
 norm(snapshot);
 
-const remote=
-norm(remoteSnapshot);
-
-const remoteMap=
-new Map(
-remote.entries.map(
-entry=>[
-entry.id,
-entry
-]
-)
-);
-
 const used=
 new Set();
 
 let assigned=0;
-let reassigned=0;
 let pendingUnassigned=0;
 
 for(
@@ -3246,10 +3327,7 @@ normalizeStoredCode(
 entry.code
 );
 
-if(
-code &&
-entry.codeAutoManaged!==true
-){
+if(code){
 used.add(
 Number(code)
 );
@@ -3260,128 +3338,19 @@ const autoEntries=
 fixed.entries
 .filter(
 entry=>
-entry.codeAutoManaged===true ||
+!normalizeStoredCode(
+entry.code
+) &&
 entry.codeAutoPending===true
 )
 .sort(
 stablePendingCodeCompare
 );
 
-const settled=
-new Set();
-
 for(
 const entry
 of autoEntries
 ){
-const remoteEntry=
-remoteMap.get(
-entry.id
-);
-
-const remoteCode=
-normalizeStoredCode(
-remoteEntry?.code
-);
-
-if(
-remoteEntry?.codeAutoManaged===true &&
-remoteCode &&
-codeAllowedForEntry(
-entry,
-remoteCode
-) &&
-!used.has(
-Number(remoteCode)
-)
-){
-const before=
-clean(
-entry.code
-);
-
-entry.code=
-remoteCode;
-
-entry.codeAutoManaged=true;
-entry.codeAutoPending=false;
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-
-used.add(
-Number(remoteCode)
-);
-
-settled.add(
-entry.id
-);
-
-if(
-before &&
-before!==remoteCode
-){
-reassigned++;
-}
-}
-}
-
-for(
-const entry
-of autoEntries
-){
-if(
-settled.has(
-entry.id
-)
-){
-continue;
-}
-
-const current=
-normalizeStoredCode(
-entry.code
-);
-
-if(
-entry.codeAutoManaged===true &&
-current &&
-codeAllowedForEntry(
-entry,
-current
-) &&
-!used.has(
-Number(current)
-)
-){
-used.add(
-Number(current)
-);
-
-entry.codeAutoPending=false;
-
-settled.add(
-entry.id
-);
-}
-}
-
-for(
-const entry
-of autoEntries
-){
-if(
-settled.has(
-entry.id
-)
-){
-continue;
-}
-
-const before=
-clean(
-entry.code
-);
-
 const code=
 smallestAvailableCode(
 entry,
@@ -3412,17 +3381,7 @@ used.add(
 Number(code)
 );
 
-settled.add(
-entry.id
-);
-
-if(before){
-if(before!==code){
-reassigned++;
-}
-}else{
 assigned++;
-}
 }
 
 return {
@@ -3430,7 +3389,7 @@ state:
 norm(fixed),
 
 assigned,
-reassigned,
+reassigned:0,
 pendingUnassigned
 };
 }
@@ -3527,10 +3486,7 @@ clean(
 baseEntry.code
 );
 
-if(
-!baseCode ||
-baseEntry.codeAutoManaged===true
-){
+if(!baseCode){
 continue;
 }
 
@@ -5620,9 +5576,11 @@ editCode.title=
 editCode.readOnly
 ? '编码已手动修改并锁定；同步不会自动清空或改号'
 : (
-editAutoManagedDraft
-? '自动编码：保存后立即按当前编组与书名语言规则生成；并发时同步仅负责服务器仲裁'
-: '历史编码保持不变；空编码条目选择编组后在保存时立即生成自动编码'
+clean(
+entry.code
+)
+? '已有编码保持不变；任何自动流程都不会改号'
+: '空编码条目选择编组后在保存时立即生成自动编码'
 );
 
 renderInstitutionOptions(
@@ -5729,8 +5687,6 @@ manualChangeRequested &&
 let manualCode='';
 
 if(
-!tagChanged &&
-!editAutoManagedDraft &&
 !manualAlreadyUsed &&
 manualChangeRequested &&
 !clearCodeRequested
@@ -5815,10 +5771,34 @@ entry.tag=
 nextTag;
 
 const shouldSyncAutoCode=
+!previousCode &&
+(
 tagChanged ||
-editAutoManagedDraft;
+editAutoManagedDraft
+);
 
 if(
+manualChangeRequested &&
+clearCodeRequested
+){
+entry.code='';
+entry.codeAutoManaged=false;
+entry.codeAutoPending=false;
+entry.codeManualEdited=false;
+entry.codeManualPinned=false;
+
+}else if(
+manualChangeRequested
+){
+entry.code=
+manualCode;
+
+entry.codeAutoManaged=false;
+entry.codeAutoPending=false;
+entry.codeManualEdited=true;
+entry.codeManualPinned=true;
+
+}else if(
 shouldSyncAutoCode
 ){
 const autoCode=
@@ -5827,10 +5807,7 @@ instantAutoCodeForEntry(
 ...entry,
 bookName,
 tag:nextTag,
-code:
-tagChanged
-? ''
-: typedCode,
+code:'',
 codeAutoManaged:true,
 codeAutoPending:false,
 codeManualEdited:false,
@@ -5855,26 +5832,6 @@ nextTag.length &&
 
 entry.codeManualEdited=false;
 entry.codeManualPinned=false;
-
-}else if(
-clearCodeRequested
-){
-entry.code='';
-entry.codeAutoManaged=false;
-entry.codeAutoPending=false;
-entry.codeManualEdited=false;
-entry.codeManualPinned=false;
-
-}else if(
-manualChangeRequested
-){
-entry.code=
-manualCode;
-
-entry.codeAutoManaged=false;
-entry.codeAutoPending=false;
-entry.codeManualEdited=true;
-entry.codeManualPinned=true;
 }
 
 editModal.classList.add(
