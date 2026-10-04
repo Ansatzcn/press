@@ -19890,6 +19890,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "72be34a3-0174-43b7-bcfb-2d87c5a09296",
+      "bookName": "烽烟侨批：抗战时期的家国守望",
+      "bookNo": "7-5507-4341",
+      "institution": "[深圳出版社](https://book.douban.com/press/2918/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230312",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "97012760-942e-4301-8893-763328bb5072",
       "bookName": "莫扎特：小夜曲、嬉游曲与舞曲",
       "bookNo": "7-80611-661",
@@ -21208,22 +21224,6 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
-    },
-    {
-      "id": "72be34a3-0174-43b7-bcfb-2d87c5a09296",
-      "bookName": "烽烟侨批：抗战时期的家国守望",
-      "bookNo": "7-5507-4341",
-      "institution": "",
-      "category": [],
-      "tag": [
-        "23组"
-      ],
-      "tagChecked": false,
-      "code": "230312",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
     }
   ],
   "institutions": [
@@ -21482,6 +21482,7 @@
     "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
     "[大连出版社](https://book.douban.com/press/2814/?order=time)",
     "[凤凰出版社](https://book.douban.com/press/2212/?order=time)",
+    "[深圳出版社](https://book.douban.com/press/2918/?order=time)",
     "[花山文艺出版社](https://book.douban.com/press/2450/?order=time)",
     "[海风出版社](https://book.douban.com/press/2795/?order=time)",
     "[西泠印社出版社](https://book.douban.com/press/2577/?order=time)",
