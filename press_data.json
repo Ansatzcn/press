@@ -2543,6 +2543,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "16867dbd-64be-45be-8174-7853a4433fd9",
+      "bookName": "无法直面的人生：鲁迅传",
+      "bookNo": "7-108-06924",
+      "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230438",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "f0013b48-df26-431c-9414-c137dee96589",
       "bookName": "中国出口之谜：解码“全球价值链”",
       "bookNo": "7-108-07308",
@@ -3122,11 +3138,12 @@
       "institution": "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)",
       "category": [],
       "tag": [
-        "21读书"
+        "21组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "260012",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -3460,11 +3477,11 @@
       "institution": "[电子工业出版社](https://book.douban.com/press/2573/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230444",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -3604,11 +3621,11 @@
       "institution": "[天津人民出版社](https://book.douban.com/press/2765/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230445",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -5058,11 +5075,11 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230440",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -5260,6 +5277,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "ee91f243-f5c5-477d-95dd-ba8dc650257e",
+      "bookName": "经济思想的激辩：凯恩斯、弗里德曼与奥地利学派",
+      "bookNo": "7-213-12417",
+      "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230449",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "9c6cdd17-118d-4c68-a3cb-62184e2b7766",
       "bookName": "梁启超与中国思想的过渡（1890-1907）",
       "bookNo": "7-214-01135",
@@ -5410,11 +5443,11 @@
       "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230437",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -5479,6 +5512,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "27a94a00-00e2-4998-b1be-d9848255dbe5",
+      "bookName": "明治维新",
+      "bookNo": "7-214-19925",
+      "institution": "[江苏人民出版社](https://book.douban.com/press/2214/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230435",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7334,6 +7383,22 @@
       "tagChecked": false,
       "code": "230089",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "0f951e0b-4147-4852-b55c-e415cd75fa53",
+      "bookName": "增强中国经济韧性的路径选择与政策研究",
+      "bookNo": "7-300-32268",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230434",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -9861,6 +9926,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "4bd020ab-3e31-4d28-94d0-e4a577b07ca2",
+      "bookName": "苏联东欧社会主义实践成败经验教训考",
+      "bookNo": "7-5227-2775",
+      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230447",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "59691c6e-75e9-48fc-ad7a-4227685edf8e",
       "bookName": "兵动粮随：雍正朝平准战争西路军需补给研究",
       "bookNo": "7-5227-3800",
@@ -9963,11 +10044,11 @@
       "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230441",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -11018,6 +11099,22 @@
       ],
       "tagChecked": false,
       "code": "228005",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "cffa4432-7011-4576-ae3b-8cd4b706252d",
+      "bookName": "福利市场",
+      "bookNo": "7-5236-1088",
+      "institution": "[中国科学技术出版社](https://book.douban.com/press/2258/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220089",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -13850,11 +13947,11 @@
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
       "tag": [
-        "21读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230431",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -16659,11 +16756,11 @@
       "institution": "[上海译文出版社](https://book.douban.com/press/2582/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230446",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -17765,11 +17862,11 @@
       "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230436",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -17925,11 +18022,11 @@
       "institution": "[上海科技教育出版社](https://book.douban.com/press/2324/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230439",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18248,11 +18345,11 @@
       "institution": "[南海出版公司](https://book.douban.com/press/2413/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230442",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18316,6 +18413,22 @@
       ],
       "tagChecked": false,
       "code": "230154",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "79d645de-b298-49c5-b262-ba0575dcb140",
+      "bookName": "我即我脑",
+      "bookNo": "7-5443-9251",
+      "institution": "[海南出版社](https://book.douban.com/press/2554/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230448",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -18832,6 +18945,38 @@
       "codeManualPinned": false
     },
     {
+      "id": "a017ed7c-c08a-4eb2-aafc-e82b27edd15d",
+      "bookName": "中国西部与滇缅公路",
+      "bookNo": "7-5455-3838",
+      "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230432",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "0704aa88-68f5-4723-95c5-78fce9567e03",
+      "bookName": "滇缅公路上的人们",
+      "bookNo": "7-5455-3940",
+      "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230430",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "88c09bd0-ea02-4fbf-b5bf-012521a6e57c",
       "bookName": "老滇缅公路",
       "bookNo": "7-5455-4495",
@@ -18966,11 +19111,11 @@
       "institution": "[上海书店出版社](https://book.douban.com/press/2880/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230433",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -21050,11 +21195,11 @@
       "institution": "[西北大学出版社](https://book.douban.com/press/2859/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230443",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
