@@ -6639,11 +6639,11 @@
       "institution": "[浙江教育出版社](https://book.douban.com/press/2256/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230396",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -13919,6 +13919,22 @@
       ],
       "tagChecked": false,
       "code": "220050",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "cea637d4-ac5b-48a0-b432-6e743ca77ef7",
+      "bookName": "破碎大地：21世纪中东的六种人生",
+      "bookNo": "7-5201-4034",
+      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230397",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
