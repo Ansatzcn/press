@@ -3401,74 +3401,6 @@ state.entries
 return addDraftCode;
 }
 
-function refreshEditDraftCode(
-forceReallocate=false
-){
-const currentEntry=
-state.entries.find(
-item=>
-item.id===editingId
-);
-
-if(!currentEntry){
-return '';
-}
-
-if(
-!forceReallocate &&
-clean(
-currentEntry.code
-)
-){
-return clean(
-currentEntry.code
-);
-}
-
-const draft={
-...currentEntry,
-
-bookName:
-cleanTitle(
-editBookName.value
-),
-
-tag:
-sortTags(
-editSelections.tag
-),
-
-code:'',
-codeAutoManaged:true,
-codeAutoPending:false,
-codeManualEdited:false,
-codeManualPinned:false
-};
-
-const autoCode=
-instantAutoCodeForEntry(
-draft,
-state.entries
-);
-
-editCode.value=
-autoCode;
-
-editAutoManagedDraft=true;
-editCode.readOnly=false;
-editCode.setAttribute(
-'aria-readonly',
-'false'
-);
-
-editCode.title=
-autoCode
-? `编组已由用户修改，自动重新分配编码 ${autoCode}；保存后写入`
-: '编组已由用户修改；当前编组暂时没有可分配编码';
-
-return autoCode;
-}
-
 function reconcileAutoCodesAfterPull(
 snapshot,
 remoteSnapshot
@@ -5314,9 +5246,8 @@ item.id===editingId
 
 if(currentEntry){
 editGroupChangedDraft=true;
-refreshEditDraftCode(
-true
-);
+editCode.title=
+'编组已修改；保存后将按新编组重新分配编码';
 }
 }
 }
@@ -5422,9 +5353,8 @@ item.id===editingId
 
 if(currentEntry){
 editGroupChangedDraft=true;
-refreshEditDraftCode(
-true
-);
+editCode.title=
+'编组已修改；保存后将按新编组重新分配编码';
 }
 }
 }
@@ -5746,8 +5676,8 @@ editCode.readOnly
 clean(
 entry.code
 )
-? '已有编码保持不变；只有用户手动修改编组时才会立即重新分配编码'
-: '空编码条目选择编组后立即生成自动编码'
+? '已有编码暂时保持显示；用户修改编组后将在保存时重新分配编码'
+: '空编码条目修改编组后将在保存时生成编码'
 );
 
 renderInstitutionOptions(
@@ -5939,11 +5869,7 @@ entry.tag=
 nextTag;
 
 const shouldSyncAutoCode=
-editGroupChangedDraft ||
-(
-!previousCode &&
-editAutoManagedDraft
-);
+tagChanged;
 
 if(
 manualChangeRequested &&
@@ -6062,6 +5988,7 @@ editModal.classList.add(
 editingId='';
 editInitialSnapshot='';
 editOverlayPointerDown=false;
+editGroupChangedDraft=false;
 
 render();
 schedule();
@@ -8748,56 +8675,6 @@ setupMultiCombo(
 bookNameInput.addEventListener(
 'input',
 refreshAddDraftCode
-);
-
-editBookName.addEventListener(
-'input',
-()=>{
-const currentEntry=
-state.entries.find(
-item=>
-item.id===editingId
-);
-
-if(
-currentEntry &&
-(
-!clean(
-currentEntry.code
-) ||
-editGroupChangedDraft
-)
-){
-refreshEditDraftCode(
-editGroupChangedDraft
-);
-}
-}
-);
-
-editBookName.addEventListener(
-'compositionend',
-()=>{
-const currentEntry=
-state.entries.find(
-item=>
-item.id===editingId
-);
-
-if(
-currentEntry &&
-(
-!clean(
-currentEntry.code
-) ||
-editGroupChangedDraft
-)
-){
-refreshEditDraftCode(
-editGroupChangedDraft
-);
-}
-}
 );
 
 bookNameInput.addEventListener(
