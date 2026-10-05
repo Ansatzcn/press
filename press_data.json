@@ -1838,6 +1838,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "010442e0-e06c-4757-bf0c-223db6852cc8",
+      "bookName": "全球视野中的明清鼎革",
+      "bookNo": "7-101-15859",
+      "institution": "[中华书局](https://book.douban.com/press/2838/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230457",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "e2c9ed86-3c11-4f05-b73a-9b119b1d31cd",
       "bookName": "江南市镇的早期城市化",
       "bookNo": "7-101-16007",
@@ -3995,6 +4011,22 @@
       ],
       "tagChecked": false,
       "code": "220057",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "56b89d81-70ef-4eb9-87fa-48dcf49acdf2",
+      "bookName": "城中城：社会学家的街头发现",
+      "bookNo": "7-208-13277",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230460",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -11339,11 +11371,11 @@
       "institution": "[中国友谊出版公司](https://book.douban.com/press/2416/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230456",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14299,11 +14331,11 @@
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230459",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -15525,6 +15557,54 @@
       ],
       "tagChecked": false,
       "code": "230149",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "085282c1-a9c1-46a1-8667-01f4c6281dd6",
+      "bookName": "西班牙内战：革命与反革命（上册）",
+      "bookNo": "7-5133-2320",
+      "institution": "[新星出版社](https://book.douban.com/press/2643/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230461",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "95052335-ad38-46cd-bdc6-b4788f908340",
+      "bookName": "西班牙内战：革命与反革命（中册）",
+      "bookNo": "7-5133-2320",
+      "institution": "[新星出版社](https://book.douban.com/press/2643/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230462",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "70f7faa1-ab88-47e5-b673-e34eb356e4a0",
+      "bookName": "西班牙内战：革命与反革命（下册）",
+      "bookNo": "7-5133-2328",
+      "institution": "[新星出版社](https://book.douban.com/press/2643/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230463",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -20556,11 +20636,11 @@
       "institution": "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230458",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -20918,22 +20998,6 @@
       "tagChecked": false,
       "code": "230338",
       "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "531acada-1a9d-4018-9693-6a5a549f0401",
-      "bookName": "战安庆：曾国藩的中年突围",
-      "bookNo": "7-5538-1561",
-      "institution": "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
-      "category": [],
-      "tag": [
-        "23读书"
-      ],
-      "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
