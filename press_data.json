@@ -12397,6 +12397,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "dbc66292-4fc2-4e1b-abc3-d8b3157ea929",
+      "bookName": "第二次机器革命",
+      "bookNo": "7-5086-6975",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230503",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "95fba5a1-7970-47b8-9000-b1728d004d34",
       "bookName": "世界的逻辑",
       "bookNo": "7-5086-6978",
