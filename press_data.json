@@ -348,10 +348,13 @@
       "bookNo": "7-01-015510",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "288004",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -2916,6 +2919,22 @@
       ],
       "tagChecked": false,
       "code": "230240",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "4f8fff8e-7c3a-4491-bbc0-1c705ab044fb",
+      "bookName": "天才与算法：人脑与AI的数学思维",
+      "bookNo": "7-111-64714",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230395",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
