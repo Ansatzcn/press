@@ -105,10 +105,13 @@
       "bookNo": "7-01-006386",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "288001",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
