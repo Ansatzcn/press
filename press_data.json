@@ -2956,6 +2956,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "921f158b-1ec2-4868-bd45-f9758551cd27",
+      "bookName": "攀登者：松下幸之助的经营哲学",
+      "bookNo": "7-111-69613",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230408",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "55773777-96dc-4aaa-8798-1a3622e4b104",
       "bookName": "农业的干法：农业企业生存发展之道",
       "bookNo": "7-111-72550",
@@ -13546,11 +13562,11 @@
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230407",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
