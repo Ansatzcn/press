@@ -12084,6 +12084,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "e97a380a-0463-4449-8175-29475912b8be",
+      "bookName": "我在国际组织的25年",
+      "bookNo": "7-5217-1997",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230386",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "f16caa89-c20d-4939-96ab-085b930afbd7",
       "bookName": "逆转：弱者如何反败为胜",
       "bookNo": "7-5217-2044",
