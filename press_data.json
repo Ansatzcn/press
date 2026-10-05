@@ -7902,13 +7902,10 @@
       "bookNo": "7-303-10481",
       "institution": "[北京师范大学出版社](https://book.douban.com/press/2611/?order=time)",
       "category": [],
-      "tag": [
-        "13组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "138018",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
