@@ -4506,6 +4506,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "a3d30df6-b463-4a24-992a-ddcec47c67f8",
+      "bookName": "社会科学的逻辑",
+      "bookNo": "7-208-18345",
+      "institution": "[上海人民出版社](https://book.douban.com/press/2733/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230470",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "fc09d73a-1a31-485e-920a-9b79317c6f7d",
       "bookName": "贩卖过去的人",
       "bookNo": "7-208-18407",
@@ -10061,11 +10077,11 @@
       "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120079",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
