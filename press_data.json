@@ -19741,11 +19741,11 @@
       "institution": "[学林出版社](https://book.douban.com/press/2521/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220001",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
