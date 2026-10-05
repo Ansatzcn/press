@@ -6621,10 +6621,13 @@
       "bookNo": "7-5366-0899",
       "institution": "[重庆出版社](https://book.douban.com/press/2162/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "288008",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
