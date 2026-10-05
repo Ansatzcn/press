@@ -4784,11 +4784,11 @@
       "institution": "[江西人民出版社](https://book.douban.com/press/2145/?order=time)",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "120077",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -4805,6 +4805,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "7a19e2b8-8cee-4d69-a424-5a41369e76d9",
+      "bookName": "宋代物价研究",
+      "bookNo": "7-210-10704",
+      "institution": "[江西人民出版社](https://book.douban.com/press/2145/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230423",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -4832,11 +4848,11 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "13图书"
+        "13组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "130085",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -4898,11 +4914,11 @@
       "institution": "[浙江人民出版社](https://book.douban.com/press/2507/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230424",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -10097,11 +10113,11 @@
       "institution": "[中国青年出版社](https://book.douban.com/press/2833/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230420",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -10118,6 +10134,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "1fada252-f0f9-4375-985a-07699322e3d7",
+      "bookName": "真实性学习：如何设计体验式、情境式、主动式的学习课堂",
+      "bookNo": "7-5153-6976",
+      "institution": "[中国青年出版社](https://book.douban.com/press/2833/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230419",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -10257,11 +10289,11 @@
       "institution": "[新华出版社](https://book.douban.com/press/2355/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230421",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -12399,11 +12431,11 @@
       "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230425",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19647,6 +19679,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "6007ed98-064e-4f68-8425-32c1bdea9db3",
+      "bookName": "晚清官员收藏活动研究",
+      "bookNo": "7-5598-1824",
+      "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230422",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "8eab4086-8130-442b-a0fb-e1f0db82cef6",
       "bookName": "旅行之道",
       "bookNo": "7-5598-1875",
@@ -20794,11 +20842,11 @@
       "institution": "[岳麓书社](https://book.douban.com/press/2358/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230426",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
