@@ -17862,11 +17862,11 @@
       "institution": "[上海三联书店](https://book.douban.com/press/2723/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230432",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18934,10 +18934,12 @@
       "bookNo": "7-5455-3838",
       "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230451",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18948,10 +18950,12 @@
       "bookNo": "7-5455-3940",
       "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230452",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18962,10 +18966,12 @@
       "bookNo": "7-5455-4495",
       "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230453",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18976,10 +18982,12 @@
       "bookNo": "7-5455-4633",
       "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230454",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19182,10 +19190,13 @@
       "bookNo": "7-5473-0704",
       "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "288015",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19197,11 +19208,11 @@
       "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220090",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19229,11 +19240,11 @@
       "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230455",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -19276,10 +19287,13 @@
       "bookNo": "7-5473-2705",
       "institution": "[东方出版中心](https://book.douban.com/press/2321/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "13组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "288014",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
