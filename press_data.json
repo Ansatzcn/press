@@ -13779,11 +13779,11 @@
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220100",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14216,22 +14216,6 @@
       "tagChecked": false,
       "code": "220087",
       "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "355b7b74-132d-4a12-9e46-393d1c18942a",
-      "bookName": "中国外交与第一次世界大战",
-      "bookNo": "7-5201-0901",
-      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
-      "category": [],
-      "tag": [
-        "23读书"
-      ],
-      "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
