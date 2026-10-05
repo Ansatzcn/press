@@ -18582,11 +18582,11 @@
       "institution": "[译林出版社](https://book.douban.com/press/2331/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230417",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -18698,6 +18698,22 @@
       ],
       "tagChecked": false,
       "code": "220052",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "29145ffb-029a-4d01-b36c-0e2fb1341a7f",
+      "bookName": "牛马游戏：硅谷大厂如何驯服工程师",
+      "bookNo": "7-5452-2047",
+      "institution": "[光启书局](https://book.douban.com/press/2909/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230416",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
