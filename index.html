@@ -633,15 +633,26 @@ font-weight:600
 .toast.error{background:#dc2626}
 #returnTopControl{
 position:fixed;
-left:0;
+left:auto;
+right:8px;
 top:70%;
 z-index:2147483647;
-width:25px;
+width:28px;
 height:25px;
+padding:0;
 border:0;
-border-radius:0;
-background:#1E40AF;
-clip-path:polygon(50% 0,100% 86.6025%,0 86.6025%)
+background:transparent
+}
+#returnTopControl::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:0;
+height:0;
+border-left:14px solid transparent;
+border-right:14px solid transparent;
+border-bottom:24.25px solid #1E40AF
 }
 #tagToggle,
 #institutionToggle,
@@ -1299,12 +1310,23 @@ const CODE_GROUP_OPTIONS=Object.freeze([
 ...GROUP_CODES
 ]);
 
+const CODE_COMMON_EXCEPTIONS=Object.freeze({
+'13/22':[
+[288001,289999]
+],
+'14/22':[
+[148001,149999]
+],
+'21/22':[
+[260001,267999]
+]
+});
+
 const CODE_RULES=Object.freeze({
 zh:{
 groups:{
 '11':[
-[110001,117999],
-[160001,167999]
+[110001,119999]
 ],
 '12':[
 [120001,127999]
@@ -1330,7 +1352,7 @@ groups:{
 },
 exceptions:{
 '11/13':[
-[118001,119999]
+[138001,139999]
 ],
 '11/22':[
 [228001,229999]
@@ -1340,9 +1362,6 @@ exceptions:{
 ],
 '13/21':[
 [218001,219999]
-],
-'13/22':[
-[138001,139999]
 ],
 '13/23':[
 [188001,189999]
@@ -1394,6 +1413,9 @@ exceptions:{
 ],
 '14/22':[
 [148001,149999]
+],
+'21/22':[
+[260001,267999]
 ]
 }
 }
@@ -1483,8 +1505,41 @@ function positionReturnTopControl(){
 const rect=
 pressList.getBoundingClientRect();
 
+const buttonWidth=28;
+const tableGap=30;
+const viewportGap=8;
+
+const viewportWidth=
+Math.max(
+0,
+Math.floor(
+window.visualViewport?.width ||
+document.documentElement.clientWidth ||
+window.innerWidth ||
+0
+)
+);
+
+const desiredLeft=
+rect.right+
+tableGap;
+
+if(
+desiredLeft+
+buttonWidth<=
+viewportWidth-
+viewportGap
+){
 returnTopControl.style.left=
-`${rect.right+30}px`;
+`${desiredLeft}px`;
+returnTopControl.style.right='auto';
+
+}else{
+returnTopControl.style.left='auto';
+returnTopControl.style.right=
+`${viewportGap}px`;
+}
+
 }
 
 positionReturnTopControl();
@@ -1521,6 +1576,7 @@ let editInitialSnapshot='';
 let addDraftId=uid();
 let addDraftCode='';
 let editAutoManagedDraft=false;
+let editGroupChangedDraft=false;
 
 let config={
 owner:'',
@@ -1931,15 +1987,27 @@ if(!groups?.length){
 return [];
 }
 
+const combination=
+groups.join('/');
+
+if(
+CODE_COMMON_EXCEPTIONS[
+combination
+]
+){
+return mergeCodeRanges(
+CODE_COMMON_EXCEPTIONS[
+combination
+]
+);
+}
+
 const rules=
 titleIsChinese(
 entry.bookName
 )
 ? CODE_RULES.zh
 : CODE_RULES.en;
-
-const combination=
-groups.join('/');
 
 if(
 rules.exceptions[
@@ -2466,10 +2534,37 @@ const remoteCodeChanged=
 remote.code!==
 base.code;
 
+const localGroupChanged=
+Boolean(
+localEntry &&
+!sameSyncValue(
+sortTags(
+localEntry.tag
+),
+sortTags(
+baseEntry?.tag
+)
+)
+);
+
+const remoteGroupChanged=
+Boolean(
+remoteEntry &&
+!sameSyncValue(
+sortTags(
+remoteEntry.tag
+),
+sortTags(
+baseEntry?.tag
+)
+)
+);
+
 const localManualChange=
 localCodeChanged &&
 (
 local.codeManualEdited ||
+localGroupChanged ||
 (
 !local.code &&
 !local.codeAutoPending
@@ -2480,6 +2575,7 @@ const remoteManualChange=
 remoteCodeChanged &&
 (
 remote.codeManualEdited ||
+remoteGroupChanged ||
 (
 !remote.code &&
 !remote.codeAutoPending
@@ -3303,6 +3399,74 @@ state.entries
 );
 
 return addDraftCode;
+}
+
+function refreshEditDraftCode(
+forceReallocate=false
+){
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(!currentEntry){
+return '';
+}
+
+if(
+!forceReallocate &&
+clean(
+currentEntry.code
+)
+){
+return clean(
+currentEntry.code
+);
+}
+
+const draft={
+...currentEntry,
+
+bookName:
+cleanTitle(
+editBookName.value
+),
+
+tag:
+sortTags(
+editSelections.tag
+),
+
+code:'',
+codeAutoManaged:true,
+codeAutoPending:false,
+codeManualEdited:false,
+codeManualPinned:false
+};
+
+const autoCode=
+instantAutoCodeForEntry(
+draft,
+state.entries
+);
+
+editCode.value=
+autoCode;
+
+editAutoManagedDraft=true;
+editCode.readOnly=false;
+editCode.setAttribute(
+'aria-readonly',
+'false'
+);
+
+editCode.title=
+autoCode
+? `编组已由用户修改，自动重新分配编码 ${autoCode}；保存后写入`
+: '编组已由用户修改；当前编组暂时没有可分配编码';
+
+return autoCode;
 }
 
 function reconcileAutoCodesAfterPull(
@@ -5142,15 +5306,18 @@ if(which==='add'){
 refreshAddDraftCode();
 
 }else{
-editCode.value='';
-editAutoManagedDraft=true;
-editCode.readOnly=false;
-editCode.setAttribute(
-'aria-readonly',
-'false'
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
 );
-editCode.title=
-'编组已删除；编码将在保存后立即按当前编组重新分配';
+
+if(currentEntry){
+editGroupChangedDraft=true;
+refreshEditDraftCode(
+true
+);
+}
 }
 }
 
@@ -5253,13 +5420,11 @@ item=>
 item.id===editingId
 );
 
-if(
-currentEntry &&
-!clean(
-currentEntry.code
-)
-){
-editAutoManagedDraft=true;
+if(currentEntry){
+editGroupChangedDraft=true;
+refreshEditDraftCode(
+true
+);
 }
 }
 }
@@ -5526,6 +5691,8 @@ return;
 editingId=
 id;
 
+editGroupChangedDraft=false;
+
 editBookName.value=
 entry.bookName;
 
@@ -5579,8 +5746,8 @@ editCode.readOnly
 clean(
 entry.code
 )
-? '已有编码保持不变；任何自动流程都不会改号'
-: '空编码条目选择编组后在保存时立即生成自动编码'
+? '已有编码保持不变；只有用户手动修改编组时才会立即重新分配编码'
+: '空编码条目选择编组后立即生成自动编码'
 );
 
 renderInstitutionOptions(
@@ -5678,6 +5845,7 @@ editCode.value
 );
 
 const manualChangeRequested=
+!editAutoManagedDraft &&
 typedCode!==previousCode;
 
 const clearCodeRequested=
@@ -5771,9 +5939,9 @@ entry.tag=
 nextTag;
 
 const shouldSyncAutoCode=
-!previousCode &&
+editGroupChangedDraft ||
 (
-tagChanged ||
+!previousCode &&
 editAutoManagedDraft
 );
 
@@ -5842,6 +6010,7 @@ editingId='';
 editInitialSnapshot='';
 editOverlayPointerDown=false;
 editAutoManagedDraft=false;
+editGroupChangedDraft=false;
 
 editSelections={
 category:[],
@@ -8581,6 +8750,61 @@ bookNameInput.addEventListener(
 refreshAddDraftCode
 );
 
+editBookName.addEventListener(
+'input',
+()=>{
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(
+currentEntry &&
+(
+!clean(
+currentEntry.code
+) ||
+editGroupChangedDraft
+)
+){
+refreshEditDraftCode(
+editGroupChangedDraft
+);
+}
+}
+);
+
+editBookName.addEventListener(
+'compositionend',
+()=>{
+const currentEntry=
+state.entries.find(
+item=>
+item.id===editingId
+);
+
+if(
+currentEntry &&
+(
+!clean(
+currentEntry.code
+) ||
+editGroupChangedDraft
+)
+){
+refreshEditDraftCode(
+editGroupChangedDraft
+);
+}
+}
+);
+
+bookNameInput.addEventListener(
+'compositionend',
+refreshAddDraftCode
+);
+
 editCode.addEventListener(
 'input',
 ()=>{
@@ -8641,6 +8865,7 @@ editingId='';
 editInitialSnapshot='';
 editOverlayPointerDown=false;
 editAutoManagedDraft=false;
+editGroupChangedDraft=false;
 
 editSelections={
 category:[],
@@ -8705,6 +8930,7 @@ return;
 editingId='';
 editInitialSnapshot='';
 editAutoManagedDraft=false;
+editGroupChangedDraft=false;
 
 editSelections={
 category:[],
@@ -8917,6 +9143,7 @@ editingId='';
 editInitialSnapshot='';
 editOverlayPointerDown=false;
 editAutoManagedDraft=false;
+editGroupChangedDraft=false;
 
 editSelections={
 category:[],
@@ -9135,6 +9362,8 @@ if(window.visualViewport){
 window.visualViewport.addEventListener(
 'resize',
 ()=>{
+positionReturnTopControl();
+
 if(
 !editModal.classList.contains(
 'hidden'
