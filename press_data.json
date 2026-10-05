@@ -20015,6 +20015,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "306222c8-51e4-4f46-bc04-266bd636627a",
+      "bookName": "我的二本同学",
+      "bookNo": "7-5496-4513",
+      "institution": "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230411",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "fd2bff12-a205-4db2-b889-43a7d99dca23",
       "bookName": "灵魂的风景：赫尔佐格回忆录",
       "bookNo": "7-5496-4566",
