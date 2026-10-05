@@ -2171,13 +2171,10 @@
       "bookNo": "7-108-03750",
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
       "category": [],
-      "tag": [
-        "13组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "138019",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
