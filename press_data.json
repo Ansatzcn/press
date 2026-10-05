@@ -904,13 +904,10 @@
       "bookNo": "7-100-02095",
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
-      "tag": [
-        "11组",
-        "13组"
-      ],
+      "tag": [],
       "tagChecked": true,
-      "code": "118001",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -14100,13 +14097,10 @@
       "bookNo": "7-5228-0375",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
-      "tag": [
-        "11组",
-        "13组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "118002",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
