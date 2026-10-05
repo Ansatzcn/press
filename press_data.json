@@ -3100,6 +3100,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "bc24e8f8-f1f4-4647-bfd2-46aec630203a",
+      "bookName": "第三代半导体材料",
+      "bookNo": "7-113-23973",
+      "institution": "[中国铁道出版社](https://book.douban.com/press/2268/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230406",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "ef24d664-ae44-49f0-bb53-a52e44ad4094",
       "bookName": "神奇的数学",
       "bookNo": "7-115-30241",
