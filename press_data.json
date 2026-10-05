@@ -1051,11 +1051,12 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
+        "21组",
         "22组"
       ],
       "tagChecked": false,
-      "code": "220001",
-      "codeAutoManaged": false,
+      "code": "260013",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -1163,11 +1164,11 @@
       "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
       "category": [],
       "tag": [
-        "22读书"
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "220092",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -1264,6 +1265,22 @@
       "tagChecked": false,
       "code": "220026",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "9aeb274f-a850-4af2-8535-c58759ccfb09",
+      "bookName": "大分化",
+      "bookNo": "7-100-11399",
+      "institution": "[商务印书馆](https://book.douban.com/press/2851/?order=time)★",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220093",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -9990,6 +10007,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "a3b80f72-8bae-4f25-89bf-4dd3dc0dc017",
+      "bookName": "科学、技术与社会视角下的逻辑研究",
+      "bookNo": "7-5227-2987",
+      "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230469",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "59691c6e-75e9-48fc-ad7a-4227685edf8e",
       "bookName": "兵动粮随：雍正朝平准战争西路军需补给研究",
       "bookNo": "7-5227-3800",
@@ -12014,11 +12047,12 @@
         "十号"
       ],
       "tag": [
-        "11图书"
+        "11组",
+        "22组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "228010",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -16226,10 +16260,10 @@
       "institution": "[研究出版社](https://book.douban.com/press/2125/?order=time)",
       "category": [],
       "tag": [
-        "14组"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "140001",
+      "code": "230468",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
