@@ -14719,10 +14719,13 @@
       "bookNo": "7-5228-0375",
       "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "11组",
+        "13组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "138002",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
