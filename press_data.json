@@ -12700,6 +12700,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "523c5812-929c-4ff3-b4f1-c1d70574df0e",
+      "bookName": "当世界停止消费",
+      "bookNo": "7-5217-5441",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230483",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "08097376-dd97-4db5-a3ec-39fa6081ec32",
       "bookName": "生成式AI：人工智能的未来",
       "bookNo": "7-5217-5578",
