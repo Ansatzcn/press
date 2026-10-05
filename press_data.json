@@ -2988,6 +2988,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "968ad1f1-1678-4ccb-a1f5-5d7612492eba",
+      "bookName": "智慧的疆界：从图灵机到人工智能",
+      "bookNo": "7-111-77800",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230404",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "124789e7-3224-42b2-80ac-aa1967f844ec",
       "bookName": "第四代研发：知识、技术和创新的管理",
       "bookNo": "7-111-80339",
@@ -20313,6 +20329,22 @@
       ],
       "tagChecked": false,
       "code": "120071",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "e9a86024-6881-4d52-a198-0110548654f4",
+      "bookName": "葡萄牙海洋帝国史（1415-1825）",
+      "bookNo": "7-5520-1652",
+      "institution": "[上海社会科学院出版社](https://book.douban.com/press/2180/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230405",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
