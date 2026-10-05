@@ -18838,11 +18838,27 @@
       "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230428",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "0e9831d8-9c9e-4749-925a-d3e225396f88",
+      "bookName": "滇缅公路",
+      "bookNo": "7-5455-4633",
+      "institution": "[天地出版社](https://book.douban.com/press/2712/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230429",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
