@@ -6608,6 +6608,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "090b531a-980d-4d00-ad95-3e18577b977f",
+      "bookName": "陇山塬",
+      "bookNo": "7-227-08130",
+      "institution": "[宁夏人民出版社](https://book.douban.com/press/2610/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230412",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "2cda1ed0-b2b5-4e5d-89fb-f7fe8e0cf009",
       "bookName": "重庆老城",
       "bookNo": "7-229-02926",
