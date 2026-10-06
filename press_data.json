@@ -12015,12 +12015,10 @@
       "bookNo": "7-5207-2819",
       "institution": "[东方出版社](https://book.douban.com/press/2731/?order=time)",
       "category": [],
-      "tag": [
-        "23组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "230523",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
