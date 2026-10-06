@@ -12013,10 +12013,12 @@
       "bookNo": "7-5207-2819",
       "institution": "[东方出版社](https://book.douban.com/press/2731/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230529",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -16711,10 +16713,12 @@
       "bookNo": "7-5714-3826",
       "institution": "[北京科学技术出版社](https://book.douban.com/press/2185/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230530",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
