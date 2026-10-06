@@ -12268,6 +12268,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "65c44ef3-fe01-46dd-a111-833483f0e1e5",
+      "bookName": "我的梦中之城",
+      "bookNo": "7-5078-6098",
+      "institution": "[中国国际广播出版社](https://book.douban.com/press/2545/?order=time)",
+      "category": [],
+      "tag": [
+        "12组"
+      ],
+      "tagChecked": false,
+      "code": "120101",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "0ba5680c-b176-4549-8d93-8ba2666f309f",
       "bookName": "国家征购农民粮食主要方式研究",
       "bookNo": "7-5080-7967",
