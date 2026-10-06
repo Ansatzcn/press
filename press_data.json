@@ -16715,12 +16715,10 @@
       "bookNo": "7-5714-3826",
       "institution": "[北京科学技术出版社](https://book.douban.com/press/2185/?order=time)",
       "category": [],
-      "tag": [
-        "23组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "230524",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
