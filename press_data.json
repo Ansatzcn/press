@@ -22844,6 +22844,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "7f417def-9936-4134-8827-dbf3d35a618b",
+      "bookName": "Fat and Mean",
+      "bookNo": "0-684-82288",
+      "institution": "The Free Press",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "170003",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "e167ca74-3af1-4bc7-879a-6cb87a272ad1",
       "bookName": "Technology and Capital in the Age of Lean Production: A Marxian Critique of the \"New Economy\"",
       "bookNo": "0-7914-4600",
@@ -22886,22 +22902,6 @@
       ],
       "tagChecked": true,
       "code": "170001",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "7f417def-9936-4134-8827-dbf3d35a618b",
-      "bookName": "Fat and Mean",
-      "bookNo": "0-684-82288",
-      "institution": "The Free Press",
-      "category": [],
-      "tag": [
-        "13组"
-      ],
-      "tagChecked": false,
-      "code": "170003",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -23221,10 +23221,10 @@
     "八旗文化",
     "香港中文大学出版社",
     "现代文艺出版社",
+    "The Free Press",
     "State University of New York Press",
     "Cambridge University Press",
-    "Routledge",
-    "The Free Press"
+    "Routledge"
   ],
   "categories": [
     "一号",
