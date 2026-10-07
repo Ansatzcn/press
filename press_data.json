@@ -22876,22 +22876,6 @@
       "codeManualPinned": false
     },
     {
-      "id": "49f3e745-f053-469a-b4ac-e89487361b40",
-      "bookName": "Structuralist and Behavioral Macroeconomics",
-      "bookNo": "1-009-36732",
-      "institution": "Cambridge University Press",
-      "category": [],
-      "tag": [
-        "13组"
-      ],
-      "tagChecked": true,
-      "code": "170002",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
       "id": "b00fe99d-b621-4507-aeca-fac7c406e21d",
       "bookName": "Value Technical Change and Crisis",
       "bookNo": "0-87332-735",
@@ -22902,6 +22886,22 @@
       ],
       "tagChecked": true,
       "code": "170001",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "49f3e745-f053-469a-b4ac-e89487361b40",
+      "bookName": "Structuralist and Behavioral Macroeconomics",
+      "bookNo": "1-009-36732",
+      "institution": "Cambridge University Press",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": true,
+      "code": "170002",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
@@ -23223,8 +23223,8 @@
     "现代文艺出版社",
     "The Free Press",
     "State University of New York Press",
-    "Cambridge University Press",
-    "Routledge"
+    "Routledge",
+    "Cambridge University Press"
   ],
   "categories": [
     "一号",
