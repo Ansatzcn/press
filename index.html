@@ -1164,9 +1164,12 @@ const WORKCOPY_KEY='workcopy';
 const PUBLIC_CACHE_KEY='public_cache';
 const SYNC_BASE_KEY='sync_base_v3_5s';
 
-const SYNC_ENGINE_VERSION=4;
+const SYNC_ENGINE_VERSION=5;
 const MAX_BYTES=750*1024;
 const SYNC_RETRY_LIMIT=3;
+const AUTO_SYNC_DELAY=700;
+const PASSIVE_SYNC_DELAY=700;
+const PASSIVE_SYNC_MIN_INTERVAL=3000;
 const PUBLIC_FETCH_TIMEOUT=15000;
 const GITHUB_FETCH_TIMEOUT=20000;
 const STORAGE_OPEN_TIMEOUT=6000;
@@ -1492,6 +1495,7 @@ let syncRequested=false;
 let syncShowResult=false;
 let syncRunning=false;
 let localMutationVersion=0;
+let autoSyncTimer=null;
 let workCopyWriteChain=Promise.resolve();
 let metaWriteChain=Promise.resolve();
 let syncBaseWriteChain=Promise.resolve();
@@ -6121,10 +6125,17 @@ syncInFlight
 syncRequested=true;
 
 }else if(syncNow){
-queueMicrotask(
-()=>{
-sync(false);
+if(autoSyncTimer!==null){
+clearTimeout(autoSyncTimer);
 }
+
+autoSyncTimer=
+setTimeout(
+()=>{
+autoSyncTimer=null;
+sync(false);
+},
+AUTO_SYNC_DELAY
 );
 }
 }
@@ -6575,7 +6586,7 @@ throw error;
 }
 
 async function readRemoteWithRetry(
-maxAttempts=3
+maxAttempts=1
 ){
 let lastError=null;
 
@@ -6702,6 +6713,171 @@ remote:null
 }
 }
 
+function needsCodeMaintenance(snapshot){
+const fixed=
+norm(snapshot);
+
+if(
+fixed.entries.some(
+entry=>
+!normalizeStoredCode(entry.code) &&
+entry.codeAutoPending===true
+)
+){
+return true;
+}
+
+return duplicateCodeCount(fixed)>0;
+}
+
+async function finalizeFastSync({
+localBefore,
+syncedState,
+finalSha,
+mutationVersionBeforeWrite,
+showResult,
+cloudUpdateDetected,
+successMessage
+}){
+const synced=
+norm(syncedState);
+
+const syncedSig=
+stateSignature(synced);
+
+let finalLocalState=
+synced;
+
+let dirtyAfterSync=false;
+
+if(
+localMutationVersion!==
+mutationVersionBeforeWrite
+){
+const currentLocal=
+norm(state);
+
+const afterWriteMerge=
+mergeStates(
+localBefore,
+currentLocal,
+synced
+);
+
+const afterWriteAudit=
+auditCodeSafety(
+localBefore,
+currentLocal,
+synced,
+afterWriteMerge.state
+);
+
+if(!afterWriteAudit.ok){
+const error=
+new Error(
+`编码安全检查失败：${formatCodeSafetyItems(afterWriteAudit.items)}`
+);
+
+error.code=
+'code_safety';
+
+throw error;
+}
+
+finalLocalState=
+afterWriteMerge.state;
+
+dirtyAfterSync=
+stateSignature(
+finalLocalState
+)!==
+syncedSig;
+
+if(dirtyAfterSync){
+syncRequested=true;
+}
+}
+
+state=
+norm(finalLocalState);
+
+meta.dirty=
+dirtyAfterSync;
+
+meta.sha=
+finalSha;
+
+saveLocal(state);
+
+const baseWrite=
+persistSyncBase(
+synced,
+finalSha
+);
+
+const metaWrite=
+persistMeta();
+
+await Promise.allSettled([
+workCopyWriteChain,
+baseWrite,
+metaWrite
+]);
+
+render();
+
+status(
+'online',
+'公开阅读 · 管理已连接'
+);
+
+lastSyncTime.textContent=
+`已同步 ${new Date().toLocaleString()}`;
+
+const finalCodeIssues=
+inspectCodeIssues(state);
+
+if(
+finalCodeIssues.duplicates ||
+finalCodeIssues.invalid
+){
+status(
+'online',
+'公开阅读 · 管理已连接 · 编码需检查'
+);
+}
+
+if(showResult){
+if(finalCodeIssues.duplicates){
+show(
+`同步完成；检测到重复编码：${formatDuplicateCodeItems(finalCodeIssues.duplicateItems)}`,
+'error'
+);
+
+}else if(finalCodeIssues.invalid){
+show(
+`同步完成；检测到编码与当前规则不一致：${finalCodeIssues.invalidItems.map(formatCodeIssueItem).join('；')}`,
+'error'
+);
+
+}else{
+show(
+successMessage,
+'success'
+);
+}
+}
+
+if(cloudUpdateDetected){
+show(
+'检测到其他终端的云端更新，当前页面已自动刷新',
+'success'
+);
+}
+
+return true;
+}
+
 async function syncOnce(
 showResult=true
 ){
@@ -6760,6 +6936,127 @@ localBefore
 
 const mutationVersionBeforeWrite=
 localMutationVersion;
+
+const baseSig=
+stateSignature(base);
+
+const localSig=
+stateSignature(localBefore);
+
+const remoteSig=
+stateSignature(remote.state);
+
+const localChanged=
+localSig!==baseSig;
+
+const remoteChanged=
+remoteSig!==baseSig;
+
+const hasReliableBase=
+Boolean(syncBaseCache);
+
+const localNeedsCodeMaintenance=
+needsCodeMaintenance(localBefore);
+
+const remoteNeedsCodeMaintenance=
+needsCodeMaintenance(remote.state);
+
+/*
+快速路径：绝大多数普通同步不再执行完整三方合并、编码审计和自动编码仲裁。
+只有双边都改动，或数据本身需要编码维护时，才进入下方完整安全路径。
+*/
+if(
+localSig===remoteSig &&
+!localNeedsCodeMaintenance
+){
+return await finalizeFastSync({
+localBefore,
+syncedState:remote.state,
+finalSha:remote.sha,
+mutationVersionBeforeWrite,
+showResult,
+cloudUpdateDetected,
+successMessage:'本机与 GitHub 已是最新'
+});
+}
+
+if(
+hasReliableBase &&
+localChanged &&
+!remoteChanged &&
+!localNeedsCodeMaintenance
+){
+try{
+const finalSha=
+await writeRemote(
+localBefore,
+remote.sha
+);
+
+return await finalizeFastSync({
+localBefore,
+syncedState:localBefore,
+finalSha,
+mutationVersionBeforeWrite,
+showResult,
+cloudUpdateDetected,
+successMessage:'已同步到 GitHub'
+});
+
+}catch(error){
+lastError=error;
+
+if(
+isWriteConflictError(error)
+){
+await delay(
+180+attempt*120
+);
+
+continue;
+}
+
+if(
+isTransientSyncError(error)
+){
+const verification=
+await verifyRemoteEquals(
+localBefore
+);
+
+if(verification.matched){
+return await finalizeFastSync({
+localBefore,
+syncedState:localBefore,
+finalSha:verification.remote.sha,
+mutationVersionBeforeWrite,
+showResult,
+cloudUpdateDetected,
+successMessage:'已同步到 GitHub'
+});
+}
+}
+
+throw error;
+}
+}
+
+if(
+hasReliableBase &&
+!localChanged &&
+remoteChanged &&
+!remoteNeedsCodeMaintenance
+){
+return await finalizeFastSync({
+localBefore,
+syncedState:remote.state,
+finalSha:remote.sha,
+mutationVersionBeforeWrite,
+showResult,
+cloudUpdateDetected,
+successMessage:'已获取另一设备的最新修改'
+});
+}
 
 const mergedResult=
 mergeStates(
@@ -6838,23 +7135,8 @@ error.code=
 throw error;
 }
 
-const baseSig=
-stateSignature(base);
-
-const localSig=
-stateSignature(localBefore);
-
-const remoteSig=
-stateSignature(remote.state);
-
 const mergedSig=
 stateSignature(mergedState);
-
-const localChanged=
-localSig!==baseSig;
-
-const remoteChanged=
-remoteSig!==baseSig;
 
 const pulledChanges=
 localSig!==mergedSig;
@@ -7212,6 +7494,11 @@ queueIfBusy=true
 ){
 if(!admin()){
 return Promise.resolve(false);
+}
+
+if(autoSyncTimer!==null){
+clearTimeout(autoSyncTimer);
+autoSyncTimer=null;
 }
 
 if(syncInFlight){
@@ -8504,7 +8791,7 @@ Date.now();
 
 if(
 now-lastPassiveSyncAt<
-1000
+PASSIVE_SYNC_MIN_INTERVAL
 ){
 if(meta.dirty){
 schedulePassiveSyncRetry();
@@ -8547,7 +8834,7 @@ setTimeout(
 passiveSyncRetryTimer=null;
 passiveSync();
 },
-700
+PASSIVE_SYNC_DELAY
 );
 }
 
