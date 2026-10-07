@@ -22890,6 +22890,22 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "7f417def-9936-4134-8827-dbf3d35a618b",
+      "bookName": "Fat and Mean",
+      "bookNo": "0-684-82288",
+      "institution": "",
+      "category": [],
+      "tag": [
+        "13组"
+      ],
+      "tagChecked": false,
+      "code": "170003",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
     }
   ],
   "institutions": [
