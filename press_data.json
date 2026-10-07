@@ -22850,11 +22850,11 @@
       "institution": "State University of New York Press",
       "category": [],
       "tag": [
-        "12图书"
+        "12组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "128001",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
