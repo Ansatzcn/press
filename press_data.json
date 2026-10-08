@@ -21308,10 +21308,12 @@
       "bookNo": "7-5496-4349",
       "institution": "[文汇出版社](https://book.douban.com/press/2585/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230565",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
