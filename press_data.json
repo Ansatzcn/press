@@ -20972,10 +20972,12 @@
       "bookNo": "7-5598-5354",
       "institution": "[广西师范大学出版社](https://book.douban.com/press/2476/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230564",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
