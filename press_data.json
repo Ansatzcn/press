@@ -412,7 +412,9 @@
       "bookName": "中国共产党简史",
       "bookNo": "7-01-023203",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
-      "category": [],
+      "category": [
+        "十号"
+      ],
       "tag": [
         "11组",
         "23组"
