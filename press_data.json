@@ -15103,6 +15103,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "d50783d7-3a57-44a3-9c81-8ebc63fd8f2f",
+      "bookName": "美利坚的民族：一部北美地区文化史",
+      "bookNo": "7-5201-7885",
+      "institution": "[社会科学文献出版社](https://book.douban.com/press/2622/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230572",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "b0231135-5b8c-4692-ba6b-91f5acfcb126",
       "bookName": "地中海的画像：从文明的起源到两次世界大战",
       "bookNo": "7-5201-8058",
@@ -16863,11 +16879,11 @@
       "institution": "[当代中国出版社](https://book.douban.com/press/2604/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230573",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
