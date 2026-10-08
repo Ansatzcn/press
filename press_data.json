@@ -408,6 +408,23 @@
       "codeManualPinned": false
     },
     {
+      "id": "cde41e67-fd19-4a5b-b693-d6d726f2fd52",
+      "bookName": "中国共产党简史",
+      "bookNo": "7-01-023203",
+      "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
+      "category": [],
+      "tag": [
+        "11组",
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "238008",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "21093854-e12e-4e86-9032-b7a7432cac2a",
       "bookName": "抗战时期重庆马克思主义学术研究的发展",
       "bookNo": "7-01-023315",
