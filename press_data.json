@@ -2588,11 +2588,11 @@
       "institution": "[生活·读书·新知三联书店](https://book.douban.com/press/2158/?order=time)☆",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230557",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -3075,6 +3075,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "daa295ff-f180-4cd0-9dea-dc2234686aec",
+      "bookName": "下一个世界工厂：中国企业在非洲的创业故事",
+      "bookNo": "7-111-65994",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230560",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "921f158b-1ec2-4868-bd45-f9758551cd27",
       "bookName": "攀登者：松下幸之助的经营哲学",
       "bookNo": "7-111-69613",
@@ -3308,11 +3324,11 @@
       "institution": "[人民邮电出版社](https://book.douban.com/press/2609/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230558",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -7154,6 +7170,22 @@
       "tagChecked": false,
       "code": "",
       "codeAutoManaged": false,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
+      "id": "b007c221-c4e3-4626-b407-d8b399b88d64",
+      "bookName": "脑与数学",
+      "bookNo": "7-5722-3105",
+      "institution": "[浙江教育出版社](https://book.douban.com/press/2256/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230559",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
