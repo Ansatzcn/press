@@ -10724,6 +10724,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "91cc69bd-db70-4c56-8638-2b3999f76aa0",
+      "bookName": "可见的教学影响力：系统地执行可见的学习5D深度教学",
+      "bookNo": "7-5153-6962",
+      "institution": "[中国青年出版社](https://book.douban.com/press/2833/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230575",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "1fada252-f0f9-4375-985a-07699322e3d7",
       "bookName": "真实性学习：如何设计体验式、情境式、主动式的学习课堂",
       "bookNo": "7-5153-6976",
@@ -22822,11 +22838,11 @@
       "institution": "[北京理工大学出版社](https://book.douban.com/press/2695/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230577",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -22902,11 +22918,11 @@
       "institution": "[汕头大学出版社](https://book.douban.com/press/2224/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230576",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
