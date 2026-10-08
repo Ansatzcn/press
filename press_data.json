@@ -19447,6 +19447,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "db890c7e-a5dd-4ddd-a831-11162c7784ba",
+      "bookName": "大外交",
+      "bookNo": "7-5443-4073",
+      "institution": "[海南出版社](https://book.douban.com/press/2554/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230602",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "ff746ee3-0a3d-42ce-8e57-208405d15835",
       "bookName": "寻找薛定谔的猫",
       "bookNo": "7-5443-5994",
