@@ -23444,6 +23444,22 @@
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
+    },
+    {
+      "id": "3fe349fb-2dda-43ca-b323-36f96361962f",
+      "bookName": "白居易诗文在日本的流传与受容",
+      "bookNo": "7-5348-7359",
+      "institution": "",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220129",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
     }
   ],
   "institutions": [
