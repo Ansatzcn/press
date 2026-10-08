@@ -7534,6 +7534,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "f14972fe-178d-46ea-b79e-d5edd4cd3f84",
+      "bookName": "近代中国的工业发展：与日本比较",
+      "bookNo": "7-300-25853",
+      "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230568",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "ae10c1d2-eecd-4330-9175-cba42936e718",
       "bookName": "戴维斯王朝",
       "bookNo": "7-300-26204",
@@ -21485,11 +21501,11 @@
       "institution": "[北京联合出版公司](https://book.douban.com/press/2478/?order=time)",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230567",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
@@ -22549,11 +22565,11 @@
       "institution": "[华东师范大学出版社](https://book.douban.com/press/2486/?order=time)★",
       "category": [],
       "tag": [
-        "23读书"
+        "23组"
       ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "230566",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
