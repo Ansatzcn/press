@@ -11647,13 +11647,10 @@
       "bookNo": "7-5035-2021",
       "institution": "[中共中央党校出版社](https://book.douban.com/press/2513/?order=time)★",
       "category": [],
-      "tag": [
-        "13组",
-        "21组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "218002",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
