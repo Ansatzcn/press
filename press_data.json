@@ -10022,10 +10022,13 @@
       "bookNo": "7-5161-5103",
       "institution": "[中国社会科学出版社](https://book.douban.com/press/2188/?order=time)★",
       "category": [],
-      "tag": [],
+      "tag": [
+        "11组",
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "169004",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
