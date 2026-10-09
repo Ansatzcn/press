@@ -4645,10 +4645,13 @@
       "category": [
         "十号"
       ],
-      "tag": [],
+      "tag": [
+        "11组",
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "169002",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
