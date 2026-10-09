@@ -2165,10 +2165,13 @@
       "bookNo": "7-102-09788",
       "institution": "[人民美术出版社](https://book.douban.com/press/2503/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "11组",
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "169003",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
