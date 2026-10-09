@@ -19500,10 +19500,13 @@
       "bookNo": "7-5432-2977",
       "institution": "[格致出版社](https://book.douban.com/press/2366/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "21组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "218007",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
