@@ -1311,18 +1311,6 @@ const CODE_GROUP_OPTIONS=Object.freeze([
 ...GROUP_CODES
 ]);
 
-const CODE_COMMON_EXCEPTIONS=Object.freeze({
-'13/22':[
-[288001,289999]
-],
-'14/22':[
-[148001,149999]
-],
-'21/22':[
-[260001,267999]
-]
-});
-
 const CODE_RULES=Object.freeze({
 zh:{
 groups:{
@@ -1993,18 +1981,6 @@ return [];
 
 const combination=
 groups.join('/');
-
-if(
-CODE_COMMON_EXCEPTIONS[
-combination
-]
-){
-return mergeCodeRanges(
-CODE_COMMON_EXCEPTIONS[
-combination
-]
-);
-}
 
 const rules=
 titleIsChinese(
@@ -3704,7 +3680,7 @@ items
 return (items||[])
 .map(
 item=>
-`《${item.bookName||'未命名条目'}》 ${item.code}`
+`${item.code}★${item.bookName||'未命名条目'}`
 )
 .join('；');
 }
