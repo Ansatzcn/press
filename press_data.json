@@ -413,13 +413,10 @@
       "category": [
         "十号"
       ],
-      "tag": [
-        "11组",
-        "23组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "238008",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
