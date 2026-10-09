@@ -12262,10 +12262,13 @@
       "bookNo": "7-5057-6176",
       "institution": "[中国友谊出版公司](https://book.douban.com/press/2416/?order=time)",
       "category": [],
-      "tag": [],
+      "tag": [
+        "11组",
+        "23组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "169006",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
