@@ -12,11 +12,11 @@
         "23组"
       ],
       "tagChecked": true,
-      "code": "188005",
-      "codeAutoManaged": true,
+      "code": "130230",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
+      "codeManualEdited": true,
+      "codeManualPinned": true
     },
     {
       "id": "5af56d9c-6e3b-46c1-b83e-2437e8f5a195",
