@@ -72,13 +72,10 @@
       "bookNo": "7-01-004893",
       "institution": "[人民出版社](https://book.douban.com/press/2291/?order=time)★",
       "category": [],
-      "tag": [
-        "13组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "288001",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
