@@ -3191,6 +3191,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "33cdf0bb-c207-40f6-9e3a-e90e811cef75",
+      "bookName": "教育的未来：人工智能时代的教育变革",
+      "bookNo": "7-111-77389",
+      "institution": "[机械工业出版社](https://book.douban.com/press/2793/?order=time)",
+      "category": [],
+      "tag": [
+        "23组"
+      ],
+      "tagChecked": false,
+      "code": "230642",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "968ad1f1-1678-4ccb-a1f5-5d7612492eba",
       "bookName": "智慧的疆界：从图灵机到人工智能",
       "bookNo": "7-111-77800",
