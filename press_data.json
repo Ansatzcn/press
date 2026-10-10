@@ -13035,6 +13035,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "c123208b-e521-469c-9c0d-ca7d4076f622",
+      "bookName": "美国创新史",
+      "bookNo": "7-5086-2700",
+      "institution": "[中信出版集团](https://book.douban.com/press/2400/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220153",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "876009c1-6a8a-4586-8497-1d975f76be8d",
       "bookName": "底特律：一座美国城市的衰落",
       "bookNo": "7-5086-3571",
