@@ -9017,13 +9017,10 @@
       "bookNo": "7-305-19274",
       "institution": "[南京大学出版社](https://book.douban.com/press/2276/?order=time)★",
       "category": [],
-      "tag": [
-        "21组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "218006",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
