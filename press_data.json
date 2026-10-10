@@ -7722,13 +7722,10 @@
       "bookNo": "7-300-26342",
       "institution": "[中国人民大学出版社](https://book.douban.com/press/2618/?order=time)★",
       "category": [],
-      "tag": [
-        "13组",
-        "22组"
-      ],
+      "tag": [],
       "tagChecked": false,
-      "code": "288007",
-      "codeAutoManaged": true,
+      "code": "",
+      "codeAutoManaged": false,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
