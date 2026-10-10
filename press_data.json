@@ -19693,6 +19693,23 @@
       "codeManualPinned": false
     },
     {
+      "id": "4e63382f-10ea-4d9a-b917-7ff03eb12ba0",
+      "bookName": "大逆转：美国市场经济的深层困境",
+      "bookNo": "7-5432-3437",
+      "institution": "[格致出版社](https://book.douban.com/press/2366/?order=time)",
+      "category": [],
+      "tag": [
+        "21组",
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "268001",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "24910ea4-2b0c-4f4e-b6a1-bb4ac0946425",
       "bookName": "躺不平的千禧一代",
       "bookNo": "7-5432-3486",
@@ -20504,23 +20521,6 @@
       ],
       "tagChecked": false,
       "code": "120036",
-      "codeAutoManaged": true,
-      "codeAutoPending": false,
-      "codeManualEdited": false,
-      "codeManualPinned": false
-    },
-    {
-      "id": "4e63382f-10ea-4d9a-b917-7ff03eb12ba0",
-      "bookName": "大逆转：美国市场经济的深层困境",
-      "bookNo": "7-5452-3437",
-      "institution": "[光启书局](https://book.douban.com/press/2909/?order=time)",
-      "category": [],
-      "tag": [
-        "21组",
-        "22组"
-      ],
-      "tagChecked": false,
-      "code": "268001",
       "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
