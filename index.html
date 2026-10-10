@@ -1073,7 +1073,9 @@ const PUBLIC_CACHE_KEY='public_cache';
 const SYNC_BASE_KEY='sync_base_v3_5s';
 
 const SYNC_ENGINE_VERSION=4;
-const MAX_BYTES=750*1024;
+// GitHub Contents API 当前采用 base64 content 读取方式，保守保持在 1 MiB 以下。
+const MAX_BYTES=950*1024;
+const SYNC_DEBOUNCE_MS=1000;
 const SYNC_RETRY_LIMIT=3;
 const PUBLIC_FETCH_TIMEOUT=15000;
 const GITHUB_FETCH_TIMEOUT=10000;
@@ -1247,6 +1249,9 @@ let syncBaseSha=null;
 let persistedToken='';
 let editOverlayPointerDown=false;
 let syncInFlight=null;
+let syncDebounceTimer=null;
+let syncDebounceWaiters=[];
+let lastSyncErrorCode='';
 let syncRequested=false;
 let syncShowResult=false;
 let syncRunning=false;
@@ -2999,7 +3004,7 @@ addBtn.disabled=true;
 status('syncing','正在确认服务器编码');
 
 try{
-const ok=await sync(false);
+const ok=await requestDebouncedSync();
 
 const finalEntry=state.entries.find(item=>item.id===entry.id);
 const finalCode=normalizeStoredCode(finalEntry?.code);
@@ -3227,7 +3232,7 @@ editSelections={category:[],tag:[]};
 render();
 schedule(false);
 
-const ok=await sync(false);
+const ok=await requestDebouncedSync();
 
 if(shouldSyncAutoCode&&ok){
 const finalEntry=state.entries.find(item=>item.id===entry.id);
@@ -3568,12 +3573,29 @@ selectInstitution(button);
 });
 }
 
+// 对短时间内连续操作集中同步；本机保存仍然立即执行。
+function requestDebouncedSync(){
+if(!admin()||!adminReady)return Promise.resolve(false);
+
+return new Promise(resolve=>{
+syncDebounceWaiters.push(resolve);
+clearTimeout(syncDebounceTimer);
+syncDebounceTimer=setTimeout(()=>{
+syncDebounceTimer=null;
+sync(false).catch(error=>{
+console.error(error);
+});
+},SYNC_DEBOUNCE_MS);
+});
+}
+
 function schedule(syncNow=true){
 state=norm(state);
 localMutationVersion++;
 saveLocal(state);
 
 meta.dirty=true;
+lastSyncErrorCode='';
 
 persistMeta().catch(console.error);
 
@@ -3581,9 +3603,7 @@ if(admin()&&adminReady){
 if(syncRunning||syncInFlight){
 syncRequested=true;
 }else if(syncNow){
-queueMicrotask(()=>{
-sync(false);
-});
+requestDebouncedSync();
 }
 }
 
@@ -3640,6 +3660,7 @@ return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
 function isTransientSyncError(error){
+if(error?.code==='payload_too_large')return false;
 const statusCode=Number(error?.status||0);
 
 return (
@@ -3669,7 +3690,8 @@ message.includes('update')
 function syncErrorText(error){
 if(
 error?.code==='code_conflict' ||
-error?.code==='code_safety'
+error?.code==='code_safety' ||
+error?.code==='payload_too_large'
 ){
 return error.message;
 }
@@ -3912,10 +3934,16 @@ return meta.dirty?norm({}):norm(localSnapshot);
 }
 
 async function writeRemote(snapshot,sha){
-const raw=JSON.stringify(norm(snapshot),null,2);
+// 去除仅用于排版的空格与换行；任何书目字段均不删除。
+const raw=JSON.stringify(norm(snapshot));
+const bytes=new TextEncoder().encode(raw).length;
 
-if(new TextEncoder().encode(raw).length>MAX_BYTES){
-throw new Error('数据超过750KB');
+if(bytes>MAX_BYTES){
+const error=new Error(
+`数据 ${(bytes/1024).toFixed(1)} KiB，超过当前 ${(MAX_BYTES/1024).toFixed(0)} KiB 同步警戒线；本机修改已保留`
+);
+error.code='payload_too_large';
+throw error;
 }
 
 const body={
@@ -3991,7 +4019,11 @@ fastBase
 const fastCandidate=fastAllocation.state;
 const fastCandidateIssues=inspectCodeIssues(fastCandidate);
 
-if(fastCandidateIssues.duplicates===0){
+// 本机数据与基准完全相同则不做乐观 PUT，转为 GET 确认远端状态。
+if(
+fastCandidateIssues.duplicates===0 &&
+stateSignature(fastCandidate)!==stateSignature(fastBase)
+){
 status('syncing','正在确认服务器编码');
 
 try{
@@ -4452,6 +4484,7 @@ new Error('多次重试后仍无法完成同步')
 
 }catch(error){
 console.error(error);
+lastSyncErrorCode=clean(error?.code);
 
 meta.dirty=Boolean(
 meta.dirty ||
@@ -4503,6 +4536,12 @@ if(showResult){
 syncShowResult=true;
 }
 
+// 手动或自动同步可以提前执行，同时唤醒已排队的防抖调用。
+if(syncDebounceTimer!==null){
+clearTimeout(syncDebounceTimer);
+syncDebounceTimer=null;
+}
+
 syncInFlight=(async()=>{
 let allOk=true;
 
@@ -4526,8 +4565,9 @@ return allOk;
 })()
 .then(allOk=>{
 if(allOk){
+lastSyncErrorCode='';
 clearPassiveSyncRetry();
-}else if(meta.dirty){
+}else if(meta.dirty && lastSyncErrorCode!=='payload_too_large'){
 schedulePassiveSyncRetry();
 }
 
@@ -4535,6 +4575,15 @@ return allOk;
 })
 .finally(()=>{
 syncInFlight=null;
+});
+
+syncInFlight.then(ok=>{
+const waiters=syncDebounceWaiters.splice(0);
+waiters.forEach(resolve=>resolve(ok));
+},error=>{
+const waiters=syncDebounceWaiters.splice(0);
+waiters.forEach(resolve=>resolve(false));
+console.error(error);
 });
 
 return syncInFlight;
@@ -4800,6 +4849,14 @@ publicCacheValue=norm(cache.state);
 
 async function saveConfig(event){
 event.preventDefault();
+
+// 切换仓库配置前清理尚未执行的延迟同步，避免操作旧仓库。
+if(syncDebounceTimer!==null){
+clearTimeout(syncDebounceTimer);
+syncDebounceTimer=null;
+const waiters=syncDebounceWaiters.splice(0);
+waiters.forEach(resolve=>resolve(false));
+}
 
 if(syncInFlight){
 await syncInFlight;
@@ -5341,7 +5398,7 @@ passiveSyncRetryIndex=0;
 }
 
 function schedulePassiveSyncRetry(resetIndex=false){
-if(!admin()||!adminReady)return;
+if(!admin()||!adminReady || lastSyncErrorCode==='payload_too_large')return;
 
 if(resetIndex){
 passiveSyncRetryIndex=0;
@@ -5413,7 +5470,7 @@ return ok;
 }
 
 function wakePassiveSync(){
-if(!admin()||!adminReady)return;
+if(!admin()||!adminReady || lastSyncErrorCode==='payload_too_large')return;
 
 clearPassiveSyncRetry();
 
@@ -5465,3 +5522,6 @@ wakePassiveSync();
 </script>
 </body>
 </html>
+
+
+
