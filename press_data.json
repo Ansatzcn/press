@@ -7723,10 +7723,13 @@
       "category": [
         "九号"
       ],
-      "tag": [],
+      "tag": [
+        "11组",
+        "22组"
+      ],
       "tagChecked": false,
-      "code": "",
-      "codeAutoManaged": false,
+      "code": "168004",
+      "codeAutoManaged": true,
       "codeAutoPending": false,
       "codeManualEdited": false,
       "codeManualPinned": false
