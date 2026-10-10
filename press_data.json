@@ -17443,6 +17443,22 @@
       "codeManualPinned": false
     },
     {
+      "id": "3cdb2dab-5e0a-4d14-a75a-7ef8f15afdaa",
+      "bookName": "自我",
+      "bookNo": "7-5321-5846",
+      "institution": "[上海文艺出版社](https://book.douban.com/press/2680/?order=time)",
+      "category": [],
+      "tag": [
+        "22组"
+      ],
+      "tagChecked": false,
+      "code": "220150",
+      "codeAutoManaged": true,
+      "codeAutoPending": false,
+      "codeManualEdited": false,
+      "codeManualPinned": false
+    },
+    {
       "id": "452f3f6a-1f79-4826-b536-bc38fe1b7eb3",
       "bookName": "书读完了",
       "bookNo": "7-5321-6311",
