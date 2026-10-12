@@ -1389,14 +1389,26 @@ function codeRangesForEntry(entry){
 const groups=codeGroupsFromEntry(entry);
 if(!groups?.length)return [];
 
-const combination=groups.join('/');
 const rules=titleIsChinese(entry.bookName)?CODE_RULES.zh:CODE_RULES.en;
 
-if(rules.exceptions[combination]){
-return mergeCodeRanges(rules.exceptions[combination]);
+// 多标签：先找出所有由其中两个标签构成的已有例外组合。
+// 命中多组时，先比较每组较小的标签，再比较较大的标签，选数值最小的一对。
+// 其他标签即使数值更小，只要未组成更优先的例外组合，就不改变选择。
+const exceptionPairs=[];
+for(let i=0;i<groups.length-1;i++){
+for(let j=i+1;j<groups.length;j++){
+const pair=`${groups[i]}/${groups[j]}`;
+if(Object.prototype.hasOwnProperty.call(rules.exceptions,pair)){
+exceptionPairs.push({first:Number(groups[i]),second:Number(groups[j]),pair});
+}
+}
+}
+if(exceptionPairs.length){
+exceptionPairs.sort((a,b)=>a.first-b.first||a.second-b.second);
+return mergeCodeRanges(rules.exceptions[exceptionPairs[0].pair]);
 }
 
-// 非例外的多编组组合，按照数值最小的编组确定编码区间；单编组仍用其本身规则。
+// 没有命中任何例外组合：按数值最小的编组编码；单编组规则不变。
 return mergeCodeRanges(rules.groups[groups[0]]||[]);
 }
 
