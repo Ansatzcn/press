@@ -24,8 +24,8 @@ Press
 <button class="btn" id="configBtn" type="button">配置</button>
 <button class="btn" id="manageBtn" type="button">排序</button>
 <button class="btn" id="importBtn" type="button">导入</button>
-<button class="btn" id="exportBtn" type="button" title="仅导出网页代码，不含本机数据">导出网页</button>
-<button class="btn" id="backupBtn" type="button" title="备份当前本机数据到 JSON，不包含 GitHub Token">备份数据</button>
+<button class="btn" id="exportBtn" type="button" title="仅导出网页代码，不含本机数据">导出</button>
+<button class="btn" id="backupBtn" type="button" title="备份当前本机数据到 JSON，不包含 GitHub Token">备份</button>
 <input class="hidden" id="importInput" type="file" accept=".html,text/html">
 </div>
 <span class="last-sync" id="lastSyncTime">公开阅读无需 Token</span>
@@ -205,7 +205,7 @@ Press
 <div class="toast hidden" id="toast"></div>
 
 <script>window.__pressBooted=false;window.__pressBootError='';window.addEventListener('error',function(event){if(window.__pressBooted)return;var message=event&&event.message?String(event.message):'未知脚本错误';var line=event&&event.lineno?String(event.lineno):'';var column=event&&event.colno?String(event.colno):'';window.__pressBootError=message+(line?'（行 '+line+(column?'，列 '+column:'')+'）':'');});window.addEventListener('unhandledrejection',function(event){if(window.__pressBooted)return;var reason=event&&event.reason;window.__pressBootError=String(reason&&reason.message?reason.message:reason||'未处理的异步异常');});window.addEventListener('load',function(){setTimeout(function(){if(window.__pressBooted)return;var label=document.getElementById('statusText');var list=document.getElementById('pressList');var dot=document.getElementById('statusDot');var detail=window.__pressBootError||'主脚本没有执行启动标记';if(label)label.textContent='脚本启动失败：'+detail;if(list)list.textContent='页面启动失败；请按错误提示检查具体行号。';if(dot)dot.className='status-dot offline';},2500);});</script>
-<script>(()=>{'use strict';window.__pressSourceVersion='bounded-sync-recovery-20261024';window.__pressBooted=true;const PUBLIC_FILE='press_data.json';const NS='press_public_v1';const DB_NAME=`${NS}:idb_v1`;const DB_STORE='kv';const CONFIG_KEY='config';const TOKEN_PERSISTED_KEY='token_persisted';const META_KEY='meta';const WORKCOPY_KEY='workcopy';const PUBLIC_CACHE_KEY='public_cache';const SYNC_BASE_KEY='sync_base_v3_5s';const SYNC_ENGINE_VERSION=6;const MAX_BYTES=950*1024;const SYNC_DEBOUNCE_MS=1000;const SYNC_RETRY_LIMIT=6;const PUBLIC_FETCH_TIMEOUT=15000;const GITHUB_FETCH_TIMEOUT=10000;const STORAGE_OPEN_TIMEOUT=6000;const STORAGE_TX_TIMEOUT=5000;const SYNC_OPERATION_TIMEOUT_MS=90000;const SYNC_UI_TIMEOUT_MS=60000;const PASSIVE_SYNC_RETRY_DELAYS=Object.freeze([3000,10000,30000,60000]);const GROUP_CODES=Object.freeze(['11','12','13','14','21','22','23']);const GROUP_OPTIONS=Object.freeze(GROUP_CODES.map(value=>`${value}组`));const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_CODES]);const CODE_RULES = Object.freeze({
+<script>(()=>{'use strict';window.__pressSourceVersion='sha-first-sync-diagnostics-20261024';window.__pressBooted=true;const PUBLIC_FILE='press_data.json';const NS='press_public_v1';const DB_NAME=`${NS}:idb_v1`;const DB_STORE='kv';const CONFIG_KEY='config';const TOKEN_PERSISTED_KEY='token_persisted';const META_KEY='meta';const WORKCOPY_KEY='workcopy';const PUBLIC_CACHE_KEY='public_cache';const SYNC_BASE_KEY='sync_base_v3_5s';const SYNC_ENGINE_VERSION=6;const MAX_BYTES=950*1024;const SYNC_DEBOUNCE_MS=1000;const SYNC_RETRY_LIMIT=6;const PUBLIC_FETCH_TIMEOUT=15000;const GITHUB_FETCH_TIMEOUT=10000;const STORAGE_OPEN_TIMEOUT=6000;const STORAGE_TX_TIMEOUT=5000;const SYNC_OPERATION_TIMEOUT_MS=90000;const SYNC_UI_TIMEOUT_MS=60000;const PASSIVE_SYNC_RETRY_DELAYS=Object.freeze([3000,10000,30000,60000]);const GROUP_CODES=Object.freeze(['11','12','13','14','21','22','23']);const GROUP_OPTIONS=Object.freeze(GROUP_CODES.map(value=>`${value}组`));const CODE_GROUP_OPTIONS=Object.freeze([...GROUP_CODES]);const CODE_RULES = Object.freeze({
   zh: {
     groups: {
       '11': [[110001, 119999], [160001, 167999]],
@@ -516,26 +516,62 @@ function withTimeout(promise,ms,message='等待超时'){let timer;return Promise
 function remainingSyncBudget(){if(!syncDeadlineAt)return GITHUB_FETCH_TIMEOUT;const remaining=syncDeadlineAt-Date.now();if(remaining<=0){const error=requestTimeoutError('本次云端同步超过90秒，已停止继续请求；本机数据已保留，云端结果尚待核实');error.code='sync_deadline';throw error;}return Math.min(GITHUB_FETCH_TIMEOUT,remaining);}
 function isTransientSyncError(error){if(error?.code==='payload_too_large')return false;const statusCode=Number(error?.status||0);return(statusCode===0||statusCode===408||statusCode===429||statusCode>=500);}
 function isWriteConflictError(error){const statusCode=Number(error?.status||0);if(statusCode===409)return true;if(statusCode!==422)return false;const message=String(error?.message||'').toLocaleLowerCase();return(message.includes('sha')||message.includes('does not match')||message.includes('already exists')||message.includes('update'));}
-function syncErrorText(error){if(error?.code==='code_conflict'||error?.code==='code_safety'||error?.code==='payload_too_large'||error?.code==='sync_conflict_exhausted'||error?.code==='invalid_remote_data'){return error.message;}
-const statusCode=Number(error?.status||0);if(statusCode===401){return 'GitHub Token 无效或已失效；请在 Press 的“配置”中重新填写与 Pages 相同的有效 Token';}
-if(statusCode===403){return`GitHub 拒绝访问：${error.message||'请确认 Token 具有仓库 Contents 读写权限'}`;}
-if(statusCode===404){return`GitHub 仓库或数据文件不存在/不可访问：${error.message||'请检查仓库所有者、仓库名称和 press_data.json 路径'}`;}
-if(statusCode===409||statusCode===422){return`GitHub 写入冲突：${error.message||`HTTP ${statusCode}`}`;}
-if(statusCode===0){return`GitHub 网络请求失败：${error?.message||'Failed to fetch'}`;}
-if(error?.message)return error.message;return '未知同步错误';}
+function syncErrorText(error){
+  if(error?.code==='code_conflict'||error?.code==='code_safety'||error?.code==='payload_too_large'||error?.code==='sync_conflict_exhausted'||error?.code==='invalid_remote_data'||error?.code==='repo_unreachable')return error.message;
+  const code=Number(error?.status||0);
+  const operation=clean(error?.githubOperation)||'请求';
+  const endpoint=clean(error?.githubEndpoint)||'GitHub API';
+  if(code===401)return 'GitHub Token 无效或失效。请在“配置”中更新 Token。';
+  if(code===403)return `GitHub 拒绝${operation}：${error.message||'请检查 Token 的 Contents 权限及访问限制'}`;
+  if(code===404)return `GitHub 返回 404（${operation} ${endpoint}）：${error.message||'请检查仓库与文件路径'}`;
+  if(code===409||code===422)return `GitHub 写入冲突（HTTP ${code}）：${error.message||'服务器版本变化'}`;
+  if(error?.code==='timeout'||error?.code==='sync_deadline')return `${operation} ${endpoint} 超时；请检查访问 api.github.com 的网络连接。本机数据已保存，云端写入结果可能仍待核实。`;
+  if(code===0)return `${operation} ${endpoint} 网络请求失败（${error?.message||'Failed to fetch'}）；请检查网络、浏览器扩展或跨域限制，本机数据已保留。`;
+  if(error?.message)return error.message;
+  return '未知同步错误';
+}
 function requestTimeoutError(message='请求超时'){const error=new Error(message);error.code='timeout';error.status=0;return error;}
 async function fetchTextWithTimeout(url,options={},timeoutMs=PUBLIC_FETCH_TIMEOUT){const controller=typeof AbortController!=='undefined'?new AbortController():null;let timer=null;const request=(async()=>{try{const response=await fetch(url,{...options,...(controller?{signal:controller.signal}:{})});const text=await response.text();return{response,text};}catch(error){if(error?.name==='AbortError'){throw requestTimeoutError();}
 if(error&&typeof error==='object'&&!('status' in error)){error.status=0;}
 throw error;}})();const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{try{controller?.abort()}catch{}
 reject(requestTimeoutError());},timeoutMs);});try{return await Promise.race([request,timeout]);}finally{if(timer!==null)clearTimeout(timer);}}
-async function githubApi(method,endpoint,body=null){const url=`https://api.github.com/repos/${config.owner}/${config.repo}/${endpoint}`;const headers={'Authorization':`token ${config.token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};const options={method,headers};if(body!==null){options.body=JSON.stringify(body);}
-try{ // 超时必须包含响应头和整个响应体读取；不能在 response.json() 之前清除计时器。
-const {response,text}=await fetchTextWithTimeout(url,options,remainingSyncBudget());let data=null;try{data=text?JSON.parse(text):null;}catch{data=null;}
-if(!response.ok){const error=new Error(data?.message||`HTTP ${response.status}`);error.status=response.status;error.apiData=data;throw error;}return data;
-}catch(error){if(error&&typeof error==='object'){error.status=Number(error.status||0);error.githubUrl=url;}throw error;}}
-async function githubRawContents(endpoint){const url=`https://api.github.com/repos/${config.owner}/${config.repo}/${endpoint}`;const headers={'Authorization':`token ${config.token}`,'Accept':'application/vnd.github.raw+json'};
-try{const {response,text}=await fetchTextWithTimeout(url,{method:'GET',headers},remainingSyncBudget());if(!response.ok){let apiData=null;try{apiData=JSON.parse(text);}catch{}const error=new Error(apiData?.message||`HTTP ${response.status}`);error.status=response.status;error.apiData=apiData;throw error;}return text;
-}catch(error){if(error&&typeof error==='object'){error.status=Number(error.status||0);error.githubUrl=url;}throw error;}}
+async function githubApi(method,endpoint,body=null){
+  const repoBase=`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}`;
+  const url=repoBase+(endpoint?`/${endpoint}`:'');
+  const headers={'Authorization':`Bearer ${config.token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'};
+  const options={method,headers,cache:'no-store'};
+  if(body!==null)options.body=JSON.stringify(body);
+  try{
+    const {response,text}=await fetchTextWithTimeout(url,options,remainingSyncBudget());
+    let data=null;
+    try{data=text?JSON.parse(text):null;}catch{
+      const error=new Error(`GitHub 返回了无法解析的 JSON（HTTP ${response.status}）`);
+      error.code='invalid_api_response';error.status=response.status;throw error;
+    }
+    if(!response.ok){const error=new Error(data?.message||`HTTP ${response.status}`);error.status=response.status;error.apiData=data;throw error;}
+    return data;
+  }catch(error){
+    if(error&&typeof error==='object'){
+      error.status=Number(error.status||0);
+      error.githubOperation=method;
+      error.githubEndpoint=endpoint||'仓库信息';
+    }
+    throw error;
+  }
+}
+async function githubRawContents(endpoint){
+  const url=`https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/${endpoint}`;
+  const headers={'Authorization':`Bearer ${config.token}`,'Accept':'application/vnd.github.raw+json'};
+  try{
+    const {response,text}=await fetchTextWithTimeout(url,{method:'GET',headers,cache:'no-store'},remainingSyncBudget());
+    if(!response.ok){let apiData=null;try{apiData=JSON.parse(text);}catch{}
+      const error=new Error(apiData?.message||`HTTP ${response.status}`);error.status=response.status;throw error;}
+    return text;
+  }catch(error){
+    if(error&&typeof error==='object'){error.status=Number(error.status||0);error.githubOperation='GET';error.githubEndpoint=endpoint;}
+    throw error;
+  }
+}
 function remoteDataError(message){const error=new Error(message);error.code='invalid_remote_data';return error;}
 function parseRemoteStateText(rawText){let parsed;try{parsed=JSON.parse(String(rawText??''));}catch(error){throw remoteDataError(`GitHub 数据文件“${config.file}”不是有效 JSON，已停止读取和写入以保护原数据。详情：${error?.message||'JSON 解析失败'}`);}
 const entries=Array.isArray(parsed)?parsed:(parsed&&typeof parsed==='object'&&!Array.isArray(parsed)&&Array.isArray(parsed.entries)?parsed.entries:null);if(!entries){throw remoteDataError(`GitHub 数据文件“${config.file}”的结构无效：应为条目数组，或包含 entries 数组的对象。为防止把数据误判为空，已停止写入。`);}
@@ -548,43 +584,170 @@ const sha=clean(data.sha)||null;let contentError=null;if(typeof data.content==='
 // GitHub Contents API 对较大的文件可能不返回 content。改用 raw 媒体类型读取；只读取，不会在这里写回数据。
 try{const rawText=await githubRawContents(`contents/${pathEncode(config.file)}`);return{exists:true,sha,state:parseRemoteStateText(rawText)};}catch(rawError){if(contentError){const combined=remoteDataError(`无法读取或解析 GitHub 数据文件“${config.file}”。已尝试标准内容和原始内容两种读取方式，均失败；为保护现有数据，没有将其当作空数据。标准读取：${contentError.message}；原始读取：${rawError?.message||'读取失败'}`);if(rawError&&Number.isFinite(Number(rawError.status)))combined.status=Number(rawError.status);if(rawError?.githubUrl)combined.githubUrl=rawError.githubUrl;throw combined;}
 throw rawError;}}
-async function readRemote(){let data;try{data=await githubApi('GET',`contents/${pathEncode(config.file)}`);}catch(error){if(Number(error?.status)===404){return{exists:false,sha:null,state:norm({})};}
-throw error;}
-// 只有 Contents API 本身返回 404 才视为文件不存在；原始内容回退读取失败不能被误当成新文件。
-return await parseRemoteContent(data);}
+async function readRemote(){
+  let data;
+  try{data=await githubApi('GET',`contents/${pathEncode(config.file)}`);}
+  catch(error){
+    if(Number(error?.status)===404){
+      try{await githubApi('GET','');}
+      catch(repoError){
+        const unavailable=new Error(`无法确认仓库 ${config.owner}/${config.repo} 可访问；数据文件的 404 不能直接视为一个新文件。请核对仓库名称及 Token 权限。${repoError?.message||''}`);
+        unavailable.code='repo_unreachable';unavailable.status=repoError?.status||404;throw unavailable;
+      }
+      return{exists:false,sha:null,state:norm({})};
+    }
+    throw error;
+  }
+  return await parseRemoteContent(data);
+}
 async function readRemoteWithRetry(maxAttempts=2){let lastError=null;for(let attempt=0;attempt<maxAttempts;attempt++){try{return await readRemote();}catch(error){lastError=error;if(!isTransientSyncError(error)||attempt>=maxAttempts-1){throw error;}
 await delay(600*Math.pow(2,attempt));}}
 throw(lastError||new Error('读取服务器数据失败'));}
-async function readRemoteVersion(){const query=new URLSearchParams({path:clean(config.file),per_page:'1'});try{const commits=await githubApi('GET',`commits?${query.toString()}`);if(!Array.isArray(commits)){throw new Error('GitHub 返回的文件版本信息无效');}return{commitSha:clean(commits[0]?.sha)||null};}catch(error){if(Number(error?.status)===409){return{commitSha:null};}throw error;}}
-async function readRemoteVersionWithRetry(maxAttempts=2){let lastError=null;for(let attempt=0;attempt<maxAttempts;attempt++){try{return await readRemoteVersion();}catch(error){lastError=error;if(!isTransientSyncError(error)||attempt>=maxAttempts-1){throw error;}await delay(350*Math.pow(2,attempt));}}throw(lastError||new Error('读取云端版本失败'));}
-function hasTrustedRemoteBase(commitSha){return meta.commitKnown===true&&meta.remoteExistsKnown===true&&commitSha===(meta.commitSha||null)&&Boolean(syncBaseCache)&&syncBaseSha===(meta.sha||null)&&(!meta.remoteExists||Boolean(meta.sha));}
-async function readRemoteConsistent(initialVersion=null){let version=initialVersion||await readRemoteVersionWithRetry();for(let attempt=0;attempt<3;attempt++){const remote=await readRemoteWithRetry();const confirmedVersion=await readRemoteVersionWithRetry();if(version.commitSha===confirmedVersion.commitSha){remote.commitSha=confirmedVersion.commitSha;remote.commitKnown=true;return remote;}version=confirmedVersion;if(attempt<2){await delay(120*(attempt+1));}}const error=new Error('云端文件在读取期间连续变化；本机数据已保留，稍后会自动重试');error.code='sync_conflict_exhausted';throw error;}
+// 不再依赖 commits 接口：以 Contents API 返回的文件 SHA 作为并发版本。
+// 写入时提交这个 SHA；如果其他设备修改了文件，GitHub 返回冲突，随后重新读取并合并。
+async function readRemoteConsistent(){
+  return await readRemoteWithRetry(2);
+}
 function resolveSyncBase(localSnapshot){if(syncBaseCache)return norm(syncBaseCache);return meta.dirty?norm({}):norm(localSnapshot);}
 async function writeRemote(snapshot,sha){const raw=JSON.stringify(norm(snapshot));const bytes=new TextEncoder().encode(raw).length;if(bytes>MAX_BYTES){const error=new Error(`数据 ${(bytes/1024).toFixed(1)} KiB，超过当前 ${(MAX_BYTES/1024).toFixed(0)} KiB 同步警戒线；本机修改已保留`);error.code='payload_too_large';throw error;}
 const body={message:`更新 Press 数据 - ${new Date().toLocaleString()}`,content:toB64(raw)};if(sha)body.sha=sha;const result=await githubApi('PUT',`contents/${pathEncode(config.file)}`,body);return{sha:result?.content?.sha||null,commitSha:result?.commit?.sha||null};}
-async function verifyRemoteEquals(expectedState){try{const checked=await readRemoteConsistent();return{matched:stateSignature(checked.state)===stateSignature(expectedState),remote:checked};}catch{return{matched:false,remote:null};}}
-async function syncOnce(showResult=true){if(!admin())return false;const dirtyAtStart=Boolean(meta.dirty);const mutationAtStart=localMutationVersion;syncRunning=true;syncDeadlineAt=Date.now()+SYNC_OPERATION_TIMEOUT_MS;updateAdmin();status('syncing','正在检查云端版本');try{let lastError=null;const fastLocalBefore=norm(state);const fastBase=resolveSyncBase(fastLocalBefore);const fastLocalIssues=inspectCodeIssues(fastLocalBefore);const canUseFastPath=Boolean(meta.dirty&&meta.sha&&syncBaseCache&&syncBaseSha===meta.sha&&fastLocalIssues.duplicates===0);if(canUseFastPath){const fastMutationVersion=localMutationVersion;const fastAllocation=reconcileCodesIfNeeded(fastLocalBefore,fastBase,fastBase);const fastCandidate=fastAllocation.state;const fastCandidateIssues=inspectCodeIssues(fastCandidate);if(fastCandidateIssues.duplicates===0&&stateSignature(fastCandidate)!==stateSignature(fastBase)){status('syncing','正在确认服务器编码');try{const fastWrite=await writeRemote(fastCandidate,meta.sha);const fastSha=fastWrite.sha;const fastCommitSha=fastWrite.commitSha;let finalLocalState=fastCandidate;let dirtyAfterFast=false;if(localMutationVersion!==fastMutationVersion){const currentLocal=norm(state);const afterFastMerge=mergeStates(fastLocalBefore,currentLocal,fastCandidate);finalLocalState=afterFastMerge.state;dirtyAfterFast=stateSignature(finalLocalState)!==stateSignature(fastCandidate);if(dirtyAfterFast){syncRequested=true;}}
-state=norm(finalLocalState);meta.dirty=dirtyAfterFast;meta.sha=fastSha;meta.commitSha=fastCommitSha||null;meta.commitKnown=Boolean(fastCommitSha);meta.remoteExists=true;meta.remoteExistsKnown=true;saveLocal(state);const fastBaseWrite=persistSyncBase(fastCandidate,fastSha);const fastMetaWrite=persistMeta();await Promise.allSettled([workCopyWriteChain,fastBaseWrite,fastMetaWrite]);render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent=`已同步 ${new Date().toLocaleString()}`;showCodeAllocationToast(fastAllocation);return true;}catch(error){lastError=error;if(isWriteConflictError(error)){lastSyncOutcome.hadConflict=true;status('syncing','正在合并最新数据');}else if(isTransientSyncError(error)){const verification=await verifyRemoteEquals(fastCandidate);if(verification.matched){const verifiedSha=verification.remote.sha;const verifiedCommitSha=verification.remote.commitSha||null;let verifiedLocalState=fastCandidate;let dirtyAfterVerification=false;if(localMutationVersion!==fastMutationVersion){const currentLocal=norm(state);const afterVerificationMerge=mergeStates(fastLocalBefore,currentLocal,fastCandidate);verifiedLocalState=afterVerificationMerge.state;dirtyAfterVerification=stateSignature(verifiedLocalState)!==stateSignature(fastCandidate);if(dirtyAfterVerification){syncRequested=true;}}
-state=norm(verifiedLocalState);meta.dirty=dirtyAfterVerification;meta.sha=verifiedSha;meta.commitSha=verifiedCommitSha;meta.commitKnown=verification.remote.commitKnown===true;meta.remoteExists=Boolean(verification.remote.exists);meta.remoteExistsKnown=true;saveLocal(state);const verifiedBaseWrite=persistSyncBase(fastCandidate,verifiedSha);const verifiedMetaWrite=persistMeta();await Promise.allSettled([workCopyWriteChain,verifiedBaseWrite,verifiedMetaWrite]);render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent=`已同步 ${new Date().toLocaleString()}`;showCodeAllocationToast(fastAllocation);return true;}}else{throw error;}}}}
-for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
-const localBefore=norm(state);const base=resolveSyncBase(localBefore);const mutationVersionBeforeWrite=localMutationVersion;let remoteVersion;try{remoteVersion=await readRemoteVersionWithRetry();}catch(error){lastError=error;throw error;}
-let remote;if(hasTrustedRemoteBase(remoteVersion.commitSha)){remote={exists:Boolean(meta.remoteExists),sha:meta.sha||null,state:norm(syncBaseCache),commitSha:remoteVersion.commitSha,commitKnown:true};}else{try{remote=await readRemoteConsistent(remoteVersion);}catch(error){lastError=error;throw error;}}
-const cloudUpdateDetected=Boolean((meta.commitKnown===true&&remote.commitKnown===true&&remote.commitSha!==meta.commitSha)||(meta.sha&&remote.sha&&remote.sha!==meta.sha));
-if(hasTrustedRemoteBase(remoteVersion.commitSha)&&!meta.dirty&&stateSignature(localBefore)===stateSignature(syncBaseCache)){meta.commitSha=remoteVersion.commitSha;meta.commitKnown=true;meta.remoteExists=Boolean(remote.exists);meta.remoteExistsKnown=true;status('online','公开阅读 · 管理已连接');lastSyncTime.textContent=`云端版本未变 · ${new Date().toLocaleString()}`;return true;}const mergedResult=mergeStates(base,localBefore,remote.state);const preAllocationState=mergedResult.state;if(mergedResult.codeConflicts>0){const error=new Error(`检测到编码并发冲突；为保护编码，已停止本次写入：${formatCodeConflictItems(mergedResult.codeConflictItems)}`);error.code='code_conflict';throw error;}
-const codeAudit=auditCodeSafety(base,localBefore,remote.state,preAllocationState);if(!codeAudit.ok){const error=new Error(`编码安全检查失败：${formatCodeSafetyItems(codeAudit.items)}`);error.code='code_safety';throw error;}
-const allocationResult=reconcileCodesIfNeeded(preAllocationState,remote.state,base);const mergedState=allocationResult.state;const postAllocationIssues=inspectCodeIssues(mergedState);if(postAllocationIssues.duplicates>0){const error=new Error(`仍存在无法自动处理的重复编码（通常为人工锁定编码冲突），已停止本次写入：${formatDuplicateCodeItems(postAllocationIssues.duplicateItems)}`);error.code='code_conflict';throw error;}
-const baseSig=stateSignature(base);const localSig=stateSignature(localBefore);const remoteSig=stateSignature(remote.state);const mergedSig=stateSignature(mergedState);const localChanged=localSig!==baseSig;const remoteChanged=remoteSig!==baseSig;const pulledChanges=localSig!==mergedSig;let wroteRemote=false;let finalSha=remote.sha;let finalCommitSha=remote.commitSha||null;let finalCommitKnown=remote.commitKnown===true;let finalExists=Boolean(remote.exists);if(remoteSig!==mergedSig){try{const writeResult=await writeRemote(mergedState,remote.sha);finalSha=writeResult.sha;finalCommitSha=writeResult.commitSha||null;finalCommitKnown=Boolean(writeResult.commitSha);finalExists=true;wroteRemote=true;}catch(error){lastError=error;if(isWriteConflictError(error)){lastSyncOutcome.hadConflict=true;status('syncing','正在合并最新数据');if(attempt<SYNC_RETRY_LIMIT-1){const backoff=Math.min(1200,180*Math.pow(2,attempt));await delay(backoff+Math.floor(Math.random()*180));}
-continue;}
-if(isTransientSyncError(error)){const verification=await verifyRemoteEquals(mergedState);if(verification.matched){finalSha=verification.remote.sha;finalCommitSha=verification.remote.commitSha||null;finalCommitKnown=verification.remote.commitKnown===true;finalExists=Boolean(verification.remote.exists);wroteRemote=true;}else{throw error;}}else{throw error;}}}
-let finalLocalState=mergedState;let dirtyAfterSync=false;let extraConflicts=0;let extraCollectionConflicts=0;let extraUnresolvedCodes=0;let extraCodeConflicts=0;let extraCodeConflictItems=[];let extraInvalidCodes=0;if(localMutationVersion!==mutationVersionBeforeWrite){const currentLocal=norm(state);const afterWriteMerge=mergeStates(localBefore,currentLocal,mergedState);finalLocalState=afterWriteMerge.state;extraConflicts=afterWriteMerge.conflicts;extraCollectionConflicts=afterWriteMerge.collectionConflicts;extraUnresolvedCodes=afterWriteMerge.unresolvedCodeConflicts;extraCodeConflicts=afterWriteMerge.codeConflicts;extraCodeConflictItems=[...afterWriteMerge.codeConflictItems];extraInvalidCodes=afterWriteMerge.invalidCodeCount;const afterWriteAudit=auditCodeSafety(localBefore,currentLocal,mergedState,afterWriteMerge.state);if(!afterWriteAudit.ok){const error=new Error(`编码安全检查失败：${formatCodeSafetyItems(afterWriteAudit.items)}`);error.code='code_safety';throw error;}
-dirtyAfterSync=stateSignature(finalLocalState)!==mergedSig;if(dirtyAfterSync){syncRequested=true;}}
-state=norm(finalLocalState);meta.dirty=dirtyAfterSync;meta.sha=finalSha;meta.commitSha=finalCommitSha;meta.commitKnown=finalCommitKnown;meta.remoteExists=finalExists;meta.remoteExistsKnown=true;saveLocal(state);const baseWrite=persistSyncBase(mergedState,finalSha);const metaWrite=persistMeta();await Promise.allSettled([workCopyWriteChain,baseWrite,metaWrite]);render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent=`已同步 ${new Date().toLocaleString()}`;const conflictCount=mergedResult.conflicts+mergedResult.collectionConflicts+extraConflicts+extraCollectionConflicts;const finalCodeIssues=inspectCodeIssues(state);const duplicateCodeCountAfterSync=finalCodeIssues.duplicates;const invalidCodeCountAfterSync=finalCodeIssues.invalid;const codeConflictCount=mergedResult.codeConflicts+extraCodeConflicts;const codeConflictItems=[...mergedResult.codeConflictItems,...extraCodeConflictItems];const pendingUnassignedCount=allocationResult.pendingUnassigned;if(duplicateCodeCountAfterSync||invalidCodeCountAfterSync||codeConflictCount){status('online','公开阅读 · 管理已连接 · 编码需检查');}
-const codeToastShown=showCodeAllocationToast(allocationResult);if(showResult&&!codeToastShown){if(codeConflictCount){show(`检测到编码并发冲突，请人工检查：${formatCodeConflictItems(codeConflictItems)}`,'error');}else if(duplicateCodeCountAfterSync){show(`同步完成；检测到重复编码：${formatDuplicateCodeItems(finalCodeIssues.duplicateItems)}`,'error');}else if(invalidCodeCountAfterSync){show(`同步完成；检测到编码与当前规则不一致：${finalCodeIssues.invalidItems.map(formatCodeIssueItem).join('；')}`,'error');}else if(pendingUnassignedCount){show(`同步完成；仍有 ${pendingUnassignedCount} 个新条目等待分配编码，已有编码未被改动`,'error');}else if(conflictCount){show(`双向同步完成；检测到 ${conflictCount} 处普通字段并发修改并已合并，编码未自动改写`,'success');}else if(wroteRemote&&localChanged&&remoteChanged){show('已合并两台设备的修改并同步 GitHub','success');}else if(wroteRemote){show('已同步到 GitHub','success');}else if(pulledChanges){show('已获取另一设备的最新修改','success');}else{show('本机与 GitHub 已是最新','success');}}
-if(cloudUpdateDetected&&!codeToastShown){show('检测到其他终端的云端更新，当前页面已自动刷新','success');}
-return true;}
-if(lastError&&isWriteConflictError(lastError)){const conflictError=new Error('服务器数据持续更新；本机修改已保留，系统稍后会自动重试');conflictError.code='sync_conflict_exhausted';throw conflictError;}
-throw(lastError||new Error('多次重试后仍无法完成同步'));}catch(error){console.error(error);lastSyncErrorCode=clean(error?.code);meta.dirty=Boolean(meta.dirty||dirtyAtStart||localMutationVersion!==mutationAtStart);saveLocal(state);await Promise.allSettled([workCopyWriteChain,persistMeta()]);status('offline',`同步失败 · ${syncErrorText(error)}`);if(showResult){show(`同步失败：${syncErrorText(error)}`,'error');}
-return false;}finally{syncRunning=false;syncDeadlineAt=0;updateAdmin();}}
+async function verifyRemoteEquals(expectedState){
+  try{
+    const checked=await readRemoteWithRetry(1);
+    return{matched:checked.exists&&stateSignature(checked.state)===stateSignature(expectedState),remote:checked};
+  }catch{return{matched:false,remote:null};}
+}
+async function syncOnce(showResult=true){
+  if(!admin())return false;
+  const dirtyAtStart=Boolean(meta.dirty);
+  const mutationAtStart=localMutationVersion;
+  syncRunning=true;
+  syncDeadlineAt=Date.now()+SYNC_OPERATION_TIMEOUT_MS;
+  updateAdmin();
+  status('syncing','正在读取 GitHub 数据文件');
+  try{
+    let lastConflict=null;
+    for(let attempt=0;attempt<SYNC_RETRY_LIMIT;attempt++){
+      const localBefore=norm(state);
+      const base=resolveSyncBase(localBefore);
+      const mutationVersionBeforeWrite=localMutationVersion;
+      const remote=await readRemoteWithRetry(attempt===0?2:1);
+      const cloudUpdateDetected=Boolean(meta.sha&&remote.sha&&remote.sha!==meta.sha);
+      const mergedResult=mergeStates(base,localBefore,remote.state);
+      const preAllocationState=mergedResult.state;
+      if(mergedResult.codeConflicts>0){
+        const error=new Error(`检测到编码并发冲突，已停止写入以保护数据：${formatCodeConflictItems(mergedResult.codeConflictItems)}`);
+        error.code='code_conflict';throw error;
+      }
+      const codeAudit=auditCodeSafety(base,localBefore,remote.state,preAllocationState);
+      if(!codeAudit.ok){
+        const error=new Error(`编码安全检查失败：${formatCodeSafetyItems(codeAudit.items)}`);
+        error.code='code_safety';throw error;
+      }
+      const allocationResult=reconcileCodesIfNeeded(preAllocationState,remote.state,base);
+      const mergedState=allocationResult.state;
+      const issues=inspectCodeIssues(mergedState);
+      if(issues.duplicates>0){
+        const error=new Error(`重复编码冲突，已停止写入：${formatDuplicateCodeItems(issues.duplicateItems)}`);
+        error.code='code_conflict';throw error;
+      }
+      const mergedSig=stateSignature(mergedState);
+      const remoteSig=stateSignature(remote.state);
+      const localSig=stateSignature(localBefore);
+      const baseSig=stateSignature(base);
+      let finalSha=remote.sha;
+      let finalCommitSha=null;
+      let wroteRemote=false;
+      if(remoteSig!==mergedSig){
+        if(remote.exists&&!remote.sha){
+          const error=remoteDataError('服务器已有数据文件但未提供 SHA，无法安全写入，已保留本机修改。');
+          throw error;
+        }
+        status('syncing','正在确认服务器编码');
+        try{
+          const result=await writeRemote(mergedState,remote.sha);
+          finalSha=result.sha;
+          finalCommitSha=result.commitSha;
+          wroteRemote=true;
+        }catch(error){
+          if(isWriteConflictError(error)){
+            lastConflict=error;
+            lastSyncOutcome.hadConflict=true;
+            status('syncing','服务器版本已变化，正在重新合并');
+            if(attempt+1<SYNC_RETRY_LIMIT)await delay(Math.min(1200,200*Math.pow(2,attempt)));
+            continue;
+          }
+          // 超时和网络错误不代表 PUT 未写入；先 GET 核验，再决定是否算成功。
+          if(isTransientSyncError(error)){
+            status('syncing','写入结果不确定，正在读取服务器核验');
+            const verification=await verifyRemoteEquals(mergedState);
+            if(verification.matched){
+              finalSha=verification.remote.sha;
+              wroteRemote=true;
+            }else{throw error;}
+          }else{throw error;}
+        }
+      }
+      // 只有成功读取 GitHub 文件、或获得 PUT 成功响应/核验成功，才消除待同步标记。
+      let finalLocalState=mergedState;
+      let dirtyAfterSync=false;
+      if(localMutationVersion!==mutationVersionBeforeWrite){
+        const currentLocal=norm(state);
+        const afterWriteMerge=mergeStates(localBefore,currentLocal,mergedState);
+        const followupAudit=auditCodeSafety(localBefore,currentLocal,mergedState,afterWriteMerge.state);
+        if(!followupAudit.ok){
+          const error=new Error(`编码安全检查失败：${formatCodeSafetyItems(followupAudit.items)}`);
+          error.code='code_safety';throw error;
+        }
+        finalLocalState=afterWriteMerge.state;
+        dirtyAfterSync=stateSignature(finalLocalState)!==mergedSig;
+        if(dirtyAfterSync)syncRequested=true;
+      }
+      state=norm(finalLocalState);
+      meta.dirty=dirtyAfterSync;
+      meta.sha=finalSha;
+      meta.commitSha=finalCommitSha;
+      meta.commitKnown=Boolean(finalCommitSha);
+      meta.remoteExists=Boolean(remote.exists||wroteRemote);
+      meta.remoteExistsKnown=true;
+      saveLocal(state);
+      const baseWrite=persistSyncBase(mergedState,finalSha);
+      const metaWrite=persistMeta();
+      await Promise.allSettled([workCopyWriteChain,baseWrite,metaWrite]);
+      render();
+      status('online','公开阅读 · 管理已连接');
+      lastSyncTime.textContent=`已同步 ${new Date().toLocaleString()}`;
+      const codeToastShown=showCodeAllocationToast(allocationResult);
+      if(showResult&&!codeToastShown){
+        if(issues.invalid>0){show(`同步完成；发现编码规则问题：${issues.invalidItems.map(formatCodeIssueItem).join('；')}`,'error');}
+        else if(allocationResult.pendingUnassigned){show(`同步完成，仍有 ${allocationResult.pendingUnassigned} 条等待分配编码`,'error');}
+        else if(mergedResult.conflicts+mergedResult.collectionConflicts){show('双向同步成功，已合并普通字段修改','success');}
+        else if(wroteRemote){show('已同步到 GitHub','success');}
+        else if(localSig!==mergedSig){show('已获取云端最新数据','success');}
+        else{show('本机与 GitHub 已是最新','success');}
+      }
+      if(cloudUpdateDetected&&!codeToastShown){show('发现其他设备的更新，已自动合并','success');}
+      return true;
+    }
+    const conflictError=new Error(`GitHub 文件在连续 ${SYNC_RETRY_LIMIT} 次尝试中被其他设备修改，已停止写入并保存本机内容。${lastConflict?.message||''}`);
+    conflictError.code='sync_conflict_exhausted';throw conflictError;
+  }catch(error){
+    console.error('Press 同步失败',error);
+    lastSyncErrorCode=clean(error?.code);
+    meta.dirty=Boolean(meta.dirty||dirtyAtStart||localMutationVersion!==mutationAtStart);
+    saveLocal(state);
+    await Promise.allSettled([workCopyWriteChain,persistMeta()]);
+    const detail=syncErrorText(error);
+    status('offline',`同步失败 · ${detail}`);
+    lastSyncTime.textContent=`未同步到云端 · ${new Date().toLocaleString()}`;
+    if(showResult)show(`同步失败：${detail}`,'error');
+    return false;
+  }finally{
+    syncRunning=false;
+    syncDeadlineAt=0;
+    updateAdmin();
+  }
+}
 function sync(showResult=true,queueIfBusy=true){if(!admin())return Promise.resolve(false);if(syncInFlight){if(showResult)syncShowResult=true;if(queueIfBusy)syncRequested=true;return syncInFlight;}
 lastSyncOutcome={hadConflict:false};syncRequested=true;if(showResult){syncShowResult=true;}
 if(syncDebounceTimer!==null){clearTimeout(syncDebounceTimer);syncDebounceTimer=null;}
@@ -595,7 +758,42 @@ async function loadPublic(){status('syncing','正在读取公开数据');const u
 try{const{response,text}=await fetchTextWithTimeout(url,{cache:'no-store'},PUBLIC_FETCH_TIMEOUT);if(!response.ok){throw new Error(`HTTP ${response.status}`);}
 state=norm(JSON.parse(text));publicCacheValue=state;await idbSet(PUBLIC_CACHE_KEY,{savedAt:new Date().toISOString(),state});render();status('online','公开阅读');lastSyncTime.textContent=`公开数据 · ${state.entries.length} 条`;}catch(error){console.error(error);if(publicCacheValue){state=norm(publicCacheValue);}
 render();status('offline',publicCacheValue?'公开数据读取失败 · 使用缓存':'公开数据读取失败');lastSyncTime.textContent=publicCacheValue?`缓存数据 · ${state.entries.length} 条`:'请确认 press_data.json 与本页同目录';}}
-async function loadAdminState(){adminReady=false;updateAdmin();status('syncing','正在检查云端版本');const local=loadLocal();if(meta.dirty&&local){state=local;adminReady=true;render();status('online','公开阅读 · 管理已连接 · 正在同步本机修改');sync(false);return;}try{const remoteVersion=await readRemoteVersionWithRetry();if(local&&hasTrustedRemoteBase(remoteVersion.commitSha)){state=local;if(stateSignature(local)!==stateSignature(syncBaseCache)){meta.dirty=true;saveLocal(state);adminReady=true;render();status('online','公开阅读 · 管理已连接 · 正在同步本机修改');sync(false);return;}meta.dirty=false;meta.commitSha=remoteVersion.commitSha;meta.commitKnown=true;adminReady=true;render();status('online','公开阅读 · 管理已连接');lastSyncTime.textContent=`云端版本未变 · ${new Date().toLocaleString()}`;return;}const remote=await readRemoteConsistent(remoteVersion);meta.commitSha=remote.commitSha||null;meta.commitKnown=remote.commitKnown===true;meta.remoteExists=Boolean(remote.exists);meta.remoteExistsKnown=true;if(remote.exists){state=remote.state;meta.dirty=false;meta.sha=remote.sha;saveLocal(state);await Promise.all([workCopyWriteChain,persistSyncBase(state,remote.sha),persistMeta()]);}else if(local){state=local;meta.dirty=true;meta.sha=null;syncBaseCache=norm({});syncBaseSha=null;saveLocal(state);await Promise.all([workCopyWriteChain,persistSyncBase(syncBaseCache,null),persistMeta()]);}else{state=norm({});meta.dirty=false;meta.sha=null;saveLocal(state);await Promise.all([workCopyWriteChain,persistSyncBase(state,null),persistMeta()]);}adminReady=true;render();status('online','公开阅读 · 管理已连接');if(meta.dirty){sync(false);}}catch(error){console.error(error);state=local||norm({});adminReady=true;render();const detail=syncErrorText(error);status('offline',`云端数据读取失败：${detail} · 使用本机数据`);lastSyncTime.textContent=`管理连接失败 · ${detail}`;}}
+async function loadAdminState(){
+  adminReady=false;updateAdmin();status('syncing','正在读取 GitHub 数据文件');
+  const local=loadLocal();
+  if(meta.dirty&&local){
+    state=local;adminReady=true;render();
+    status('syncing','本机有待同步修改，正在连接 GitHub');
+    sync(false);return;
+  }
+  try{
+    const remote=await readRemoteWithRetry(2);
+    meta.commitSha=null;meta.commitKnown=false;
+    meta.remoteExists=Boolean(remote.exists);meta.remoteExistsKnown=true;
+    if(remote.exists){
+      state=remote.state;meta.dirty=false;meta.sha=remote.sha;
+      saveLocal(state);
+      await Promise.allSettled([workCopyWriteChain,persistSyncBase(state,remote.sha),persistMeta()]);
+    }else if(local){
+      state=local;meta.dirty=true;meta.sha=null;
+      syncBaseCache=norm({});syncBaseSha=null;
+      saveLocal(state);
+      await Promise.allSettled([workCopyWriteChain,persistSyncBase(syncBaseCache,null),persistMeta()]);
+    }else{
+      state=norm({});meta.dirty=false;meta.sha=null;
+      saveLocal(state);
+      await Promise.allSettled([workCopyWriteChain,persistSyncBase(state,null),persistMeta()]);
+    }
+    adminReady=true;render();status('online','公开阅读 · 管理已连接');
+    if(meta.dirty)sync(false);
+  }catch(error){
+    console.error('Press 读取 GitHub 失败',error);
+    state=local||norm({});adminReady=true;render();
+    const detail=syncErrorText(error);
+    status('offline',`云端数据读取失败：${detail} · 本机数据仍可查看`);
+    lastSyncTime.textContent=`管理连接失败 · ${detail}`;
+  }
+}
 async function bootstrapStorage(){const[storedConfig,storedToken,storedMeta,work,cache,base]=await Promise.all([idbGet(CONFIG_KEY),idbGet(TOKEN_PERSISTED_KEY),idbGet(META_KEY),idbGet(WORKCOPY_KEY),idbGet(PUBLIC_CACHE_KEY),idbGet(SYNC_BASE_KEY)]);if(storedConfig&&typeof storedConfig==='object'){config.owner=clean(storedConfig.owner);config.repo=clean(storedConfig.repo);config.file=clean(storedConfig.file)||'press_data.json';}
 persistedToken=typeof storedToken==='string'?storedToken:'';config.token=persistedToken;const currentTarget=syncTargetId();if(storedMeta&&typeof storedMeta==='object'&&(!storedMeta.target||storedMeta.target===currentTarget)){meta={...meta,...storedMeta};}
 if(work?.state&&(!work.target||work.target===currentTarget)){workCopyCache=norm(work.state);}
